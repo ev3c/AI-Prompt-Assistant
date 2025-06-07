@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "AI prompt assistant",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "❓ Domanda personalizzata",
+      "buttons": [
+        {"label": "Scrivi una domanda", "prompt": "@prompt"}
+      ]
+    },    
+    {
+      "title": "📝 Riassunto e comprensione",
+      "buttons": [
+        {"label": "Fai un riassunto di pagina/testo", "prompt": "Fai un riassunto di:"},
+        {"label": "Punti principali", "prompt": "Quali sono i punti principali di questo articolo?"},
+        {"label": "Riassunto in 3 frasi", "prompt": "Riassumi questa pagina in 3 frasi."},
+        {"label": "Versione per bambini", "prompt": "Dammi una versione per bambini di queste informazioni."},
+        {"label": "Conclusione principale", "prompt": "Qual è la conclusione principale di questa pagina?"}
+      ]
+    },
+    {
+      "title": "🔍 Analisi del contenuto",
+      "buttons": [
+        {"label": "Che tono ha?", "prompt": "Che tono ha questa pagina? (obiettivo, persuasivo, emotivo, ecc.)"},
+        {"label": "Argomenti principali", "prompt": "Quali argomenti principali vengono utilizzati in questa pagina?"},
+        {"label": "Identificare pregiudizi", "prompt": "Puoi identificare qualche pregiudizio in questo testo?"},
+        {"label": "Fonti utilizzate", "prompt": "Quali sono le fonti utilizzate in questa pagina?"},
+        {"label": "Valutare l'affidabilità", "prompt": "Queste informazioni sono affidabili? Perché sì o perché no?"}
+      ]
+    },
+    {
+      "title": "📊 Estrazione dati",
+      "buttons": [
+        {"label": "Dati statistici", "prompt": "Estrai tutti i dati statistici che appaiono in questa pagina."},
+        {"label": "Tabella riassuntiva", "prompt": "Dammi una tabella con le informazioni più importanti di questo articolo."},
+        {"label": "Prodotti menzionati", "prompt": "Elenca tutti i prodotti che vengono menzionati."},
+        {"label": "Entità menzionate", "prompt": "Quali sono i nomi di persone/luoghi/aziende che appaiono qui?"}
+      ]
+    },
+    {
+      "title": "🤖 Interazione o aiuto con azioni",
+      "buttons": [
+        {"label": "Compilare modulo", "prompt": "Aiutami a compilare questo modulo con i miei dati."},
+        {"label": "Come registrarsi", "prompt": "Come posso registrarmi qui?"},
+        {"label": "Info di contatto", "prompt": "Dove si trovano le informazioni di contatto?"},
+        {"label": "Passi d'azione", "prompt": "Riassumi i passi per fare [azione specifica della pagina]."}
+      ]
+    },
+    {
+      "title": "💬 Traduzione o cambio di formato",
+      "translationButton": {"label": "Traduci pagina/testo in: "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 Spagnolo", "prompt": "Traduci questa pagina in spagnolo."},
+        {"label": "🇬🇧 Inglese", "prompt": "Traduci questa pagina in inglese."},
+        {"label": "ca Catalano", "prompt": "Traduci questa pagina in catalano."},
+        {"label": "🇩🇪 Tedesco", "prompt": "Traduci questa pagina in tedesco."},
+        {"label": "🇫🇷 Francese", "prompt": "Traduci questa pagina in francese."}, 
+        {"label": "🇮🇹 Italiano", "prompt": "Traduci questa pagina in italiano."},
+        {"label": "🇵🇹 Portoghese", "prompt": "Traduci questa pagina in portoghese."},
+        {"label": "🇨🇳 Cinese", "prompt": "Traduci questa pagina in cinese."},
+        {"label": "🇷🇺 Russo", "prompt": "Traduci questa pagina in russo."},
+        {"label": "🇸🇦 Arabo", "prompt": "Traduci questa pagina in arabo."},
+        {"label": "🇯🇵 Giapponese", "prompt": "Traduci questa pagina in giapponese."},
+        {"label": "🇮🇳 Hindi", "prompt": "Traduci questa pagina in hindi."},
+        {"label": "🇰🇷 Coreano", "prompt": "Traduci questa pagina in coreano."}
+      ],
+      "buttons": [
+        {"label": "In presentazione", "prompt": "Converti questo articolo in una presentazione di diapositive."},
+        {"label": "Per social media", "prompt": "Riscrivi questo contenuto per un post sui social media."}
+      ]
+    }
+  ]
+}

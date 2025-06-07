@@ -1,0 +1,51 @@
+{
+  "header": {
+    "title": "Assistant de prompts ePub",
+    "currentUrlPlaceholder": "Page actuelle"
+  },
+  "sections": [
+    {
+      "title": "❓ Question personnalisée",
+      "buttons": [
+        {"label": "Écrivez une question", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "📘 Compréhension générale",
+      "buttons": [
+        {"label": "Quel est le résumé du livre?", "prompt": "Quel est le résumé du livre?"},
+        {"label": "Qui sont les personnages principaux et comment sont-ils?", "prompt": "Qui sont les personnages principaux et comment sont-ils?"},
+        {"label": "Quel conflit central est présenté?", "prompt": "Quel conflit central est présenté?"},
+        {"label": "Comment se termine l'histoire?", "prompt": "Comment se termine l'histoire?"},
+        {"label": "Quels éléments de l'intrigue sont les plus importants?", "prompt": "Quels éléments de l'intrigue sont les plus importants?"}
+      ]
+    },
+    {
+      "title": "🎭 Analyse littéraire",
+      "buttons": [
+        {"label": "Quel est le thème principal du livre?", "prompt": "Quel est le thème principal du livre?"},
+        {"label": "Quels symbolismes sont utilisés et que signifient-ils?", "prompt": "Quels symbolismes sont utilisés et que signifient-ils?"},
+        {"label": "Comment le protagoniste évolue-t-il?", "prompt": "Comment le protagonistes évolue-t-il?"},
+        {"label": "Quel message l'auteur transmet-il?", "prompt": "Quel message l'auteur transmet-il?"},
+        {"label": "Que représente ce personnage ou cette scène?", "prompt": "Que représente ce personnage ou cette scène?"}
+      ]
+    },
+    {
+      "title": "🧠 Interprétation philosophique",
+      "buttons": [
+        {"label": "Quelle critique le livre fait-il de la société?", "prompt": "Quelle critique le livre fait-il de la société?"},
+        {"label": "Comment cette histoire se rapporte-t-elle à la vie réelle?", "prompt": "Comment cette histoire se rapporte-t-elle à la vie réelle?"},
+        {"label": "Quelles leçons peut-on appliquer aujourd'hui?", "prompt": "Quelles leçons peut-on appliquer aujourd'hui?"},
+        {"label": "Quel est le sens de la fin?", "prompt": "Quel est le sens de la fin?"}
+      ]
+    },
+    {
+      "title": "✍️ Essais et devoirs",
+      "buttons": [
+        {"label": "Comment ce livre se rapporte-t-il à d'autres textes/littérature?", "prompt": "Comment ce livre se rapporte-t-il à d'autres textes/littérature?"},
+        {"label": "Quelles valeurs ou idées sont promues dans l'œuvre?", "prompt": "Quelles valeurs ou idées sont promues dans l'œuvre?"},
+        {"label": "Comment le langage est-il utilisé pour créer de l'émotion ou de l'impact?", "prompt": "Comment le langage est-il utilisé pour créer de l'émotion ou de l'impact?"},
+        {"label": "Quelles figures littéraires apparaissent et à quoi servent-elles?", "prompt": "Quelles figures littéraires apparaissent et à quoi servent-elles?"}
+      ]
+    }
+  ]
+}

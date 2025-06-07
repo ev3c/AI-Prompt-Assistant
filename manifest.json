@@ -1,0 +1,93 @@
+{
+  "manifest_version": 3,
+  "name": "🧠 AI Prompt Assistant v1.3 beta",
+  "version": "1.3",
+  "description": "Menú de prompts útiles para ChatGPT, DeepSeek, Gemini, Copilot, y más.",
+  "permissions": [
+    "clipboardWrite", 
+    "clipboardRead",
+    "activeTab", 
+    "storage", 
+    "contextMenus", 
+    "sidePanel",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://claude.ai/*",
+    "https://chat.deepseek.com/*",
+    "https://chat.mistral.ai/*",
+    "https://copilot.microsoft.com/*",
+    "https://gemini.google.com/*",
+    "https://grok.x.ai/*",
+    "https://meta.ai/*",
+    "https://twitter.com/*",
+    "https://x.com/*",
+    "https://wikipedia.org/*",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "🧠 AI Prompt Assistant",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://chat.deepseek.com/*",
+        "https://chat.mistral.ai/*",
+        "https://copilot.microsoft.com/*",
+        "https://gemini.google.com/app*",
+        "https://grok.x.ai/*",
+        "https://meta.ai/*"
+      ],
+      "js": ["ai_sites.js"]
+    },
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://chat.deepseek.com/*",
+        "https://chat.mistral.ai/*",
+        "https://copilot.microsoft.com/*",
+        "https://gemini.google.com/*",
+        "https://grok.x.ai/*",
+        "https://meta.ai/*",
+        "https://google.com/*",
+        "https://wikipedia.org/*",
+        "https://facebook.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidebar.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "json-viewer.html",
+        "json-viewer.js",
+        "feedback.html",
+        "feedback.js",
+        "idioma/*.json"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

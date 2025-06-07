@@ -1,0 +1,93 @@
+{
+  "motoresIA": [
+    {
+      "nombre": "ChatGPT",
+      "modelos": [
+        "GPT-3.5",
+        "GPT-4",
+        "GPT-4 Turbo"
+      ],
+      "empresa": "OpenAI"
+    },
+    {
+      "nombre": "Claude",
+      "modelos": [
+        "Claude 2",
+        "Claude 3 Opus",
+        "Claude 3 Sonnet",
+        "Claude 3 Haiku"
+      ],
+      "empresa": "Anthropic"
+    },
+    {
+      "nombre": "DeepSeek",
+      "modelos": [
+        "DeepSeek-7B",
+        "DeepSeek-67B",
+        "DeepSeek Coder"
+      ],
+      "empresa": "DeepSeek"
+    },
+    {
+      "nombre": "Copilot",
+      "modelos": [
+        "GitHub Copilot",
+        "Microsoft Copilot",
+        "Copilot Pro"
+      ],
+      "empresa": "Microsoft"
+    },
+    {
+      "nombre": "Gemini",
+      "modelos": [
+        "Gemini Ultra",
+        "Gemini Pro",
+        "Gemini Nano"
+      ],
+      "empresa": "Google"
+    },
+    {
+      "nombre": "Meta AI",
+      "modelos": [
+        "Llama 3 8B",
+        "Llama 3 70B",
+        "Llama 3 405B"
+      ],
+      "empresa": "Meta"
+    },
+    {
+      "nombre": "LLaMA",
+      "modelos": [
+        "LLaMA 2-7B",
+        "LLaMA 2-13B",
+        "LLaMA 2-70B"
+      ],
+      "empresa": "Meta"
+    },
+    {
+      "nombre": "Mistral",
+      "modelos": [
+        "Mistral 7B",
+        "Mixtral 8x7B",
+        "Mistral Large"
+      ],
+      "empresa": "Mistral AI"
+    },
+    {
+      "nombre": "Grok",
+      "modelos": [
+        "Grok-1"
+      ],
+      "empresa": "xAI"
+    },
+    {
+      "nombre": "Otros",
+      "modelos": [
+        "Falcon",
+        "BLOOM",
+        "PaLM"
+      ],
+      "empresa": "Varios"
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "header": {
+    "title": "Email Assistant",
+    "currentUrlPlaceholder": "Current page"
+  },
+  "sections": [
+    {
+      "title": "📩 Write an email from scratch",
+      "buttons": [
+        {
+          "label": "Professional email with proposal",
+          "prompt": "Write a professional email to [client / colleague / company] where I propose [your idea or proposal]. The tone should be [formal / friendly / enthusiastic]."
+        },
+        {
+          "label": "Meeting for demo",
+          "prompt": "Write a professional email to a potential client where I propose a meeting to show them a demo of our virtual reality solution."
+        }
+      ]
+    },
+    {
+      "title": "✍️ Improve an email you've already written",
+      "buttons": [
+        {
+          "label": "Improve existing email",
+          "prompt": "Improve this email to make it sound clearer and more professional, but keep the original message: [Paste your email here]"
+        },
+        {
+          "label": "Shorten email",
+          "prompt": "Make this email more brief and direct, without losing courtesy or clarity: [Paste your email here]"
+        }
+      ]
+    },
+    {
+      "title": "🎯 Follow-up email",
+      "buttons": [
+        {
+          "label": "Follow-up without response",
+          "prompt": "Write a friendly and professional follow-up email for someone who hasn't responded to my proposal sent [X days/a week] ago."
+        }
+      ]
+    },
+    {
+      "title": "🔁 Repetitive or batch emails (templates)",
+      "buttons": [
+        {
+          "label": "Template for potential clients",
+          "prompt": "Create an email template to contact potential clients interested in [your product or service]. It should be brief, with a clear call to action."
+        }
+      ]
+    },
+    {
+      "title": "🙋‍♂️ Ask for something",
+      "buttons": [
+        {
+          "label": "Request something specific",
+          "prompt": "Write a polite email to request [a meeting / feedback / a document / more information] from [name or type of person]."
+        }
+      ]
+    },
+    {
+      "title": "💬 Emails with specific tone",
+      "buttons": [
+        {
+          "label": "Professional",
+          "prompt": "Convert this email to a more professional tone, without changing the main content: [Paste your text]"
+        },
+        {
+          "label": "Cordial",
+          "prompt": "Convert this email to a warmer tone, without changing the main content: [Paste your text]"
+        },
+        {
+          "label": "Inspiring",
+          "prompt": "Convert this email to a more inspiring tone, without changing the main content: [Paste your text]"
+        },
+        {
+          "label": "Informal but respectful",
+          "prompt": "Convert this email to a more informal but respectful tone, without changing the main content: [Paste your text]"
+        },
+        {
+          "label": "Assertive but diplomatic",
+          "prompt": "Convert this email to a more assertive but diplomatic tone, without changing the main content: [Paste your text]"
+        }
+      ]
+    },
+    {
+      "title": "🧠 Extra tip: Use variables",
+      "buttons": [
+        {
+          "label": "Email with variables",
+          "prompt": "Write an email to {{client_name}} thanking them for their interest in {{product}} and proposing a call on {{day}} at {{time}}."
+        }
+      ]
+    }
+  ]
+}

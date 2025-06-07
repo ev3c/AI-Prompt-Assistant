@@ -1,0 +1,63 @@
+{
+  "header": {
+    "title": "PDF prompt assistant",
+    "currentUrlPlaceholder": "Current PDF file"
+  },
+  "sections": [
+    {
+      "title": "❓ Custom Question",
+      "buttons": [
+        {"label": "Write a question", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "📄 Basic PDF Analysis",
+      "buttons": [
+        {"label": "Summarize this PDF", "prompt": "Summarize the content of the file [PDF]"},
+        {"label": "Extract key points", "prompt": "Extract the key points and important concepts from the file [PDF]"},
+        {"label": "What's the main topic?", "prompt": "What is the main topic of the document [PDF]?"},
+        {"label": "Analyze structure", "prompt": "Analyze and describe the structure and organization of the document [PDF]"},
+        {"label": "Summarize each section", "prompt": "Summarize each important section of the document [PDF]"}
+      ]
+    },
+    {
+      "title": "📊 Technical Analysis",
+      "buttons": [
+        {"label": "Extract data and statistics", "prompt": "Extract numerical data, statistics, and important figures from the document [PDF]"},
+        {"label": "Explain technical terminology", "prompt": "Identify and explain the technical or specialized terminology used in [PDF]"},
+        {"label": "Identify methodology", "prompt": "What methodology is used in this document [PDF]? Explain it in detail"},
+        {"label": "Analyze validity", "prompt": "Analyze the validity and reliability of the information presented in [PDF]"},
+        {"label": "Compare with standards", "prompt": "Compare the information presented in [PDF] with current standards in this field"}
+      ]
+    },
+    {
+      "title": "🔍 Search and Extraction",
+      "buttons": [
+        {"label": "Search for specific information", "prompt": "Search for information about [TOPIC] in the document [PDF]"},
+        {"label": "Extract all dates", "prompt": "Extract all important dates and the timeline mentioned in the document [PDF]"},
+        {"label": "List all references", "prompt": "List all references, citations, or sources mentioned in [PDF]"},
+        {"label": "Find definitions", "prompt": "Find and extract all definitions presented in the document [PDF]"},
+        {"label": "Extract tables and figures", "prompt": "Describe the tables, graphs, diagrams, and figures that appear in [PDF] and their relevance"}
+      ]
+    },
+    {
+      "title": "📝 Critical Evaluation",
+      "buttons": [
+        {"label": "Evaluate main argument", "prompt": "Critically evaluate the main argument and evidence presented in [PDF]"},
+        {"label": "Identify biases", "prompt": "Identify possible biases, limitations, or gaps in the information in [PDF]"},
+        {"label": "Strengths and weaknesses", "prompt": "What are the main strengths and weaknesses of this document [PDF]?"},
+        {"label": "Compare perspectives", "prompt": "Identify different perspectives or viewpoints presented in [PDF]"},
+        {"label": "Suggest improvements", "prompt": "How could the analysis or presentation of information in this document [PDF] be improved?"}
+      ]
+    },
+    {
+      "title": "📋 Advanced Actions",
+      "buttons": [
+        {"label": "Create exam questions", "prompt": "Create 10 exam questions based on the content of [PDF], with their correct answers"},
+        {"label": "Generate student summary", "prompt": "Generate a student-friendly summary of the document [PDF], highlighting the most important concepts and explaining them in a simple way"},
+        {"label": "Verify information", "prompt": "Verify the accuracy of key information presented in [PDF], noting any data that may be inaccurate or controversial"},
+        {"label": "Create supporting materials", "prompt": "Create supporting materials such as outlines, concept maps, or visual aids based on the content of [PDF]"},
+        {"label": "Compare with other sources", "prompt": "Compare the content of [PDF] with other sources or recent literature on the same topic"}
+      ]
+    }
+  ]
+} 

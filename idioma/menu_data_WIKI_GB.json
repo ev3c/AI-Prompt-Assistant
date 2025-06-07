@@ -1,0 +1,97 @@
+{
+  "header": {
+    "title": "AI prompt assistant",
+    "currentUrlPlaceholder": "Current page"
+  },
+  "sections": [
+    {
+      "title": "❓ Custom question",
+      "buttons": [
+        {"label": "Write a question", "prompt": "@prompt"}
+      ]
+    },    
+    {
+      "title": "📚 Summarize Wikipedia articles",
+      "buttons": [
+        {
+          "label": "Summarize article",
+          "prompt": "Summarize this Wikipedia article in less than 200 words, highlighting the key points: [paste text here]"
+        },
+        {
+          "label": "School-style summary",
+          "prompt": "Create a school-style summary (middle/high school level) of this Wikipedia text about [topic]."
+        }
+      ]
+    },
+    {
+      "title": "🔍 Explain difficult concepts",
+      "buttons": [
+        {
+          "label": "Explain this Wikipedia text as if I were 12 years old",
+          "prompt": "Explain this Wikipedia text as if I were 12 years old: [text]"
+        },
+        {
+          "label": "Make a simple, easy-to-understand version of this Wikipedia section",
+          "prompt": "Make a simple, easy-to-understand version of this Wikipedia section: [text]"
+        }
+      ]
+    },
+    {
+      "title": "🔄 Paraphrase to avoid plagiarism",
+      "buttons": [
+        {
+          "label": "Rewrite this Wikipedia content in your own words, avoiding plagiarism but maintaining the information",
+          "prompt": "Rewrite this Wikipedia content in your own words, avoiding plagiarism but maintaining the information: [text]"
+        },
+        {
+          "label": "Create an original version of this Wikipedia content without copying the literal text",
+          "prompt": "Create an original version of this Wikipedia content without copying the literal text."
+        }
+      ]
+    },
+    {
+      "title": "🧠 Compare articles or concepts",
+      "buttons": [
+        {
+          "label": "Compare the Wikipedia articles about [topic 1] and [topic 2]. How are they similar and how do they differ?",
+          "prompt": "Compare the Wikipedia articles about [topic 1] and [topic 2]. How are they similar and how do they differ?"
+        },
+        {
+          "label": "What are the differences between [topic 1] and [topic 2] according to the information on Wikipedia?",
+          "prompt": "What are the differences between [topic 1] and [topic 2] according to the information on Wikipedia?"
+        }
+      ]
+    },
+    {
+      "title": "📝 Create outlines or concept maps",
+      "buttons": [
+        {
+          "label": "Based on this Wikipedia text, create a thematic outline or concept map of the main topics.",
+          "prompt": "Based on this Wikipedia text, create a thematic outline or concept map of the main topics."
+        }
+      ]
+    },
+    {
+      "title": "💬 Generate review or exam questions",
+      "buttons": [
+        {
+          "label": "Create 10 exam-style questions about this Wikipedia article, with their answers: [paste text]",
+          "prompt": "Create 10 exam-style questions about this Wikipedia article, with their answers: [paste text]"
+        },
+        {
+          "label": "Make multiple-choice questions about the following Wikipedia text for study purposes.",
+          "prompt": "Make multiple-choice questions about the following Wikipedia text for study purposes."
+        }
+      ]
+    },
+    {
+      "title": "🔎 Search for information with context",
+      "buttons": [
+        {
+          "label": "Explain what Wikipedia says about [topic], and add historical context and examples if possible.",
+          "prompt": "Explain what Wikipedia says about [topic], and add historical context and examples if possible."
+        }
+      ]
+    }
+  ]
+}

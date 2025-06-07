@@ -1,0 +1,795 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  /* Contenedor principal */
+  #sidebar-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* Encabezado */
+  #header {
+    background-color: #87CEEB; /* Azul cielo */
+    color: white;
+    padding: 8px 12px;
+    border-bottom: 1px solid #ddd;
+    flex-shrink: 0;
+  }
+  
+  /* Estilos para el encabezado con botón de configuración */
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    padding: 4px;
+  }
+  
+  /* Contenedor del selector de modelo */
+  .model-selector-container {
+    position: relative;
+    flex: 2;
+  }
+  
+  /* Botón de selección del modelo de IA */
+  .ai-model-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .dropdown-icon {
+    margin-right: 4px;
+    font-size: 10px;
+  }
+  
+  /* Menú de modelos de IA */
+  .inline-models-menu {
+    display: none;
+    flex-direction: column;
+    padding: 6px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 50;
+    position: absolute;
+    left: 0;
+    top: 30px;
+    width: 140px;
+  }
+  
+  /* Cuando el menú está visible */
+  .inline-models-menu.visible {
+    display: flex;
+  }
+  
+  /* Opciones del menú de modelos de IA */
+  .inline-model-option {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    color: #2c3e50;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 8px 10px;
+    margin-bottom: 2px;
+    transition: background-color 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+  
+  .inline-model-option:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .inline-model-option.selected {
+    background-color: #d2e3fc;
+    font-weight: bold;
+  }
+  
+  /* Contenedor del selector de idioma */
+  .language-selector-container {
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  /* Botón de selección de idioma */
+  .language-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  /* Menú de idiomas */
+  .inline-languages-menu {
+    display: none;
+    flex-direction: column;
+    padding: 6px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 50;
+    position: absolute;
+    right: 0;
+    top: 30px;
+    width: 140px;
+  }
+  
+  /* Cuando el menú está visible */
+  .inline-languages-menu.visible {
+    display: flex;
+  }
+  
+  /* Opciones del menú de idiomas */
+  .inline-language-option {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 3px;
+    color: #2c3e50;
+    cursor: pointer;
+    font-size: 11px;
+    padding: 6px 8px;
+    margin-bottom: 2px;
+    transition: background-color 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+  
+  .inline-language-option:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .inline-language-option.selected {
+    background-color: #d2e3fc;
+    font-weight: bold;
+  }
+  
+  #title {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 16px;
+    color: white; /* Texto blanco */
+  }
+  
+  .emoji-icon {
+    margin-right: 5px;
+    font-size: 1.1em;
+  }
+  
+  #title-text {
+    flex: 1;
+  }
+  
+  /* Botón de configuración */
+  .icon-button {
+    position: relative;
+    padding: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Opciones de fuente de contexto */
+  .context-selector {
+    margin: 6px 0;
+    display: flex;
+  }
+  
+  .option-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+  }
+  
+  .button-row {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+  }
+  
+  .option-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 4px;
+    color: #000000;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    flex: 1;
+    text-align: center;
+    font-weight: normal;
+  }
+  
+  .option-button:hover {
+    background-color: #e8e8e8;
+  }
+  
+  .option-button.option-selected {
+    background-color: #e0e0e0;
+    border-color: #999;
+    font-weight: bold;
+  }
+  
+  #current-url {
+    margin: 6px 0 0;
+    font-size: 11px;
+    color: #2c3e50;
+    padding: 5px 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.2em;
+    min-height: 2.4em; /* Altura para aproximadamente 2 líneas */
+    max-height: 2.4em; /* Limitar a 2 líneas exactamente */
+    word-break: break-word;
+  }
+  
+  /* Contenido principal */
+  #main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+  }
+  
+  /* Secciones */
+  .section {
+    margin-bottom: 14px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 6px;
+  }
+  
+  .section:last-child {
+    border-bottom: none;
+  }
+  
+  .section h2 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    color: #2c3e50;
+    font-weight: bold;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 4px;
+  }
+  
+  /* Contenedor de botones */
+  .buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  /* Botones de prompt */
+  .prompt-button {
+    background-color: #f0f0f0;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    color: #2c3e50;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 6px 10px;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .prompt-button:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Estilo especial para el botón de traducción */
+  .translation-button {
+    background-color: #e8f0fe;
+    border-color: #d2e3fc;
+    color: #000000;
+    margin-bottom: 0;
+  }
+  
+  .translation-button:hover {
+    background-color: #d2e3fc;
+  }
+  
+  /* Contenedor para el botón de traducción y su menú de idiomas */
+  .translation-container {
+    position: relative;
+    flex-grow: 1;
+  }
+  
+  /* Estilo para el menú de idiomas inline */
+  .inline-language-menu {
+    display: none;
+    flex-direction: column;
+    padding: 5px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 5;
+    position: absolute;
+    left: 0;
+    bottom: 24px;
+    width: 130px;
+  }
+  
+  /* Cuando el menú está visible */
+  .inline-language-menu.visible {
+    display: flex;
+  }
+  
+  /* Estilos para la ventana emergente de configuración */
+  .settings-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .settings-popup {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 85%;
+    max-width: 350px;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: scale(1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  
+  /* Cuando está oculto, hacer una transición suave */
+  .settings-popup-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .settings-popup-overlay.hidden .settings-popup {
+    transform: scale(0.95);
+  }
+  
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #87CEEB; /* Azul cielo, igual que el header */
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .popup-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: white; /* Texto blanco como en el header */
+    font-weight: bold;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: white; /* Botón de cierre en blanco */
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  
+  .close-button:hover {
+    color: #e0e0e0; /* Color más claro al pasar el mouse */
+  }
+  
+  .settings-popup-content {
+    padding: 16px;
+  }
+  
+  .settings-item {
+    margin-bottom: 16px;
+  }
+  
+  .settings-item.button-container {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .settings-item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .settings-item label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 14px;
+  }
+  
+  .language-dropdown,
+  .model-dropdown {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dadce0;
+    border-radius: 6px;
+    background-color: white;
+    font-size: 14px;
+    color: #2c3e50;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+  }
+  
+  .language-dropdown:hover,
+  .model-dropdown:hover {
+    border-color: #87CEEB;
+  }
+  
+  .language-dropdown:focus,
+  .model-dropdown:focus {
+    outline: none;
+    border-color: #87CEEB;
+    box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.3);
+  }
+  
+  .language-dropdown option,
+  .model-dropdown option {
+    padding: 10px;
+    background-color: white;
+    color: #2c3e50;
+  }
+  
+  /* Notification */
+  #copy-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #323232;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    z-index: 1000;
+    transition: opacity 0.3s;
+  }
+  
+  /* Utilidades */
+  .hidden {
+    display: none;
+    visibility: hidden;
+  }
+  
+  /* Menús emergentes (estilos comunes) */
+  .ai-models-popup,
+  .language-popup {
+    position: absolute;
+    top: 100%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    border: 1px solid #ddd;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px) scale(0.95);
+    min-width: 150px;
+    margin-top: 5px;
+  }
+  
+  /* Posicionamiento específico para el menú de modelos de IA */
+  .ai-models-popup {
+    left: 20px;
+    transform-origin: top left;
+    transform: translateY(8px) scale(0.95);
+  }
+  
+  /* Posicionamiento específico para el menú de idiomas */
+  .language-popup {
+    right: 20px;
+    left: auto;
+    transform-origin: top right;
+    transform: translateY(8px) scale(0.95);
+  }
+  
+  /* Estado visible para ambos menús */
+  .ai-models-popup.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+  
+  .language-popup.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+  
+  /* Ajustar posición de la flecha indicadora para cada menú */
+  .ai-models-popup::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    transform: rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+  }
+  
+  .language-popup::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: auto;
+    right: 20px;
+    transform: rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+  }
+  
+  /* Estilos comunes para las listas */
+  .ai-models-popup ul,
+  .language-popup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: white;
+    position: relative;
+  }
+  
+  /* Estilos comunes para las opciones */
+  .ai-model-option,
+  .language-option {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap;
+  }
+  
+  .ai-model-option:last-child,
+  .language-option:last-child {
+    border-bottom: none;
+  }
+  
+  .ai-model-option:hover,
+  .language-option:hover {
+    background-color: #f5f8ff;
+    padding-left: 20px;
+  }
+  
+  .ai-model-option.selected,
+  .language-option.selected {
+    background-color: #e0f0ff;
+    font-weight: 600;
+    color: #0066cc;
+  }
+  
+  /* Estilos para los iconos de modelos de IA */
+  .ai-model-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border-radius: 3px;
+    object-fit: contain;
+    vertical-align: middle;
+  }
+  
+  /* Estilo para el icono del motor */
+  .motor-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    object-fit: contain;
+    vertical-align: middle;
+  }
+  
+  /* Posicionamiento relativo para los botones */
+  #motor-button,
+  #language-button {
+    position: relative;
+  }
+
+  /* Clase hidden */
+  .hidden {
+    display: none !important;
+    visibility: hidden;
+  }
+
+  .language-option.selected {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    font-weight: bold;
+  }
+
+  /* Estilos para el enlace de correo electrónico */
+  .contact-info {
+    margin-top: 15px;
+    text-align: center;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+
+  .email-link {
+    color: white;
+    background-color: #87CEEB; /* Mismo color que settings-button */
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+    padding: 10px 15px; /* Mismo padding que settings-button */
+    border-radius: 6px; /* Mismo radio de borde que settings-button */
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    font-weight: bold; /* Mismo peso de fuente que settings-button */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Misma sombra que settings-button */
+    transition: background-color 0.3s, transform 0.2s; /* Mismas transiciones que settings-button */
+  }
+
+  .email-link:hover {
+    background-color: #5bb4dc; /* Mismo color hover que settings-button */
+    color: white;
+    text-decoration: none;
+    transform: translateY(-2px); /* Mismo efecto de elevación que settings-button */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Misma sombra hover que settings-button */
+  }
+
+  /* Botón Open .json */
+  .settings-button {
+    background-color: #87CEEB;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 5px 0;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.2s;
+    display: block;
+    width: 100%;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .settings-button + .settings-button {
+    margin-top: 10px;
+  }
+  
+  .settings-button:hover {
+    background-color: #5bb4dc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  /* Remove the old primary and secondary button styles since we're using a single style */
+  .primary-button, .secondary-button {
+    background-color: #87CEEB;
+    color: white;
+  }
+
+  .primary-button:hover, .secondary-button:hover {
+    background-color: #5bb4dc;
+  }
+
+  /* Estilos para el contenedor de compartir y submenú */
+  .share-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .share-submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    border: 1px solid #dadce0;
+    margin-top: 5px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.95);
+  }
+
+  .share-submenu.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  .share-option {
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background-color: transparent;
+    color: #2c3e50;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .share-option:last-child {
+    border-bottom: none;
+  }
+
+  .share-option:hover {
+    background-color: #f5f8ff;
+    color: #87CEEB;
+  }
+
+  .share-option:active {
+    background-color: #e0f0ff;
+  }

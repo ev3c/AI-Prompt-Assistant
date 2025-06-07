@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "X prompt assistant",
+    "currentUrlPlaceholder": "Page actuelle"
+  },
+  "sections": [
+    {
+      "title": "❓ Question personnalisée",
+      "buttons": [
+        {"label": "Écris une question", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "🧵 Analyse du contenu du fil",
+      "buttons": [
+        {"label": "Résumé en 3 phrases clés","prompt": "Résume ce fil X en 3 phrases clés."},
+        {"label": "Résumé du fil X","prompt": "Résume ce fil :"},
+        {"label": "Morale ou enseignement du fil","prompt": "Quelle est la morale ou l'enseignement principal de ce fil ?"},
+        {"label": "Résumé sans marques ni promotions","prompt": "Fais un résumé à puces du fil sans mentions de marque ni promotions."},
+        {"label": "Version courte pour TikTok ou Reels","prompt": "Crée une version plus courte de ce fil pour TikTok ou Reels."},
+        {"label": "Partie la plus émouvante ou percutante","prompt": "Quelle partie du fil a la plus grande charge émotionnelle ou impact ?"}
+      ]
+    },
+    {
+      "title": "💬 Analyse des commentaires",
+      "buttons": [
+        {"label": "Commentaires les plus pertinents ou viraux","prompt": "Extrais les commentaires les plus pertinents ou avec le plus d'engagement de ce fil."},
+        {"label": "Classification par ton émotionnel","prompt": "Classe les commentaires entre positifs, négatifs et ironiques."},
+        {"label": "Résumé général du ton des commentaires","prompt": "Que pensent les utilisateurs dans les commentaires ? Donne-moi un résumé général du ton."},
+        {"label": "Schémas répétés dans les réponses","prompt": "Y a-t-il des schémas ou des commentaires qui se répètent beaucoup ?"},
+        {"label": "Top 5 des réponses créatives ou virales","prompt": "Fais un top 5 des réponses les plus créatives ou avec le plus de potentiel viral."}
+      ]
+    },
+    {
+      "title": "📈 Données et Marketing",
+      "buttons": [
+        {"label": "Idées pour créer un contenu similaire","prompt": "Quels insights puis-je tirer de ce fil pour créer un contenu similaire ?"},
+        {"label": "Accroches pour futurs posts","prompt": "Quelles parties du fil pourraient être de bonnes accroches pour de futurs posts ?"},
+        {"label": "Phrases remarquables comme titres","prompt": "Extrais des phrases qui peuvent être utilisées comme titres ou phrases d'impact."},
+        {"label": "Émotions prédominantes dans le fil","prompt": "Quelles émotions prédominent dans ce fil (étonnement, rire, inspiration, critique) ?"},
+        {"label": "Idées pour améliorer l'engagement","prompt": "Comment améliorerais-tu ce fil pour qu'il ait plus d'interaction ?"}
+      ]
+    },
+    {
+      "title": "💬 Traduction ou changement de format",
+      "translationButton": {
+        "label": "Traduis la page/texte en langue : "
+      },
+      "translationSubmenu": [
+        {"label": "🇪🇸 Espagnol", "prompt": "Traduis cette page en espagnol."},
+        {"label": "🇬🇧 Anglais", "prompt": "Traduis cette page en anglais."},
+        {"label": "ca Catalan", "prompt": "Traduis cette page en catalan."},
+        {"label": "🇩🇪 Allemand", "prompt": "Traduis cette page en allemand."},
+        {"label": "🇫🇷 Français", "prompt": "Traduis cette page en français."}, 
+        {"label": "🇮🇹 Italien", "prompt": "Traduis cette page en italien."},
+        {"label": "🇵🇹 Portugais", "prompt": "Traduis cette page en portugais."},
+        {"label": "🇨🇳 Chinois", "prompt": "Traduis cette page en chinois."},
+        {"label": "🇷🇺 Russe", "prompt": "Traduis cette page en russe."},
+        {"label": "🇸🇦 Arabe", "prompt": "Traduis cette page en arabe."},
+        {"label": "🇯🇵 Japonais", "prompt": "Traduis cette page en japonais."},
+        {"label": "🇮🇳 Hindi", "prompt": "Traduis cette page en hindi."},
+        {"label": "🇰🇷 Coréen", "prompt": "Traduis cette page en coréen."}
+      ],
+      "buttons": [
+        {
+          "label": "En présentation",
+          "prompt": "Convertis cet article en une présentation avec diapositives."
+        },
+        {
+          "label": "Pour réseaux sociaux",
+          "prompt": "Réécris ce contenu pour une publication sur les réseaux sociaux."
+        }
+      ]
+    }
+  ]
+}

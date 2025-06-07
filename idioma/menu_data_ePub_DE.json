@@ -1,0 +1,51 @@
+{
+  "header": {
+    "title": "ePub Prompt-Assistent",
+    "currentUrlPlaceholder": "Aktuelle Seite"
+  },
+  "sections": [
+    {
+      "title": "❓ Benutzerdefinierte Frage",
+      "buttons": [
+        {"label": "Schreiben Sie eine Frage", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "📘 Allgemeines Verständnis",
+      "buttons": [
+        {"label": "Was ist die Zusammenfassung des Buches?", "prompt": "Was ist die Zusammenfassung des Buches?"},
+        {"label": "Wer sind die Hauptfiguren und wie sind sie?", "prompt": "Wer sind die Hauptfiguren und wie sind sie?"},
+        {"label": "Welcher zentrale Konflikt wird dargestellt?", "prompt": "Welcher zentrale Konflikt wird dargestellt?"},
+        {"label": "Wie endet die Geschichte?", "prompt": "Wie endet die Geschichte?"},
+        {"label": "Welche Elemente der Handlung sind am wichtigsten?", "prompt": "Welche Elemente der Handlung sind am wichtigsten?"}
+      ]
+    },
+    {
+      "title": "🎭 Literarische Analyse",
+      "buttons": [
+        {"label": "Was ist das Hauptthema des Buches?", "prompt": "Was ist das Hauptthema des Buches?"},
+        {"label": "Welche Symbolik wird verwendet und was bedeutet sie?", "prompt": "Welche Symbolik wird verwendet und was bedeutet sie?"},
+        {"label": "Wie entwickelt sich der Protagonist?", "prompt": "Wie entwickelt sich der Protagonist?"},
+        {"label": "Welche Botschaft vermittelt der Autor?", "prompt": "Welche Botschaft vermittelt der Autor?"},
+        {"label": "Was repräsentiert diese Figur oder Szene?", "prompt": "Was repräsentiert diese Figur oder Szene?"}
+      ]
+    },
+    {
+      "title": "🧠 Philosophische Interpretation",
+      "buttons": [
+        {"label": "Welche Kritik übt das Buch an der Gesellschaft?", "prompt": "Welche Kritik übt das Buch an der Gesellschaft?"},
+        {"label": "Wie bezieht sich diese Geschichte auf das reale Leben?", "prompt": "Wie bezieht sich diese Geschichte auf das reale Leben?"},
+        {"label": "Welche Lehren können heute angewendet werden?", "prompt": "Welche Lehren können heute angewendet werden?"},
+        {"label": "Was bedeutet das Ende?", "prompt": "Was bedeutet das Ende?"}
+      ]
+    },
+    {
+      "title": "✍️ Aufsätze und Aufgaben",
+      "buttons": [
+        {"label": "Wie verhält sich dieses Buch zu anderen Texten/Literatur?", "prompt": "Wie verhält sich dieses Buch zu anderen Texten/Literatur?"},
+        {"label": "Welche Werte oder Ideen werden in dem Werk gefördert?", "prompt": "Welche Werte oder Ideen werden in dem Werk gefördert?"},
+        {"label": "Wie wird Sprache verwendet, um Emotion oder Wirkung zu erzeugen?", "prompt": "Wie wird Sprache verwendet, um Emotion oder Wirkung zu erzeugen?"},
+        {"label": "Welche literarischen Stilmittel kommen vor und wofür sind sie?", "prompt": "Welche literarischen Stilmittel kommen vor und wofür sind sie?"}
+      ]
+    }
+  ]
+} 

@@ -1,0 +1,51 @@
+{
+  "header": {
+    "title": "ePub prompt assistant",
+    "currentUrlPlaceholder": "Current page"
+  },
+  "sections": [
+    {
+      "title": "❓ Custom question",
+      "buttons": [
+        {"label": "Write a question", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "📘 General Understanding",
+      "buttons": [
+        {"label": "What is the book summary?", "prompt": "What is the book summary?"},
+        {"label": "Who are the main characters and how are they?", "prompt": "Who are the main characters and how are they?"},
+        {"label": "What central conflict is presented?", "prompt": "What central conflict is presented?"},
+        {"label": "How does the story end?", "prompt": "How does the story end?"},
+        {"label": "What elements of the plot are most important?", "prompt": "What elements of the plot are most important?"}
+      ]
+    },
+    {
+      "title": "🎭 Literary Analysis",
+      "buttons": [
+        {"label": "What is the main theme of the book?", "prompt": "What is the main theme of the book?"},
+        {"label": "What symbolism is used and what does it mean?", "prompt": "What symbolism is used and what does it mean?"},
+        {"label": "How does the protagonist evolve?", "prompt": "How does the protagonist evolve?"},
+        {"label": "What message does the author convey?", "prompt": "What message does the author convey?"},
+        {"label": "What does this character or scene represent?", "prompt": "What does this character or scene represent?"}
+      ]
+    },
+    {
+      "title": "🧠 Philosophical Interpretation",
+      "buttons": [
+        {"label": "What criticism does the book make of society?", "prompt": "What criticism does the book make of society?"},
+        {"label": "How does this story relate to real life?", "prompt": "How does this story relate to real life?"},
+        {"label": "What lessons can be applied today?", "prompt": "What lessons can be applied today?"},
+        {"label": "What is the meaning of the ending?", "prompt": "What is the meaning of the ending?"}
+      ]
+    },
+    {
+      "title": "✍️ Essays and Assignments",
+      "buttons": [
+        {"label": "How does this book relate to other texts/literature?", "prompt": "How does this book relate to other texts/literature?"},
+        {"label": "What values or ideas are promoted in the work?", "prompt": "What values or ideas are promoted in the work?"},
+        {"label": "How is language used to create emotion or impact?", "prompt": "How is language used to create emotion or impact?"},
+        {"label": "What literary figures appear and what are they for?", "prompt": "What literary figures appear and what are they for?"}
+      ]
+    }
+  ]
+}

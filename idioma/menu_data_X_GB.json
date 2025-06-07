@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "X prompt assistant",
+    "currentUrlPlaceholder": "Current page"
+  },
+  "sections": [
+    {
+      "title": "❓ Custom question",
+      "buttons": [
+        {"label": "Write a question", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "🧵 Thread Content Analysis",
+      "buttons": [
+        {"label": "Summary in 3 key phrases","prompt": "Summarize this X thread in 3 key phrases."},
+        {"label": "Thread summary","prompt": "Summarize this thread:"},
+        {"label": "Thread moral or lesson","prompt": "What is the main moral or lesson from this thread?"},
+        {"label": "Summary without brands or promotions","prompt": "Create a bullet-point summary of the thread without brand mentions or promotions."},
+        {"label": "Short version for TikTok or Reels","prompt": "Create a shorter version of this thread for TikTok or Reels."},
+        {"label": "Most emotional or impactful part","prompt": "Which part of the thread has the greatest emotional impact?"}
+      ]
+    },
+    {
+      "title": "💬 Comments Analysis",
+      "buttons": [
+        {"label": "Most relevant or viral comments","prompt": "Extract the most relevant comments or those with the most engagement from this thread."},
+        {"label": "Classification by emotional tone","prompt": "Classify the comments as positive, negative, or ironic."},
+        {"label": "General summary of comments tone","prompt": "What do users think in the comments? Give me a general summary of the tone."},
+        {"label": "Repeated patterns in responses","prompt": "Are there any patterns or comments that repeat frequently?"},
+        {"label": "Top 5 creative or viral responses","prompt": "Make a top 5 of the most creative responses or those with the most viral potential."}
+      ]
+    },
+    {
+      "title": "📈 Data and Marketing",
+      "buttons": [
+        {"label": "Ideas for creating similar content","prompt": "What insights can I get from this thread to create similar content?"},
+        {"label": "Hooks for future posts","prompt": "Which parts of the thread could be good hooks for future posts?"},
+        {"label": "Notable phrases as headlines","prompt": "Extract phrases that could be used as headlines or impact statements."},
+        {"label": "Predominant emotions in the thread","prompt": "What emotions dominate this thread (amazement, laughter, inspiration, criticism)?"},
+        {"label": "Ideas to improve engagement","prompt": "How would you improve this thread to get more interaction?"}
+      ]
+    },
+    {
+      "title": "💬 Translation or format change",
+      "translationButton": {
+        "label": "Translate page/text to language: "
+      },
+      "translationSubmenu": [
+        {"label": "🇪🇸 Spanish", "prompt": "Translate this page to Spanish."},
+        {"label": "🇬🇧 English", "prompt": "Translate this page to English."},
+        {"label": "ca Catalan", "prompt": "Translate this page to Catalan."},
+        {"label": "🇩🇪 German", "prompt": "Translate this page to German."},
+        {"label": "🇫🇷 French", "prompt": "Translate this page to French."}, 
+        {"label": "🇮🇹 Italian", "prompt": "Translate this page to Italian."},
+        {"label": "🇵🇹 Portuguese", "prompt": "Translate this page to Portuguese."},
+        {"label": "🇨🇳 Chinese", "prompt": "Translate this page to Chinese."},
+        {"label": "🇷🇺 Russian", "prompt": "Translate this page to Russian."},
+        {"label": "🇸🇦 Arabic", "prompt": "Translate this page to Arabic."},
+        {"label": "🇯🇵 Japanese", "prompt": "Translate this page to Japanese."},
+        {"label": "🇮🇳 Hindi", "prompt": "Translate this page to Hindi."},
+        {"label": "🇰🇷 Korean", "prompt": "Translate this page to Korean."}
+      ],
+      "buttons": [
+        {
+          "label": "To presentation",
+          "prompt": "Convert this article into a slide presentation."
+        },
+        {
+          "label": "For social media",
+          "prompt": "Rewrite this content for a social media post."
+        }
+      ]
+    }
+  ]
+}

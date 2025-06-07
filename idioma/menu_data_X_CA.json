@@ -1,0 +1,76 @@
+{
+  "header": {
+    "title": "X prompt assistant",
+    "currentUrlPlaceholder": "Pàgina actual"
+  },
+  "sections": [
+    {
+      "title": "❓ Pregunta personalitzada",
+      "buttons": [
+        {"label": "Escriu una pregunta", "prompt": "@prompt"}
+      ]
+    },  
+    {
+      "title": "🧵 Anàlisi de contingut del fil",
+      "buttons": [
+        {"label": "Resum en 3 frases clau","prompt": "Resumeix aquest fil de X en 3 frases clau."},
+        {"label": "Resum del fil de X","prompt": "Resumeix aquest fil:"},
+        {"label": "Moralitat o ensenyament del fil","prompt": "Quina és la moralitat o ensenyament principal d'aquest fil?"},
+        {"label": "Resum sense marques ni promocions","prompt": "Fes un resum amb vinyetes del fil sense mencions de marca o promocions."},
+        {"label": "Versió curta per a TikTok o Reels","prompt": "Crea una versió més curta d'aquest fil per a TikTok o Reels."},
+        {"label": "Part més emocional o impactant","prompt": "Quina part del fil té més càrrega emocional o impacte?"}
+      ]
+    },
+    {
+      "title": "💬 Anàlisi de comentaris",
+      "buttons": [
+        {"label": "Comentaris més rellevants o virals","prompt": "Extreu els comentaris més rellevants o amb més engagement d'aquest fil."},
+        {"label": "Classificació per to emocional","prompt": "Classifica els comentaris entre positius, negatius i irònics."},
+        {"label": "Resum general del to dels comentaris","prompt": "Què opinen els usuaris als comentaris? Dóna'm un resum general del to."},
+        {"label": "Patrons repetits en respostes","prompt": "Hi ha algun patró o comentari que es repeteix molt?"},
+        {"label": "Top 5 de respostes creatives o virals","prompt": "Fes un top 5 de respostes més creatives o amb més potencial viral."}
+      ]
+    },
+    {
+      "title": "📈 Dades i Màrqueting",
+      "buttons": [
+        {"label": "Idees per crear contingut similar","prompt": "Quins insights puc treure d'aquest fil per crear contingut similar?"},
+        {"label": "Ganxos per a futurs posts","prompt": "Quines parts del fil podrien ser bons ganxos per a futurs posts?"},
+        {"label": "Frases destacables com a titulars","prompt": "Extreu frases que puguin utilitzar-se com a titulars o frases d'impacte."},
+        {"label": "Emocions predominants al fil","prompt": "Quines emocions predominen en aquest fil (sorpresa, riure, inspiració, crítica)?"},
+        {"label": "Idees per millorar l'engagement","prompt": "Com milloraries aquest fil perquè tingui més interacció?"}
+      ]
+    },
+    {
+      "title": "💬 Traducció o canvi de format",
+      "translationButton": {
+        "label": "Tradueix pàgina/text a l'idioma: "
+      },
+      "translationSubmenu": [
+        {"label": "🇪🇸 Espanyol", "prompt": "Tradueix aquesta pàgina a l'espanyol."},
+        {"label": "🇬🇧 Anglès", "prompt": "Tradueix aquesta pàgina a l'anglès."},
+        {"label": "ca Català", "prompt": "Tradueix aquesta pàgina al català."},
+        {"label": "🇩🇪 Alemany", "prompt": "Tradueix aquesta pàgina a l'alemany."},
+        {"label": "🇫🇷 Francès", "prompt": "Tradueix aquesta pàgina al francès."}, 
+        {"label": "🇮🇹 Italià", "prompt": "Tradueix aquesta pàgina a l'italià."},
+        {"label": "🇵🇹 Portuguès", "prompt": "Tradueix aquesta pàgina al portuguès."},
+        {"label": "🇨🇳 Xinès", "prompt": "Tradueix aquesta pàgina al xinès."},
+        {"label": "🇷🇺 Rus", "prompt": "Tradueix aquesta pàgina al rus."},
+        {"label": "🇸🇦 Àrab", "prompt": "Tradueix aquesta pàgina a l'àrab."},
+        {"label": "🇯🇵 Japonès", "prompt": "Tradueix aquesta pàgina al japonès."},
+        {"label": "🇮🇳 Hindi", "prompt": "Tradueix aquesta pàgina al hindi."},
+        {"label": "🇰🇷 Coreà", "prompt": "Tradueix aquesta pàgina al coreà."}
+      ],
+      "buttons": [
+        {
+          "label": "A presentació",
+          "prompt": "Converteix aquest article en una presentació amb diapositives."
+        },
+        {
+          "label": "Per a xarxes socials",
+          "prompt": "Reescriu aquest contingut per a una publicació de xarxes socials."
+        }
+      ]
+    }
+  ]
+}

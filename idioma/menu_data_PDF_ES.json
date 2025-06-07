@@ -1,0 +1,63 @@
+{
+  "header": {
+    "title": "PDF prompt assistant",
+    "currentUrlPlaceholder": "Archivo PDF actual"
+  },
+  "sections": [
+    {
+      "title": "❓ Pregunta personalizada",
+      "buttons": [
+        {"label": "Escribe una pregunta", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "📄 Análisis básico de PDF",
+      "buttons": [
+        {"label": "Resume este PDF", "prompt": "Resume el contenido del archivo [PDF]"},
+        {"label": "Extrae los puntos clave", "prompt": "Extrae los puntos clave y conceptos importantes del archivo [PDF]"},
+        {"label": "¿Cuál es el tema principal?", "prompt": "¿Cuál es el tema principal del documento [PDF]?"},
+        {"label": "Analiza la estructura", "prompt": "Analiza y describe la estructura y organización del documento [PDF]"},
+        {"label": "Resume cada sección", "prompt": "Resume cada sección importante del documento [PDF]"}
+      ]
+    },
+    {
+      "title": "📊 Análisis técnico",
+      "buttons": [
+        {"label": "Extrae datos y estadísticas", "prompt": "Extrae los datos numéricos, estadísticas y cifras importantes del documento [PDF]"},
+        {"label": "Explica terminología técnica", "prompt": "Identifica y explica la terminología técnica o especializada utilizada en [PDF]"},
+        {"label": "Identifica metodología", "prompt": "¿Qué metodología se utiliza en este documento [PDF]? Explícala detalladamente"},
+        {"label": "Analiza la validez", "prompt": "Analiza la validez y fiabilidad de la información presentada en [PDF]"},
+        {"label": "Compara con estándares", "prompt": "Compara la información presentada en [PDF] con los estándares actuales en este campo"}
+      ]
+    },
+    {
+      "title": "🔍 Búsqueda y extracción",
+      "buttons": [
+        {"label": "Busca información específica", "prompt": "Busca información sobre [TEMA] en el documento [PDF]"},
+        {"label": "Extrae todas las fechas", "prompt": "Extrae todas las fechas importantes y la cronología mencionada en el documento [PDF]"},
+        {"label": "Lista todas las referencias", "prompt": "Lista todas las referencias, citas o fuentes mencionadas en [PDF]"},
+        {"label": "Encuentra definiciones", "prompt": "Encuentra y extrae todas las definiciones presentadas en el documento [PDF]"},
+        {"label": "Extrae tablas y figuras", "prompt": "Describe las tablas, gráficos, diagramas y figuras que aparecen en [PDF] y su relevancia"}
+      ]
+    },
+    {
+      "title": "📝 Evaluación crítica",
+      "buttons": [
+        {"label": "Evalúa argumento principal", "prompt": "Evalúa críticamente el argumento principal y la evidencia presentada en [PDF]"},
+        {"label": "Identifica sesgos", "prompt": "Identifica posibles sesgos, limitaciones o vacíos en la información de [PDF]"},
+        {"label": "Fortalezas y debilidades", "prompt": "¿Cuáles son las principales fortalezas y debilidades de este documento [PDF]?"},
+        {"label": "Compara perspectivas", "prompt": "Identifica diferentes perspectivas o puntos de vista presentados en [PDF]"},
+        {"label": "Sugiere mejoras", "prompt": "¿Cómo se podría mejorar el análisis o la presentación de información en este documento [PDF]?"}
+      ]
+    },
+    {
+      "title": "📋 Acciones avanzadas",
+      "buttons": [
+        {"label": "Elabora preguntas de examen", "prompt": "Crea 10 preguntas de examen basadas en el contenido de [PDF], con sus respectivas respuestas correctas"},
+        {"label": "Genera resumen para estudiantes", "prompt": "Genera un resumen para estudiantes del documento [PDF], destacando los conceptos más importantes y explicándolos de manera sencilla"},
+        {"label": "Verifica la información", "prompt": "Verifica la precisión de la información clave presentada en [PDF], señalando cualquier dato que pueda ser inexacto o controversial"},
+        {"label": "Crea material de apoyo", "prompt": "Crea material de apoyo como esquemas, diagramas conceptuales o ayudas visuales basadas en el contenido de [PDF]"},
+        {"label": "Compara con otras fuentes", "prompt": "Compara el contenido de [PDF] con otras fuentes o literatura reciente sobre el mismo tema"}
+      ]
+    }
+  ]
+} 

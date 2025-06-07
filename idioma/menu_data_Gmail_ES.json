@@ -1,0 +1,95 @@
+{
+  "header": {
+    "title": "Asistente de emails",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "📩 Redactar un email desde cero",
+      "buttons": [
+        {
+          "label": "Email profesional con propuesta",
+          "prompt": "Redacta un email profesional para [cliente / colega / empresa] donde le propongo [tu idea o propuesta]. El tono debe ser [formal / cercano / entusiasta]."
+        },
+        {
+          "label": "Reunión para demo",
+          "prompt": "Redacta un email profesional para un posible cliente en el que propongo una reunión para mostrarle una demo de nuestra solución de realidad virtual."
+        }
+      ]
+    },
+    {
+      "title": "✍️ Mejorar un email que ya escribiste",
+      "buttons": [
+        {
+          "label": "Mejorar email existente",
+          "prompt": "Mejora este email para que suene más claro y profesional, pero mantén el mensaje original: [Pega aquí tu email]"
+        },
+        {
+          "label": "Acortar email",
+          "prompt": "Haz este email más breve y directo, pero sin perder cortesía ni claridad: [Pega aquí tu email]"
+        }
+      ]
+    },
+    {
+      "title": "🎯 Email de seguimiento",
+      "buttons": [
+        {
+          "label": "Seguimiento sin respuesta",
+          "prompt": "Redacta un email de seguimiento amable y profesional para alguien que no ha respondido a mi propuesta enviada hace [X días/una semana]."
+        }
+      ]
+    },
+    {
+      "title": "🔁 Emails repetitivos o en lote (plantillas)",
+      "buttons": [
+        {
+          "label": "Plantilla para clientes potenciales",
+          "prompt": "Crea una plantilla de email para contactar a potenciales clientes interesados en [tu producto o servicio]. Debe ser breve, con una llamada a la acción clara."
+        }
+      ]
+    },
+    {
+      "title": "🙋‍♂️ Pedir algo",
+      "buttons": [
+        {
+          "label": "Solicitar algo específico",
+          "prompt": "Redacta un email cortés para solicitar [una reunión / feedback / un documento / más información] a [nombre o tipo de persona]."
+        }
+      ]
+    },
+    {
+      "title": "💬 Emails con tono específico",
+      "buttons": [
+        {
+          "label": "Profesional",
+          "prompt": "Convierte este email en uno con tono más profesional, sin cambiar el contenido principal: [Pega tu texto]"
+        },
+        {
+          "label": "Cordial",
+          "prompt": "Convierte este email en uno con tono más cálido, sin cambiar el contenido principal: [Pega tu texto]"
+        },
+        {
+          "label": "Inspirador",
+          "prompt": "Convierte este email en uno con tono más inspirador, sin cambiar el contenido principal: [Pega tu texto]"
+        },
+        {
+          "label": "Informal pero respetuoso",
+          "prompt": "Convierte este email en uno con tono más informal pero respetuoso, sin cambiar el contenido principal: [Pega tu texto]"
+        },
+        {
+          "label": "Asertivo pero diplomático",
+          "prompt": "Convierte este email en uno con tono más asertivo pero diplomático, sin cambiar el contenido principal: [Pega tu texto]"
+        }
+      ]
+    },
+    {
+      "title": "🧠 Tip extra: Usa variables",
+      "buttons": [
+        {
+          "label": "Email con variables",
+          "prompt": "Redacta un email para {{nombre_del_cliente}} en el que le agradezco por su interés en {{producto}} y le propongo una llamada el {{día}} a las {{hora}}."
+        }
+      ]
+    }
+  ]
+}

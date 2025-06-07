@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "X prompt assistant",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "❓ Pregunta personalizada",
+      "buttons": [
+        {"label": "Escribe una pregunta", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "🧵 Análisis de Contenido del Hilo",
+      "buttons": [
+        {"label": "Resumen en 3 frases clave","prompt": "Resume este hilo de X en 3 frases clave."},
+        {"label": "Resumen del hilo de X","prompt": "Resume este hilo :"},
+        {"label": "Moraleja o enseñanza del hilo","prompt": "¿Cuál es la moraleja o enseñanza principal de este hilo?"},
+        {"label": "Resumen sin marcas ni promociones","prompt": "Haz un resumen con viñetas del hilo sin menciones de marca o promociones."},
+        {"label": "Versión corta para TikTok o Reels","prompt": "Crea una versión más corta de este hilo para TikTok o Reels."},
+        {"label": "Parte más emocional o impactante","prompt": "¿Qué parte del hilo tiene mayor carga emocional o impacto?"}
+      ]
+    },
+    {
+      "title": "💬 Análisis de Comentarios",
+      "buttons": [
+        {"label": "Comentarios más relevantes o virales","prompt": "Extrae los comentarios más relevantes o con más engagement de este hilo."},
+        {"label": "Clasificación por tono emocional","prompt": "Clasifica los comentarios entre positivos, negativos e irónicos."},
+        {"label": "Resumen general del tono de los comentarios","prompt": "¿Qué opinan los usuarios en los comentarios? Dame un resumen general del tono."},
+        {"label": "Patrones repetidos en respuestas","prompt": "¿Hay algún patrón o comentario que se repite mucho?"},
+        {"label": "Top 5 de respuestas creativas o virales","prompt": "Haz un top 5 de respuestas más creativas o con más potencial viral."}
+      ]
+    },
+    {
+      "title": "📈 Datos y Marketing",
+      "buttons": [
+        {"label": "Ideas para crear contenido similar","prompt": "¿Qué insights puedo sacar de este hilo para crear contenido similar?"},
+        {"label": "Hooks para futuros posts","prompt": "¿Qué partes del hilo podrían ser buenos hooks para futuros posts?"},
+        {"label": "Frases destacables como titulares","prompt": "Extrae frases que puedan usarse como titulares o frases de impacto."},
+        {"label": "Emociones predominantes en el hilo","prompt": "¿Qué emociones predominan en este hilo (asombro, risa, inspiración, crítica)?"},
+        {"label": "Ideas para mejorar el engagement","prompt": "¿Cómo mejoraría este hilo para que tenga más interacción?"}
+      ]
+    },
+    {
+      "title": "💬 Traducción o cambio de formato",
+      "translationButton": {
+        "label": "Traduce página/texto al idioma: "
+      },
+      "translationSubmenu": [
+        {"label": "🇪🇸 Español", "prompt": "Traduce esta página al español."},
+        {"label": "🇬🇧 Inglés", "prompt": "Traduce esta página al inglés."},
+        {"label": "ca Catalán", "prompt": "Traduce esta página al catalán."},
+        {"label": "🇩🇪 Alemán", "prompt": "Traduce esta página al alemán."},
+        {"label": "🇫🇷 Francés", "prompt": "Traduce esta página al francés."}, 
+        {"label": "🇮🇹 Italiano", "prompt": "Traduce esta página al italiano."},
+        {"label": "🇵🇹 Portugués", "prompt": "Traduce esta página al portugués."},
+        {"label": "🇨🇳 Chino", "prompt": "Traduce esta página al chino."},
+        {"label": "🇷🇺 Ruso", "prompt": "Traduce esta página al ruso."},
+        {"label": "🇸🇦 Árabe", "prompt": "Traduce esta página al árabe."},
+        {"label": "🇯🇵 Japonés", "prompt": "Traduce esta página al japonés."},
+        {"label": "🇮🇳 Hindi", "prompt": "Traduce esta página al hindi."},
+        {"label": "🇰🇷 Coreano", "prompt": "Traduce esta página al coreano."}
+      ],
+      "buttons": [
+        {
+          "label": "A presentación",
+          "prompt": "Convierte este artículo en una presentación con diapositivas."
+        },
+        {
+          "label": "Para redes sociales",
+          "prompt": "Reescribe este contenido para una publicación de redes sociales."
+        }
+      ]
+    }
+  ]
+}

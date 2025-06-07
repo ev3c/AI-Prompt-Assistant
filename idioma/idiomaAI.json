@@ -1,0 +1,69 @@
+{
+  "idiomas": [
+    {
+      "nombreNativo": "Español",
+      "codigoISO": "es",
+      "nombreEspanol": "Español"
+    },
+    {
+      "nombreNativo": "English",
+      "codigoISO": "gb",
+      "nombreEspanol": "Inglés"
+    },
+    {
+      "nombreNativo": "Català",
+      "codigoISO": "ca",
+      "nombreEspanol": "Catalán"
+    },
+    {
+      "nombreNativo": "Deutsch",
+      "codigoISO": "de",
+      "nombreEspanol": "Alemán"
+    },
+    {
+      "nombreNativo": "Français",
+      "codigoISO": "fr",
+      "nombreEspanol": "Francés"
+    },
+    {
+      "nombreNativo": "Italiano",
+      "codigoISO": "it",
+      "nombreEspanol": "Italiano"
+    },
+    {
+      "nombreNativo": "Português",
+      "codigoISO": "pt",
+      "nombreEspanol": "Portugués"
+    },
+    {
+      "nombreNativo": "中文",
+      "codigoISO": "zh",
+      "nombreEspanol": "Chino"
+    },
+    {
+      "nombreNativo": "Русский",
+      "codigoISO": "ru",
+      "nombreEspanol": "Ruso"
+    },
+    {
+      "nombreNativo": "العربية",
+      "codigoISO": "ar",
+      "nombreEspanol": "Árabe"
+    },
+    {
+      "nombreNativo": "日本語",
+      "codigoISO": "ja",
+      "nombreEspanol": "Japonés"
+    },
+    {
+      "nombreNativo": "हिन्दी",
+      "codigoISO": "hi",
+      "nombreEspanol": "Hindi"
+    },
+    {
+      "nombreNativo": "한국어",
+      "codigoISO": "kr",
+      "nombreEspanol": "Coreano"
+    }
+  ]
+}

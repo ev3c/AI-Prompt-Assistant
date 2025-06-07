@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>AI Prompt Assistant</title>
+  <link rel="stylesheet" href="sidebar.css">
+</head>
+
+<body>
+  <div id="sidebar-container">
+    <header id="header">
+      <div id="header-hover-area">
+        <div class="header-top">
+          <button id="motor-button" class="icon-button">
+            <img id="motor-icon" src="imagenes/chatgpt.png" class="motor-icon" alt="AI Model">
+          </button>
+          <!-- Menú emergente de modelos de IA -->
+          <div id="ai-models-popup" class="ai-models-popup hidden">
+            <ul class="ai-model-options">
+              <li class="ai-model-option" data-model="chatgpt">
+                <img src="imagenes/chatgpt.png" class="ai-model-icon" alt="ChatGPT">
+                ChatGPT
+              </li>
+              <li class="ai-model-option" data-model="copilot">
+                <img src="imagenes/copilot-color.png" class="ai-model-icon" alt="Copilot">
+                Copilot
+              </li>
+              <li class="ai-model-option" data-model="meta">
+                <img src="imagenes/meta-color.png" class="ai-model-icon" alt="Meta">
+                Meta
+              </li>
+              <li class="ai-model-option" data-model="claude">
+                <img src="imagenes/claude-color.png" class="ai-model-icon" alt="Claude">
+                Claude
+              </li>
+              <li class="ai-model-option" data-model="deepseek">
+                <img src="imagenes/deepseek-color.png" class="ai-model-icon" alt="DeepSeek">
+                DeepSeek
+              </li>
+              <li class="ai-model-option" data-model="mistral">
+                <img src="imagenes/mistral-color.png" class="ai-model-icon" alt="Mistral">
+                Mistral
+              </li>
+              <li class="ai-model-option" data-model="gemini">
+                <img src="imagenes/gemini-color.png" class="ai-model-icon" alt="Gemini">
+                Gemini
+              </li>
+              <li class="ai-model-option" data-model="grok">
+                <img src="imagenes/grok.png" class="ai-model-icon" alt="Grok">
+                Grok
+              </li>
+            </ul>
+          </div>
+          <h1 id="title"> <span id="title-text"></span></h1>
+          <button id="language-button" class="icon-button">🇪🇸</button>
+          <!-- Menú emergente de idiomas - Se llenará dinámicamente desde JavaScript -->
+          <div id="language-popup" class="language-popup hidden">
+            <ul>
+              <!-- Las opciones de idioma se generarán dinámicamente -->
+            </ul>
+          </div>
+          <button id="settings-button" class="icon-button">⚙️</button>
+        </div>
+      </div>
+
+      <!-- Opciones de fuente de contexto -->
+      <div class="context-selector">
+        <div class="option-buttons">
+          <div class="button-row">
+            <button id="use-url" class="option-button option-selected"></button>
+            <button id="use-clipb" class="option-button"></button>
+            <button id="use-book" class="option-button"></button>
+            <button id="use-pdf" class="option-button"></button>
+          </div>
+          <div class="button-row">
+            <button id="use-wiki" class="option-button"></button>
+            <button id="use-twitter" class="option-button"></button>
+            <button id="use-gmail" class="option-button"></button>
+            <button id="use-add" class="option-button"></button>
+          </div>
+        </div>
+      </div>
+
+      <p id="current-url"></p>
+    </header>
+
+    <!-- Menú principal -->
+    <div id="main-content">
+      <div id="sections-container">
+        <!-- Las secciones se cargarán dinámicamente desde idioma\menu_data_XX.json -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Ventana emergente de configuración -->
+  <div id="settings-popup" class="settings-popup-overlay hidden">
+    <div class="settings-popup">
+      <div class="popup-header">
+        <h3>Configuración</h3>
+        <button id="close-settings" class="close-button">×</button>
+      </div>
+      <div class="settings-popup-content">
+        <div class="settings-item">
+          <label for="language-selector">Idioma de la extensión:</label>
+          <select id="language-selector" class="language-dropdown">
+            <!-- Las opciones de idioma se generarán dinámicamente -->
+          </select>
+        </div>
+        <div class="settings-item">
+          <label for="ai-model-selector">Motor de IA:</label>
+          <select id="ai-model-selector" class="model-dropdown">
+            <option value="chatgpt">ChatGPT</option>
+            <option value="claude">Claude</option>
+            <option value="deepseek">DeepSeek</option>
+            <option value="mistral">Mistral</option>
+            <option value="copilot">Copilot</option>
+            <option value="gemini">Gemini</option>
+            <option value="meta">Meta</option>
+            <option value="grok">Grok</option>
+          </select>
+        </div>
+        <div class="settings-item">
+          <div class="share-container">
+            <button id="share-button" class="settings-button">Share AI Prompt Assistant ▼</button>
+            <!-- Submenú de opciones de compartir -->
+            <div id="share-submenu" class="share-submenu hidden">
+              <button id="share-email" class="share-option">📧 Email</button>
+              <button id="share-whatsapp" class="share-option">� WhatsApp</button>
+              <button id="share-gmail" class="share-option">📬 gMail</button>
+            </div>
+          </div>
+        </div>
+        <div class="settings-item">
+          <button id="open-json-button" class="settings-button">Open / Abrir .json files</button>
+          <button id="feedback-button" class="settings-button">Send / Enviar feedback</button>
+          <button id="rate-button" class="settings-button">Rate / Calificar:  ⭐⭐⭐⭐⭐</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="copy-notification" class="hidden">
+    Abriendo ChatGPT...
+  </div>
+
+  <script type="module" src="sidebar.js"></script>
+</body>
+
+</html>

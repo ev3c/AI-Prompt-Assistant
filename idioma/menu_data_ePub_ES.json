@@ -1,0 +1,51 @@
+{
+  "header": {
+    "title": "ePub prompt assistant",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "❓ Pregunta personalizada",
+      "buttons": [
+        {"label": "Escribe una pregunta", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "📘 Comprensión general",
+      "buttons": [
+        {"label": "¿Cuál es el resumen del libro?", "prompt": "¿Cuál es el resumen del libro?"},
+        {"label": "¿Cuáles son los personajes principales y cómo son?", "prompt": "¿Cuáles son los personajes principales y cómo son?"},
+        {"label": "¿Qué conflicto central se presenta?", "prompt": "¿Qué conflicto central se presenta?"},
+        {"label": "¿Cómo termina la historia?", "prompt": "¿Cómo termina la historia?"},
+        {"label": "¿Qué elementos del argumento son más importantes?", "prompt": "¿Qué elementos del argumento son más importantes?"}
+      ]
+    },
+    {
+      "title": "🎭 Análisis literario",
+      "buttons": [
+        {"label": "¿Cuál es el tema principal del libro?", "prompt": "¿Cuál es el tema principal del libro?"},
+        {"label": "¿Qué simbolismos se usan y qué significan?", "prompt": "¿Qué simbolismos se usan y qué significan?"},
+        {"label": "¿Cómo evoluciona el protagonista?", "prompt": "¿Cómo evoluciona el protagonista?"},
+        {"label": "¿Qué mensaje transmite el autor?", "prompt": "¿Qué mensaje transmite el autor?"},
+        {"label": "¿Qué representa tal personaje o escena?", "prompt": "¿Qué representa tal personaje o escena?"}
+      ]
+    },
+    {
+      "title": "🧠 Interpretación filosófica",
+      "buttons": [
+        {"label": "¿Qué crítica hace el libro a la sociedad?", "prompt": "¿Qué crítica hace el libro a la sociedad?"},
+        {"label": "¿Cómo se relaciona esta historia con la vida real?", "prompt": "¿Cómo se relaciona esta historia con la vida real?"},
+        {"label": "¿Qué enseñanzas se pueden aplicar hoy?", "prompt": "¿Qué enseñanzas se pueden aplicar hoy?"},
+        {"label": "¿Qué significado tiene el final?", "prompt": "¿Qué significado tiene el final?"}
+      ]
+    },
+    {
+      "title": "✍️ Ensayos y tareas",
+      "buttons": [
+        {"label": "¿Cómo se relaciona este libro con otro texto/literatura?", "prompt": "¿Cómo se relaciona este libro con otro texto/literatura?"},
+        {"label": "¿Qué valores o ideas se promueven en la obra?", "prompt": "¿Qué valores o ideas se promueven en la obra?"},
+        {"label": "¿Cómo se usa el lenguaje para crear emoción o impacto?", "prompt": "¿Cómo se usa el lenguaje para crear emoción o impacto?"},
+        {"label": "¿Qué figuras literarias aparecen y para qué?", "prompt": "¿Qué figuras literarias aparecen y para qué?"}
+      ]
+    }
+  ]
+}

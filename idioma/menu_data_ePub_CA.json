@@ -1,0 +1,51 @@
+{
+  "header": {
+    "title": "ePub prompt assistant",
+    "currentUrlPlaceholder": "Pàgina actual"
+  },
+  "sections": [
+    {
+      "title": "❓ Pregunta personalitzada",
+      "buttons": [
+        {"label": "Escriu una pregunta", "prompt": "@prompt"}
+      ]
+    },  {
+      "title": "📘 Comprensió general",
+      "buttons": [
+        {"label": "Quin és el resum del llibre?", "prompt": "Quin és el resum del llibre?"},
+        {"label": "Quins són els personatges principals i com són?", "prompt": "Quins són els personatges principals i com són?"},
+        {"label": "Quin conflicte central es presenta?", "prompt": "Quin conflicte central es presenta?"},
+        {"label": "Com acaba la història?", "prompt": "Com acaba la història?"},
+        {"label": "Quins elements de la trama són més importants?", "prompt": "Quins elements de la trama són més importants?"}
+      ]
+    },
+    {
+      "title": "🎭 Anàlisi literària",
+      "buttons": [
+        {"label": "Quin és el tema principal del llibre?", "prompt": "Quin és el tema principal del llibre?"},
+        {"label": "Quins simbolismes s'utilitzen i què signifiquen?", "prompt": "Quins simbolismes s'utilitzen i què signifiquen?"},
+        {"label": "Com evoluciona el protagonista?", "prompt": "Com evoluciona el protagonista?"},
+        {"label": "Quin missatge transmet l'autor?", "prompt": "Quin missatge transmet l'autor?"},
+        {"label": "Què representa tal personatge o escena?", "prompt": "Què representa tal personatge o escena?"}
+      ]
+    },
+    {
+      "title": "🧠 Interpretació filosòfica",
+      "buttons": [
+        {"label": "Quina crítica fa el llibre a la societat?", "prompt": "Quina crítica fa el llibre a la societat?"},
+        {"label": "Com es relaciona aquesta història amb la vida real?", "prompt": "Com es relaciona aquesta història amb la vida real?"},
+        {"label": "Quins ensenyaments es poden aplicar avui?", "prompt": "Quins ensenyaments es poden aplicar avui?"},
+        {"label": "Quin significat té el final?", "prompt": "Quin significat té el final?"}
+      ]
+    },
+    {
+      "title": "✍️ Assajos i tasques",
+      "buttons": [
+        {"label": "Com es relaciona aquest llibre amb un altre text/literatura?", "prompt": "Com es relaciona aquest llibre amb un altre text/literatura?"},
+        {"label": "Quins valors o idees es promouen a l'obra?", "prompt": "Quins valors o idees es promouen a l'obra?"},
+        {"label": "Com s'utilitza el llenguatge per crear emoció o impacte?", "prompt": "Com s'utilitza el llenguatge per crear emoció o impacte?"},
+        {"label": "Quines figures literàries apareixen i per a què?", "prompt": "Quines figures literàries apareixen i per a què?"}
+      ]
+    }
+  ]
+}

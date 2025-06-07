@@ -1,0 +1,527 @@
+/* Estilos generales */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Contenedor principal */
+#sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+/* Encabezado */
+#header {
+  background-color: #87CEEB; /* Azul cielo */
+  color: white;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  flex-shrink: 0;
+  position: relative; /* Para posicionamiento del menú emergente */
+}
+
+/* Estilos para el encabezado con botón de configuración */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; /* Para el menú emergente */
+  cursor: pointer;
+}
+
+/* Estilos para el área de hover del encabezado */
+#header-hover-area {
+  position: relative;
+}
+
+/* Menú emergente de modelos de IA */
+.ai-models-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  border: 1px solid #ddd;
+  border-top: none;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+  visibility: visible;
+}
+
+.ai-models-popup.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ai-models-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ai-model-option {
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+  font-size: 8px;
+  color: #333;
+}
+
+.ai-model-option:hover {
+  background-color: #f0f0f0;
+}
+
+.ai-model-option.selected {
+  background-color: #e0f0ff;
+  font-weight: bold;
+}
+
+.model-icon {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+#title {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: 18px;
+  color: white; /* Texto blanco */
+}
+
+.emoji-icon {
+  margin-right: 5px;
+  font-size: 1.1em;
+}
+
+#title-text {
+  flex: 1;
+}
+
+/* Botón de configuración */
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Opciones de fuente de contexto */
+.context-selector {
+  margin: 10px 0;
+  display: flex;
+}
+
+.option-buttons {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.option-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 4px;
+  color: #000000;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  flex: 1;
+  text-align: center;
+  font-weight: normal;
+}
+
+.option-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.option-selected {
+  background-color: rgba(255, 255, 255, 0.4);
+  font-weight: bold;
+}
+
+#current-url {
+  margin: 10px 0 0;
+  font-size: 12px;
+  color: #2c3e50;
+  word-break: break-all;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 6px 8px;
+  border-radius: 4px;
+  max-height: 60px;
+  overflow-y: auto;
+}
+
+/* Contenido principal */
+#main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+/* Secciones */
+.section {
+  margin-bottom: 14px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 6px;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section h2 {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: #2c3e50;
+  font-weight: bold;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 4px;
+}
+
+/* Contenedor de botones */
+.buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* Botones de prompt */
+.prompt-button {
+  background-color: #f0f0f0;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  color: #2c3e50;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 6px 10px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.prompt-button:hover {
+  background-color: #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo especial para el botón de traducción */
+.translation-button {
+  background-color: #e8f0fe;
+  border-color: #d2e3fc;
+  color: #000000;
+  margin-bottom: 0;
+}
+
+.translation-button:hover {
+  background-color: #d2e3fc;
+}
+
+/* Contenedor para el botón de traducción y su menú de idiomas */
+.translation-container {
+  position: relative;
+  flex-grow: 1;
+}
+
+/* Estilo para el menú de idiomas inline */
+.inline-language-menu {
+  display: none;
+  flex-direction: column;
+  padding: 5px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 5;
+  position: absolute;
+  left: 0;
+  bottom: 24px;
+  width: 130px;
+}
+
+/* Cuando el menú está visible */
+.inline-language-menu.visible {
+  display: flex;
+}
+
+/* Opciones del menú de idiomas */
+.inline-language-option {
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 3px;
+  color: #2c3e50;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 6px 8px;
+  margin-bottom: 2px;
+  transition: background-color 0.2s;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.inline-language-option:hover {
+  background-color: #e0e0e0;
+}
+
+/* Estilos para la ventana emergente de configuración */
+.settings-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.settings-popup {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 80%;
+  max-width: 300px;
+  overflow: hidden;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.popup-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.settings-popup-content {
+  padding: 16px;
+}
+
+.settings-item {
+  margin-bottom: 16px;
+}
+
+.settings-item:last-child {
+  margin-bottom: 0;
+}
+
+.settings-item label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.language-dropdown,
+.model-dropdown {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+}
+
+.language-dropdown option,
+.model-dropdown option {
+  padding: 5px;
+}
+
+/* Notification */
+#copy-notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #323232;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1000;
+  transition: opacity 0.3s;
+}
+
+/* Utilidades */
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.ai-model-option {
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  color: #333;
+}
+
+.ai-model-option:hover {
+  background-color: #f0f0f0;
+}
+
+.ai-model-option.selected {
+  background-color: #e0f0ff;
+  font-weight: bold;
+}
+
+.ai-model-option {
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+  font-size: 8px;
+  color: #333;
+}
+
+.ai-model-option:hover {
+  background-color: #f0f0f0;
+}
+
+.ai-model-option.selected {
+  background-color: #e0f0ff;
+  font-weight: bold;
+}
+
+/* Menú emergente de idiomas */
+.language-popup {
+  position: absolute;
+  right: 40px;
+  top: 40px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+#popup-container .language-popup {
+  top: 100%; /* Posicionarlo debajo del botón en el popup */
+  right: 60px; /* Ajustar la posición horizontal */
+  margin-top: 4px; /* Espacio entre el botón y el menú */
+}
+
+.language-popup.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease;
+}
+
+.language-popup::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: 22px;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  transform: rotate(45deg);
+  box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.05);
+  z-index: -1;
+}
+
+.language-popup ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.language-option:last-child {
+  border-bottom: none;
+}
+
+.language-option:hover {
+  background-color: #f5f5f5;
+}
+
+.language-option.selected {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  font-weight: bold;
+}
+
+/* Estilos para el enlace de correo electrónico */
+.contact-info {
+  margin-top: 15px;
+  text-align: center;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.email-link {
+  color: #0078d7;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.email-link:hover {
+  color: #005a9e;
+  text-decoration: underline;
+}
