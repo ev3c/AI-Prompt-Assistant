@@ -2,6 +2,8 @@
   "motoresIA": [
     {
       "nombre": "ChatGPT",
+      "web": "https://chat.openai.com",
+      "icono": "/src/assets/images/chatgpt.png",
       "modelos": [
         "GPT-3.5",
         "GPT-4",
@@ -11,6 +13,8 @@
     },
     {
       "nombre": "Claude",
+      "web": "https://claude.ai",
+      "icono": "/src/assets/images/claude-color.png",
       "modelos": [
         "Claude 2",
         "Claude 3 Opus",
@@ -21,6 +25,8 @@
     },
     {
       "nombre": "DeepSeek",
+      "web": "https://chat.deepseek.com",
+      "icono": "/src/assets/images/deepseek-color.png",
       "modelos": [
         "DeepSeek-7B",
         "DeepSeek-67B",
@@ -30,6 +36,8 @@
     },
     {
       "nombre": "Copilot",
+      "web": "https://copilot.microsoft.com",
+      "icono": "/src/assets/images/copilot-color.png",
       "modelos": [
         "GitHub Copilot",
         "Microsoft Copilot",
@@ -39,6 +47,8 @@
     },
     {
       "nombre": "Gemini",
+      "web": "https://gemini.google.com",
+      "icono": "/src/assets/images/gemini-color.png",
       "modelos": [
         "Gemini Ultra",
         "Gemini Pro",
@@ -48,6 +58,8 @@
     },
     {
       "nombre": "Meta AI",
+      "web": "https://meta.ai",
+      "icono": "/src/assets/images/meta-color.png",
       "modelos": [
         "Llama 3 8B",
         "Llama 3 70B",
@@ -57,6 +69,8 @@
     },
     {
       "nombre": "LLaMA",
+      "web": "https://llama.com",
+      "icono": "/src/assets/images/meta-color.png",
       "modelos": [
         "LLaMA 2-7B",
         "LLaMA 2-13B",
@@ -66,6 +80,8 @@
     },
     {
       "nombre": "Mistral",
+      "web": "https://chat.mistral.ai",
+      "icono": "/src/assets/images/mistral-color.png",
       "modelos": [
         "Mistral 7B",
         "Mixtral 8x7B",
@@ -75,6 +91,8 @@
     },
     {
       "nombre": "Grok",
+      "web": "https://x.ai/grok",
+      "icono": "/src/assets/images/groc.png",
       "modelos": [
         "Grok-1"
       ],
