@@ -1,0 +1,33 @@
+{
+  "header": {
+    "title": "AI prompt assistant",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "❓ Pregunta personalizada",
+      "buttons": [
+        {"label": "Escribe una pregunta", "prompt": "@prompt"}
+      ]
+    },
+    {
+      "title": "💬 Traducción o cambio de formato",
+      "translationButton": {"label": "Traduce página/texto al idioma: "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 Español", "prompt": "Traduce esta página al español."},
+        {"label": "🇬🇧 Inglés", "prompt": "Traduce esta página al inglés."},
+        {"label": "ca Catalán", "prompt": "Traduce esta página al catalán."},
+        {"label": "🇩🇪 Alemán", "prompt": "Traduce esta página al alemán."},
+        {"label": "🇫🇷 Francés", "prompt": "Traduce esta página al francés."}, 
+        {"label": "🇮🇹 Italiano", "prompt": "Traduce esta página al italiano."},
+        {"label": "🇵🇹 Portugués", "prompt": "Traduce esta página al portugués."},
+        {"label": "🇨🇳 Chino", "prompt": "Traduce esta página al chino."},
+        {"label": "🇷🇺 Ruso", "prompt": "Traduce esta página al ruso."},
+        {"label": "🇸🇦 Árabe", "prompt": "Traduce esta página al árabe."},
+        {"label": "🇯🇵 Japonés", "prompt": "Traduce esta página al japonés."},
+        {"label": "🇮🇳 Hindi", "prompt": "Traduce esta página al hindi."},
+        {"label": "🇰🇷 Coreano", "prompt": "Traduce esta página al coreano."}
+      ]
+    }
+  ]
+}

@@ -22,7 +22,7 @@ function categorizeFile(filename) {
 }
 
 // La ruta base donde están los archivos JSON
-const basePath = 'idioma/';
+const basePath = '/src/common/languages/';
 
 // Actualizar el elemento que muestra la ruta
 function updatePathInfo() {
@@ -43,7 +43,7 @@ function updatePathInfo() {
 async function loadJsonFileList() {
   try {
     // Obtener la lista de archivos dinámicamente
-    const response = await fetch(chrome.runtime.getURL('idioma/'));
+    const response = await fetch(chrome.runtime.getURL('/src/common/languages/'));
     
     if (!response.ok) {
       throw new Error(`Error al obtener la lista de archivos: ${response.status}`);
@@ -105,7 +105,7 @@ async function loadJsonFilesAlternative() {
   
   // Agregar archivos conocidos
   for (const file of knownFiles) {
-    checkPromises.push(checkFileExists(`idioma/${file}`).then(exists => {
+    checkPromises.push(checkFileExists(`/src/common/languages/${file}`).then(exists => {
       if (exists) existingFiles.push(file);
     }));
   }
@@ -114,7 +114,7 @@ async function loadJsonFilesAlternative() {
   for (const prefix of prefixes) {
     for (const suffix of suffixes) {
       const filename = prefix + suffix;
-      checkPromises.push(checkFileExists(`idioma/${filename}`).then(exists => {
+      checkPromises.push(checkFileExists(`/src/common/languages/${filename}`).then(exists => {
         if (exists) existingFiles.push(filename);
       }));
     }
@@ -139,7 +139,7 @@ async function checkFileExists(url) {
 // Función para obtener el tamaño de un archivo
 async function getFileSize(filename) {
   try {
-    const response = await fetch(chrome.runtime.getURL(`idioma/${filename}`));
+    const response = await fetch(chrome.runtime.getURL(`/src/common/languages/${filename}`));
     if (!response.ok) {
       throw new Error(`Error al obtener el archivo: ${response.status}`);
     }

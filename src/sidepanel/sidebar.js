@@ -22,9 +22,9 @@ import {
   confirmPrompt,
   isAISupportedURL,
   sendTextToAI
-} from './common.js';
+} from '/src/common/common.js';
 
-import { updateUITexts, getTranslation } from './translations.js';
+import { updateUITexts, getTranslation } from '/src/content-script/translations.js';
 
 // Guardar configuración al cerrar la sidebar
 window.addEventListener('beforeunload', function () {
@@ -1128,7 +1128,7 @@ function initializeUI() {
     feedbackLink.addEventListener('click', function (e) {
       e.preventDefault();
       // Abrir la página de feedback
-      chrome.tabs.create({ url: chrome.runtime.getURL('feedback.html') });
+      chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/components/feedback/feedback.html') });
     });
   }
 
@@ -1919,7 +1919,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
   const openJsonButton = document.getElementById('open-json-button');
   if (openJsonButton) {
     openJsonButton.addEventListener('click', () => {
-      window.open('json-viewer.html', '_blank');
+      window.open('/src/sidepanel/components/json-viewer/json-viewer.html', '_blank');
     });
   }
 
@@ -2046,19 +2046,19 @@ function updateMotorIcon() {
   
   // Mapeo de modelos de IA a sus archivos PNG
   const modelIconMap = {
-    'chatgpt': 'src/assets/images/chatgpt.png',
-    'claude': 'src/assets/images/claude-color.png',
-    'deepseek': 'src/assets/images/deepseek-color.png',
-    'mistral': 'src/assets/images/mistral-color.png',
-    'copilot': 'src/assets/images/copilot-color.png',
-    'gemini': 'src/assets/images/gemini-color.png',
-    'meta': 'src/assets/images/meta-color.png',
-    'grok': 'src/assets/images/grok.png'
+    'chatgpt': '/src/assets/images/chatgpt.png',
+    'claude': '/src/assets/images/claude-color.png',
+    'deepseek': '/src/assets/images/deepseek-color.png',
+    'mistral': '/src/assets/images/mistral-color.png',
+    'copilot': '/src/assets/images/copilot-color.png',
+    'gemini': '/src/assets/images/gemini-color.png',
+    'meta': '/src/assets/images/meta-color.png',
+    'grok': '/src/assets/images/grok.png'
   };
   
   // Obtener el modelo actual y su icono correspondiente
   const currentModel = config.getCurrentAIModel();
-  const iconPath = modelIconMap[currentModel] || 'src/assets/images/chatgpt.png'; // Default fallback
+  const iconPath = modelIconMap[currentModel] || '/src/assets/images/chatgpt.png'; // Default fallback
   
   // Actualizar la imagen del motor
   motorIcon.src = iconPath;

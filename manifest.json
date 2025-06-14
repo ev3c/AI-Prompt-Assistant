@@ -30,18 +30,18 @@
   "action": {
     "default_title": "🧠 AI Prompt Assistant",
     "default_icon": {
-      "16": "src/assets/icons/icon16.png",
-      "48": "src/assets/icons/icon48.png",
-      "128": "src/assets/icons/icon128.png"
+      "16": "/src/assets/icons/icon16.png",
+      "48": "/src/assets/icons/icon48.png",
+      "128": "/src/assets/icons/icon128.png"
     }
   },
   "icons": {
-    "16": "src/assets/icons/icon16.png",
-    "48": "src/assets/icons/icon48.png",
-    "128": "src/assets/icons/icon128.png"
+    "16": "/src/assets/icons/icon16.png",
+    "48": "/src/assets/icons/icon48.png",
+    "128": "/src/assets/icons/icon128.png"
   },
   "background": {
-    "service_worker": "background.js",
+    "service_worker": "/src/background/background.js",
     "type": "module"
   },
   "content_scripts": [
@@ -56,7 +56,7 @@
         "https://grok.x.ai/*",
         "https://meta.ai/*"
       ],
-      "js": ["ai_sites.js"]
+      "js": ["/src/content-script/ai_sites.js"]
     },
     {
       "matches": [
@@ -72,20 +72,20 @@
         "https://wikipedia.org/*",
         "https://facebook.com/*"
       ],
-      "js": ["content.js"]
+      "js": ["/src/content-script/content.js"]
     }
   ],
   "side_panel": {
-    "default_path": "sidebar.html"
+    "default_path": "/src/sidepanel/sidebar.html"
   },
   "web_accessible_resources": [
     {
       "resources": [
-        "json-viewer.html",
-        "json-viewer.js",
-        "feedback.html",
-        "feedback.js",
-        "idioma/*.json"
+        "/src/sidepanel/components/feedback/feedback.html",
+        "/src/sidepanel/components/feedback/feedback.js",
+        "/src/sidepanel/components/json-viewer/json-viewer.html",
+        "/src/sidepanel/components/json-viewer/json-viewer.js",
+        "/src/common/languages/*.json"
       ],
       "matches": ["<all_urls>"]
     }

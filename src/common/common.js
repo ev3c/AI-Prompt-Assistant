@@ -1,7 +1,7 @@
 // Módulo común para funcionalidad compartida entre popup.js y sidebar.js
 
 // Importar función de traducción
-import { getTranslation } from './translations.js';
+import { getTranslation } from '/src/content-script/translations.js';
 
 // Variables que serán reutilizadas
 let menuData = null;
@@ -13,7 +13,7 @@ let currentAIModel = 'chatgpt'; // Modelo por defecto: ChatGPT
 let useClipboard = false; // Por defecto, usar URL
 let hoveredTranslationButton = null; // Para guardar referencia al botón de traducción con hover
 let currentContext = 'url'; // Default context is URL
-let availableLanguages = []; // Lista de idiomas disponibles cargada desde idioma/idiomaAI.json
+let availableLanguages = []; // Lista de idiomas disponibles cargada desde /src/common/languages/idiomaAI.json
 let currentPrompt = '';
 let clipboardContent = '';
 
@@ -48,12 +48,12 @@ export const config = {
   setAvailableLanguages: (languages) => { availableLanguages = languages; }
 };
 
-// Función para cargar los idiomas disponibles desde idioma/idiomaAI.json
+// Función para cargar los idiomas disponibles desde /src/common/languages/idiomaAI.json
 export async function loadAvailableLanguages() {
   try {
-    const response = await fetch('idioma/idiomaAI.json');
+    const response = await fetch('/src/common/languages/idiomaAI.json');
     if (!response.ok) {
-      throw new Error(`Error al cargar idioma/idiomaAI.json: ${response.status}`);
+      throw new Error(`Error al cargar /src/common/languages/idiomaAI.json: ${response.status}`);
     }
     const data = await response.json();
     availableLanguages = data.idiomas || [];
@@ -277,13 +277,13 @@ export async function loadMenuData(language = 'es') {
       langSuffix = 'ES';
     }
 
-    // Generar el nombre del archivo con la carpeta idioma/
-    fileName = `idioma/menu_data_${contextPrefix}_${langSuffix}.json`;
+    // Generar el nombre del archivo con la carpeta /src/common/languages/
+    fileName = `/src/common/languages/menu_data_${contextPrefix}_${langSuffix}.json`;
     console.log(`Intentando cargar archivo: ${fileName}`);
 
-    // Obre Bloc de notes amb arxiu idioma/menu_data_ADD_XX.json
+    // Obre Bloc de notes amb arxiu /src/common/languages/menu_data_ADD_XX.json
     if (contextPrefix === 'ADD') {
-      addFileName = `idioma/menu_data_ADD_${langSuffix}.json`;
+      addFileName = `/src/common/languages/menu_data_ADD_${langSuffix}.json`;
       try {
         // Intentar abrir el archivo addFileName en el bloc de notas
         console.log(`Intentando abrir archivo: ${addFileName} en el bloc de notas`);
@@ -316,7 +316,7 @@ export async function loadMenuData(language = 'es') {
     }
 
     // Si no se encuentra el archivo específico, intentar con el archivo de AI en el idioma actual
-    const aiFileName = `idioma/menu_data_AI_${langSuffix}.json`;
+    const aiFileName = `/src/common/languages/menu_data_AI_${langSuffix}.json`;
     try {
       console.log(`Intentando cargar archivo AI como fallback: ${aiFileName}`);
       const aiResponse = await fetch(aiFileName);
@@ -328,7 +328,7 @@ export async function loadMenuData(language = 'es') {
     }
 
     // Si no se encuentra el archivo de AI, intentar con el archivo ADD en el idioma actual
-    const addFile = `idioma/menu_data_ADD_${langSuffix}.json`;
+    const addFile = `/src/common/languages/menu_data_ADD_${langSuffix}.json`;
     try {
       console.log(`Intentando cargar archivo ADD: ${addFile}`);
       const addResponse = await fetch(addFile);
@@ -340,8 +340,8 @@ export async function loadMenuData(language = 'es') {
     }
 
     // Como último recurso, intentar con el archivo en español
-    console.log(`Intentando cargar archivo: idioma/menu_data_ADD_ES.json`);
-    const fallbackResponse = await fetch('idioma/menu_data_ADD_ES.json');
+    console.log(`Intentando cargar archivo: /src/common/languages/menu_data_ADD_ES.json`);
+    const fallbackResponse = await fetch('/src/common/languages/menu_data_ADD_ES.json');
     if (fallbackResponse.ok) {
       return await fallbackResponse.json();
     }
@@ -354,7 +354,7 @@ export async function loadMenuData(language = 'es') {
 }
 
 // Función para cambiar el idioma
-import { updateUITexts } from './translations.js';
+import { updateUITexts } from '/src/content-script/translations.js';
 
 export function changeLanguage(language) {
   currentLanguage = language;

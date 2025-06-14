@@ -1,5 +1,5 @@
 // Script de fondo para la extensión
-import { getTranslation } from './translations.js';
+import { getTranslation } from '/src/content-script/translations.js';
 
 let availableLanguages = []; // Lista de idiomas disponibles
 
@@ -9,9 +9,9 @@ const jsonPath = "C:\\Users\\Propietario\\AppData\\Local\\Google\\Chrome\\User D
 // Cargar idiomas disponibles
 async function loadAvailableLanguages() {
   try {
-    const response = await fetch('idioma/idiomaAI.json');
+    const response = await fetch('/src/common/languages/idiomaAI.json');
     if (!response.ok) {
-      throw new Error(`Error al cargar idioma/idiomaAI.json: ${response.status}`);
+      throw new Error(`Error al cargar idioma idiomaAI.json: ${response.status}`);
     }
     const data = await response.json();
     availableLanguages = data.idiomas || [];
@@ -291,13 +291,13 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   // Manejar clic en abrir archivos JSON
   else if (info.menuItemId === 'open-json-files') {
     // Abrir la página del visor de archivos JSON
-    chrome.tabs.create({ url: chrome.runtime.getURL('json-viewer.html') });
+    chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/components/json-viewer/json-viewer.html') });
   }
   
   // Manejar clic en enviar feedback
   else if (info.menuItemId === 'send-feedback') {
     // Abrir la página de feedback
-    chrome.tabs.create({ url: chrome.runtime.getURL('feedback.html') });
+    chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/components/feedback/feedback.html') });
   }
 
   // Manejar clic en calificar extensión
@@ -466,7 +466,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   } 
   else if (request.action === 'openJsonFolder') {
     // En lugar de abrir la carpeta del sistema, abrir nuestra página de visualización de JSON
-    chrome.tabs.create({ url: chrome.runtime.getURL('json-viewer.html') });
+    chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/components/json-viewer/json-viewer.html') });
     
     sendResponse({ success: true });
     return true;
