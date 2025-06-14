@@ -31,6 +31,9 @@ chrome.runtime.onInstalled.addListener(async function () {
   // Cargar idiomas disponibles
   await loadAvailableLanguages();
   
+  // Abrir / Cerrar panel al click en Extensión
+  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+
   // Establecer configuración por defecto
   chrome.storage.local.get(['language', 'aiModel'], async function (result) {
     if (!result.language) {
@@ -248,9 +251,14 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 });
 
 // Manejar clics en el icono de la extensión
-chrome.action.onClicked.addListener((tab) => {
-  // Abrir el panel lateral
-  chrome.sidePanel.open({ tabId: tab.id });
+chrome.action.onClicked.addListener(async (tab) => {
+  try {
+    // Abre la sidebar para la pestaña actual
+    await chrome.sidePanel.open({ tabId: tab.id });
+    console.log('Sidebar abierta para la pestaña:', tab.id);
+  } catch (error) {
+    console.error('Error al abrir la sidebar:', error);
+  }
 });
 
 // Manejar clics en el menú contextual
