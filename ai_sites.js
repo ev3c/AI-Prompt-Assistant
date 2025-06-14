@@ -9,28 +9,28 @@
   
   if (currentURL.includes('chat.openai.com')) {
     aiSite = 'chatgpt';
-    aiPng = 'imagenes/openai.png';
+    aiPng = 'src/assets/images/openai.png';
   } else if (currentURL.includes('claude.ai')) {
     aiSite = 'claude';
-    aiPng = 'imagenes/claude-color.png';
+    aiPng = 'src/assets/images/claude-color.png';
   } else if (currentURL.includes('chat.deepseek.com')) {
     aiSite = 'deepseek';
-    aiPng = 'imagenes/deepseek-color.png';
+    aiPng = 'src/assets/images/deepseek-color.png';
   } else if (currentURL.includes('copilot.microsoft.com')) {
     aiSite = 'copilot';
-    aiPng = 'imagenes/copilot-color.png';
+    aiPng = 'src/assets/images/copilot-color.png';
   } else if (currentURL.includes('gemini.google.com')) {
     aiSite = 'gemini';
-    aiPng = 'imagenes/gemini-color.png';
+    aiPng = 'src/assets/images/gemini-color.png';
   } else if (currentURL.includes('grok.x.ai')) {
     aiSite = 'grok';
-    aiPng = 'imagenes/grok.png';
+    aiPng = 'src/assets/images/grok.png';
   } else if (currentURL.includes('meta.ai')) {
     aiSite = 'meta';
-    aiPng = 'imagenes/meta-color.png';
+    aiPng = 'src/assets/images/meta-color.png';
   } else if (currentURL.includes('chat.mistral.ai')) {
     aiSite = 'mistral';
-    aiPng = 'imagenes/mistral-color.png';
+    aiPng = 'src/assets/images/mistral-color.png';
   }
   
   // Sitio detectado: ${aiSite}

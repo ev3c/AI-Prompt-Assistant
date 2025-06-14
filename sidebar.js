@@ -2046,19 +2046,19 @@ function updateMotorIcon() {
   
   // Mapeo de modelos de IA a sus archivos PNG
   const modelIconMap = {
-    'chatgpt': 'imagenes/chatgpt.png',
-    'claude': 'imagenes/claude-color.png',
-    'deepseek': 'imagenes/deepseek-color.png',
-    'mistral': 'imagenes/mistral-color.png',
-    'copilot': 'imagenes/copilot-color.png',
-    'gemini': 'imagenes/gemini-color.png',
-    'meta': 'imagenes/meta-color.png',
-    'grok': 'imagenes/grok.png'
+    'chatgpt': 'src/assets/images/chatgpt.png',
+    'claude': 'src/assets/images/claude-color.png',
+    'deepseek': 'src/assets/images/deepseek-color.png',
+    'mistral': 'src/assets/images/mistral-color.png',
+    'copilot': 'src/assets/images/copilot-color.png',
+    'gemini': 'src/assets/images/gemini-color.png',
+    'meta': 'src/assets/images/meta-color.png',
+    'grok': 'src/assets/images/grok.png'
   };
   
   // Obtener el modelo actual y su icono correspondiente
   const currentModel = config.getCurrentAIModel();
-  const iconPath = modelIconMap[currentModel] || 'imagenes/chatgpt.png'; // Default fallback
+  const iconPath = modelIconMap[currentModel] || 'src/assets/images/chatgpt.png'; // Default fallback
   
   // Actualizar la imagen del motor
   motorIcon.src = iconPath;
