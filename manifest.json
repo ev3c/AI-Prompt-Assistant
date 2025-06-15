@@ -48,6 +48,7 @@
     {
       "matches": [
         "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
         "https://claude.ai/*",
         "https://chat.deepseek.com/*",
         "https://chat.mistral.ai/*",
@@ -59,7 +60,8 @@
         "https://wikipedia.org/*",
         "https://facebook.com/*"
       ],
-      "js": ["/src/content-script/content.js"]
+      "js": ["/src/content-script/content.js",
+              "/src/content-script/ai_sites.js"]
     }
   ],
   "side_panel": {

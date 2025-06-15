@@ -4,6 +4,7 @@
       "id": "chatgpt",
       "nombre": "ChatGPT",
       "web": "https://chat.openai.com",
+      "web2": "https://chatgpt.com",
       "icono": "/src/assets/images/chatgpt.png",
       "modelos": [
         "GPT-3.5",
@@ -16,6 +17,7 @@
       "id": "claude",
       "nombre": "Claude",
       "web": "https://claude.ai",
+      "web2": "https://claude.ai",
       "icono": "/src/assets/images/claude-color.png",
       "modelos": [
         "Claude 2",
@@ -29,6 +31,7 @@
       "id": "deepseek",
       "nombre": "DeepSeek",
       "web": "https://chat.deepseek.com",
+      "web2": "https://chat.deepseek.com",
       "icono": "/src/assets/images/deepseek-color.png",
       "modelos": [
         "DeepSeek-7B",
@@ -41,6 +44,7 @@
       "id": "copilot",
       "nombre": "Copilot",
       "web": "https://copilot.microsoft.com",
+      "web2": "https://copilot.microsoft.com",
       "icono": "/src/assets/images/copilot-color.png",
       "modelos": [
         "GitHub Copilot",
@@ -53,6 +57,7 @@
       "id": "gemini",
       "nombre": "Gemini",
       "web": "https://gemini.google.com",
+      "web2": "https://gemini.google.com",
       "icono": "/src/assets/images/gemini-color.png",
       "modelos": [
         "Gemini Ultra",
@@ -65,6 +70,7 @@
       "id": "meta",
       "nombre": "Meta AI",
       "web": "https://meta.ai",
+      "web2": "https://meta.ai",
       "icono": "/src/assets/images/meta-color.png",
       "modelos": [
         "Llama 3 8B",
@@ -77,6 +83,7 @@
       "id": "llama",
       "nombre": "LLaMA",
       "web": "https://llama.com",
+      "web2": "https://llama.com",
       "icono": "/src/assets/images/meta-color.png",
       "modelos": [
         "LLaMA 2-7B",
@@ -89,6 +96,7 @@
       "id": "mistral",
       "nombre": "Mistral",
       "web": "https://chat.mistral.ai",
+      "web2": "https://chat.mistral.ai",
       "icono": "/src/assets/images/mistral-color.png",
       "modelos": [
         "Mistral 7B",
@@ -101,6 +109,7 @@
       "id": "grok",
       "nombre": "Grok",
       "web": "https://x.ai/grok",
+      "web2": "https://x.ai/grok",
       "icono": "/src/assets/images/groc.png",
       "modelos": [
         "Grok-1"
