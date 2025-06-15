@@ -68,10 +68,10 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "/src/sidepanel/components/feedback/feedback.html",
-        "/src/sidepanel/components/feedback/feedback.js",
-        "/src/sidepanel/components/json-viewer/json-viewer.html",
-        "/src/sidepanel/components/json-viewer/json-viewer.js",
+        "/src/sidepanel/pages/feedback/feedback.html",
+        "/src/sidepanel/pages/feedback/feedback.js",
+        "/src/sidepanel/pages/json-viewer/json-viewer.html",
+        "/src/sidepanel/pages/json-viewer/json-viewer.js",
         "/src/common/languages/*.json"
       ],
       "matches": ["<all_urls>"]

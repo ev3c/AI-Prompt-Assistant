@@ -1128,7 +1128,7 @@ function initializeUI() {
     feedbackLink.addEventListener('click', function (e) {
       e.preventDefault();
       // Abrir la página de feedback
-      chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/components/feedback/feedback.html') });
+      chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/pages/feedback/feedback.html') });
     });
   }
 
@@ -1919,7 +1919,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
   const openJsonButton = document.getElementById('open-json-button');
   if (openJsonButton) {
     openJsonButton.addEventListener('click', () => {
-      window.open('/src/sidepanel/components/json-viewer/json-viewer.html', '_blank');
+      window.open('/src/sidepanel/pages/json-viewer/json-viewer.html', '_blank');
     });
   }
 
