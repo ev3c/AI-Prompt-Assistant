@@ -29,6 +29,18 @@ export async function loadMotorAI() {
   }
 }
 
+export async function getAIUrls() {
+  const motorAIJson = await loadMotorAI();
+  const motores = motorAIJson.motoresIA || [];
+  const AI_URLS = {};
+  motores.forEach(model => {
+    if (model.id && model.web) {
+      AI_URLS[model.id] = model.web;
+    }
+  });
+  return AI_URLS;
+}
+
 // Exportamos configuración que serán utilizadas por popup.js y sidebar.js
 export const config = {
   // Getters y setters para variables globales
