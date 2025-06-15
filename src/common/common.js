@@ -17,6 +17,18 @@ let availableLanguages = []; // Lista de idiomas disponibles cargada desde /src/
 let currentPrompt = '';
 let clipboardContent = '';
 
+export async function loadMotorAI() {
+  try {
+    const response = await fetch('/src/common/motorAI.json');
+    if (!response.ok) {
+      throw new Error(`Error al cargar /src/common/motorAI.json: ${response.status}`); // Intenta cargar json
+    }
+    return await response.json(); // Devuelve json
+  } catch (error) {
+    console.error('Error al cargar el motor de IA:', error);
+  }
+}
+
 // Exportamos configuración que serán utilizadas por popup.js y sidebar.js
 export const config = {
   // Getters y setters para variables globales

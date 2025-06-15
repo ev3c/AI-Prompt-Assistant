@@ -1,20 +1,20 @@
 // contextMenuManager.js
-import { getAIModelName } from './aiInteractionManager.js';
-import { getContextMenuTextForDisplay, copySelectedTextToClipboard } from './utils.js';
-import { getAvailableLanguages } from './languageManager.js';
+import { getAIModelName } from '/src/background/aiInteractionManager.js';
+import { getContextMenuTextForDisplay, copySelectedTextToClipboard } from '/src/background/utils.js';
+import { getAvailableLanguages } from '/src/background/languageManager.js';
+import { loadMotorAI } from '/src/common/common.js';
 
-const AI_MODELS = [
-  { id: 'chatgpt', title: 'ChatGPT' },
-  { id: 'claude', title: 'Claude' },
-  { id: 'deepseek', title: 'DeepSeek' },
-  { id: 'mistral', title: 'Mistral' },
-  { id: 'copilot', title: 'Copilot' },
-  { id: 'gemini', title: 'Gemini' },
-  { id: 'meta', title: 'Meta' },
-  { id: 'grok', title: 'Grok' }
-];
+// Cargar modelos IA
+let AI_MODELS = [];
+
+export async function initAIModels() {
+  const motorAIJson = await loadMotorAI();
+  AI_MODELS = motorAIJson.motoresIA || [];
+}
 
 export async function createInitialContextMenus(loadedLangs, defaultModelId, defaultLangIso) {
+  await initAIModels();
+  
   chrome.contextMenus.removeAll(async () => { // Asegura que no haya menús duplicados en recargas
     const urlText = await getContextMenuTextForDisplay(false, defaultLangIso);
     chrome.contextMenus.create({
@@ -68,7 +68,7 @@ export async function createInitialContextMenus(loadedLangs, defaultModelId, def
       chrome.contextMenus.create({
         id: `model-${model.id}`,
         parentId: 'ai-model-config',
-        title: model.title,
+        title: model.nombre,
         type: 'radio',
         contexts: ['action'],
         checked: model.id === defaultModelId
