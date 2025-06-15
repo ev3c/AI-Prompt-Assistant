@@ -1,5 +1,7 @@
 // Content script universal para insertar texto en múltiples sitios web
+console.log('🔌 Content script cargado en:', window.location.href);
 
+// OJU
 // Función para detectar el tipo de sitio web
 function detectarSitio() {
   const hostname = window.location.hostname.toLowerCase();
@@ -8,7 +10,7 @@ function detectarSitio() {
     return 'chatgpt';
   } else if (hostname.includes('gemini.google.com')) {
     return 'gemini';
-  } else if (hostname.includes('google.com')) {
+  } else if (hostname.includes('google.com') && !hostname.includes('mail.google.com')) {
     return 'google';
   } else if (hostname.includes('facebook.com') || hostname.includes('meta.ai')) {
     return 'meta';
@@ -16,14 +18,16 @@ function detectarSitio() {
     return 'wikipedia';
   } else if (hostname.includes('claude.ai') || hostname.includes('anthropic.com')) {
     return 'claude';
-  } else if (hostname.includes('chat.deepseek.com')) {
-    return 'deepseek';
-  } else if (hostname.includes('copilot.microsoft.com')) {
+  } else if (hostname.includes('copilot.microsoft.com') || hostname.includes('github.com/features/copilot')) {
     return 'copilot';
-  } else if (hostname.includes('chat.mistral.ai')) {
-    return 'mistral';
-  } else if (hostname.includes('grok.x.ai')) {
+  } else if (hostname.includes('deepseek.com') || hostname.includes('chat.deepseek.com')) {
+    return 'deepseek';
+  } else if (hostname.includes('grok.com') || hostname.includes('x.ai')) {
     return 'grok';
+  } else if (hostname.includes('mistral.ai') || hostname.includes('chat.mistral.ai')) {
+    return 'mistral';
+  } else if (hostname.includes('mail.google.com') || hostname.includes('gmail.com')) {
+    return 'gmail';
   } else {
     return 'generico';
   }
@@ -103,33 +107,29 @@ function obtenerSelectores(sitio) {
       'textarea'
     ],
     
-    deepseek: [
-      'textarea[placeholder*="Ask anything"]',
-      'textarea[placeholder*="Pregunta cualquier cosa"]',
-      'div[contenteditable="true"][role="textbox"]',
-      'textarea[data-testid="chat-input"]',
-      'main textarea',
-      'form textarea',
-      '[role="textbox"]',
-      'textarea'
-    ],
-    
     copilot: [
+      'textarea[placeholder*="Ask Copilot"]',
       'textarea[placeholder*="Ask me anything"]',
-      'textarea[placeholder*="Pregúntame cualquier cosa"]',
+      'textarea[placeholder*="Message Copilot"]',
       'div[contenteditable="true"][role="textbox"]',
-      'textarea[data-testid="chat-input"]',
+      'div[contenteditable="true"][data-placeholder*="Ask"]',
+      'textarea[aria-label*="Message"]',
+      'textarea[aria-label*="Chat"]',
+      'cib-text-input textarea',
       'main textarea',
       'form textarea',
       '[role="textbox"]',
       'textarea'
     ],
     
-    mistral: [
-      'textarea[placeholder*="Type a message"]',
-      'textarea[placeholder*="Escribe un mensaje"]',
+    deepseek: [
+      'textarea[placeholder*="Send a message"]',
+      'textarea[placeholder*="Type your message"]',
+      'textarea[placeholder*="Ask DeepSeek"]',
       'div[contenteditable="true"][role="textbox"]',
-      'textarea[data-testid="chat-input"]',
+      'div[contenteditable="true"][data-placeholder*="message"]',
+      'textarea[data-testid*="chat-input"]',
+      'textarea[id*="chat"]',
       'main textarea',
       'form textarea',
       '[role="textbox"]',
@@ -138,12 +138,43 @@ function obtenerSelectores(sitio) {
     
     grok: [
       'textarea[placeholder*="Ask Grok"]',
-      'textarea[placeholder*="Pregunta a Grok"]',
+      'textarea[placeholder*="Message Grok"]',
+      'textarea[placeholder*="Type a message"]',
       'div[contenteditable="true"][role="textbox"]',
-      'textarea[data-testid="chat-input"]',
+      'div[contenteditable="true"][data-testid*="grok"]',
+      'textarea[data-testid*="compose"]',
+      'textarea[aria-label*="Message"]',
       'main textarea',
       'form textarea',
       '[role="textbox"]',
+      'textarea'
+    ],
+    
+    mistral: [
+      'textarea[placeholder*="Send a message"]',
+      'textarea[placeholder*="Type your message"]',
+      'textarea[placeholder*="Ask Mistral"]',
+      'div[contenteditable="true"][role="textbox"]',
+      'div[contenteditable="true"][data-placeholder*="message"]',
+      'textarea[data-testid*="chat-input"]',
+      'textarea[id*="input"]',
+      'main textarea',
+      'form textarea',
+      '[role="textbox"]',
+      'textarea'
+    ],
+    
+    gmail: [
+      'div[contenteditable="true"][role="textbox"]',
+      'div[contenteditable="true"][aria-label*="Message Body"]',
+      'div[contenteditable="true"][aria-label*="Cuerpo del mensaje"]',
+      'div[contenteditable="true"][data-message-id]',
+      'div[g_editable="true"]',
+      'div[contenteditable="true"][dir="ltr"]',
+      'textarea[name="body"]',
+      'textarea[aria-label*="Message"]',
+      'div.Am.Al.editable',
+      'div[role="textbox"]',
       'textarea'
     ],
     
@@ -164,18 +195,32 @@ function obtenerSelectores(sitio) {
 // Función principal para insertar texto
 function enviarTextoUniversal(texto) {
   const sitio = detectarSitio();
+  console.log('🌐 Sitio detectado:', sitio);
+  console.log('🎯 Intentando insertar texto:', texto);
+  
   const selectores = obtenerSelectores(sitio);
+  console.log('🔍 Selectores a usar:', selectores);
 
   for (let i = 0; i < selectores.length; i++) {
     const selector = selectores[i];
+    console.log(`🔍 Probando selector ${i + 1}/${selectores.length}: ${selector}`);
     
     try {
       const elemento = document.querySelector(selector);
       
       if (elemento) {
+        console.log('🎯 Elemento encontrado:', elemento);
+        console.log('👁️ ¿Es visible?', elemento.offsetParent !== null);
+        console.log('🚫 ¿Está deshabilitado?', elemento.disabled);
+        console.log('📝 Tipo de elemento:', elemento.tagName);
+        console.log('✏️ ¿Es contenteditable?', elemento.contentEditable);
+        
         if (elemento.offsetParent !== null && !elemento.disabled) {
+          console.log(`✅ Elemento válido encontrado con selector: ${selector}`);
+          
           try {
             // Enfocar el elemento
+            console.log('🎯 Enfocando elemento...');
             elemento.focus();
             elemento.click();
             
@@ -191,11 +236,13 @@ function enviarTextoUniversal(texto) {
             setTimeout(() => {
               // Insertar el texto
               if (elemento.tagName === 'TEXTAREA' || elemento.tagName === 'INPUT') {
+                console.log('📝 Insertando en TEXTAREA/INPUT...');
                 elemento.value = texto;
                 elemento.dispatchEvent(new Event('input', { bubbles: true }));
                 elemento.dispatchEvent(new Event('change', { bubbles: true }));
                 elemento.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true }));
               } else if (elemento.contentEditable === 'true') {
+                console.log('📝 Insertando en elemento contentEditable...');
                 
                 // Para Gemini y otros editores rich text
                 if (sitio === 'gemini') {
@@ -236,101 +283,52 @@ function enviarTextoUniversal(texto) {
               elemento.dispatchEvent(new Event('blur', { bubbles: true }));
               elemento.focus(); // Volver a enfocar
               
+              console.log('✅ Texto insertado correctamente');
             }, 100);
             
             return true;
             
           } catch (error) {
-            console.error(`Error insertando con selector ${selector}:`, error);
+            console.log(`❌ Error insertando con selector ${selector}:`, error);
           }
+        } else {
+          console.log(`⚠️ Elemento encontrado pero no es válido (oculto o deshabilitado)`);
         }
+      } else {
+        console.log(`❌ No se encontró elemento con selector: ${selector}`);
       }
     } catch (error) {
-      console.error(`Error con selector ${selector}:`, error);
+      console.log(`💥 Error con selector ${selector}:`, error);
     }
   }
   
-  console.error('No se encontró ningún campo de texto válido en:', window.location.href);
+  console.log('❌ No se encontró ningún campo de texto válido');
+  
+  // Información de depuración adicional
+  console.log('🔍 Información de depuración:');
+  console.log('- Sitio detectado:', sitio);
+  console.log('- Todos los textareas:', document.querySelectorAll('textarea'));
+  console.log('- Todos los inputs de texto:', document.querySelectorAll('input[type="text"], input[type="search"]'));
+  console.log('- Elementos contenteditable:', document.querySelectorAll('[contenteditable="true"]'));
+  console.log('- URL actual:', window.location.href);
+  
   return false;
 }
 
 // Escuchar mensajes del background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log('📨 Mensaje recibido:', request);
+  
   if (request.action === 'insertarTexto') {
-    const exito = enviarTextoUniversal(request.texto);
+    const response = {
+      success: enviarTextoUniversal(request.texto),
+      error: exito ? null : 'No se encontró ningún campo de texto válido o el campo no estaba listo',
+      site: detectarSitio(),
+      url: window.location.href
+    };
+    console.log('📤 Enviando respuesta:', { success: exito });
     sendResponse({ success: exito });
-    return true; // Importante: mantener el canal abierto para respuesta asíncrona
   }
   
-  const action = request.action;
-  const selectionText = request.selectionText || '';
-  
-  // Obtener el contenido de la página
-  const pageContent = document.body.innerText;
-  const pageTitle = document.title;
-  const pageUrl = window.location.href;
-
-  // Procesar la acción solicitada
-  switch(action) {
-    case 'resumen-completo':
-      generarResumenCompleto(pageContent);
-      break;
-    case 'puntos-principales':
-      identificarPuntosPrincipales(pageContent);
-      break;
-    // ... otros casos para cada acción
-    default:
-      console.log('Acción no reconocida:', action);
-  }
-  
-  return true;
-});
-
-function generarResumenCompleto(content) {
-  // Aquí iría la lógica para generar el resumen
-  // En una implementación real, podrías usar una API de IA o un algoritmo propio
-  
-  // Ejemplo simplificado: tomar las primeras 3 oraciones
-  const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 0);
-  const summary = sentences.slice(0, 3).join('. ') + '.';
-  
-  mostrarResultado(summary, 'Resumen completo');
-}
-
-function identificarPuntosPrincipales(content) {
-  // Lógica para identificar puntos clave...
-  mostrarResultado("Puntos principales identificados (ejemplo)", "Puntos clave");
-}
-
-function mostrarResultado(texto, titulo) {
-  // Crear un overlay para mostrar el resultado
-  const overlay = document.createElement('div');
-  overlay.style.position = 'fixed';
-  overlay.style.top = '20px';
-  overlay.style.right = '20px';
-  overlay.style.width = '300px';
-  overlay.style.padding = '15px';
-  overlay.style.backgroundColor = '#fff';
-  overlay.style.border = '1px solid #ddd';
-  overlay.style.borderRadius = '5px';
-  overlay.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-  overlay.style.zIndex = '9999';
-  
-  const titleEl = document.createElement('h3');
-  titleEl.textContent = titulo;
-  titleEl.style.marginTop = '0';
-  
-  const contentEl = document.createElement('p');
-  contentEl.textContent = texto;
-  
-  const closeBtn = document.createElement('button');
-  closeBtn.textContent = 'Cerrar';
-  closeBtn.style.marginTop = '10px';
-  closeBtn.onclick = () => overlay.remove();
-  
-  overlay.appendChild(titleEl);
-  overlay.appendChild(contentEl);
-  overlay.appendChild(closeBtn);
-  
-  document.body.appendChild(overlay);
-}
+  return true; // Importante: mantener el canal abierto para respuesta asíncrona
+}); 

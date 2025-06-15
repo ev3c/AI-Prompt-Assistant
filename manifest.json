@@ -52,19 +52,6 @@
         "https://chat.deepseek.com/*",
         "https://chat.mistral.ai/*",
         "https://copilot.microsoft.com/*",
-        "https://gemini.google.com/app*",
-        "https://grok.x.ai/*",
-        "https://meta.ai/*"
-      ],
-      "js": ["/src/content-script/ai_sites.js"]
-    },
-    {
-      "matches": [
-        "https://chat.openai.com/*",
-        "https://claude.ai/*",
-        "https://chat.deepseek.com/*",
-        "https://chat.mistral.ai/*",
-        "https://copilot.microsoft.com/*",
         "https://gemini.google.com/*",
         "https://grok.x.ai/*",
         "https://meta.ai/*",
