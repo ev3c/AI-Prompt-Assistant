@@ -1371,8 +1371,18 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
 
     // Obtener el texto seleccionado de la pestaña activa
     chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
-      if (tabs && tabs.length > 0) {
+        if (tabs && tabs.length > 0) {
         try {
+          const url = tabs[0].url;
+          if (
+            url.startsWith('chrome://') ||
+            url.startsWith('chrome-extension://') ||
+            url.startsWith('https://chrome.google.com/webstore')
+          ) {
+            // Mostrar mensaje de error en la sidebar
+            mostrarError('No se puede acceder al portapapeles en esta página.');
+            return;
+          }
           // Ejecutar script para copiar texto seleccionado al portapapeles
           const result = await chrome.scripting.executeScript({
             target: { tabId: tabs[0].id },
