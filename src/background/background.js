@@ -1,7 +1,7 @@
 // Script de fondo para la extensión
-import { loadAvailableLanguages } from './languageManager.js';
-import { createInitialContextMenus, handleContextMenuClick, updateContextMenuTitlesFromStorage } from './contextMenuManager.js';
-import { openAIWithPrompt } from './aiInteractionManager.js';
+import { loadAvailableLanguages } from '/src/background/languageManager.js';
+import { createInitialContextMenus, handleContextMenuClick, updateContextMenuTitlesFromStorage } from '/src/background/contextMenuManager.js';
+import { openAIWithPrompt } from '/src/background/aiInteractionManager.js';
 
 // Nota: La importación de funciones de content.js como detectarSitio, obtenerSelectores, etc.,
 // no es adecuada para el background script ya que operan en el contexto de la página (DOM, window.location).
@@ -34,7 +34,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
   if (namespace === 'local') {
     if (changes.aiModel) {
       // Si cambió el modelo de IA, actualizar el menú contextual
-      updateContextMenuTitle(changes.aiModel.newValue);
+      updateContextMenuTitlesFromStorage(changes.aiModel.newValue, null);
     } else if (changes.language) {
       updateContextMenuTitlesFromStorage(null, changes.language.newValue);
     }
