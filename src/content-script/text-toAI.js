@@ -132,6 +132,7 @@ document.getElementById('yesButton').addEventListener('click', async function() 
             await textToAI(textPrompt, newTabDeepseek);
 
             const newTabCopilot = await openCorrectAITab('copilot');
+            await textToAI(textPrompt, newTabCopilot);
 
             const newTabGemini = await openCorrectAITab('gemini');
             await textToAI(textPrompt, newTabGemini);

@@ -87,9 +87,35 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
 
   // Buscar pestaña existente
   const tabs = await chrome.tabs.query({});
-  let targetTab = tabs.find(tab => tab.url && (tab.url.includes(aiUrls.web1) || tab.url.includes(aiUrls.web2)));
+  console.log('🔍 Buscando pestaña existente para:', aiModel);
+  console.log('🔍 URLs a buscar:', aiUrls);
+  console.log('🔍 Pestañas abiertas:', tabs.map(tab => ({ id: tab.id, url: tab.url })));
+  
+  let targetTab = tabs.find(tab => {
+    if (!tab.url) return false;
+    
+    // Para MetaAI, buscar específicamente meta.ai en el hostname
+    if (aiModel === 'meta') {
+      try {
+        const tabUrl = new URL(tab.url);
+        const isMetaAI = tabUrl.hostname.includes('meta.ai');
+        console.log(`🔍 Pestaña ${tab.id}: ${tab.url} - es meta.ai: ${isMetaAI}`);
+        return isMetaAI;
+      } catch (e) {
+        console.log(`🔍 Error parsing URL ${tab.url}:`, e);
+        return false;
+      }
+    }
+    
+    // Para otras IAs, usar la lógica original
+    const matchesWeb1 = tab.url.includes(aiUrls.web1);
+    const matchesWeb2 = aiUrls.web2 && tab.url.includes(aiUrls.web2);
+    console.log(`🔍 Pestaña ${tab.id}: ${tab.url} - web1: ${matchesWeb1}, web2: ${matchesWeb2}`);
+    return matchesWeb1 || matchesWeb2;
+  });
 
   if (targetTab) {
+    console.log('✅ Pestaña existente encontrada:', targetTab.id, targetTab.url);
     await chrome.tabs.update(targetTab.id, { active: true });
     
     // OJU OSCAR: Actualizar la página antes de enviar el prompt
@@ -103,8 +129,8 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
       }
     });
   } else {
-    console.log(aiUrls.web1);
-    console.log(aiUrls);    
+    console.log('❌ No se encontró pestaña existente, creando nueva');
+    console.log('🔗 Creando nueva pestaña con URL:', aiUrls.web1);
     const newTab = await chrome.tabs.create({ url: aiUrls.web1 });
     // Esperar a que cargue la pestaña antes de enviar el prompt
     chrome.tabs.onUpdated.addListener(function listener(tabId, info) {

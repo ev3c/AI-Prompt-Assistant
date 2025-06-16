@@ -76,11 +76,17 @@ function obtenerSelectores(sitio) {
     
     meta: [
       'div[contenteditable="true"][role="textbox"]',
-      'div[contenteditable="true"][data-text*="thinking"]',
-      'div[contenteditable="true"][data-text*="pensando"]',
+      'div[contenteditable="true"][data-placeholder*="Ask Meta AI"]',
+      'div[contenteditable="true"][data-placeholder*="Message Meta AI"]',
+      'div[contenteditable="true"][data-placeholder*="Ask me anything"]',
+      'textarea[placeholder*="Ask Meta AI"]',
+      'textarea[placeholder*="Message Meta AI"]',
+      'textarea[placeholder*="Ask me anything"]',
       'textarea[placeholder*="What\'s on your mind"]',
       'textarea[placeholder*="¿Qué estás pensando"]',
       'div[data-testid="status-attachment-mentions-input"]',
+      'div[contenteditable="true"][aria-label*="Message"]',
+      'div[contenteditable="true"][aria-label*="Chat"]',
       '[role="textbox"]',
       'textarea'
     ],
@@ -320,8 +326,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('📨 Mensaje recibido:', request);
   
   if (request.action === 'insertarTexto') {
+    const exito = enviarTextoUniversal(request.texto);
     const response = {
-      success: enviarTextoUniversal(request.texto),
+      success: exito,
       error: exito ? null : 'No se encontró ningún campo de texto válido o el campo no estaba listo',
       site: detectarSitio(),
       url: window.location.href
