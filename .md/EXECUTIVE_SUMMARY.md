@@ -32,7 +32,7 @@ Tu extensión es un **asistente de prompts para AI** que:
 - DeepSeek (chat.deepseek.com)
 - Copilot (copilot.microsoft.com)
 - Mistral (chat.mistral.ai)
-- Grok (grok.x.ai)
+- Grok (x.ai/grok)
 - Meta AI (meta.ai)
 
 ### Arquitectura Técnica

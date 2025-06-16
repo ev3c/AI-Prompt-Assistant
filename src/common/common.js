@@ -1297,6 +1297,8 @@ export function textPrompt(title = null, defaultText = "") {
           if (tab && isAISupportedURL(tab.url)) {
             console.log('🎯 Detectada página de AI, enviando texto directamente...');
             
+
+
             // Enviar el texto directamente a la página de AI
             const success = await sendTextToAI(text);
             
@@ -1628,7 +1630,7 @@ export function isAISupportedURL(url = window.location.href) {
          hostname.includes('chat.mistral.ai') ||
          hostname.includes('copilot.microsoft.com') ||
          hostname.includes('gemini.google.com') ||
-         hostname.includes('grok.x.ai') ||
+         hostname.includes('x.ai/grok') ||
          hostname.includes('meta.ai');
 }
 

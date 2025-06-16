@@ -43,7 +43,7 @@
 - **DeepSeek** (chat.deepseek.com)
 - **Copilot** (copilot.microsoft.com)
 - **Mistral** (chat.mistral.ai)
-- **Grok** (grok.x.ai)
+- **Grok** (x.ai/grok)
 - **Meta AI** (meta.ai)
 
 **Funcionamiento:**

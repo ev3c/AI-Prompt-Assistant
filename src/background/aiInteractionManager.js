@@ -91,7 +91,17 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
 
   if (targetTab) {
     await chrome.tabs.update(targetTab.id, { active: true });
-    await sendPromptToTab(targetTab.id, finalPrompt);
+    
+    // OJU OSCAR: Actualizar la página antes de enviar el prompt
+    await chrome.tabs.reload(targetTab.id);
+    
+    // Esperar a que se complete la recarga antes de enviar el prompt
+    chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
+      if (tabId === targetTab.id && info.status === 'complete') {
+        chrome.tabs.onUpdated.removeListener(listener);
+        sendPromptToTab(targetTab.id, finalPrompt);
+      }
+    });
   } else {
     console.log(aiUrls.web1);
     console.log(aiUrls);    
@@ -193,7 +203,7 @@ export function openAIWithPrompt(prompt, context, aiModel, isClipboard, buttonTy
     case 'mistral': baseUrl = 'https://chat.mistral.ai/'; break;
     case 'copilot': baseUrl = 'https://copilot.microsoft.com/'; break;
     case 'gemini': baseUrl = 'https://gemini.google.com/app'; break;
-    case 'grok': baseUrl = 'https://grok.x.ai/'; break; // Asumiendo que es x.ai/grok o similar
+    case 'grok': baseUrl = 'https://x.ai/grok/'; break; // Asumiendo que es x.ai/grok o similar
     case 'meta': baseUrl = 'https://meta.ai/'; break;
     case 'chatgpt':
     default: baseUrl = 'https://chat.openai.com/'; break;

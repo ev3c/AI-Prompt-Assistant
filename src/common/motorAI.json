@@ -68,7 +68,7 @@
     },
     {
       "id": "meta",
-      "nombre": "Meta AI",
+      "nombre": "Meta",
       "web": "https://meta.ai",
       "web2": "https://meta.ai",
       "icono": "/src/assets/images/meta-color.png",
@@ -79,19 +79,7 @@
       ],
       "empresa": "Meta"
     },
-    {
-      "id": "llama",
-      "nombre": "LLaMA",
-      "web": "https://llama.com",
-      "web2": "https://llama.com",
-      "icono": "/src/assets/images/meta-color.png",
-      "modelos": [
-        "LLaMA 2-7B",
-        "LLaMA 2-13B",
-        "LLaMA 2-70B"
-      ],
-      "empresa": "Meta"
-    },
+
     {
       "id": "mistral",
       "nombre": "Mistral",

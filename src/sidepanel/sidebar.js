@@ -1202,7 +1202,7 @@ Se llama *AI Prompt Assistant* y tiene estas características increíbles:
 • 📚 Soporte para libros y PDFs
 • 🎯 Interfaz intuitiva y elegante
 
-🔗 La puedes instalar gratis aquí:
+🔗 La puedes instalar gratis aquí desde la Chrome Store de Google:
 https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=whatsapp-share
 
 ---
@@ -1217,7 +1217,7 @@ It's called *AI Prompt Assistant* and has these amazing features:
 • 📚 Support for books and PDFs
 • 🎯 Intuitive and elegant interface
 
-🔗 You can install it for free here:
+🔗 You can install it for free here from the Google Chrome Store:
 https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=whatsapp-share`;
 
       try {
@@ -1277,7 +1277,7 @@ Se llama *AI Prompt Assistant* y tiene estas características increíbles:
 • 📚 Soporte para libros y PDFs
 • 🎯 Interfaz intuitiva y elegante
 
-🔗 La puedes instalar gratis aquí:
+🔗 La puedes instalar gratis aquí desde la Chrome Store de Google:
 https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=whatsapp-share
 
 ---
@@ -1292,7 +1292,7 @@ It's called *AI Prompt Assistant* and has these amazing features:
 • 📚 Support for books and PDFs
 • 🎯 Intuitive and elegant interface
 
-🔗 You can install it for free here:
+🔗 You can install it for free here from the Google Chrome Store:
 https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=whatsapp-share`;
 
       try {
@@ -2536,7 +2536,7 @@ Se llama AI Prompt Assistant y tiene estas características increíbles:
 • 📚 Soporte para libros y PDFs
 • 🎯 Interfaz intuitiva y elegante
 
-🔗 La puedes instalar gratis aquí:
+🔗 La puedes instalar gratis aquí desde la Chrome Store de Google:
 https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=whatsapp-share
 
 ---
@@ -2551,7 +2551,7 @@ It's called AI Prompt Assistant and has these amazing features:
 • 📚 Support for books and PDFs
 • 🎯 Intuitive and elegant interface
 
-🔗 You can install it for free here:
+🔗 You can install it for free here from the Google Chrome Store:
 https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=whatsapp-share`;
 
   // Codificar el asunto y el cuerpo para URL

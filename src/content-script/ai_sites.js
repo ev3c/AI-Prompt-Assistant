@@ -22,7 +22,7 @@
   } else if (currentURL.includes('gemini.google.com')) {
     aiSite = 'gemini';
     aiPng = '/src/assets/images/gemini-color.png';
-  } else if (currentURL.includes('grok.x.ai')) {
+  } else if (currentURL.includes('x.ai/grok')) {
     aiSite = 'grok';
     aiPng = '/src/assets/images/grok.png';
   } else if (currentURL.includes('meta.ai')) {
@@ -175,7 +175,7 @@
       }, true);
     };
     
-    // Para Meta AI
+    // Para Meta
     const preventMetaAutoSubmit = () => {
       document.addEventListener('keydown', function(event) {
         if (event.key === 'Enter' && !event.isTrusted) {
