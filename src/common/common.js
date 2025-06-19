@@ -187,9 +187,7 @@ if (displayText.length > 100) {
       case 'gmail':
         labelText.textContent = ` ${displayText}`;
         break;
-      case '+add+':
-        labelText.textContent = `Add: ${shortenUrl(currentUrl)}`;
-        break;
+
       default:
         labelText.textContent = `URL: ${shortenUrl("error")}`;
     }
@@ -224,7 +222,6 @@ export async function loadMenuData(language = 'es') {
   try {
     // Determinar qué archivo cargar según el idioma, el modelo de IA y el contexto seleccionado
     let fileName;
-    let addFileName;
     const model = currentAIModel || 'chatgpt'; // Usar 'chatgpt' como valor por defecto
     const context = currentContext || 'url'; // Usar 'url' como contexto por defecto
 
@@ -264,9 +261,7 @@ export async function loadMenuData(language = 'es') {
       case 'gmail':
         contextPrefix = 'Gmail';
         break;
-      case '+add+':
-        contextPrefix = 'ADD';
-        break;
+
       default:
         contextPrefix = 'AI';
     }
@@ -306,29 +301,7 @@ export async function loadMenuData(language = 'es') {
     fileName = `/src/common/languages/menu_data_${contextPrefix}_${langSuffix}.json`;
     console.log(`Intentando cargar archivo: ${fileName}`);
 
-    // Obre Bloc de notes amb arxiu /src/common/languages/menu_data_ADD_XX.json
-    if (contextPrefix === 'ADD') {
-      addFileName = `/src/common/languages/menu_data_ADD_${langSuffix}.json`;
-      try {
-        // Intentar abrir el archivo addFileName en el bloc de notas
-        console.log(`Intentando abrir archivo: ${addFileName} en el bloc de notas`);
 
-        // Crear un enlace temporal para descargar el archivo
-        const link = document.createElement('a');
-        link.href = addFileName;
-        link.download = addFileName;
-        link.target = '_blank';
-
-        // Simular clic para abrir el archivo
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        console.log(`Archivo ${addFileName} abierto en el bloc de notas`);
-      } catch (error) {
-        console.error(`Error al abrir ${addFileName} en el bloc de notas:`, error);
-      }
-    }
 
     // Intentar cargar el archivo específico
     try {

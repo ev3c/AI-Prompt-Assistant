@@ -1833,57 +1833,8 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
   });
 
   addButton.addEventListener('click', function () {
-    deselectAllButtons();
-    addButton.classList.add('option-selected');
-    config.setCurrentContext('+add+');
-
-    // Actualizar la etiqueta para mostrar que estamos en modo de personalización
-    config.setClipboardText('Modo de personalización de menus');
-    updateContextDisplay();
-
-    // Guardar configuración principal
-    saveMainConfig();
-
-    // Cargar el menú correspondiente al contexto de +add+
-    loadMenuData(config.getCurrentLanguage()).then(newMenuData => {
-      config.setMenuData(newMenuData);
-      renderSections();
-
-      // Añadir texto adicional después del menú +add+
-      const additionalText = document.createElement('div');
-      additionalText.className = 'additional-text';
-      additionalText.style.color = 'red';
-
-      // Mostrar texto en español si el idioma es español, en inglés para otros idiomas
-      if (config.getCurrentLanguage() === 'gb') {
-        additionalText.innerHTML = `
-          <div class="add-info-container">
-            <h3>How to customize your prompt menus</h3>
-            <p>The file idioma/menu_data_ADD_GB.json, as well as the other .json files can be modified, maintaining their structure, for the extension to work correctly.</p>
-            <p>The location of the .json files is as follows:</p>
-            <p>C:\\Users\\[YourUsername]\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg</p> 
-            <p>modify the idioma/menu_data_ADD_GB.json file to customize it</p>
-          </div>          
-        `;
-      } else {
-        additionalText.innerHTML = `
-          <div class="add-info-container">
-            <h3>Así puedes personalizar tus menus de prompts</h3>
-            <p>El archivo idioma/menu_data_ADD_ES.json , así cómo los otros .json se pueden modificar, manteniendo su estructura, para que la extensión funcione correctamente.</p>
-            <p>La ubicación de los archivos .json es la siguiente:</p>
-            <p>C:\\Users\\[TuNombreDeUsuario]\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg</p> 
-            <p>modifica el archivo idioma/menu_data_ADD_ES.json para personalizarlo</p>
-          </div>
-        `;
-      }
-      // Insertar después de las secciones del menú
-      const sectionsContainer = document.getElementById('sections-container');
-      if (sectionsContainer) {
-        sectionsContainer.appendChild(additionalText);
-      }
-    }).catch(error => {
-      console.error('Error al cargar el menú de +add+:', error);
-    });
+    // Abrir el JSON Editor en una nueva pestaña
+    window.open('/src/jsonEditor/jsonEditor.html', '_blank');
   });
 
   // Configurar eventos para la ventana emergente de configuración
