@@ -212,6 +212,7 @@ const modelNames = {
   'gemini': 'Gemini',
   'meta': 'Meta',
   'grok': 'Grok',
+  'allai': 'All AI\'s',
 };
 
 export function getAIModelName(modelId) {

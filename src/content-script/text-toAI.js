@@ -121,7 +121,7 @@ document.getElementById('yesButton').addEventListener('click', async function() 
         // OJU OSCAR: AÑADIR AQUÍ EL TEXTO QUE QUIERAS AÑADIR AL PROMPT
         // textPrompt = textPrompt + "yes yes yes yes";
 
-        if (selectedAI === 'allAI') {
+        if (selectedAI === 'allai') {
             const newTabChatgpt = await openCorrectAITab('chatgpt');
             await textToAI(textPrompt, newTabChatgpt);
 

@@ -2063,7 +2063,8 @@ function updateMotorIcon() {
     'copilot': '/src/assets/images/copilot-color.png',
     'gemini': '/src/assets/images/gemini-color.png',
     'meta': '/src/assets/images/meta-color.png',
-    'grok': '/src/assets/images/grok.png'
+    'grok': '/src/assets/images/grok.png',
+    'allai': '/src/assets/images/All-AI.png'
   };
   
   // Obtener el modelo actual y su icono correspondiente

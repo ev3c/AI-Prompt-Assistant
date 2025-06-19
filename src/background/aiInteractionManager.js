@@ -79,11 +79,52 @@ export function buildPrompt(prompt, context, isClipboard, buttonType) {
  * Busca o abre la pestaña de la IA y envía el prompt usando content script.
  */
 export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, buttonType) {
+  const finalPrompt = buildPrompt(prompt, context, isClipboard, buttonType);
+  
+  // Caso especial para "All AI's" - abrir todas las AIs disponibles
+  if (aiModel === 'allai') {
+    const AI_URLS = await getAIUrls();
+    const supportedAIs = ['chatgpt', 'claude', 'deepseek', 'mistral', 'copilot', 'gemini', 'meta', 'grok'];
+    
+    for (const ai of supportedAIs) {
+      if (AI_URLS[ai]) {
+        try {
+          // Crear nueva pestaña para cada AI con un pequeño delay
+          setTimeout(async () => {
+            const newTab = await chrome.tabs.create({ url: AI_URLS[ai].web1, active: false });
+
+
+            // Esperar a que cargue la pestaña antes de enviar el prompt
+            chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
+              if (tabId === newTab.id && info.status === 'complete') {
+                chrome.tabs.onUpdated.removeListener(listener);
+
+                // Actualizar la página antes de enviar el prompt
+                console.log(`🔄 Actualizando pestaña ${ai} antes de enviar prompt`);
+                chrome.tabs.reload(newTab.id);
+                
+                // Esperar a que se complete la recarga antes de enviar el prompt
+                chrome.tabs.onUpdated.addListener(function reloadListener(tabId, info) {
+                  if (tabId === newTab.id && info.status === 'complete') {
+                    chrome.tabs.onUpdated.removeListener(reloadListener);
+                    console.log(`✅ Pestaña ${ai} actualizada, enviando prompt`);
+                    sendPromptToTab(newTab.id, finalPrompt);
+                  }
+                });
+              }
+            });
+          }, supportedAIs.indexOf(ai) * 500); // Delay de 1000ms entre cada AI
+        } catch (error) {
+          console.error(`Error abriendo ${ai}:`, error);
+        }
+      }
+    }
+    return; // Salir temprano para All AI's
+  }
+
   const AI_URLS = await getAIUrls();
   const aiUrls = AI_URLS[aiModel];
   if (!aiUrls) throw new Error('IA no soportada');
-
-  const finalPrompt = buildPrompt(prompt, context, isClipboard, buttonType);
 
   // Buscar pestaña existente
   const tabs = await chrome.tabs.query({});

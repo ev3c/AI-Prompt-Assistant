@@ -105,6 +105,17 @@
       "empresa": "xAI"
     },
     {
+      "id": "allai",
+      "nombre": "All AI's",
+      "web": "https://chat.openai.com",
+      "web2": "https://chat.openai.com",
+      "icono": "/src/assets/images/All-AI.png",
+      "modelos": [
+        "All Models"
+      ],
+      "empresa": "Multiple"
+    },
+    {
       "id": "otros",
       "nombre": "Otros",
       "modelos": [
