@@ -1,0 +1,85 @@
+{
+  "header": {
+    "title": "ADD",
+    "currentUrlPlaceholder": "Current page"
+  },
+  "sections": [
+    {
+      "title": "❓ 1st menu section ",
+      "buttons": [
+        {
+          "label": "Label 1.1 in menu. (Extension will ask user before sending prompt)",
+          "prompt": "This is the text that will ask the user"
+        },
+        {
+          "label": "Label 1.2 in menu",
+          "prompt": "Question 1.2 to AI:."
+        }
+      ]
+    },
+    {
+      "title": "📝 2nd menu section in file",
+      "buttons": [
+        {
+          "label": "Label 2.1 in menu",
+          "prompt": "Question 2.1 to AI:."
+        },
+        {
+          "label": "Label 2.2 in menu",
+          "prompt": "Question 2.2 to AI:."
+        },
+        {
+          "label": "Label 2.3 in menu",
+          "prompt": "Question 2.3 to AI:."
+        }
+      ]
+    },
+    {
+      "title": "🔍 3rd menu section in file",
+      "buttons": [
+        {
+          "label": "Label 3.1 in menu",
+          "prompt": "Question 3.1 to AI:."
+        },
+        {
+          "label": "Label 3.2 in menu",
+          "prompt": "Question 3.2 to AI:."
+        },
+        {
+          "label": "Label 3.3 in menu",
+          "prompt": "Question 3.3 to AI:."
+        }
+      ]
+    },
+    {
+      "title": "💬 4th menu section in file",
+      "translationButton": {
+        "label": "Translate page/text to language: "
+      },
+      "translationSubmenu": [
+        {
+          "label": "🇪🇸 Spanish",
+          "prompt": "Translate this page to Spanish."
+        },
+        {
+          "label": "🇬🇧 English",
+          "prompt": "Translate this page to English."
+        },
+        {
+          "label": "xx Language",
+          "prompt": "Translate this page to language."
+        }
+      ],
+      "buttons": [
+        {
+          "label": "Label 4.1 in menu",
+          "prompt": "Question 4.1 to AI:."
+        },
+        {
+          "label": "Label 4.2 in menu",
+          "prompt": "Question 4.2 to AI:."
+        }
+      ]
+    }
+  ]
+}

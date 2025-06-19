@@ -1929,7 +1929,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
   const openJsonButton = document.getElementById('open-json-button');
   if (openJsonButton) {
     openJsonButton.addEventListener('click', () => {
-      window.open('/src/sidepanel/pages/json-viewer/json-viewer.html', '_blank');
+      window.open('/src/jsonEditor/jsonEditor.html', '_blank');
     });
   }
 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JSON AI Prompt Editor</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="jsonEditor.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="header-content">
+        <div class="header-text">
+          <h1>📝 JSON AI Prompt Editor</h1>
+          <p>Editor visual para archivos JSON de AI Prompt Assistant</p>
+        </div>
+        <div class="language-selector">
+          <button id="lang-es" class="lang-btn active">🇪🇸</button>
+          <button id="lang-en" class="lang-btn">🇬🇧</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="file-controls">
+      <div class="button-name-field">
+        <label for="add-button-text" class="button-name-label">🏷️ Title:</label>
+        <input type="text" id="add-button-text" maxlength="12" placeholder="Máx. 12 chars" value="ButtonName" class="button-name-input">
+      </div>
+      <button id="load-default-btn" class="btn btn-success">📋 Cargar Plantilla</button>
+      <div class="file-input-wrapper">
+        <label for="file-input" class="file-label">📁 Abrir JSON</label>
+        <input type="file" id="file-input" accept=".json" class="file-input">
+      </div>
+      <button id="save-btn" class="btn btn-primary" disabled>💾 Guardar</button>
+      <div class="filename-display" id="filename-display">
+        Loading default file...
+      </div>
+    </div>
+
+    <!-- Editor Embebido -->
+    <div id="embedded-editor" class="embedded-editor">
+      <div class="editor-header">
+        <h3>📝 Editor de Texto JSON</h3>
+        <div class="editor-controls">
+          <button id="validate-json-btn" class="btn btn-small btn-primary">✅ Validar JSON</button>
+          <button id="copy-path-btn" class="btn btn-small btn-secondary" title="Copiar ruta al portapapeles">📋 Copiar Ruta</button>
+          <button id="copy-json-btn" class="btn btn-small btn-secondary">📋 Copiar Archivo</button>
+        </div>
+      </div>
+      <textarea id="embedded-json-editor" placeholder="Edit your JSON here..."></textarea>
+    </div>
+
+  </div>
+
+  <script src="jsonEditor.js"></script>
+</body>
+</html> 
