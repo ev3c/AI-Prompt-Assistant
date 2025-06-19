@@ -1833,8 +1833,24 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
   });
 
   addButton.addEventListener('click', function () {
-    // Abrir el JSON Editor en una nueva pestaña
-    window.open('/src/jsonEditor/jsonEditor.html', '_blank');
+    deselectAllButtons();
+    addButton.classList.add('option-selected');
+    config.setCurrentContext('+add+');
+
+    // Actualizar la etiqueta para mostrar que estamos en modo de personalización
+    config.setClipboardText('Modo de personalización de menus');
+    updateContextDisplay();
+
+    // Guardar configuración principal
+    saveMainConfig();
+
+    // Cargar el menú correspondiente al contexto de +add+
+    loadMenuData(config.getCurrentLanguage()).then(newMenuData => {
+      config.setMenuData(newMenuData);
+      renderSections();
+    }).catch(error => {
+      console.error('Error al cargar el menú de +add+:', error);
+    });
   });
 
   // Configurar eventos para la ventana emergente de configuración

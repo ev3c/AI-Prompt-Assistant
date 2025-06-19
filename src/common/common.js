@@ -184,10 +184,12 @@ if (displayText.length > 100) {
       case 'twitter':
         labelText.textContent = ` ${displayText}`;
         break;
-      case 'gmail':
+            case 'gmail':
         labelText.textContent = ` ${displayText}`;
         break;
-
+      case '+add+':
+        labelText.textContent = `Add: ${shortenUrl(currentUrl)}`;
+        break;
       default:
         labelText.textContent = `URL: ${shortenUrl("error")}`;
     }
@@ -258,10 +260,12 @@ export async function loadMenuData(language = 'es') {
       case 'twitter':
         contextPrefix = 'X';
         break;
-      case 'gmail':
+            case 'gmail':
         contextPrefix = 'Gmail';
         break;
-
+      case '+add+':
+        contextPrefix = 'ADD';
+        break;
       default:
         contextPrefix = 'AI';
     }
