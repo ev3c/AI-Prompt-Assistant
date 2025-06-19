@@ -171,9 +171,9 @@ class JSONEditor {
 
   async loadDefaultFile() {
     try {
-      // Determinar el archivo por defecto según el idioma
+      // Determinar el archivo por defecto según el idioma (archivos locales en jsonEditor)
       const defaultFileName = this.currentLanguage === 'en' ? 'menu_data_ADD_GB.json' : 'menu_data_ADD_ES.json';
-      const fileUrl = chrome.runtime.getURL(`jsonEditor/${defaultFileName}`);
+      const fileUrl = chrome.runtime.getURL(`src/jsonEditor/${defaultFileName}`);
       const response = await fetch(fileUrl);
       const jsonData = await response.json();
       

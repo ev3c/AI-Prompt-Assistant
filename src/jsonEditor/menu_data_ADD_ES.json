@@ -3,6 +3,7 @@
     "title": "ADD",
     "currentUrlPlaceholder": "Página actual"
   },
+  "addButtonText": "ADD",
   "sections": [
     {
       "title": "❓ 1a sección del menú ",
