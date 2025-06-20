@@ -184,12 +184,13 @@ if (displayText.length > 100) {
       case 'twitter':
         labelText.textContent = ` ${displayText}`;
         break;
-            case 'gmail':
+      case 'gmail':
         labelText.textContent = ` ${displayText}`;
         break;
       case '+add+':
-        labelText.textContent = `Add: ${shortenUrl(currentUrl)}`;
+        labelText.textContent = `ADD: Custom prompts menu`;
         break;
+
       default:
         labelText.textContent = `URL: ${shortenUrl("error")}`;
     }
@@ -260,12 +261,13 @@ export async function loadMenuData(language = 'es') {
       case 'twitter':
         contextPrefix = 'X';
         break;
-            case 'gmail':
+      case 'gmail':
         contextPrefix = 'Gmail';
         break;
       case '+add+':
         contextPrefix = 'ADD';
         break;
+
       default:
         contextPrefix = 'AI';
     }
@@ -273,32 +275,38 @@ export async function loadMenuData(language = 'es') {
     // Determinar el sufijo del idioma
     let langSuffix = 'ES'; // Español por defecto
 
-    if (language === 'gb') {
-      langSuffix = 'GB';
-    } else if (language === 'fr') {
-      langSuffix = 'FR';
-    } else if (language === 'ca') {
-      langSuffix = 'CA';
-    } else if (language === 'de') {
-      langSuffix = 'DE';
-    } else if (language === 'it') {
-      langSuffix = 'IT';
-    } else if (language === 'pt') {
-      langSuffix = 'PT';
-    } else if (language === 'ja') {
-      langSuffix = 'JA';
-    } else if (language === 'zh') {
-      langSuffix = 'ZH';
-    } else if (language === 'ru') {
-      langSuffix = 'RU';
-    } else if (language === 'ar') {
-      langSuffix = 'AR';
-    } else if (language === 'kr') {
-      langSuffix = 'KR';
-    } else if (language === 'hi') {
-      langSuffix = 'HI';
-    } else if (language === 'es') {
-      langSuffix = 'ES';
+    // Lógica especial para contexto ADD: solo ES o GB
+    if (context === '+add+') {
+      langSuffix = (language === 'es') ? 'ES' : 'GB';
+    } else {
+      // Lógica normal para otros contextos
+      if (language === 'gb') {
+        langSuffix = 'GB';
+      } else if (language === 'fr') {
+        langSuffix = 'FR';
+      } else if (language === 'ca') {
+        langSuffix = 'CA';
+      } else if (language === 'de') {
+        langSuffix = 'DE';
+      } else if (language === 'it') {
+        langSuffix = 'IT';
+      } else if (language === 'pt') {
+        langSuffix = 'PT';
+      } else if (language === 'ja') {
+        langSuffix = 'JA';
+      } else if (language === 'zh') {
+        langSuffix = 'ZH';
+      } else if (language === 'ru') {
+        langSuffix = 'RU';
+      } else if (language === 'ar') {
+        langSuffix = 'AR';
+      } else if (language === 'kr') {
+        langSuffix = 'KR';
+      } else if (language === 'hi') {
+        langSuffix = 'HI';
+      } else if (language === 'es') {
+        langSuffix = 'ES';
+      }
     }
 
     // Generar el nombre del archivo con la carpeta /src/common/languages/
@@ -751,6 +759,9 @@ function openAIWithStandardContext(prompt, label) {
       break;
     case 'gmail':
       buttonType = 'gmailButton';
+      break;
+    case '+add+':
+      buttonType = 'addButton';
       break;
     default:
       buttonType = 'urlButton';

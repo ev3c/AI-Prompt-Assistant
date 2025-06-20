@@ -7,6 +7,7 @@ import {
   getAIModelName,
   changeLanguage,
   changeAIModel,
+  changeContext,
   showSettingsMenu,
   hideSettingsMenu,
   renderSections,
@@ -1833,24 +1834,20 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
   });
 
   addButton.addEventListener('click', function () {
+    // Cambiar al contexto ADD para mostrar el menú JSON correspondiente
+    const context = '+add+';
+    config.setCurrentContext(context);
+    changeContext(context);
+    
+    // Actualizar el botón seleccionado
     deselectAllButtons();
     addButton.classList.add('option-selected');
-    config.setCurrentContext('+add+');
-
-    // Actualizar la etiqueta para mostrar que estamos en modo de personalización
-    config.setClipboardText('Modo de personalización de menus');
-    updateContextDisplay();
-
-    // Guardar configuración principal
+    
+    // Guardar la configuración
     saveMainConfig();
-
-    // Cargar el menú correspondiente al contexto de +add+
-    loadMenuData(config.getCurrentLanguage()).then(newMenuData => {
-      config.setMenuData(newMenuData);
-      renderSections();
-    }).catch(error => {
-      console.error('Error al cargar el menú de +add+:', error);
-    });
+    
+    // También abrir el JSON Editor en una nueva pestaña
+    window.open('/src/jsonEditor/jsonEditor.html', '_blank');
   });
 
   // Configurar eventos para la ventana emergente de configuración
