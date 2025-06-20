@@ -7,7 +7,7 @@
     {
       "title": "❓ Domanda personalizzata",
       "buttons": [
-        {"label": "Scrivi una domanda", "prompt": "@prompt"}
+        {"label": "Scrivi una domanda", "prompt": ""}
       ]
     },  {
       "title": "📘 Comprensione generale",

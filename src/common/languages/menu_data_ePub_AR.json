@@ -7,7 +7,7 @@
     {
       "title": "❓ سؤال مخصص",
       "buttons": [
-        {"label": "اكتب سؤالاً", "prompt": "@prompt"}
+        {"label": "اكتب سؤالاً", "prompt": ""}
       ]
     },  {
       "title": "📘 الفهم العام",

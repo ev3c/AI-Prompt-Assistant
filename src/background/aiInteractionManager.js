@@ -41,6 +41,10 @@ export function buildPrompt(prompt, context, isClipboard, buttonType) {
       finalPrompt = prompt.replace(/\[URL\]/g, context);
     } else {
       switch (buttonType) {
+        case 'textOnlyButton':
+          // Para prompts vacíos originales, enviar solo el texto del usuario
+          finalPrompt = prompt;
+          break;
         case 'urlButton':
           finalPrompt = `${prompt}\n\nURL: ${context}`;
           break;
@@ -48,19 +52,22 @@ export function buildPrompt(prompt, context, isClipboard, buttonType) {
           finalPrompt = `${prompt}\n\nTexto del portapapeles:\n${context}`;
           break;
         case 'bookButton':
-          finalPrompt = `${prompt}\n\nTexto del libro:\n${context}`;
+          finalPrompt = `${prompt}\n\n${context}`;
           break;
         case 'pdfButton':
           finalPrompt = `${prompt}\n\nTexto del PDF:\n${context}`;
           break;
         case 'xButton':
-          finalPrompt = `${prompt}\n\nTexto del X:\n${context}`;
+          finalPrompt = `${prompt}\n\nTexto de X/Twitter:\n${context}`;
           break;
         case 'gmailButton':
           finalPrompt = `${prompt}\n\nTexto del portapapeles:\n${context}`;
           break;
         case 'wikiButton':
           finalPrompt = `${prompt}\n\nContenido de Wikipedia:\n${context}`;
+          break;
+        case 'addButton':
+          finalPrompt = `${prompt}\n\nURL: ${context}`;
           break;
         default:
           if (isClipboard) {

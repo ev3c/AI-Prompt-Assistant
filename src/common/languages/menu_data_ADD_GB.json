@@ -6,6 +6,12 @@
   "addButtonText": "ADD",
   "sections": [
     {
+      "title": "❓ Custom question",
+      "buttons": [
+        {"label": "Write a question directly to the AI", "prompt": ""}
+      ]
+    },
+    {
       "title": "❓ 1st menu section ",
       "buttons": [
         {

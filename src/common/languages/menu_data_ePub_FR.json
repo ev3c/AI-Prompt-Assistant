@@ -7,7 +7,7 @@
     {
       "title": "❓ Question personnalisée",
       "buttons": [
-        {"label": "Écrivez une question", "prompt": "@prompt"}
+        {"label": "Écrivez une question", "prompt": ""}
       ]
     },  {
       "title": "📘 Compréhension générale",

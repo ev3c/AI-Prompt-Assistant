@@ -7,7 +7,7 @@
     {
       "title": "❓ Custom Question",
       "buttons": [
-        {"label": "Write a question", "prompt": "@prompt"}
+        {"label": "Write a question directly to the AI", "prompt": ""}
       ]
     },  {
       "title": "📄 Basic PDF Analysis",

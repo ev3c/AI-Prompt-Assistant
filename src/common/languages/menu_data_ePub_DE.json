@@ -7,7 +7,7 @@
     {
       "title": "❓ Benutzerdefinierte Frage",
       "buttons": [
-        {"label": "Schreiben Sie eine Frage", "prompt": "@prompt"}
+        {"label": "Schreiben Sie eine Frage", "prompt": ""}
       ]
     },  {
       "title": "📘 Allgemeines Verständnis",

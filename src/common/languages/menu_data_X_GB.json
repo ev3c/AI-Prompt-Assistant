@@ -7,7 +7,7 @@
     {
       "title": "❓ Custom question",
       "buttons": [
-        {"label": "Write a question", "prompt": "@prompt"}
+        {"label": "Write a question directly to the AI", "prompt": ""}
       ]
     },  {
       "title": "🧵 Thread Content Analysis",

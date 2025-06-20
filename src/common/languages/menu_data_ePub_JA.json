@@ -7,7 +7,7 @@
     {
       "title": "❓ カスタム質問",
       "buttons": [
-        {"label": "質問を書く", "prompt": "@prompt"}
+        {"label": "質問を書く", "prompt": ""}
       ]
     },  {
       "title": "📘 一般的な理解",

@@ -7,7 +7,7 @@
     {
       "title": "❓ 自定义问题",
       "buttons": [
-        {"label": "输入问题", "prompt": "@prompt"}
+        {"label": "输入问题", "prompt": ""}
       ]
     },    
     {
