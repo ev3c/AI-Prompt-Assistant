@@ -101,11 +101,18 @@ body {
   flex-wrap: wrap;
 }
 
+.controls-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-right: auto;
+}
+
 .button-name-field {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex: 1;
   min-width: 200px;
 }
 
@@ -289,6 +296,29 @@ body {
   background-color: #fafafa;
 }
 
+/* En tu archivo CSS para el jsonEditor */
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0px;
+}
+
+.control-group label {
+  font-weight: bold;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.control-group input[type="text"],
+.control-group select {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
 @media (max-width: 768px) {
   .header-content {
     flex-direction: column;
@@ -400,5 +430,3 @@ body {
 #embedded-json-editor::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
-
-

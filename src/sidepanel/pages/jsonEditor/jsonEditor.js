@@ -27,10 +27,13 @@ class JSONEditor {
         defaultFile: "por defecto",
         loadedFile: "cargado",
         newFile: "nuevo",
+        platformLabel: "Plataforma:",
         pathCopied: "Ruta copiada al portapapeles:",
         pathCopyError: "No se pudo copiar la ruta al portapapeles.",
         saveMessage: "Guarda el archivo",
-        saveLocation: "en:\n\nC:/Users/[usuario]/AppData/Local/Google/Chrome/User Data/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/idioma/ \n\n Con el siguiente formato de nombre: \n Nombre de archivo = menu_data_[buttonName]_XX.json \n Donde XX es el idioma del archivo",
+        saveLocationWin: "en (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.3_0\\src\\common\\languages\\custom\\\n\nCon el siguiente formato de nombre: custom_N.json (donde N es de 1 a 4)",
+        saveLocationMac: "en (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre: custom_N.json (donde N es de 1 a 4)",
+        saveLocationLinux: "en (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre: custom_N.json (donde N es de 1 a 4)",
         jsonError: "Error al cargar el archivo JSON:",
         validationEmpty: "⚠️ Validación JSON\n\nEl editor está vacío. Por favor, ingresa contenido JSON para validar.",
         validationValid: "✅ JSON válido\n\nLa sintaxis del archivo es correcta.\n\n",
@@ -68,10 +71,13 @@ class JSONEditor {
         defaultFile: "default",
         loadedFile: "loaded",
         newFile: "new",
+        platformLabel: "Platform:",
         pathCopied: "Path copied to clipboard:",
         pathCopyError: "Could not copy path to clipboard.",
         saveMessage: "Save the file",
-        saveLocation: "to:\n\nC:/Users/[user]/AppData/Local/Google/Chrome/User Data/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/idioma/ \n\n With the following name format: \n File name = menu_data_[buttonName]_XX.json \n Where XX is the file language",
+        saveLocationWin: "on (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.2_0\\src\\common\\languages\\custom\\\n\nWith the following name format: custom_N.json (where N is from 1 to 4)",
+        saveLocationMac: "on (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format: custom_N.json (where N is from 1 to 4)",
+        saveLocationLinux: "on (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format: custom_N.json (where N is from 1 to 4)",
         jsonError: "Error loading JSON file:",
         validationEmpty: "⚠️ JSON Validation\n\nThe editor is empty. Please enter JSON content to validate.",
         validationValid: "✅ Valid JSON\n\nThe file syntax is correct.\n\n",
@@ -113,6 +119,7 @@ class JSONEditor {
     this.initEmbeddedEditor();
     // Inicializar el campo Title con valor por defecto
     this.initializeButtonNameField();
+    this.initializePlatformSelector();
     // Aplicar traducciones iniciales
     this.updateLanguage();
     // Actualizar texto inicial del filename display
@@ -142,6 +149,7 @@ class JSONEditor {
     const headerH1 = document.querySelector('.header h1');
     const headerP = document.querySelector('.header p');
     const buttonNameLabel = document.querySelector('.button-name-label');
+    const platformLabel = document.getElementById('platform-label');
     const addButtonText = document.getElementById('add-button-text');
     const loadDefaultBtn = document.getElementById('load-default-btn');
     const fileLabel = document.querySelector('.file-label');
@@ -155,6 +163,7 @@ class JSONEditor {
     if (headerH1) headerH1.textContent = this.t('title');
     if (headerP) headerP.textContent = this.t('subtitle');
     if (buttonNameLabel) buttonNameLabel.textContent = this.t('titleLabel');
+    if (platformLabel) platformLabel.textContent = this.t('platformLabel');
     if (addButtonText) addButtonText.placeholder = this.t('titlePlaceholder');
     if (loadDefaultBtn) loadDefaultBtn.textContent = this.t('loadTemplate');
     if (fileLabel) fileLabel.textContent = this.t('openJson');
@@ -207,9 +216,9 @@ class JSONEditor {
     
     // Copy path button
     document.getElementById('copy-path-btn').addEventListener('click', () => {
-      const path = this.currentData.jsonPath || 'C:/Users/[usuario]/AppData/Local/Google/Chrome/User Data/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/idioma/';
-      navigator.clipboard.writeText(path).then(() => {
-        alert(this.t('pathCopied') + '\n\n\n' + path);
+      const pathOnly = this.getPlatformPathOnly();
+      navigator.clipboard.writeText(pathOnly).then(() => {
+        alert(this.t('pathCopied') + '\n\n' + pathOnly);
       }, () => {
         alert(this.t('pathCopyError'));
       });
@@ -344,7 +353,7 @@ class JSONEditor {
     URL.revokeObjectURL(url);
 
     // Mostrar mensaje con la ruta sugerida
-    alert(this.t('saveMessage') + ' ' + filename + ' ' + this.t('saveLocation'));
+    alert(this.t('saveMessage') + ' ' + filename + ' ' + this.getPlatformSaveMessage());
   }
 
   updateFilenameDisplay() {
@@ -408,6 +417,46 @@ class JSONEditor {
       // Actualizar los datos con el valor por defecto del campo
       this.updateAddButtonText(buttonNameInput.value);
     }
+  }
+
+  initializePlatformSelector() {
+    const platformSelector = document.getElementById('platform-selector');
+    if (!platformSelector) return;
+
+    const platform = navigator.platform.toLowerCase();
+    if (platform.includes('win')) {
+      platformSelector.value = 'win';
+    } else if (platform.includes('mac')) {
+      platformSelector.value = 'mac';
+    } else if (platform.includes('linux')) {
+      platformSelector.value = 'linux';
+    }
+  }
+
+  getPlatformSaveMessage() {
+    const platformSelector = document.getElementById('platform-selector');
+    const selectedPlatform = platformSelector ? platformSelector.value : 'win';
+
+    switch (selectedPlatform) {
+      case 'win':
+        return this.t('saveLocationWin');
+      case 'mac':
+        return this.t('saveLocationMac');
+      case 'linux':
+        return this.t('saveLocationLinux');
+      default:
+        return this.t('saveLocationWin');
+    }
+  }
+
+  getPlatformPathOnly() {
+    const fullMessage = this.getPlatformSaveMessage();
+    const parts = fullMessage.split('\n\n');
+    if (parts.length > 1) {
+      // La ruta es la segunda parte del mensaje
+      return parts[1].trim();
+    }
+    return fullMessage; // Fallback si el formato no es el esperado
   }
 
   validateEmbeddedJSON() {

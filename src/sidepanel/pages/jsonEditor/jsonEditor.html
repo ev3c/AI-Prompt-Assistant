@@ -22,9 +22,19 @@
     </header>
 
     <div class="file-controls">
-      <div class="button-name-field">
-        <label for="add-button-text" class="button-name-label">🏷️ Title:</label>
-        <input type="text" id="add-button-text" maxlength="12" placeholder="Máx. 12 chars" value="ButtonName" class="button-name-input">
+      <div class="controls-wrapper">
+        <div class="button-name-field">
+          <label for="add-button-text" class="button-name-label">🏷️ Title:</label>
+          <input type="text" id="add-button-text" maxlength="12" placeholder="Máx. 12 chars" value="ButtonName" class="button-name-input">
+        </div>
+        <div class="control-group">
+            <label id="platform-label" for="platform-selector">Plataforma:</label>
+            <select id="platform-selector">
+                <option value="win">Windows</option>
+                <option value="mac">Mac</option>
+                <option value="linux">Linux</option>
+            </select>
+        </div>
       </div>
       <button id="load-default-btn" class="btn btn-success">📋 Cargar Plantilla</button>
       <div class="file-input-wrapper">
