@@ -964,7 +964,12 @@ async function initializeCustomButtons() {
     customToggle.classList.remove('hidden');
     customToggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      customContainer.classList.toggle('hidden');
+      const isHidden = customContainer.classList.toggle('hidden');
+      if (isHidden) {
+        customToggle.textContent = '▼'; // Oculto, mostrar flecha hacia abajo para desplegar
+      } else {
+        customToggle.textContent = '▲'; // Visible, mostrar flecha hacia arriba para ocultar
+      }
     });
   }
 }
