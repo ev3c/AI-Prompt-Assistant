@@ -237,11 +237,16 @@ export async function loadMenuData(language = 'es') {
 
     // Manejar contextos custom primero
     if (context.startsWith('custom_')) {
-      fileName = `/src/common/languages/custom/${context}.json`;
-      console.log(`Intentando cargar archivo custom: ${fileName}`);
-      const response = await fetch(chrome.runtime.getURL(fileName));
-      if (response.ok) {
-        return await response.json();
+      const customFileName = context.replace('custom_', 'custom_') + '.json';
+      const customFilePath = `/src/common/languages/custom/${customFileName}`;
+      
+      try {
+        const response = await fetch(chrome.runtime.getURL(customFilePath));
+        if (response.ok) {
+          return await response.json();
+        }
+      } catch (error) {
+        console.error(`Error al cargar el archivo custom ${customFileName}:`, error);
       }
       // Si llegamos aquí, el archivo custom no se encontró o falló al cargar.
       throw new Error(`No se pudo cargar el archivo de menú custom: ${fileName}`);
