@@ -5,7 +5,7 @@
   },
   "sections": [
     {
-      "title": "❓ Pregunta personalizada",
+      "title": "❓ Pregunta personalizadas",
       "buttons": [
         {"label": "Escribe una pregunta directamente a la AI", "prompt": ""}
       ]

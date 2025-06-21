@@ -81,13 +81,20 @@
             <button id="use-wiki" class="option-button"></button>
             <button id="use-twitter" class="option-button"></button>
             <button id="use-gmail" class="option-button"></button>
-            <button id="use-add" class="option-button"></button>
+            <div id="add-button-group" class="option-button-group">
+              <button id="use-add" class="option-button">ADD</button>
+              <button id="custom-toggle" class="option-button dropdown-arrow hidden">▼</button>
+            </div>
+          </div>
+          <div id="custom-buttons-container" class="button-row custom-buttons-container hidden">
+            <!-- Los botones personalizados se inyectarán aquí dinámicamente -->
           </div>
         </div>
       </div>
 
       <p id="current-url"></p>
     </header>
+
 
     <!-- Menú principal -->
     <div id="main-content">

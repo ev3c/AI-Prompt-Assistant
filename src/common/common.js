@@ -164,37 +164,44 @@ let displayText = clipboardText || '[Portapapeles vacío]';
 if (displayText.length > 100) {
   displayText = displayText.substring(0, 100) + '...';
 }
+const menuData = config.getMenuData(); // Get current menu data
 
-    switch (currentContext) {
-      case 'url':
-        labelText.textContent = `URL: ${shortenUrl(currentUrl)}`;
-        break;
-      case 'clipboard':
-        labelText.textContent = `ClipB: ${displayText}`;
-        break;
-      case 'book':
-        labelText.textContent = `Book: ${displayText}`;
-        break;
-      case 'pdf':
-        labelText.textContent = ` ${displayText}`;
-        break;
-      case 'wiki':
-        labelText.textContent = `Wiki: ${shortenUrl(currentUrl)}`;
-        break;
-      case 'twitter':
-        labelText.textContent = ` ${displayText}`;
-        break;
-      case 'gmail':
-        labelText.textContent = ` ${displayText}`;
-        break;
-      case '+add+':
-        labelText.textContent = `ADD: Custom prompts menu`;
-        break;
 
-      default:
-        labelText.textContent = `URL: ${shortenUrl("error")}`;
+switch (currentContext) {
+  case 'url':
+    labelText.textContent = `URL: ${shortenUrl(currentUrl)}`;
+    break;
+  case 'clipboard':
+    labelText.textContent = `ClipB: ${displayText}`;
+    break;
+  case 'book':
+    labelText.textContent = `Book: ${displayText}`;
+    break;
+  case 'pdf':
+    labelText.textContent = ` ${displayText}`;
+    break;
+  case 'wiki':
+    labelText.textContent = `Wiki: ${shortenUrl(currentUrl)}`;
+    break;
+  case 'twitter':
+    labelText.textContent = ` ${displayText}`;
+    break;
+  case 'gmail':
+    labelText.textContent = ` ${displayText}`;
+    break;
+  case '+add+':
+    labelText.textContent = `ADD: Custom prompts menu`;
+    break;
+
+  default:
+    if (currentContext.startsWith('custom_')) {
+      const title = menuData?.header?.title || currentContext.replace(/_/g, ' ').replace('custom', 'Custom');
+      labelText.textContent = `Custom: ${title}`;
+    } else {
+      labelText.textContent = `URL: ${shortenUrl("error")}`;
     }
   }
+}
 
 
 // Función para acortar URLs largas
@@ -227,6 +234,18 @@ export async function loadMenuData(language = 'es') {
     let fileName;
     const model = currentAIModel || 'chatgpt'; // Usar 'chatgpt' como valor por defecto
     const context = currentContext || 'url'; // Usar 'url' como contexto por defecto
+
+    // Manejar contextos custom primero
+    if (context.startsWith('custom_')) {
+      fileName = `/src/common/languages/custom/${context}.json`;
+      console.log(`Intentando cargar archivo custom: ${fileName}`);
+      const response = await fetch(chrome.runtime.getURL(fileName));
+      if (response.ok) {
+        return await response.json();
+      }
+      // Si llegamos aquí, el archivo custom no se encontró o falló al cargar.
+      throw new Error(`No se pudo cargar el archivo de menú custom: ${fileName}`);
+    }
 
     // Si el contexto es PDF, verificar si tenemos información del PDF seleccionado
     if (context === 'pdf') {

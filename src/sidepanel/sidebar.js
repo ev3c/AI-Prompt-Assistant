@@ -913,6 +913,62 @@ function extractAndCopyTweets() {
   });
 }
 
+// Función para manejar el clic en un botón de menú custom
+function handleCustomButtonClick(context, buttonElement) {
+  deselectAllButtons();
+  buttonElement.classList.add('option-selected');
+  changeContext(context);
+}
+
+// Función para buscar archivos JSON custom y crear los botones
+async function initializeCustomButtons() {
+  const customToggle = document.getElementById('custom-toggle');
+  const customContainer = document.getElementById('custom-buttons-container');
+
+  if (!customToggle || !customContainer) {
+    console.warn('Elementos para botones custom no encontrados.');
+    return;
+  }
+
+  const customFileNames = ['custom_1.json', 'custom_2.json', 'custom_3.json', 'custom_4.json'];
+  let customButtonsCreated = 0;
+
+  const fileCheckPromises = customFileNames.map(async (fileName) => {
+    try {
+      const fileUrl = chrome.runtime.getURL(`src/common/languages/custom/${fileName}`);
+      const response = await fetch(fileUrl);
+      
+      if (response.ok) {
+        const data = await response.json();
+        const title = data.header?.title || fileName.replace('.json', '');
+        const context = `custom_${customButtonsCreated + 1}`;
+
+        const button = document.createElement('button');
+        button.className = 'option-button custom-menu-button';
+        button.textContent = title;
+        button.dataset.context = context;
+
+        button.addEventListener('click', () => handleCustomButtonClick(context, button));
+
+        customContainer.appendChild(button);
+        customButtonsCreated++;
+      }
+    } catch (error) {
+      // El archivo no existe o es inválido, se ignora.
+    }
+  });
+
+  await Promise.all(fileCheckPromises);
+
+  if (customButtonsCreated > 0) {
+    customToggle.classList.remove('hidden');
+    customToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      customContainer.classList.toggle('hidden');
+    });
+  }
+}
+
 // Función para inicializar la extensión
 document.addEventListener('DOMContentLoaded', async function () {
   try {
@@ -968,6 +1024,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Inicializar la interfaz de usuario
     initializeUI();
+
+    // Inicializar botones customizados
+    await initializeCustomButtons();
 
     // Obtener URL actual o contenido del portapapeles según el contexto
     if (config.getUseClipboard() || config.getCurrentContext() === 'clipboard') {
@@ -1087,6 +1146,11 @@ function deselectAllButtons() {
   if (twitterButton) twitterButton.classList.remove('option-selected');
   if (gmailButton) gmailButton.classList.remove('option-selected');
   if (addButton) addButton.classList.remove('option-selected');
+
+  // Añadir deselección para los botones custom
+  const customButtons = document.querySelectorAll('.custom-menu-button');
+  customButtons.forEach(btn => btn.classList.remove('option-selected'));
+  
 }
 
 // Función para inicializar la interfaz de usuario

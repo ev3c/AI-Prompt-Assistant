@@ -161,6 +161,11 @@ body {
   font-weight: bold;
 }
 
+/* En tu archivo sidebar.css */
+.option-button-group {
+  display: flex;
+}
+
 #current-url {
   margin: 10px 0 0;
   font-size: 12px;
