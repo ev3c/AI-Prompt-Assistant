@@ -65,7 +65,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   } 
   else if (request.action === 'openJsonFolder') {
     // En lugar de abrir la carpeta del sistema, abrir el editor de JSON
-    chrome.tabs.create({ url: chrome.runtime.getURL('/src/jsonEditor/jsonEditor.html') });
+    chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/pages/jsonEditor/jsonEditor.html') });
     
     sendResponse({ success: true });
     return true;

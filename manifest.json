@@ -74,10 +74,10 @@
         "/src/sidepanel/pages/feedback/feedback.js",
         "/src/sidepanel/pages/json-viewer/json-viewer.html",
         "/src/sidepanel/pages/json-viewer/json-viewer.js",
-        "/src/jsonEditor/jsonEditor.html",
-        "/src/jsonEditor/jsonEditor.js",
-        "/src/jsonEditor/jsonEditor.css",
-        "/src/jsonEditor/*.json",
+        "/src/sidepanel/pages/jsonEditor/jsonEditor.html",
+        "/src/sidepanel/pages/jsonEditor/jsonEditor.js",
+        "/src/sidepanel/pages/jsonEditor/jsonEditor.css",
+        "/src/common/languages/custom/*.json",
         "/src/common/languages/*.json"
       ],
       "matches": ["<all_urls>"]

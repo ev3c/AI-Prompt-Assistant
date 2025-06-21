@@ -125,7 +125,7 @@ export function handleContextMenuClick(info, tab) {
     }
   }
   else if (menuItemId === 'open-json-files') {
-    chrome.tabs.create({ url: chrome.runtime.getURL('/jsonEditor/jsonEditor.html') });
+    chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/pages/jsonEditor/jsonEditor.html') });
     console.log("Abriendo JSON Editor");
    // chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/pages/json-viewer/json-viewer.html') });
   }
