@@ -1,0 +1,74 @@
+{
+  "header": {
+    "title": "AI prompt assistant",
+    "currentUrlPlaceholder": "Current page"
+  },
+  "sections": [
+    {
+      "title": "❓ Custom question",
+      "buttons": [
+        {"label": "Write a question directly to the AI", "prompt": ""}
+      ]
+    },  {
+      "title": "📝 Summary and Understanding",
+      "buttons": [
+        {"label": "Make a page/text summary", "prompt": "Make a summary of:"},
+        {"label": "Main points", "prompt": "What are the main points of this article?"},
+        {"label": "3-sentence summary", "prompt": "Summarize this page in 3 sentences."},
+        {"label": "Kids version", "prompt": "Give me a child-friendly version of this information."},
+        {"label": "Main conclusion", "prompt": "What is the main conclusion of this page?"}
+      ]
+    },
+    {
+      "title": "🔍 Content Analysis",
+      "buttons": [
+        {"label": "What's the tone?", "prompt": "What tone does this page have? (objective, persuasive, emotional, etc.)"},
+        {"label": "Main arguments", "prompt": "What main arguments are used on this page?"},
+        {"label": "Identify biases", "prompt": "Can you identify any bias in this text?"},
+        {"label": "Sources used", "prompt": "What are the sources used in this page?"},
+        {"label": "Evaluate reliability", "prompt": "Is this information reliable? Why or why not?"}
+      ]
+    },
+    {
+      "title": "📊 Data Extraction",
+      "buttons": [
+        {"label": "Statistical data", "prompt": "Extract all statistical data that appears on this page."},
+        {"label": "Summary table", "prompt": "Give me a table with the most important information from this article."},
+        {"label": "Products mentioned", "prompt": "List all products that are mentioned."},
+        {"label": "Entities mentioned", "prompt": "What are the names of people/places/companies that appear here?"}
+      ]
+    },
+    {
+      "title": "🤖 Interaction or Action Help",
+      "buttons": [
+        {"label": "Fill form", "prompt": "Help me fill this form with my data."},
+        {"label": "How to register", "prompt": "How can I register here?"},
+        {"label": "Contact info", "prompt": "Where is the contact information?"},
+        {"label": "Action steps", "prompt": "Summarize the steps to do [specific page action]."}
+      ]
+    },
+    {
+      "title": "💬 Translation or Format Change",
+      "translationButton": {"label": "Translate page/text to: "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 Spanish", "prompt": "Translate this page to Spanish."},
+        {"label": "🇬🇧 English", "prompt": "Translate this page to English."},
+        {"label": "ca Catalan", "prompt": "Translate this page to Catalan."},
+        {"label": "🇩🇪 German", "prompt": "Translate this page to German."},
+        {"label": "🇫🇷 French", "prompt": "Translate this page to French."}, 
+        {"label": "🇮🇹 Italian", "prompt": "Translate this page to Italian."},
+        {"label": "🇵🇹 Portuguese", "prompt": "Translate this page to Portuguese."},
+        {"label": "🇨🇳 Chinese", "prompt": "Translate this page to Chinese."},
+        {"label": "🇷🇺 Russian", "prompt": "Translate this page to Russian."},
+        {"label": "🇸🇦 Arabic", "prompt": "Translate this page to Arabic."},
+        {"label": "🇯🇵 Japanese", "prompt": "Translate this page to Japanese."},
+        {"label": "🇮🇳 Hindi", "prompt": "Translate this page to Hindi."},
+        {"label": "🇰🇷 Korean", "prompt": "Translate this page to Korean."}
+      ],
+      "buttons": [
+        {"label": "To presentation", "prompt": "Convert this article into a slide presentation."},
+        {"label": "For social media", "prompt": "Rewrite this content for a social media post."}
+      ]
+    }
+  ]
+}

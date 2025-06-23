@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "AI prompt assistant",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "❓ Benutzerdefinierte Frage",
+      "buttons": [
+        {"label": "Frage formulieren", "prompt": ""}
+      ]
+    },    
+    {
+      "title": "📝 Zusammenfassung und Verständnis",
+      "buttons": [
+        {"label": "Seite/Text zusammenfassen", "prompt": "Fasse zusammen:"},
+        {"label": "Hauptpunkte", "prompt": "Was sind die Hauptpunkte dieses Artikels?"},
+        {"label": "3-Satz-Zusammenfassung", "prompt": "Fasse diese Seite in 3 Sätzen zusammen."},
+        {"label": "Kinderversion", "prompt": "Gib mir eine kinderfreundliche Version dieser Information."},
+        {"label": "Hauptschlussfolgerung", "prompt": "Was ist die Hauptschlussfolgerung dieser Seite?"}
+      ]
+    },
+    {
+      "title": "🔍 Inhaltsanalyse",
+      "buttons": [
+        {"label": "Welcher Tonfall?", "prompt": "Welchen Tonfall hat diese Seite? (objektiv, überzeugend, emotional, usw.)"},
+        {"label": "Hauptargumente", "prompt": "Welche Hauptargumente werden auf dieser Seite verwendet?"},
+        {"label": "Vorurteile identifizieren", "prompt": "Kannst du Vorurteile in diesem Text identifizieren?"},
+        {"label": "Verwendete Quellen", "prompt": "Welche Quellen werden auf dieser Seite verwendet?"},
+        {"label": "Zuverlässigkeit bewerten", "prompt": "Sind diese Informationen zuverlässig? Warum oder warum nicht?"}
+      ]
+    },
+    {
+      "title": "📊 Datenextraktion",
+      "buttons": [
+        {"label": "Statistische Daten", "prompt": "Extrahiere alle statistischen Daten, die auf dieser Seite erscheinen."},
+        {"label": "Zusammenfassende Tabelle", "prompt": "Gib mir eine Tabelle mit den wichtigsten Informationen aus diesem Artikel."},
+        {"label": "Erwähnte Produkte", "prompt": "Liste alle erwähnten Produkte auf."},
+        {"label": "Erwähnte Entitäten", "prompt": "Welche Namen von Personen/Orten/Unternehmen erscheinen hier?"}
+      ]
+    },
+    {
+      "title": "🤖 Interaktion oder Aktionshilfe",
+      "buttons": [
+        {"label": "Formular ausfüllen", "prompt": "Hilf mir, dieses Formular mit meinen Daten auszufüllen."},
+        {"label": "Wie registrieren", "prompt": "Wie kann ich mich hier registrieren?"},
+        {"label": "Kontaktinformationen", "prompt": "Wo befinden sich die Kontaktinformationen?"},
+        {"label": "Aktionsschritte", "prompt": "Fasse die Schritte zusammen, um [spezifische Seitenaktion] durchzuführen."}
+      ]
+    },
+    {
+      "title": "💬 Übersetzung oder Formatänderung",
+      "translationButton": {"label": "Seite/Text übersetzen auf: "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 Spanisch", "prompt": "Übersetze diese Seite ins Spanische."},
+        {"label": "🇬🇧 Englisch", "prompt": "Übersetze diese Seite ins Englische."},
+        {"label": "ca Katalanisch", "prompt": "Übersetze diese Seite ins Katalanische."},
+        {"label": "🇩🇪 Deutsch", "prompt": "Übersetze diese Seite ins Deutsche."},
+        {"label": "🇫🇷 Französisch", "prompt": "Übersetze diese Seite ins Französische."}, 
+        {"label": "🇮🇹 Italienisch", "prompt": "Übersetze diese Seite ins Italienische."},
+        {"label": "🇵🇹 Portugiesisch", "prompt": "Übersetze diese Seite ins Portugiesische."},
+        {"label": "🇨🇳 Chinesisch", "prompt": "Übersetze diese Seite ins Chinesische."},
+        {"label": "🇷🇺 Russisch", "prompt": "Übersetze diese Seite ins Russische."},
+        {"label": "🇸🇦 Arabisch", "prompt": "Übersetze diese Seite ins Arabische."},
+        {"label": "🇯🇵 Japanisch", "prompt": "Übersetze diese Seite ins Japanische."},
+        {"label": "🇮🇳 Hindi", "prompt": "Übersetze diese Seite ins Hindi."},
+        {"label": "🇰🇷 Koreanisch", "prompt": "Übersetze diese Seite ins Koreanische."}
+      ],
+      "buttons": [
+        {"label": "In Präsentation", "prompt": "Wandle diesen Artikel in eine Folienpräsentation um."},
+        {"label": "Für soziale Medien", "prompt": "Schreibe diesen Inhalt für einen Social-Media-Beitrag um."}
+      ]
+    }
+  ]
+}

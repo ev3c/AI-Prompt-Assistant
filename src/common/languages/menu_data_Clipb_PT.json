@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "AI prompt assistant",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "❓ Pergunta personalizada",
+      "buttons": [
+        {"label": "Escreva uma pergunta", "prompt": ""}
+      ]
+    },    
+    {
+      "title": "📝 Resumo e compreensão",
+      "buttons": [
+        {"label": "Faça um resumo da página/texto", "prompt": "Faça um resumo de:"},
+        {"label": "Pontos principais", "prompt": "Quais são os pontos principais deste artigo?"},
+        {"label": "Resumo em 3 frases", "prompt": "Resuma esta página em 3 frases."},
+        {"label": "Versão para crianças", "prompt": "Dê-me uma versão para crianças desta informação."},
+        {"label": "Conclusão principal", "prompt": "Qual é a conclusão principal desta página?"}
+      ]
+    },
+    {
+      "title": "🔍 Análise de conteúdo",
+      "buttons": [
+        {"label": "Qual o tom?", "prompt": "Que tom esta página tem? (objetivo, persuasivo, emocional, etc.)"},
+        {"label": "Argumentos principais", "prompt": "Quais argumentos principais são usados nesta página?"},
+        {"label": "Identificar vieses", "prompt": "Você pode identificar algum viés neste texto?"},
+        {"label": "Fontes utilizadas", "prompt": "Quais são as fontes usadas nesta página?"},
+        {"label": "Avaliar confiabilidade", "prompt": "Esta informação é confiável? Por que sim ou por que não?"}
+      ]
+    },
+    {
+      "title": "📊 Extração de dados",
+      "buttons": [
+        {"label": "Dados estatísticos", "prompt": "Extraia todos os dados estatísticos que aparecem nesta página."},
+        {"label": "Tabela resumo", "prompt": "Dê-me uma tabela com as informações mais importantes deste artigo."},
+        {"label": "Produtos mencionados", "prompt": "Liste todos os produtos mencionados."},
+        {"label": "Entidades mencionadas", "prompt": "Quais são os nomes de pessoas/lugares/empresas que aparecem aqui?"}
+      ]
+    },
+    {
+      "title": "🤖 Interação ou ajuda com ações",
+      "buttons": [
+        {"label": "Preencher formulário", "prompt": "Ajude-me a preencher este formulário com meus dados."},
+        {"label": "Como se registrar", "prompt": "Como posso me registrar aqui?"},
+        {"label": "Informações de contato", "prompt": "Onde estão as informações de contato?"},
+        {"label": "Passos de ação", "prompt": "Resuma os passos para fazer [ação específica da página]."}
+      ]
+    },
+    {
+      "title": "💬 Tradução ou mudança de formato",
+      "translationButton": {"label": "Traduza página/texto para: "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 Espanhol", "prompt": "Traduza esta página para o espanhol."},
+        {"label": "🇬🇧 Inglês", "prompt": "Traduza esta página para o inglês."},
+        {"label": "ca Catalão", "prompt": "Traduza esta página para o catalão."},
+        {"label": "🇩🇪 Alemão", "prompt": "Traduza esta página para o alemão."},
+        {"label": "🇫🇷 Francês", "prompt": "Traduza esta página para o francês."}, 
+        {"label": "🇮🇹 Italiano", "prompt": "Traduza esta página para o italiano."},
+        {"label": "🇵🇹 Português", "prompt": "Traduza esta página para o português."},
+        {"label": "🇨🇳 Chinês", "prompt": "Traduza esta página para o chinês."},
+        {"label": "🇷🇺 Russo", "prompt": "Traduza esta página para o russo."},
+        {"label": "🇸🇦 Árabe", "prompt": "Traduza esta página para o árabe."},
+        {"label": "🇯🇵 Japonês", "prompt": "Traduza esta página para o japonês."},
+        {"label": "🇮🇳 Hindi", "prompt": "Traduza esta página para o hindi."},
+        {"label": "🇰🇷 Coreano", "prompt": "Traduza esta página para o coreano."}
+      ],
+      "buttons": [
+        {"label": "Para apresentação", "prompt": "Converta este artigo em uma apresentação de slides."},
+        {"label": "Para redes sociais", "prompt": "Reescreva este conteúdo para uma publicação de redes sociais."}
+      ]
+    }
+  ]
+}
