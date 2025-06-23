@@ -87,156 +87,94 @@ export function buildPrompt(prompt, context, isClipboard, buttonType) {
  */
 export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, buttonType) {
   const finalPrompt = buildPrompt(prompt, context, isClipboard, buttonType);
-  
-  // Caso especial para "All AI's" - abrir todas las AIs disponibles
-  if (aiModel === 'allai') {
-    const AI_URLS = await getAIUrls();
-    const supportedAIs = ['chatgpt', 'copilot', 'meta', 'claude', 'deepseek', 'mistral', 'gemini', 'grok', 'google'];
-    const allTabs = await chrome.tabs.query({});
-    
-    // Usar un bucle for...of con await para procesar cada IA de forma secuencial y pausada.
-    for (const ai of supportedAIs) {
-      if (AI_URLS[ai]) {
-        try {
-          const aiUrls = AI_URLS[ai];
-          let targetTab = allTabs.find(tab => {
-            if (!tab.url) return false;
-            if (ai === 'meta') {
-              try {
-                return new URL(tab.url).hostname.includes('meta.ai');
-              } catch (e) { return false; }
-            }
-            const matchesWeb1 = tab.url.includes(aiUrls.web1);
-            const matchesWeb2 = aiUrls.web2 && tab.url.includes(aiUrls.web2);
-            return matchesWeb1 || matchesWeb2;
-          });
-
-          let tabToUse;
-          if (targetTab) {
-            console.log(`✅ Pestaña existente encontrada para ${ai}:`, targetTab.id);
-            tabToUse = targetTab;
-          } else {
-            console.log(`❌ No se encontró pestaña para ${ai}, creando nueva.`);
-            tabToUse = await chrome.tabs.create({ url: aiUrls.web1, active: false });
-            // Esperar a que la nueva pestaña cargue completamente.
-            await new Promise(resolve => {
-              const listener = (tabId, info) => {
-                if (tabId === tabToUse.id && info.status === 'complete') {
-                  chrome.tabs.onUpdated.removeListener(listener);
-                  console.log(`✅ Pestaña nueva ${ai} cargada.`);
-                  resolve();
-                }
-              };
-              chrome.tabs.onUpdated.addListener(listener);
-            });
-          }
-
-          // Activar la pestaña y recargarla
-          await chrome.tabs.update(tabToUse.id, { active: true });
-          console.log(`🔄 Recargando pestaña ${ai}...`);
-          await chrome.tabs.reload(tabToUse.id);
-
-          // Esperar a que la recarga se complete.
-           await new Promise(resolve => {
-            const reloadListener = (tabId, info) => {
-              if (tabId === tabToUse.id && info.status === 'complete') {
-                chrome.tabs.onUpdated.removeListener(reloadListener);
-                console.log(`✅ Pestaña ${ai} recargada.`);
-                resolve();
-              }
-            };
-            chrome.tabs.onUpdated.addListener(reloadListener);
-          });
-
-          // Enviar el prompt con el tiempo de espera específico de la IA.
-          await sendPromptToTab(tabToUse.id, finalPrompt, ai);
-        } catch (error) {
-          console.error(`Error abriendo ${ai}:`, error);
-        }
-      }
-    }
-    return; // Salir temprano para All AI's
-  }
-
   const AI_URLS = await getAIUrls();
-  const aiUrls = AI_URLS[aiModel];
-  if (!aiUrls) throw new Error('IA no soportada');
 
-  // Buscar pestaña existente
-  const tabs = await chrome.tabs.query({});
-  console.log('🔍 Buscando pestaña existente para:', aiModel);
-  console.log('🔍 URLs a buscar:', aiUrls);
-  console.log('🔍 Pestañas abiertas:', tabs.map(tab => ({ id: tab.id, url: tab.url })));
-  
-  let targetTab = tabs.find(tab => {
-    if (!tab.url) return false;
-    
-    // Para MetaAI, buscar específicamente meta.ai en el hostname
-    if (aiModel === 'meta') {
-      try {
-        const tabUrl = new URL(tab.url);
-        const isMetaAI = tabUrl.hostname.includes('meta.ai');
-        console.log(`🔍 Pestaña ${tab.id}: ${tab.url} - es meta.ai: ${isMetaAI}`);
-        return isMetaAI;
-      } catch (e) {
-        console.log(`🔍 Error parsing URL ${tab.url}:`, e);
-        return false;
-      }
-    }
-    
-    // Para otras IAs, usar la lógica original
-    const matchesWeb1 = tab.url.includes(aiUrls.web1);
-    const matchesWeb2 = aiUrls.web2 && tab.url.includes(aiUrls.web2);
-    console.log(`🔍 Pestaña ${tab.id}: ${tab.url} - web1: ${matchesWeb1}, web2: ${matchesWeb2}`);
-    return matchesWeb1 || matchesWeb2;
-  });
-
-  if (targetTab) {
-    console.log('✅ Pestaña existente encontrada:', targetTab.id, targetTab.url);
-    await chrome.tabs.update(targetTab.id, { active: true });
-    
-    // OJU OSCAR: Actualizar la página antes de enviar el prompt
-    console.log(`Prompt para ${aiModel}:`, finalPrompt);
-    await chrome.tabs.reload(targetTab.id);
-    
-    // Esperar a que se complete la recarga antes de enviar el prompt
-    chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
-      if (tabId === targetTab.id && info.status === 'complete') {
-        chrome.tabs.onUpdated.removeListener(listener);
-        sendPromptToTab(targetTab.id, finalPrompt, aiModel);
-      }
-    });
-  } else {
-    console.log('❌ No se encontró pestaña existente, creando nueva');
-    console.log('🔗 Creando nueva pestaña con URL:', aiUrls.web1);
-    console.log(`Prompt para ${aiModel}:`, finalPrompt);
-    const newTab = await chrome.tabs.create({ url: aiUrls.web1, active: true });
-
-    // Esperar a que cargue la pestaña antes de enviar el prompt
-    await new Promise(resolve => {
+  // Helper para esperar a que una pestaña cargue o recargue completamente
+  const waitForTabLoad = (tabId) => {
+    return new Promise(resolve => {
       const listener = (tabId, info) => {
-        if (tabId === newTab.id && info.status === 'complete') {
+        if (tabId === tabId && info.status === 'complete') {
           chrome.tabs.onUpdated.removeListener(listener);
           resolve();
         }
       };
       chrome.tabs.onUpdated.addListener(listener);
     });
+  };
 
-    // Recargar y esperar
-    await chrome.tabs.reload(newTab.id);
-    await new Promise(resolve => {
-      const reloadListener = (tabId, info) => {
-        if (tabId === newTab.id && info.status === 'complete') {
-          chrome.tabs.onUpdated.removeListener(reloadListener);
-          resolve();
+  // Helper para procesar una IA: la busca, la activa, la recarga (si es nueva) y le envía el prompt
+  const processAI = async (ai) => {
+    if (!AI_URLS[ai]) {
+      console.error(`Configuración para ${ai} no encontrada.`);
+      return;
+    }
+
+    const aiUrls = AI_URLS[ai];
+    const allTabs = await chrome.tabs.query({});
+
+    // Lógica mejorada para encontrar una pestaña existente
+    let targetTab = allTabs.find(tab => {
+      if (!tab.url) return false;
+      try {
+        const tabHostname = new URL(tab.url).hostname.toLowerCase();
+        if (ai === 'meta') return tabHostname.includes('meta.ai');
+        if (ai === 'google') return tabHostname.includes('google.com') && !tabHostname.includes('mail.google.com');
+
+        const web1Hostname = new URL(aiUrls.web1).hostname.toLowerCase().replace('www.', '');
+        let matches = tabHostname.includes(web1Hostname);
+        if (aiUrls.web2) {
+          const web2Hostname = new URL(aiUrls.web2).hostname.toLowerCase().replace('www.', '');
+          matches = matches || tabHostname.includes(web2Hostname);
         }
-      };
-      chrome.tabs.onUpdated.addListener(reloadListener);
+        return matches;
+      } catch (e) {
+        return false; // URL inválida en la pestaña
+      }
     });
 
-    // Enviar prompt
-    await sendPromptToTab(newTab.id, finalPrompt, aiModel);
+    let tabToUse;
+    if (targetTab) {
+      console.log(`✅ Pestaña existente encontrada para ${ai}:`, targetTab.id);
+      tabToUse = targetTab;
+      // Solo activar, no recargar para preservar la conversación
+      await chrome.tabs.update(tabToUse.id, { active: true });
+      console.log(`➡️ Pestaña ${ai} activada sin recargar.`);
+    } else {
+      console.log(`❌ No se encontró pestaña para ${ai}, creando nueva.`);
+      tabToUse = await chrome.tabs.create({ url: aiUrls.web1, active: false });
+      await waitForTabLoad(tabToUse.id);
+      console.log(`✅ Pestaña nueva ${ai} cargada.`);
+      
+      // Activar y recargar la pestaña NUEVA
+      await chrome.tabs.update(tabToUse.id, { active: true });
+      console.log(`🔄 Recargando pestaña nueva ${ai}...`);
+      await chrome.tabs.reload(tabToUse.id);
+      await waitForTabLoad(tabToUse.id);
+      console.log(`✅ Pestaña ${ai} recargada.`);
+    }
+
+    // Enviar el prompt con el tiempo de espera específico de la IA.
+    await sendPromptToTab(tabToUse.id, finalPrompt, ai);
+  };
+
+  // Lógica principal: procesar todas las IAs o solo una.
+  if (aiModel === 'allai') {
+    const supportedAIs = ['chatgpt', 'copilot', 'meta', 'claude', 'deepseek', 'mistral', 'gemini', 'grok', 'google'];
+    for (const ai of supportedAIs) {
+      try {
+        await processAI(ai);
+      } catch (error) {
+        console.error(`Error procesando ${ai}:`, error);
+      }
+    }
+  } else {
+    // Procesar una única IA
+    try {
+      await processAI(aiModel);
+    } catch (error)
+    {
+      console.error(`Error procesando ${aiModel}:`, error);
+    }
   }
 }
 
@@ -259,7 +197,7 @@ async function sendPromptToTab(tabId, prompt, aiModel) {
   // Espera el tiempo configurado para asegurar que el content script está listo.
   await new Promise(resolve => setTimeout(resolve, delay));
   
-  console.log(`💬 Inyectando prompt en la pestaña ${tabId}`);
+  console.log(`💬 Inyectando prompt en la pestaña ${tabId} para ${aiModel}`);
   chrome.tabs.sendMessage(tabId, {
     action: 'insertarTexto',
     texto: prompt
