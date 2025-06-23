@@ -91,7 +91,7 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
   // Caso especial para "All AI's" - abrir todas las AIs disponibles
   if (aiModel === 'allai') {
     const AI_URLS = await getAIUrls();
-    const supportedAIs = ['chatgpt', 'claude', 'deepseek', 'mistral', 'copilot', 'gemini', 'meta', 'grok', 'google'];
+    const supportedAIs = ['chatgpt', 'copilot', 'meta', 'claude', 'deepseek', 'mistral', 'gemini', 'grok', 'google'];
     const allTabs = await chrome.tabs.query({});
     
     // Usar un bucle for...of con await para procesar cada IA de forma secuencial y pausada.

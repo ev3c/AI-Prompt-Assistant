@@ -1,6 +1,7 @@
 {
   "motoresIA": [
     {
+      "orden": 1,
       "id": "chatgpt",
       "nombre": "ChatGPT",
       "web": "https://chat.openai.com",
@@ -15,6 +16,37 @@
       "empresa": "OpenAI"
     },
     {
+      "orden": 2,
+      "id": "copilot",
+      "nombre": "Copilot",
+      "web": "https://copilot.microsoft.com",
+      "web2": "https://copilot.microsoft.com",
+      "icono": "/src/assets/images/copilot-color.png",
+      "segundos": 2,
+      "modelos": [
+        "GitHub Copilot",
+        "Microsoft Copilot",
+        "Copilot Pro"
+      ],
+      "empresa": "Microsoft"
+    },
+    {
+      "orden": 3,
+      "id": "meta",
+      "nombre": "Meta",
+      "web": "https://meta.ai",
+      "web2": "https://meta.ai",
+      "icono": "/src/assets/images/meta-color.png",
+      "segundos": 2.5,
+      "modelos": [
+        "Llama 3 8B",
+        "Llama 3 70B",
+        "Llama 3 405B"
+      ],
+      "empresa": "Meta"
+    },
+    {
+      "orden": 4,
       "id": "claude",
       "nombre": "Claude",
       "web": "https://claude.ai",
@@ -30,6 +62,7 @@
       "empresa": "Anthropic"
     },
     {
+      "orden": 5,
       "id": "deepseek",
       "nombre": "DeepSeek",
       "web": "https://chat.deepseek.com",
@@ -44,49 +77,7 @@
       "empresa": "DeepSeek"
     },
     {
-      "id": "copilot",
-      "nombre": "Copilot",
-      "web": "https://copilot.microsoft.com",
-      "web2": "https://copilot.microsoft.com",
-      "icono": "/src/assets/images/copilot-color.png",
-      "segundos": 2,
-      "modelos": [
-        "GitHub Copilot",
-        "Microsoft Copilot",
-        "Copilot Pro"
-      ],
-      "empresa": "Microsoft"
-    },
-    {
-      "id": "gemini",
-      "nombre": "Gemini",
-      "web": "https://gemini.google.com",
-      "web2": "https://gemini.google.com",
-      "icono": "/src/assets/images/gemini-color.png",
-      "segundos": 1,
-      "modelos": [
-        "Gemini Ultra",
-        "Gemini Pro",
-        "Gemini Nano"
-      ],
-      "empresa": "Google"
-    },
-    {
-      "id": "meta",
-      "nombre": "Meta",
-      "web": "https://meta.ai",
-      "web2": "https://meta.ai",
-      "icono": "/src/assets/images/meta-color.png",
-      "segundos": 2.5,
-      "modelos": [
-        "Llama 3 8B",
-        "Llama 3 70B",
-        "Llama 3 405B"
-      ],
-      "empresa": "Meta"
-    },
-
-    {
+      "orden": 6,
       "id": "mistral",
       "nombre": "Mistral",
       "web": "https://chat.mistral.ai",
@@ -101,6 +92,22 @@
       "empresa": "Mistral AI"
     },
     {
+      "orden": 7,
+      "id": "gemini",
+      "nombre": "Gemini",
+      "web": "https://gemini.google.com",
+      "web2": "https://gemini.google.com",
+      "icono": "/src/assets/images/gemini-color.png",
+      "segundos": 1,
+      "modelos": [
+        "Gemini Ultra",
+        "Gemini Pro",
+        "Gemini Nano"
+      ],
+      "empresa": "Google"
+    },
+    {
+      "orden": 8,
       "id": "grok",
       "nombre": "Grok",
       "web": "https://x.ai/grok",
