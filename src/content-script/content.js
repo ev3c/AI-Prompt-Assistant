@@ -36,180 +36,146 @@ function detectarSitio() {
 // Selectores específicos por sitio web
 function obtenerSelectores(sitio) {
   const selectores = {
-    chatgpt: [
-      'textarea[data-id]',
-      'textarea[id*="prompt"]',
-      '#prompt-textarea',
-      'textarea[placeholder*="Message"]',
-      'textarea[placeholder*="mensaje"]',
-      'div[contenteditable="true"][role="textbox"]',
-      'main textarea',
-      'form textarea'
-    ],
-    
-    gemini: [
-      'div[contenteditable="true"][data-placeholder*="Enter a prompt"]',
-      'div[contenteditable="true"][data-placeholder*="Introduce un mensaje"]',
-      'div[contenteditable="true"][role="textbox"]',
-      'div[contenteditable="true"][aria-label*="Message"]',
-      'div[contenteditable="true"][aria-label*="Prompt"]',
-      'textarea[placeholder*="Enter a prompt"]',
-      'textarea[placeholder*="Introduce un mensaje"]',
-      'rich-textarea div[contenteditable="true"]',
-      '.ql-editor[contenteditable="true"]',
-      'div[contenteditable="true"]',
-      'textarea[aria-label*="Message"]',
-      'main textarea',
-      'form textarea'
-    ],
-    
-    google: [
-      'input[name="q"]',
-      'textarea[name="q"]',
-      'input[title*="Buscar"]',
-      'input[title*="Search"]',
-      'input[role="combobox"]',
-      'input[type="search"]',
-      '#searchboxinput',
-      '.gLFyf'
-    ],
-    
-    meta: [
-      'div[contenteditable="true"][role="textbox"]',
-      'div[contenteditable="true"][data-placeholder*="Ask Meta AI"]',
-      'div[contenteditable="true"][data-placeholder*="Message Meta AI"]',
-      'div[contenteditable="true"][data-placeholder*="Ask me anything"]',
-      'textarea[placeholder*="Ask Meta AI"]',
-      'textarea[placeholder*="Message Meta AI"]',
-      'textarea[placeholder*="Ask me anything"]',
-      'textarea[placeholder*="What\'s on your mind"]',
-      'textarea[placeholder*="¿Qué estás pensando"]',
-      'div[data-testid="status-attachment-mentions-input"]',
-      'div[contenteditable="true"][aria-label*="Message"]',
-      'div[contenteditable="true"][aria-label*="Chat"]',
-      '[role="textbox"]',
-      'textarea'
-    ],
-    
-    wikipedia: [
-      'input[name="search"]',
-      'input#searchInput',
-      'input.searchboxInput',
-      'textarea[name="wpTextbox1"]',  // Editor de Wikipedia
-      'input[placeholder*="Search"]',
-      'input[placeholder*="Buscar"]',
-      'textarea',
-      'input[type="search"]'
-    ],
-    
-    claude: [
-      'textarea[placeholder*="Talk to Claude"]',
-      'textarea[placeholder*="Habla con Claude"]',
-      'div[contenteditable="true"]',
-      'textarea[data-id]',
-      'main textarea',
-      'form textarea',
-      '[role="textbox"]',
-      'textarea'
-    ],
-    
-    copilot: [
-      'textarea[placeholder*="Ask Copilot"]',
-      'textarea[placeholder*="Ask me anything"]',
-      'textarea[placeholder*="Message Copilot"]',
-      'div[contenteditable="true"][role="textbox"]',
-      'div[contenteditable="true"][data-placeholder*="Ask"]',
-      'textarea[aria-label*="Message"]',
-      'textarea[aria-label*="Chat"]',
-      'cib-text-input textarea',
-      'main textarea',
-      'form textarea',
-      '[role="textbox"]',
-      'textarea'
-    ],
-    
-    deepseek: [
-      'textarea[placeholder*="Send a message"]',
-      'textarea[placeholder*="Type your message"]',
-      'textarea[placeholder*="Ask DeepSeek"]',
-      'div[contenteditable="true"][role="textbox"]',
-      'div[contenteditable="true"][data-placeholder*="message"]',
-      'textarea[data-testid*="chat-input"]',
-      'textarea[id*="chat"]',
-      'main textarea',
-      'form textarea',
-      '[role="textbox"]',
-      'textarea'
-    ],
-    
-    grok: [
-      'textarea[placeholder*="Ask Grok"]',
-      'textarea[placeholder*="Message Grok"]',
-      'textarea[placeholder*="Type a message"]',
-      'div[contenteditable="true"][role="textbox"]',
-      'div[contenteditable="true"][data-testid*="grok"]',
-      'textarea[data-testid*="compose"]',
-      'textarea[aria-label*="Message"]',
-      'main textarea',
-      'form textarea',
-      '[role="textbox"]',
-      'textarea'
-    ],
-    
-    mistral: [
-      'textarea[placeholder*="Send a message"]',
-      'textarea[placeholder*="Type your message"]',
-      'textarea[placeholder*="Ask Mistral"]',
-      'div[contenteditable="true"][role="textbox"]',
-      'div[contenteditable="true"][data-placeholder*="message"]',
-      'textarea[data-testid*="chat-input"]',
-      'textarea[id*="input"]',
-      'main textarea',
-      'form textarea',
-      '[role="textbox"]',
-      'textarea'
-    ],
-    
-    gmail: [
-      'div[contenteditable="true"][role="textbox"]',
-      'div[contenteditable="true"][aria-label*="Message Body"]',
-      'div[contenteditable="true"][aria-label*="Cuerpo del mensaje"]',
-      'div[contenteditable="true"][data-message-id]',
-      'div[g_editable="true"]',
-      'div[contenteditable="true"][dir="ltr"]',
-      'textarea[name="body"]',
-      'textarea[aria-label*="Message"]',
-      'div.Am.Al.editable',
-      'div[role="textbox"]',
-      'textarea'
-    ],
-    
-    generico: [
-      'textarea:not([disabled])',
-      'input[type="text"]:not([disabled])',
-      'input[type="search"]:not([disabled])',
-      'div[contenteditable="true"]',
-      '[role="textbox"]',
-      'input:not([type="hidden"]):not([type="submit"]):not([type="button"])',
-      'textarea'
-    ]
+    chatgpt: {
+      input: [
+        'textarea[data-id]', 'textarea[id*="prompt"]', '#prompt-textarea',
+        'textarea[placeholder*="Message"]', 'textarea[placeholder*="mensaje"]',
+        'div[contenteditable="true"][role="textbox"]', 'main textarea', 'form textarea'
+      ],
+      sendButton: [
+        'button[data-testid="send-button"]', 'button[class*="bottom-"] > button', 'form button[type="submit"]'
+      ]
+    },
+    gemini: {
+      input: [
+        'div[contenteditable="true"][data-placeholder*="Enter a prompt"]', 'div[contenteditable="true"][data-placeholder*="Introduce un mensaje"]',
+        'div[contenteditable="true"][role="textbox"]', 'div[contenteditable="true"][aria-label*="Message"]',
+        'div[contenteditable="true"][aria-label*="Prompt"]', 'textarea[placeholder*="Enter a prompt"]',
+        'textarea[placeholder*="Introduce un mensaje"]', 'rich-textarea div[contenteditable="true"]',
+        '.ql-editor[contenteditable="true"]', 'div[contenteditable="true"]',
+        'textarea[aria-label*="Message"]', 'main textarea', 'form textarea'
+      ],
+      sendButton: [
+        'button.send-button', 'button[aria-label*="Send"]', 'button[aria-label*="Enviar"]', 'button[data-testid="send-button"]'
+      ]
+    },
+    google: {
+      input: [
+        'input[name="q"]', 'textarea[name="q"]', 'input[title*="Buscar"]',
+        'input[title*="Search"]', 'input[role="combobox"]', 'input[type="search"]',
+        '#searchboxinput', '.gLFyf'
+      ],
+      sendButton: [
+        'input[name="btnK"]', 'button[aria-label*="Search"]', 'button[aria-label*="Buscar"]', 'form[role="search"] button'
+      ]
+    },
+    meta: {
+      input: [
+        'div[contenteditable="true"][role="textbox"]', 'div[contenteditable="true"][data-placeholder*="Ask Meta AI"]',
+        'textarea[placeholder*="Ask me anything"]', 'textarea[placeholder*="What\'s on your mind"]',
+        'textarea[placeholder*="¿Qué estás pensando"]', 'div[data-testid="status-attachment-mentions-input"]',
+        'div[contenteditable="true"][aria-label*="Message"]', '[role="textbox"]', 'textarea'
+      ],
+      sendButton: [
+        'button[aria-label="Send message"]', 'button[aria-label="Enviar mensaje"]', 'button[type="submit"]'
+      ]
+    },
+    wikipedia: {
+      input: [
+        'input[name="search"]', 'input#searchInput', 'input.searchboxInput',
+        'textarea[name="wpTextbox1"]', 'input[placeholder*="Search"]',
+        'input[placeholder*="Buscar"]', 'textarea', 'input[type="search"]'
+      ],
+      sendButton: [
+        'button[type="submit"]', '#searchform button'
+      ]
+    },
+    claude: {
+      input: [
+        'textarea[placeholder*="Talk to Claude"]', 'textarea[placeholder*="Habla con Claude"]',
+        'div[contenteditable="true"]', 'main textarea', '[role="textbox"]', 'textarea'
+      ],
+      sendButton: [
+        'button[aria-label="Send Message"]', 'button[aria-label="Enviar mensaje"]', 'form button[type="submit"]'
+      ]
+    },
+    copilot: {
+      input: [
+        'textarea[placeholder*="Ask Copilot"]', 'textarea[placeholder*="Ask me anything"]',
+        'div[contenteditable="true"][role="textbox"]', 'textarea[aria-label*="Chat"]',
+        'cib-text-input textarea', 'main textarea', '[role="textbox"]', 'textarea'
+      ],
+      sendButton: [
+        'button[aria-label="Submit"]', 'button[title="Submit"]', '#searchboxform button[type="submit"]'
+      ]
+    },
+    deepseek: {
+      input: [
+        'textarea[placeholder*="Send a message"]', 'div[contenteditable="true"][role="textbox"]',
+        'textarea[data-testid*="chat-input"]', 'main textarea', '[role="textbox"]', 'textarea'
+      ],
+      sendButton: [
+        'button[class*="absolute"] > svg', 'form button[type="submit"]'
+      ]
+    },
+    grok: {
+      input: [
+        'textarea[placeholder*="Ask Grok"]', 'div[contenteditable="true"][role="textbox"]',
+        'textarea[data-testid*="compose"]', 'main textarea', '[role="textbox"]', 'textarea'
+      ],
+      sendButton: [
+        'button[data-testid="send-button"]', 'button[aria-label*="Send"]'
+      ]
+    },
+    mistral: {
+      input: [
+        'textarea[placeholder*="Send a message"]', 'div[contenteditable="true"][role="textbox"]',
+        'textarea[id*="input"]', 'main textarea', '[role="textbox"]', 'textarea'
+      ],
+      sendButton: [
+        'button[class*="absolute"] > svg', 'form button[type="submit"]'
+      ]
+    },
+    gmail: {
+      input: [
+        'div[contenteditable="true"][role="textbox"]', 'div[contenteditable="true"][aria-label*="Message Body"]',
+        'div[contenteditable="true"][aria-label*="Cuerpo del mensaje"]', 'div[g_editable="true"]',
+        'div.Am.Al.editable', 'div[role="textbox"]', 'textarea'
+      ],
+      sendButton: [
+        'div[role="button"][data-tooltip*="Send"]', 'div[role="button"][data-tooltip*="Enviar"]'
+      ]
+    },
+    generico: {
+      input: [
+        'textarea:not([disabled])', 'input[type="text"]:not([disabled])',
+        'input[type="search"]:not([disabled])', 'div[contenteditable="true"]',
+        '[role="textbox"]', 'input:not([type="hidden"]):not([type="submit"]):not([type="button"])',
+        'textarea'
+      ],
+      sendButton: [
+        'button[type="submit"]', 'button[aria-label*="Send"]', 'button[aria-label*="Enviar"]',
+        'button[id*="submit"]', 'input[type="submit"]'
+      ]
+    }
   };
   
   return selectores[sitio] || selectores.generico;
 }
 
 // Función principal para insertar texto
-function enviarTextoUniversal(texto) {
+function enviarTextoUniversal(texto, submit = false) {
   const sitio = detectarSitio();
   console.log('🌐 Sitio detectado:', sitio);
   console.log('🎯 Intentando insertar texto:', texto);
   
-  const selectores = obtenerSelectores(sitio);
-  console.log('🔍 Selectores a usar:', selectores);
+  const { input: inputSelectors, sendButton: sendButtonSelectors } = obtenerSelectores(sitio);
+  console.log('🔍 Selectores de input a usar:', inputSelectors);
+  console.log('🚀 Selectores de botón de envío a usar:', sendButtonSelectors);
 
-  for (let i = 0; i < selectores.length; i++) {
-    const selector = selectores[i];
-    console.log(`🔍 Probando selector ${i + 1}/${selectores.length}: ${selector}`);
+  for (let i = 0; i < inputSelectors.length; i++) {
+    const selector = inputSelectors[i];
+    console.log(`🔍 Probando selector de input ${i + 1}/${inputSelectors.length}: ${selector}`);
     
     try {
       const elemento = document.querySelector(selector);
@@ -290,6 +256,27 @@ function enviarTextoUniversal(texto) {
               elemento.focus(); // Volver a enfocar
 
               console.log('✅ Texto insertado correctamente');
+
+              // Si se solicitó, intentar hacer clic en el botón de enviar
+              if (submit) {
+                console.log('🚀 Intentando enviar el prompt...');
+                // Pequeña pausa para que la UI (ej. el botón) se actualice y se habilite
+                setTimeout(() => {
+                  for (const btnSelector of sendButtonSelectors) {
+                    const sendButton = document.querySelector(btnSelector);
+                    if (sendButton && !sendButton.disabled) {
+                      console.log(`✅ Botón de envío encontrado y habilitado con selector: ${btnSelector}`);
+                      sendButton.click();
+                      console.log('🎉 ¡Prompt enviado!');
+                      return; // Salir del bucle de botones
+                    } else {
+                      console.log(`❌ No se encontró o está deshabilitado el botón con selector: ${btnSelector}`);
+                    }
+                  }
+                  console.error('❌ No se pudo encontrar un botón de envío válido.');
+                }, 500); // 500ms de espera es un valor seguro
+              }
+
             }, 500); // Increased from 100 to 500
             
             return true;
@@ -326,7 +313,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('📨 Mensaje recibido:', request);
   
   if (request.action === 'insertarTexto') {
-    const exito = enviarTextoUniversal(request.texto);
+    const exito = enviarTextoUniversal(request.texto, request.submit);
     const response = {
       success: exito,
       error: exito ? null : 'No se encontró ningún campo de texto válido o el campo no estaba listo',

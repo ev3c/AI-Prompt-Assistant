@@ -85,8 +85,8 @@ export function buildPrompt(prompt, context, isClipboard, buttonType) {
 /**
  * Busca o abre la pestaña de la IA y envía el prompt usando content script.
  */
-export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, buttonType) {
-  const finalPrompt = buildPrompt(prompt, context, isClipboard, buttonType);
+export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, buttonType, submit = true) {
+  const finalPrompt = buildPrompt(prompt, context, isClipboard, buttonType, submit);
   const AI_URLS = await getAIUrls();
 
   // Helper para esperar a que una pestaña cargue o recargue completamente
@@ -154,7 +154,7 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
     }
 
     // Enviar el prompt con el tiempo de espera específico de la IA.
-    await sendPromptToTab(tabToUse.id, finalPrompt, ai);
+    await sendPromptToTab(tabToUse.id, finalPrompt, ai, submit);
   };
 
   // Lógica principal: procesar todas las IAs o solo una.
@@ -162,7 +162,7 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
     const supportedAIs = ['chatgpt', 'copilot', 'meta', 'claude', 'deepseek', 'mistral', 'gemini', 'grok', 'google'];
     for (const ai of supportedAIs) {
       try {
-        await processAI(ai);
+        await processAI(ai, submit);
       } catch (error) {
         console.error(`Error procesando ${ai}:`, error);
       }
@@ -170,7 +170,7 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
   } else {
     // Procesar una única IA
     try {
-      await processAI(aiModel);
+      await processAI(aiModel, submit);
     } catch (error)
     {
       console.error(`Error procesando ${aiModel}:`, error);
@@ -181,7 +181,7 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
 /**
  * Envía el prompt al content script de la pestaña, respetando los tiempos de espera.
  */
-async function sendPromptToTab(tabId, prompt, aiModel) {
+async function sendPromptToTab(tabId, prompt, aiModel, submit = true) {
   const AI_URLS = await getAIUrls();
   // Valor por defecto de 1.5 segundos si no se especifica.
   let delay = 1500; 
@@ -200,6 +200,7 @@ async function sendPromptToTab(tabId, prompt, aiModel) {
   console.log(`💬 Inyectando prompt en la pestaña ${tabId} para ${aiModel}`);
   chrome.tabs.sendMessage(tabId, {
     action: 'insertarTexto',
-    texto: prompt
+    texto: prompt,
+    submit: submit // ¡NUEVO! Pasamos la instrucción de enviar
   });
 }

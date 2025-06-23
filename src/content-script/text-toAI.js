@@ -85,7 +85,8 @@ async function textToAI(textPrompt, targetTab = null) {
 
     return await chrome.tabs.sendMessage(tab.id, {
         action: 'insertarTexto',
-        texto: textPrompt
+        texto: textPrompt,
+        submit: true // ¡NUEVO! Indicamos que queremos enviar el prompt
     });
 }
 
