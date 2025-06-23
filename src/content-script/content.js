@@ -71,13 +71,29 @@ function obtenerSelectores(sitio) {
     },
     meta: {
       input: [
-        'div[contenteditable="true"][role="textbox"]', 'div[contenteditable="true"][data-placeholder*="Ask Meta AI"]',
-        'textarea[placeholder*="Ask me anything"]', 'textarea[placeholder*="What\'s on your mind"]',
-        'textarea[placeholder*="¿Qué estás pensando"]', 'div[data-testid="status-attachment-mentions-input"]',
-        'div[contenteditable="true"][aria-label*="Message"]', '[role="textbox"]', 'textarea'
+        // --- Selectores de alta prioridad para Meta AI (meta.ai) ---
+        'div[aria-placeholder*="Ask Meta AI"]',
+        'div[aria-placeholder*="Pregunta a Meta AI"]',
+        'div[aria-label*="Ask Meta AI"]',
+        'div[aria-label*="Pregunta a Meta AI"]',
+        'div[data-lexical-editor="true"]',
+        'div[role="searchbox"]',
+        'textarea[placeholder*="Ask me anything"]',
+        // --- Selectores para Facebook (facebook.com) ---
+        'textarea[placeholder*="What\'s on your mind"]',
+        'textarea[placeholder*="¿Qué estás pensando"]',
+        'div[data-testid="status-attachment-mentions-input"]',
+        // --- Selectores genéricos de respaldo ---
+        'div[contenteditable="true"][role="textbox"]',
+        '[role="textbox"]',
+        'textarea'
       ],
       sendButton: [
-        'button[aria-label="Send message"]', 'button[aria-label="Enviar mensaje"]', 'button[type="submit"]'
+        'div[aria-label="Send message"][role="button"]',
+        'div[aria-label="Enviar mensaje"][role="button"]',
+        'div[role="button"][aria-label*="message"]', // Más genérico para inglés
+        'div[role="button"][aria-label*="mensaje"]', // Más genérico para español
+        'button[type="submit"]' // Selector de respaldo para botones nativos
       ]
     },
     wikipedia: {

@@ -194,6 +194,19 @@ async function sendPromptToTab(tabId, prompt, aiModel, submit = true) {
     console.log(`⏳ Usando delay por defecto para ${aiModel || 'AI desconocida'}: ${delay}ms`);
   }
 
+  // Asegurarse de que el content script esté inyectado y listo.
+  // Esto es crucial para evitar el error "Receiving end does not exist".
+  try {
+    await chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      files: ['src/content-script/content.js'] // Ruta a tu content script
+    });
+    console.log(`✅ Content script 'src/content-script/content.js' inyectado/asegurado en la pestaña ${tabId}`);
+  } catch (e) {
+    console.error(`❌ Error al inyectar el content script en la pestaña ${tabId}:`, e);
+    return; // No podemos enviar el mensaje si el script no se inyectó
+  }
+
   // Espera el tiempo configurado para asegurar que el content script está listo.
   await new Promise(resolve => setTimeout(resolve, delay));
   
