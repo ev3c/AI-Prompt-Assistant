@@ -91,36 +91,65 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
   // Caso especial para "All AI's" - abrir todas las AIs disponibles
   if (aiModel === 'allai') {
     const AI_URLS = await getAIUrls();
-    const supportedAIs = ['chatgpt', 'claude', 'deepseek', 'mistral', 'copilot', 'gemini', 'meta', 'grok'];
+    const supportedAIs = ['chatgpt', 'claude', 'deepseek', 'mistral', 'copilot', 'gemini', 'meta', 'grok', 'google'];
+    const allTabs = await chrome.tabs.query({});
     
+    // Usar un bucle for...of con await para procesar cada IA de forma secuencial y pausada.
     for (const ai of supportedAIs) {
       if (AI_URLS[ai]) {
         try {
-          // Crear nueva pestaña para cada AI con un pequeño delay
-          setTimeout(async () => {
-            const newTab = await chrome.tabs.create({ url: AI_URLS[ai].web1, active: false });
+          const aiUrls = AI_URLS[ai];
+          let targetTab = allTabs.find(tab => {
+            if (!tab.url) return false;
+            if (ai === 'meta') {
+              try {
+                return new URL(tab.url).hostname.includes('meta.ai');
+              } catch (e) { return false; }
+            }
+            const matchesWeb1 = tab.url.includes(aiUrls.web1);
+            const matchesWeb2 = aiUrls.web2 && tab.url.includes(aiUrls.web2);
+            return matchesWeb1 || matchesWeb2;
+          });
 
-
-            // Esperar a que cargue la pestaña antes de enviar el prompt
-            chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
-              if (tabId === newTab.id && info.status === 'complete') {
-                chrome.tabs.onUpdated.removeListener(listener);
-
-                // Actualizar la página antes de enviar el prompt
-                console.log(`🔄 Actualizando pestaña ${ai} antes de enviar prompt`);
-                chrome.tabs.reload(newTab.id);
-                
-                // Esperar a que se complete la recarga antes de enviar el prompt
-                chrome.tabs.onUpdated.addListener(function reloadListener(tabId, info) {
-                  if (tabId === newTab.id && info.status === 'complete') {
-                    chrome.tabs.onUpdated.removeListener(reloadListener);
-                    console.log(`✅ Pestaña ${ai} actualizada, enviando prompt`);
-                    sendPromptToTab(newTab.id, finalPrompt);
-                  }
-                });
-              }
+          let tabToUse;
+          if (targetTab) {
+            console.log(`✅ Pestaña existente encontrada para ${ai}:`, targetTab.id);
+            tabToUse = targetTab;
+          } else {
+            console.log(`❌ No se encontró pestaña para ${ai}, creando nueva.`);
+            tabToUse = await chrome.tabs.create({ url: aiUrls.web1, active: false });
+            // Esperar a que la nueva pestaña cargue completamente.
+            await new Promise(resolve => {
+              const listener = (tabId, info) => {
+                if (tabId === tabToUse.id && info.status === 'complete') {
+                  chrome.tabs.onUpdated.removeListener(listener);
+                  console.log(`✅ Pestaña nueva ${ai} cargada.`);
+                  resolve();
+                }
+              };
+              chrome.tabs.onUpdated.addListener(listener);
             });
-          }, supportedAIs.indexOf(ai) * 500); // Delay de 1000ms entre cada AI
+          }
+
+          // Activar la pestaña y recargarla
+          await chrome.tabs.update(tabToUse.id, { active: true });
+          console.log(`🔄 Recargando pestaña ${ai}...`);
+          await chrome.tabs.reload(tabToUse.id);
+
+          // Esperar a que la recarga se complete.
+           await new Promise(resolve => {
+            const reloadListener = (tabId, info) => {
+              if (tabId === tabToUse.id && info.status === 'complete') {
+                chrome.tabs.onUpdated.removeListener(reloadListener);
+                console.log(`✅ Pestaña ${ai} recargada.`);
+                resolve();
+              }
+            };
+            chrome.tabs.onUpdated.addListener(reloadListener);
+          });
+
+          // Enviar el prompt con el tiempo de espera específico de la IA.
+          await sendPromptToTab(tabToUse.id, finalPrompt, ai);
         } catch (error) {
           console.error(`Error abriendo ${ai}:`, error);
         }
@@ -167,147 +196,72 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
     await chrome.tabs.update(targetTab.id, { active: true });
     
     // OJU OSCAR: Actualizar la página antes de enviar el prompt
+    console.log(`Prompt para ${aiModel}:`, finalPrompt);
     await chrome.tabs.reload(targetTab.id);
     
     // Esperar a que se complete la recarga antes de enviar el prompt
     chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
       if (tabId === targetTab.id && info.status === 'complete') {
         chrome.tabs.onUpdated.removeListener(listener);
-        sendPromptToTab(targetTab.id, finalPrompt);
+        sendPromptToTab(targetTab.id, finalPrompt, aiModel);
       }
     });
   } else {
     console.log('❌ No se encontró pestaña existente, creando nueva');
     console.log('🔗 Creando nueva pestaña con URL:', aiUrls.web1);
-    const newTab = await chrome.tabs.create({ url: aiUrls.web1 });
+    console.log(`Prompt para ${aiModel}:`, finalPrompt);
+    const newTab = await chrome.tabs.create({ url: aiUrls.web1, active: true });
+
     // Esperar a que cargue la pestaña antes de enviar el prompt
-    chrome.tabs.onUpdated.addListener(function listener(tabId, info) {
-      if (tabId === newTab.id && info.status === 'complete') {
-        chrome.tabs.onUpdated.removeListener(listener);
-        sendPromptToTab(newTab.id, finalPrompt);
-      }
+    await new Promise(resolve => {
+      const listener = (tabId, info) => {
+        if (tabId === newTab.id && info.status === 'complete') {
+          chrome.tabs.onUpdated.removeListener(listener);
+          resolve();
+        }
+      };
+      chrome.tabs.onUpdated.addListener(listener);
     });
+
+    // Recargar y esperar
+    await chrome.tabs.reload(newTab.id);
+    await new Promise(resolve => {
+      const reloadListener = (tabId, info) => {
+        if (tabId === newTab.id && info.status === 'complete') {
+          chrome.tabs.onUpdated.removeListener(reloadListener);
+          resolve();
+        }
+      };
+      chrome.tabs.onUpdated.addListener(reloadListener);
+    });
+
+    // Enviar prompt
+    await sendPromptToTab(newTab.id, finalPrompt, aiModel);
   }
 }
 
 /**
- * Envía el prompt al content script de la pestaña.
+ * Envía el prompt al content script de la pestaña, respetando los tiempos de espera.
  */
-async function sendPromptToTab(tabId, prompt) {
-  // Espera un poco para asegurar que el content script está listo
-  await new Promise(resolve => setTimeout(resolve, 1000));
+async function sendPromptToTab(tabId, prompt, aiModel) {
+  const AI_URLS = await getAIUrls();
+  // Valor por defecto de 1.5 segundos si no se especifica.
+  let delay = 1500; 
+
+  if (aiModel && AI_URLS[aiModel] && AI_URLS[aiModel].waitSeconds) {
+    // Si hay un valor específico en motorAI.json, lo usamos (convertido a ms).
+    delay = AI_URLS[aiModel].waitSeconds * 1000;
+    console.log(`⏳ Usando delay específico para ${aiModel}: ${delay}ms`);
+  } else {
+    console.log(`⏳ Usando delay por defecto para ${aiModel || 'AI desconocida'}: ${delay}ms`);
+  }
+
+  // Espera el tiempo configurado para asegurar que el content script está listo.
+  await new Promise(resolve => setTimeout(resolve, delay));
+  
+  console.log(`💬 Inyectando prompt en la pestaña ${tabId}`);
   chrome.tabs.sendMessage(tabId, {
     action: 'insertarTexto',
     texto: prompt
   });
 }
-/*
-export function openAIWithPrompt(prompt, context, aiModel, isClipboard, buttonType) {
-  let finalPrompt = prompt;
-
-  // Verificar si estamos en contexto PDF
-  if (context && typeof context === 'string' && context.startsWith("PDF: ")) {
-    const pdfMatch = context.match(/PDF: (.*?) \((.*?)\)/);
-    if (pdfMatch) {
-      const pdfName = pdfMatch[1];
-      const pdfPath = pdfMatch[2];
-      
-      if (prompt.includes('[PDF]')) {
-        finalPrompt = prompt.replace(/\[PDF\]/g, pdfName);
-      } else if (prompt.includes('[PDF_PATH]')) {
-        finalPrompt = prompt.replace(/\[PDF_PATH\]/g, pdfPath);
-      } else {
-        finalPrompt = `${prompt}\n\nPDF: ${pdfName}\nRuta: ${pdfPath}`;
-      }
-      
-      if (finalPrompt.includes('[TEMA]') || finalPrompt.includes('[TOPIC]')) {
-        const themeMatch = finalPrompt.match(/\[TEMA\]|\[TOPIC\]/);
-        if (themeMatch) {
-          const userTopic = window.prompt('Especifique el tema a buscar en el PDF:', ''); // window.prompt no funciona en service worker. Esto necesitará un modal en el sidepanel.
-          if (userTopic) {
-            finalPrompt = finalPrompt.replace(/\[TEMA\]|\[TOPIC\]/g, userTopic);
-          } else {
-            finalPrompt = finalPrompt.replace(/\[TEMA\]|\[TOPIC\]/g, 'tema principal');
-          }
-        }
-      }
-    }
-  } else {
-    if (prompt.includes('[URL]')) {
-      finalPrompt = prompt.replace(/\[URL\]/g, context);
-    } else {
-      switch (buttonType) {
-        case 'urlButton':
-          finalPrompt = `${prompt}\n\nURL: ${context}`;
-          break;
-        case 'clipboardButton':
-          finalPrompt = `${prompt}\n\nTexto del portapapeles:\n${context}`;
-          break;  
-        case 'bookButton':
-          finalPrompt = `${prompt}\n\nTexto del libro:\n${context}`;
-          break;
-        case 'pdfButton': // Asumiendo que el texto del PDF ya está extraído y en 'context'
-          finalPrompt = `${prompt}\n\nTexto del PDF:\n${context}`;
-          break;
-        case 'xButton':
-          finalPrompt = `${prompt}\n\nTexto del X:\n${context}`;
-          break;
-        case 'gmailButton':
-          finalPrompt = `${prompt}\n\nTexto del portapapeles:\n${context}`;
-          break;
-        case 'wikiButton':
-          finalPrompt = `${prompt}\n\nContenido de Wikipedia:\n${context}`;
-          break;
-        default:
-          if (isClipboard) {
-            finalPrompt = `${prompt}\n\nTexto del portapapeles:\n${context}`;
-          } else {
-            finalPrompt = `${prompt}\n\nURL: ${context}`;
-          }
-          break;
-      }
-    }
-  }
-
-  const encodedPrompt = encodeURIComponent(finalPrompt);
-  let baseUrl;
-  switch (aiModel) {
-    case 'claude': baseUrl = 'https://claude.ai/'; break;
-    case 'deepseek': baseUrl = 'https://chat.deepseek.com/'; break;
-    case 'mistral': baseUrl = 'https://chat.mistral.ai/'; break;
-    case 'copilot': baseUrl = 'https://copilot.microsoft.com/'; break;
-    case 'gemini': baseUrl = 'https://gemini.google.com/app'; break;
-    case 'grok': baseUrl = 'https://x.ai/grok/'; break; // Asumiendo que es x.ai/grok o similar
-    case 'meta': baseUrl = 'https://meta.ai/'; break;
-    case 'chatgpt':
-    default: baseUrl = 'https://chat.openai.com/'; break;
-  }
-
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    const currentTabUrl = tabs[0]?.url || "";
-    let aiUrl;
-
-    // La mayoría de las IAs aceptan el prompt como un parámetro 'q' o similar.
-    // Algunas podrían necesitar una estructura de URL diferente o enviar el prompt vía POST
-    // o a través de un content script después de abrir la página.
-    // Por simplicidad, usamos un parámetro 'q', pero esto puede necesitar ajustes por IA.
-    // Claude, por ejemplo, no tiene una forma estándar de pasar prompts vía URL query.
-    // Gemini tampoco tiene una forma documentada y estable para pasar prompts vía URL.
-    // La mejor manera de enviar un prompt a estas IAs es abrir la página y luego usar un content script.
-    // La lógica actual de textToAI (la otra extensión) es más robusta para esto.
-    // Aquí, simplificaremos para el ejemplo de refactorización.
-
-    if (aiModel === 'gemini') {
-        aiUrl = `${baseUrl}/search?q=${encodedPrompt}`; // Ejemplo, puede no ser el método oficial
-    } else if (aiModel === 'claude') {
-        aiUrl = `${baseUrl}`; // Claude no soporta prompts en URL directamente, se debe pegar manualmente o con content script
-    }
-    else {
-        aiUrl = `${baseUrl}?q=${encodedPrompt}`; // Formato genérico
-    }
-    // Podrías añadir &url=${encodeURIComponent(currentTabUrl)} si la IA lo soporta
-
-    chrome.tabs.create({ url: aiUrl });
-  });
-}
-  */

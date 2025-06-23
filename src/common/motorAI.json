@@ -6,6 +6,7 @@
       "web": "https://chat.openai.com",
       "web2": "https://chatgpt.com",
       "icono": "/src/assets/images/chatgpt.png",
+      "segundos": 1,
       "modelos": [
         "GPT-3.5",
         "GPT-4",
@@ -19,6 +20,7 @@
       "web": "https://claude.ai",
       "web2": "https://claude.ai",
       "icono": "/src/assets/images/claude-color.png",
+      "segundos": 1,
       "modelos": [
         "Claude 2",
         "Claude 3 Opus",
@@ -33,6 +35,7 @@
       "web": "https://chat.deepseek.com",
       "web2": "https://chat.deepseek.com",
       "icono": "/src/assets/images/deepseek-color.png",
+      "segundos": 1,
       "modelos": [
         "DeepSeek-7B",
         "DeepSeek-67B",
@@ -46,6 +49,7 @@
       "web": "https://copilot.microsoft.com",
       "web2": "https://copilot.microsoft.com",
       "icono": "/src/assets/images/copilot-color.png",
+      "segundos": 2,
       "modelos": [
         "GitHub Copilot",
         "Microsoft Copilot",
@@ -59,6 +63,7 @@
       "web": "https://gemini.google.com",
       "web2": "https://gemini.google.com",
       "icono": "/src/assets/images/gemini-color.png",
+      "segundos": 1,
       "modelos": [
         "Gemini Ultra",
         "Gemini Pro",
@@ -72,6 +77,7 @@
       "web": "https://meta.ai",
       "web2": "https://meta.ai",
       "icono": "/src/assets/images/meta-color.png",
+      "segundos": 2.5,
       "modelos": [
         "Llama 3 8B",
         "Llama 3 70B",
@@ -86,6 +92,7 @@
       "web": "https://chat.mistral.ai",
       "web2": "https://chat.mistral.ai",
       "icono": "/src/assets/images/mistral-color.png",
+      "segundos": 1,
       "modelos": [
         "Mistral 7B",
         "Mixtral 8x7B",
@@ -99,6 +106,7 @@
       "web": "https://x.ai/grok",
       "web2": "https://x.ai/grok",
       "icono": "/src/assets/images/groc.png",
+      "segundos": 1,
       "modelos": [
         "Grok-1"
       ],
@@ -110,6 +118,7 @@
       "web": "https://chat.openai.com",
       "web2": "https://chat.openai.com",
       "icono": "/src/assets/images/All-AI.png",
+      "segundos": 0.5,
       "modelos": [
         "All Models"
       ],

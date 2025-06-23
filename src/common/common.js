@@ -35,7 +35,7 @@ export async function getAIUrls() {
   const AI_URLS = {};
   motores.forEach(model => {
     if (model.id && model.web) {
-      AI_URLS[model.id] = {web1 : model.web, web2: model.web2};
+      AI_URLS[model.id] = {web1 : model.web, web2: model.web2, waitSeconds: model.segundos};
     }
   });
   return AI_URLS;

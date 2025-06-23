@@ -238,7 +238,7 @@ function enviarTextoUniversal(texto) {
               elemento.innerHTML = '';
             }
             
-            // Pequeña pausa para que el sitio se prepare
+            // Pausa para que el sitio se prepare y el DOM se estabilice
             setTimeout(() => {
               // Insertar el texto
               if (elemento.tagName === 'TEXTAREA' || elemento.tagName === 'INPUT') {
@@ -288,9 +288,9 @@ function enviarTextoUniversal(texto) {
               elemento.dispatchEvent(new Event('focus', { bubbles: true }));
               elemento.dispatchEvent(new Event('blur', { bubbles: true }));
               elemento.focus(); // Volver a enfocar
-              
+
               console.log('✅ Texto insertado correctamente');
-            }, 100);
+            }, 500); // Increased from 100 to 500
             
             return true;
             
