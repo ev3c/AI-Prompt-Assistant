@@ -214,6 +214,9 @@ class JSONEditor {
     // Button name field
     document.getElementById('add-button-text').addEventListener('input', (e) => this.updateAddButtonText(e.target.value));
     
+    // Add listener for the editor itself to sync changes back to the UI
+    document.getElementById('embedded-json-editor').addEventListener('input', () => this.syncUIFromEditor());
+
     // Copy path button
     document.getElementById('copy-path-btn').addEventListener('click', () => {
       const pathOnly = this.getPlatformPathOnly();
@@ -336,9 +339,44 @@ class JSONEditor {
   }
 
   saveFile() {
+    const embeddedEditor = document.getElementById('embedded-json-editor');
+    const titleInput = document.getElementById('add-button-text');
+    
+    const jsonStringFromEditor = embeddedEditor.value;
+    const titleFromInput = titleInput.value.trim();
+
+    let dataToSave;
+
+    try {
+      // 1. Parsear el contenido del editor. Esta es nuestra base.
+      dataToSave = JSON.parse(jsonStringFromEditor);
+
+    } catch (error) {
+      // Si el JSON del editor es inválido, no podemos continuar.
+      let errorMessage = this.t('validationInvalid');
+      errorMessage += `"${error.message}"\n\n`;
+      errorMessage += "Por favor, corrige los errores en el editor de texto JSON antes de guardar.";
+      alert(errorMessage);
+      return; // Detener la ejecución
+    }
+
+    // 2. Consolidar: Actualizar el objeto JSON con el valor del campo de título.
+    //    Esto asegura que el cambio en el título se incluya en el archivo guardado.
+    if (dataToSave.header) {
+      dataToSave.header.title = titleFromInput;
+    }
+    dataToSave.addButtonText = titleFromInput;
+
+    // 3. Actualizar el estado principal de la clase con los datos consolidados.
+    this.currentData = dataToSave;
+
+    // 4. Sincronizar la UI para que refleje el estado que se va a guardar.
+    this.updateJsonPreview(); // Actualiza el <textarea> con el JSON formateado.
+    this.updateFilenameDisplay(); // Actualiza el nombre del archivo a guardar.
+
+    // 5. Proceder a guardar el archivo.
     const jsonString = JSON.stringify(this.currentData, null, 2);
     const fileNameParts = this.spritFileName();
-    // Siempre usar el formato dinámico basado en el título
     const filename = fileNameParts.fullFileName;
     
     const blob = new Blob([jsonString], { type: 'application/json' });
@@ -389,17 +427,25 @@ class JSONEditor {
   }
 
   updateAddButtonText(value) {
-    this.currentData.addButtonText = value;
-    
-    // Si el campo no está vacío, actualizar el título del header
-    if (value && value.trim() !== '') {
-      this.currentData.header.title = value.trim();
+    // Para mantener la UI sincronizada, actualizamos el JSON en el editor.
+    // Para no perder otras ediciones manuales, primero leemos el contenido del editor.
+    const editor = document.getElementById('embedded-json-editor');
+    try {
+      const data = JSON.parse(editor.value);
+
+      data.addButtonText = value;
+      if (data.header) {
+        data.header.title = value;
+      }
+
+      this.currentData = data;
+      this.updateJsonPreview(); // Esto reescribe el contenido del editor, manteniéndolo sincronizado.
+    } catch (e) {
+      // Si el JSON del editor no es válido, no podemos actualizarlo. El usuario probablemente está editando.
+      // La fusión final se realizará al guardar.
     }
-    
-    // Actualizar la visualización del nombre del archivo dinámicamente
+
     this.updateFilenameDisplay();
-    
-    this.updateJsonPreview();
     this.enableSave();
   }
 
@@ -537,6 +583,27 @@ class JSONEditor {
     }).catch(() => {
       alert(this.t('copyError'));
     });
+  }
+
+  syncUIFromEditor() {
+    const editor = document.getElementById('embedded-json-editor');
+    try {
+      const data = JSON.parse(editor.value);
+      // El editor es la fuente de la verdad, así que actualizamos el estado central de datos.
+      this.currentData = data;
+
+      const titleFromEditor = data?.header?.title;
+      const titleInput = document.getElementById('add-button-text');
+
+      // Sincronizar el campo de entrada del título SI ha cambiado en el editor.
+      if (titleFromEditor !== undefined && titleInput.value !== titleFromEditor) {
+        titleInput.value = titleFromEditor;
+        // Después de sincronizar el título, actualizar también la visualización del nombre del archivo.
+        this.updateFilenameDisplay();
+      }
+    } catch (e) {
+      // Es de esperar que el JSON no sea válido mientras el usuario escribe. No hacer nada.
+    }
   }
 }
 
