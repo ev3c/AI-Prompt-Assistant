@@ -2,6 +2,7 @@
 import { loadAvailableLanguages } from '/src/background/languageManager.js';
 import { createInitialContextMenus, handleContextMenuClick, updateContextMenuTitlesFromStorage } from '/src/background/contextMenuManager.js';
 import { openAIWithPrompt } from '/src/background/aiInteractionManager.js';
+import { startFileWatcher } from './fileWatcher.js';
 
 // Nota: La importación de funciones de content.js como detectarSitio, obtenerSelectores, etc.,
 // no es adecuada para el background script ya que operan en el contexto de la página (DOM, window.location).
@@ -26,6 +27,9 @@ chrome.runtime.onInstalled.addListener(async () => {
     }
     const loadedLangs = await loadAvailableLanguages(); // Carga idiomas a través del manager
     await createInitialContextMenus(loadedLangs, defaultModel, result.language || 'es');
+
+    // Iniciar el vigilante de archivos JSON personalizados
+    startFileWatcher();
   });
 });
 

@@ -2522,6 +2522,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
   }
 
+  // NUEVO: Escuchar la orden de recarga desde el fileWatcher
+  if (request.action === 'reloadSidebar') {
+    console.log('Recibida orden de recarga desde el background script. Recargando...');
+    window.location.reload();
+  }
+
   return true; // Mantener el canal abierto para respuesta asíncrona
 });
 
