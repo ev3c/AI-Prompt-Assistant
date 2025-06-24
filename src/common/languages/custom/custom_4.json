@@ -1,0 +1,11 @@
+{
+  "header": {
+    "title": "CUSTOM_4",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "Please, configure your custom prompts"
+    }
+  ]
+}
