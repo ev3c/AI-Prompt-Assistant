@@ -147,6 +147,10 @@ function obtenerSelectores(sitio) {
         'textarea[data-testid*="compose"]', 'main textarea', '[role="textbox"]', 'textarea'
       ],
       sendButton: [
+        // Selector de alta prioridad y muy específico basado en el HTML actual.
+        'button[aria-label="Submit a query to Grok"]',
+        // Selectores de respaldo basados en el tipo y los selectores antiguos.
+        'button[type="submit"]',
         'button[data-testid="send-button"]', 'button[aria-label*="Send"]'
       ]
     },
