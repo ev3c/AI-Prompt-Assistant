@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ 맞춤 질문",
-      "buttons": [
-        {"label": "질문 작성하기", "prompt": ""}
-      ]
-    },  {
       "title": "📘 일반적 이해",
       "buttons": [
         {"label": "책의 요약은 무엇인가요?", "prompt": "책의 요약은 무엇인가요?"},

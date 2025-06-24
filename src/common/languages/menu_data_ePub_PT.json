@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Pergunta personalizada",
-      "buttons": [
-        {"label": "Escreva uma pergunta", "prompt": ""}
-      ]
-    },  {
       "title": "📘 Compreensão geral",
       "buttons": [
         {"label": "Qual é o resumo do livro?", "prompt": "Qual é o resumo do livro?"},

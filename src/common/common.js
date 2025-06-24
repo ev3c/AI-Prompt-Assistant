@@ -1734,3 +1734,62 @@ export function truncatePrompt(prompt, maxLength = 1000) {
   
   return truncated;
 }
+
+// Función especial para enviar solo el prompt sin contexto adicional
+export async function openAIWithPromptOnly(prompt, label) {
+  // Siempre preguntar al usuario para confirmar/modificar el prompt
+  const defaultText = prompt || "";
+  const iPrompt = await textPrompt(label || "Editar prompt:", defaultText);
+  
+  // Si el usuario cancela o no ingresa nada, salir de la función
+  if (!iPrompt) return;
+  
+  // Usar el prompt ingresado por el usuario
+  prompt = iPrompt;
+  console.log("Prompt confirmado/modificado (solo prompt):", prompt);
+
+  // Limitar el prompt a 1000 caracteres
+  prompt = truncatePrompt(prompt, 1000);
+  console.log("Prompt después de truncar:", prompt.length, "caracteres");
+
+  // Verificar si el prompt contiene [TEMA] o [TOPIC]
+  if (prompt.includes('[TEMA]') || prompt.includes('[TOPIC]')) {
+    // Pedir al usuario que ingrese el tema específico
+    const texts = getTranslation(currentLanguage);
+    const userTopic = await textPrompt(texts.textPrompt.topicPrompt, texts.textPrompt.topicPlaceholder);
+    if (userTopic) {
+      // Reemplazar [TEMA] o [TOPIC] con el tema ingresado por el usuario
+      prompt = prompt.replace(/\[TEMA\]|\[TOPIC\]/g, userTopic);
+    } else {
+      // Si el usuario no ingresa nada, usar un valor genérico
+      prompt = prompt.replace(/\[TEMA\]|\[TOPIC\]/g, 'tema principal');
+    }
+  }
+
+  // Enviar mensaje al background script para abrir el modelo de IA SIN CONTEXTO
+  chrome.runtime.sendMessage({
+    action: 'openAI',
+    prompt: prompt,
+    context: '', // Contexto vacío
+    aiModel: currentAIModel,
+    isClipboard: false,
+    buttonType: 'textOnlyButton' // Tipo especial para solo texto
+  });
+
+  // Mostrar notificación
+  const notification = document.getElementById('copy-notification');
+  notification.textContent = `Abriendo ${getAIModelName(currentAIModel)}...`;
+  notification.classList.remove('hidden');
+
+  // Si estamos en el popup, cerrarlo después de un segundo
+  if (location.pathname.includes('popup.html')) {
+    setTimeout(() => {
+      window.close();
+    }, 1000);
+  } else {
+    // Si estamos en el sidebar, solo ocultar la notificación
+    setTimeout(() => {
+      notification.classList.add('hidden');
+    }, 2000);
+  }
+}

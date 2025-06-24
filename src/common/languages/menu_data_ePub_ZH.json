@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ 自定义问题",
-      "buttons": [
-        {"label": "写一个问题", "prompt": ""}
-      ]
-    },  {
       "title": "📘 一般理解",
       "buttons": [
         {"label": "这本书的摘要是什么？", "prompt": "这本书的摘要是什么？"},

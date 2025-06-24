@@ -24,7 +24,8 @@ import {
   isAISupportedURL,
   sendTextToAI,
   isClipboardBehaviorContext, // Import the moved function
-  openAIWithPrompt // Añadir import para openAIWithPrompt
+  openAIWithPrompt, // Añadir import para openAIWithPrompt
+  openAIWithPromptOnly // Añadir import para openAIWithPromptOnly
 } from '/src/common/common.js';
 
 import { updateUITexts, getTranslation } from '/src/content-script/translations.js';
@@ -1936,10 +1937,10 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
   // Event listener para el botón de pregunta directa
   if (directQuestionButton) {
     directQuestionButton.addEventListener('click', async function () {
-      // Ejecutar el mismo código que el botón "Escribe una pregunta directamente a la AI"
+      // Usar la función especial que envía solo el prompt sin contexto
       const texts = getTranslation(config.getCurrentLanguage());
       const label = texts.optionButtons.directQuestionButton;
-      await openAIWithPrompt("", label);
+      await openAIWithPromptOnly("", label);
     });
   }
 

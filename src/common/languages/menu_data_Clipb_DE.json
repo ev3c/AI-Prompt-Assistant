@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Benutzerdefinierte Frage",
-      "buttons": [
-        {"label": "Frage formulieren", "prompt": ""}
-      ]
-    },    
-    {
       "title": "📝 Zusammenfassung und Verständnis",
       "buttons": [
         {"label": "Seite/Text zusammenfassen", "prompt": "Fasse zusammen:"},

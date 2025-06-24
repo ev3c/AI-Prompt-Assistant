@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Pregunta personalitzada",
-      "buttons": [
-        {"label": "Escriu una pregunta", "prompt": ""}
-      ]
-    },  {
       "title": "📘 Comprensió general",
       "buttons": [
         {"label": "Quin és el resum del llibre?", "prompt": "Quin és el resum del llibre?"},

@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Pregunta personalizada",
-      "buttons": [
-        {"label": "Escribe una pregunta directamente a la AI", "prompt": ""}
-      ]
-    },  
-    {
       "title": "🔍 1a sección del menú ",
       "buttons": [
         {"label": "Etiqueta 1.1 en el menú. (La extensión preguntará al usuario antes de enviar el prompt)", "prompt": "Este es el texto que preguntará al usuario"},

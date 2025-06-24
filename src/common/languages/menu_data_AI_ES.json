@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Pregunta personalizada",
-      "buttons": [
-        {"label": "Escribe una pregunta directamente a la AI", "prompt": ""}
-      ]
-    },    
-    {
       "title": "📝 Resumen y comprensión",
       "buttons": [
         {"label": "Haz un resumen de página/texto", "prompt": "Haz un resumen de:."},

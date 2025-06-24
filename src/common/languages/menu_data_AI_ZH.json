@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ 自定义问题",
-      "buttons": [
-        {"label": "输入问题", "prompt": ""}
-      ]
-    },    
-    {
       "title": "📝 摘要和理解",
       "buttons": [
         {"label": "页面/文本摘要", "prompt": "总结一下:"},

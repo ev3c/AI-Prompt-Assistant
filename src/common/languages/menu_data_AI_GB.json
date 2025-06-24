@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Custom question",
-      "buttons": [
-        {"label": "Write a question directly to the AI", "prompt": ""}
-      ]
-    },  {
       "title": "📝 Summary and Understanding",
       "buttons": [
         {"label": "Make a page/text summary", "prompt": "Make a summary of:"},

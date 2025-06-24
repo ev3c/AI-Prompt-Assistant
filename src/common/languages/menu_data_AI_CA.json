@@ -4,11 +4,6 @@
     "currentUrlPlaceholder": "Pàgina actual"
   },
   "sections": [
-    {
-      "title": "❓ Pregunta personalitzada",
-      "buttons": [
-        {"label": "Escriu una pregunta", "prompt": ""}
-      ]
     },  {
       "title": "📝 Resum i comprensió",
       "buttons": [

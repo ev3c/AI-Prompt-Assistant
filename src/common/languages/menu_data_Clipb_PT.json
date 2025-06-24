@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Pergunta personalizada",
-      "buttons": [
-        {"label": "Escreva uma pergunta", "prompt": ""}
-      ]
-    },    
-    {
       "title": "📝 Resumo e compreensão",
       "buttons": [
         {"label": "Faça um resumo da página/texto", "prompt": "Faça um resumo de:"},

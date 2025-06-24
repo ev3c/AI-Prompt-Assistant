@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Custom question",
-      "buttons": [
-        {"label": "Write a question directly to the AI", "prompt": ""}
-      ]
-    },    
-    {
       "title": "📚 Summarize Wikipedia articles",
       "buttons": [
         {

@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Domanda personalizzata",
-      "buttons": [
-        {"label": "Scrivi una domanda", "prompt": ""}
-      ]
-    },    
-    {
       "title": "📝 Riassunto e comprensione",
       "buttons": [
         {"label": "Fai un riassunto di pagina/testo", "prompt": "Fai un riassunto di:"},

@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Custom Question",
-      "buttons": [
-        {"label": "Write a question directly to the AI", "prompt": ""}
-      ]
-    },  {
       "title": "📄 Basic PDF Analysis",
       "buttons": [
         {"label": "Summarize this PDF", "prompt": "Summarize the content of the file [PDF]"},

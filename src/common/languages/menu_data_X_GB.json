@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Custom question",
-      "buttons": [
-        {"label": "Write a question directly to the AI", "prompt": ""}
-      ]
-    },  {
       "title": "🧵 Thread Content Analysis",
       "buttons": [
         {"label": "Summary in 3 key phrases","prompt": "Summarize this X thread in 3 key phrases."},

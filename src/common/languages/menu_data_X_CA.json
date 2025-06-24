@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Pregunta personalitzada",
-      "buttons": [
-        {"label": "Escriu una pregunta", "prompt": ""}
-      ]
-    },  
-    {
       "title": "🧵 Anàlisi de contingut del fil",
       "buttons": [
         {"label": "Resum en 3 frases clau","prompt": "Resumeix aquest fil de X en 3 frases clau."},

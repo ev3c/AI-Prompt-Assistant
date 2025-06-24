@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Question personnalisée",
-      "buttons": [
-        {"label": "Écris une question", "prompt": ""}
-      ]
-    },  {
       "title": "🧵 Analyse du contenu du fil",
       "buttons": [
         {"label": "Résumé en 3 phrases clés","prompt": "Résume ce fil X en 3 phrases clés."},

@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ カスタム質問",
-      "buttons": [
-        {"label": "質問を書く", "prompt": ""}
-      ]
-    },    
-    {
       "title": "📝 要約と理解",
       "buttons": [
         {"label": "ページ/テキストの要約", "prompt": "以下を要約して:"},

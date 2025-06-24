@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Benutzerdefinierte Frage",
-      "buttons": [
-        {"label": "Schreiben Sie eine Frage", "prompt": ""}
-      ]
-    },  {
       "title": "📘 Allgemeines Verständnis",
       "buttons": [
         {"label": "Was ist die Zusammenfassung des Buches?", "prompt": "Was ist die Zusammenfassung des Buches?"},

@@ -5,11 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ Pregunta personalizada",
-      "buttons": [
-        {"label": "Escribe una pregunta directamente a la AI", "prompt": ""}
-      ]
-    },  {
       "title": "🧵 Análisis de Contenido del Hilo",
       "buttons": [
         {"label": "Resumen en 3 frases clave","prompt": "Resume este hilo de X en 3 frases clave."},

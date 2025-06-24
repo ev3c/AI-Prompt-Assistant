@@ -5,12 +5,6 @@
   },
   "sections": [
     {
-      "title": "❓ 맞춤 질문",
-      "buttons": [
-        {"label": "질문 작성하기", "prompt": ""}
-      ]
-    },    
-    {
       "title": "📝 요약 및 이해",
       "buttons": [
         {"label": "페이지/텍스트 요약하기", "prompt": "다음을 요약해 주세요:"},
