@@ -122,7 +122,11 @@ function obtenerSelectores(sitio) {
         'cib-text-input textarea', 'main textarea', '[role="textbox"]', 'textarea'
       ],
       sendButton: [
-        'button[aria-label="Submit"]', 'button[title="Submit"]', '#searchboxform button[type="submit"]'
+        // Priorizar el selector más específico proporcionado en el HTML
+        'button[data-testid="submit-button"][aria-label="Enviar mensaje"]',
+        'button[aria-label="Submit"]', 
+        'button[title="Submit"]', 
+        '#searchboxform button[type="submit"]'
       ]
     },
     deepseek: {
