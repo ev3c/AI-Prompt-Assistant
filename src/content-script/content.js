@@ -135,6 +135,9 @@ function obtenerSelectores(sitio) {
         'textarea[data-testid*="chat-input"]', 'main textarea', '[role="textbox"]', 'textarea'
       ],
       sendButton: [
+        'div._7436101', // Alta prioridad por tipo de clase. 
+        'div[role="button"]:has(div.ds-icon)', // La segunda opción es si tiene un div con ds-icon, pero hay más elementos y puede dar conflicto
+        'button[data-testid="submit-button"]',
         'button[class*="absolute"] > svg', 'form button[type="submit"]'
       ]
     },
@@ -284,13 +287,16 @@ function enviarTextoUniversal(texto, submit = false) {
                 setTimeout(() => {
                   for (const btnSelector of sendButtonSelectors) {
                     const sendButton = document.querySelector(btnSelector);
-                    if (sendButton && !sendButton.disabled) {
+                    // Comprobación robusta: funciona para <button> (propiedad .disabled) y para <div> (atributo aria-disabled)
+                    const isDisabled = sendButton?.disabled || sendButton?.getAttribute('aria-disabled') === 'true';
+
+                    if (sendButton && !isDisabled) {
                       console.log(`✅ Botón de envío encontrado y habilitado con selector: ${btnSelector}`);
                       sendButton.click();
                       console.log('🎉 ¡Prompt enviado!');
                       return; // Salir del bucle de botones
                     } else {
-                      console.log(`❌ No se encontró o está deshabilitado el botón con selector: ${btnSelector}`);
+                      console.log(`❌ Botón no encontrado o deshabilitado con selector: ${btnSelector}`);
                     }
                   }
                   console.error('❌ No se pudo encontrar un botón de envío válido.');
