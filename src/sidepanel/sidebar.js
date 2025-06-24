@@ -937,7 +937,7 @@ async function handleCustomButtonClick(context, buttonElement) {
     });
   }
 
-  changeContext(context);
+  config.setCurrentContext(context);
   saveMainConfig(); // Save the updated config
 
   // Load and render sections based on the new context
@@ -1913,7 +1913,6 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     // Cambiar al contexto ADD para mostrar el menú JSON correspondiente
     const context = '+add+';
     config.setCurrentContext(context);
-    changeContext(context);
     
     // Actualizar el botón seleccionado
     deselectAllButtons();
