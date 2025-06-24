@@ -87,14 +87,14 @@ export function buildPrompt(prompt, context, isClipboard, buttonType) {
  */
 export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, buttonType, submit = true) {
   const finalPrompt = buildPrompt(prompt, context, isClipboard, buttonType, submit);
-  const AI_URLS = await getAIUrls();
+    const AI_URLS = await getAIUrls();
 
   // Helper para esperar a que una pestaña cargue o recargue completamente
   const waitForTabLoad = (tabId) => {
     return new Promise(resolve => {
       const listener = (tabId, info) => {
         if (tabId === tabId && info.status === 'complete') {
-          chrome.tabs.onUpdated.removeListener(listener);
+                chrome.tabs.onUpdated.removeListener(listener);
           resolve();
         }
       };
@@ -114,7 +114,7 @@ export async function openAIWithPrompt(prompt, context, aiModel, isClipboard, bu
 
     // Lógica mejorada para encontrar una pestaña existente
     let targetTab = allTabs.find(tab => {
-      if (!tab.url) return false;
+    if (!tab.url) return false;
       try {
         const tabHostname = new URL(tab.url).hostname.toLowerCase();
         if (ai === 'meta') return tabHostname.includes('meta.ai');

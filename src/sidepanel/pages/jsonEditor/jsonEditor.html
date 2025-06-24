@@ -28,6 +28,13 @@
           <input type="text" id="add-button-text" maxlength="12" placeholder="Máx. 12 chars" value="ButtonName" class="button-name-input">
         </div>
         <div class="control-group">
+            <label id="origin-label" for="origin-selector">Origen:</label>
+            <select id="origin-selector">
+                <option value="url">URL</option>
+                <option value="clipboard">Clipboard</option>
+            </select>
+        </div>
+        <div class="control-group">
             <label id="platform-label" for="platform-selector">Plataforma:</label>
             <select id="platform-selector">
                 <option value="win">Windows</option>
@@ -42,9 +49,6 @@
         <input type="file" id="file-input" accept=".json" class="file-input">
       </div>
       <button id="save-btn" class="btn btn-primary" disabled>💾 Guardar</button>
-      <div class="filename-display" id="filename-display">
-        Loading default file...
-      </div>
     </div>
 
     <!-- Editor Embebido -->

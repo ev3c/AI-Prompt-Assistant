@@ -23,10 +23,7 @@ class JSONEditor {
         copyPath: "📋 Copiar Ruta",
         copyFile: "📋 Copiar Archivo",
         editorPlaceholder: "Edita tu JSON aquí...",
-        file: "Archivo:",
-        defaultFile: "por defecto",
-        loadedFile: "cargado",
-        newFile: "nuevo",
+        originLabel: "Origen:",
         platformLabel: "Plataforma:",
         pathCopied: "Ruta copiada al portapapeles:",
         pathCopyError: "No se pudo copiar la ruta al portapapeles.",
@@ -67,10 +64,7 @@ class JSONEditor {
         copyPath: "📋 Copy Path",
         copyFile: "📋 Copy File",
         editorPlaceholder: "Edit your JSON here...",
-        file: "File:",
-        defaultFile: "default",
-        loadedFile: "loaded",
-        newFile: "new",
+        originLabel: "Origin:",
         platformLabel: "Platform:",
         pathCopied: "Path copied to clipboard:",
         pathCopyError: "Could not copy path to clipboard.",
@@ -107,6 +101,7 @@ class JSONEditor {
         currentUrlPlaceholder: "Página actual"
       },
       addButtonText: "Añadir",
+      origin: "url",
       jsonPath: "C:/Users/[usuario]/AppData/Local/Google/Chrome/User Data/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/idioma/",
       sections: []
     };
@@ -119,11 +114,10 @@ class JSONEditor {
     this.initEmbeddedEditor();
     // Inicializar el campo Title con valor por defecto
     this.initializeButtonNameField();
+    this.initializeOriginSelector();
     this.initializePlatformSelector();
     // Aplicar traducciones iniciales
     this.updateLanguage();
-    // Actualizar texto inicial del filename display
-    document.getElementById('filename-display').textContent = this.t('loadingDefault');
   }
 
   t(key) {
@@ -149,6 +143,7 @@ class JSONEditor {
     const headerH1 = document.querySelector('.header h1');
     const headerP = document.querySelector('.header p');
     const buttonNameLabel = document.querySelector('.button-name-label');
+    const originLabel = document.getElementById('origin-label');
     const platformLabel = document.getElementById('platform-label');
     const addButtonText = document.getElementById('add-button-text');
     const loadDefaultBtn = document.getElementById('load-default-btn');
@@ -163,6 +158,7 @@ class JSONEditor {
     if (headerH1) headerH1.textContent = this.t('title');
     if (headerP) headerP.textContent = this.t('subtitle');
     if (buttonNameLabel) buttonNameLabel.textContent = this.t('titleLabel');
+    if (originLabel) originLabel.textContent = this.t('originLabel');
     if (platformLabel) platformLabel.textContent = this.t('platformLabel');
     if (addButtonText) addButtonText.placeholder = this.t('titlePlaceholder');
     if (loadDefaultBtn) loadDefaultBtn.textContent = this.t('loadTemplate');
@@ -173,9 +169,6 @@ class JSONEditor {
     if (copyPathBtn) copyPathBtn.textContent = this.t('copyPath');
     if (copyJsonBtn) copyJsonBtn.textContent = this.t('copyFile');
     if (embeddedJsonEditor) embeddedJsonEditor.placeholder = this.t('editorPlaceholder');
-    
-    // Actualizar la visualización del archivo
-    this.updateFilenameDisplay();
   }
 
   async loadDefaultFile() {
@@ -192,7 +185,6 @@ class JSONEditor {
       // Actualizar el campo Title con el header.title del archivo JSON
       this.updateTitleFieldFromJSON();
       
-      this.updateFilenameDisplay();
       this.updateJsonPreview();
       this.enableSave();
       
@@ -213,6 +205,9 @@ class JSONEditor {
     
     // Button name field
     document.getElementById('add-button-text').addEventListener('input', (e) => this.updateAddButtonText(e.target.value));
+    
+    // Origin selector
+    document.getElementById('origin-selector').addEventListener('change', (e) => this.updateOriginSelection(e.target.value));
     
     // Add listener for the editor itself to sync changes back to the UI
     document.getElementById('embedded-json-editor').addEventListener('input', () => this.syncUIFromEditor());
@@ -291,7 +286,6 @@ class JSONEditor {
         // Actualizar el campo Title con el header.title del archivo JSON
         this.updateTitleFieldFromJSON();
         
-        this.updateFilenameDisplay();
         this.updateJsonPreview();
         this.enableSave();
         
@@ -312,6 +306,16 @@ class JSONEditor {
         buttonNameInput.value = titleFromJSON;
         // También actualizar el addButtonText en los datos
         this.currentData.addButtonText = titleFromJSON;
+      }
+    }
+
+    // Extraer el origen del JSON cargado
+    if (this.currentData && this.currentData.origin) {
+      const originFromJSON = this.currentData.origin;
+      const originSelector = document.getElementById('origin-selector');
+      
+      if (originSelector) {
+        originSelector.value = originFromJSON;
       }
     }
   }
@@ -341,9 +345,11 @@ class JSONEditor {
   saveFile() {
     const embeddedEditor = document.getElementById('embedded-json-editor');
     const titleInput = document.getElementById('add-button-text');
+    const originSelector = document.getElementById('origin-selector');
     
     const jsonStringFromEditor = embeddedEditor.value;
     const titleFromInput = titleInput.value.trim();
+    const originFromSelector = originSelector.value;
 
     let dataToSave;
 
@@ -360,19 +366,19 @@ class JSONEditor {
       return; // Detener la ejecución
     }
 
-    // 2. Consolidar: Actualizar el objeto JSON con el valor del campo de título.
-    //    Esto asegura que el cambio en el título se incluya en el archivo guardado.
+    // 2. Consolidar: Actualizar el objeto JSON con el valor del campo de título y origen.
+    //    Esto asegura que los cambios en el título y origen se incluyan en el archivo guardado.
     if (dataToSave.header) {
       dataToSave.header.title = titleFromInput;
     }
     dataToSave.addButtonText = titleFromInput;
+    dataToSave.origin = originFromSelector;
 
     // 3. Actualizar el estado principal de la clase con los datos consolidados.
     this.currentData = dataToSave;
 
     // 4. Sincronizar la UI para que refleje el estado que se va a guardar.
     this.updateJsonPreview(); // Actualiza el <textarea> con el JSON formateado.
-    this.updateFilenameDisplay(); // Actualiza el nombre del archivo a guardar.
 
     // 5. Proceder a guardar el archivo.
     const jsonString = JSON.stringify(this.currentData, null, 2);
@@ -394,25 +400,7 @@ class JSONEditor {
     alert(this.t('saveMessage') + ' ' + filename + ' ' + this.getPlatformSaveMessage());
   }
 
-  updateFilenameDisplay() {
-    const display = document.getElementById('filename-display');
-    const fileNameParts = this.spritFileName();
-    
-    // Siempre mostrar el nombre dinámico formado por fileName + buttonName + idiomaAI
-    if (this.currentFilename === 'menu_data_ADD_ES.json' || this.currentFilename === 'menu_data_ADD_GB.json') {
-      display.innerHTML = `📋 <strong>${this.t('file')}</strong> ${fileNameParts.fullFileName}`;
-      display.style.color = '#28a745';
-      display.style.fontWeight = 'normal';
-    } else if (this.currentFilename) {
-      display.innerHTML = `📄 <strong>${this.t('file')}</strong> ${fileNameParts.fullFileName}`;
-      display.style.color = '#007bff';
-      display.style.fontWeight = 'normal';
-    } else {
-      display.innerHTML = `📝 <strong>${this.t('file')}</strong> ${fileNameParts.fullFileName}`;
-      display.style.color = '#17a2b8';
-      display.style.fontWeight = 'normal';
-    }
-  }
+
 
   enableSave() {
     document.getElementById('save-btn').disabled = false;
@@ -445,8 +433,28 @@ class JSONEditor {
       // La fusión final se realizará al guardar.
     }
 
-    this.updateFilenameDisplay();
     this.enableSave();
+  }
+
+  updateOriginSelection(origin) {
+    // Actualizar los datos JSON con la nueva selección de origen
+    try {
+      const editor = document.getElementById('embedded-json-editor');
+      const data = JSON.parse(editor.value);
+      
+      // Agregar o actualizar la propiedad origin en los datos
+      data.origin = origin;
+      
+      this.currentData = data;
+      this.updateJsonPreview();
+      this.enableSave();
+      
+      console.log('Origin updated to:', origin);
+    } catch (e) {
+      // Si el JSON del editor no es válido, solo actualizar el estado interno
+      this.currentData.origin = origin;
+      console.log('Origin updated to:', origin, '(JSON editor invalid, updated internal state only)');
+    }
   }
 
   initEmbeddedEditor() {
@@ -463,6 +471,14 @@ class JSONEditor {
       // Actualizar los datos con el valor por defecto del campo
       this.updateAddButtonText(buttonNameInput.value);
     }
+  }
+
+  initializeOriginSelector() {
+    const originSelector = document.getElementById('origin-selector');
+    if (!originSelector) return;
+
+    // Por defecto seleccionar URL
+    originSelector.value = 'url';
   }
 
   initializePlatformSelector() {
@@ -594,12 +610,17 @@ class JSONEditor {
 
       const titleFromEditor = data?.header?.title;
       const titleInput = document.getElementById('add-button-text');
+      const originFromEditor = data?.origin;
+      const originSelector = document.getElementById('origin-selector');
 
       // Sincronizar el campo de entrada del título SI ha cambiado en el editor.
       if (titleFromEditor !== undefined && titleInput.value !== titleFromEditor) {
         titleInput.value = titleFromEditor;
-        // Después de sincronizar el título, actualizar también la visualización del nombre del archivo.
-        this.updateFilenameDisplay();
+      }
+
+      // Sincronizar el selector de origen SI ha cambiado en el editor.
+      if (originFromEditor !== undefined && originSelector.value !== originFromEditor) {
+        originSelector.value = originFromEditor;
       }
     } catch (e) {
       // Es de esperar que el JSON no sea válido mientras el usuario escribe. No hacer nada.
