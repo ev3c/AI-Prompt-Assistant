@@ -72,6 +72,27 @@ export const config = {
   setAvailableLanguages: (languages) => { availableLanguages = languages; }
 };
 
+// Helper function to determine if a context behaves like a clipboard context
+export function isClipboardBehaviorContext(context) {
+  // Standard clipboard-like contexts
+  if (['clipboard', 'book', 'twitter', 'gmail'].includes(context)) {
+    return true;
+  }
+  // Custom contexts with 'Clipboard' behaviour
+  if (context.startsWith('custom_')) {
+    const customButton = document.querySelector(`.custom-menu-button[data-context="${context}"]`);
+    if (customButton && customButton.dataset.behaviour === 'Clipboard') {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Helper function to determine if a context behaves like a URL context
+export function isUrlBehaviorContext(context) {
+  return !isClipboardBehaviorContext(context);
+}
+
 // Función para cargar los idiomas disponibles desde /src/common/languages/idiomaAI.json
 export async function loadAvailableLanguages() {
   try {
@@ -108,8 +129,8 @@ export async function tryReadClipboard() {
           const previousClipboardText = clipboardText;
           clipboardText = text;
           
-          // Si el contenido cambió y estamos en contexto de clipboard, notificar el cambio
-          if (previousClipboardText !== clipboardText && currentContext === 'clipboard') {
+          // Si el contenido cambió y estamos en un contexto que se comporta como clipboard, notificar el cambio
+          if (previousClipboardText !== clipboardText && isClipboardBehaviorContext(currentContext)) {
             console.log('Contenido del portapapeles actualizado:', clipboardText);
             // Disparar un evento personalizado para que otros módulos puedan reaccionar
             const clipboardChangeEvent = new CustomEvent('clipboardContentChanged', { 
@@ -144,62 +165,57 @@ export async function tryReadClipboard() {
 
 // Actualizar la visualización del contexto (URL o portapapeles)
 export function updateContextDisplay() {
-const labelText = document.getElementById('current-url');
+  const labelText = document.getElementById('current-url');
 
-// Configurar el estilo para que ocupe dos líneas
-labelText.style.height = 'auto';
-labelText.style.minHeight = '2.4em'; // Altura para aproximadamente 2 líneas
-labelText.style.maxWidth = '100%';
-labelText.style.whiteSpace = 'normal'; // Permitir saltos de línea
-labelText.style.overflow = 'hidden';
-labelText.style.textOverflow = 'ellipsis';
-labelText.style.display = '-webkit-box';
-labelText.style.webkitLineClamp = '2'; // Limitar a 2 líneas
-labelText.style.webkitBoxOrient = 'vertical';
-labelText.style.lineHeight = '1.2em';
+  // Configurar el estilo para que ocupe dos líneas
+  labelText.style.height = 'auto';
+  labelText.style.minHeight = '2.4em'; // Altura para aproximadamente 2 líneas
+  labelText.style.maxWidth = '100%';
+  labelText.style.whiteSpace = 'normal'; // Permitir saltos de línea
+  labelText.style.overflow = 'hidden';
+  labelText.style.textOverflow = 'ellipsis';
+  labelText.style.display = '-webkit-box';
+  labelText.style.webkitLineClamp = '2'; // Limitar a 2 líneas
+  labelText.style.webkitBoxOrient = 'vertical';
+  labelText.style.lineHeight = '1.2em';
 
-let displayText = clipboardText || '[Portapapeles vacío]';
-// Limitar el texto del portapapeles para la visualización
-// Aumentar el límite de caracteres ya que ahora tenemos 2 líneas
-if (displayText.length > 100) {
-  displayText = displayText.substring(0, 100) + '...';
-}
-const menuData = config.getMenuData(); // Get current menu data
+  let displayText = clipboardText || '[Portapapeles vacío]';
+  // Limitar el texto del portapapeles para la visualización
+  // Aumentar el límite de caracteres ya que ahora tenemos 2 líneas
+  if (displayText.length > 100) {
+    displayText = displayText.substring(0, 100) + '...';
+  }
 
-
-switch (currentContext) {
-  case 'url':
-    labelText.textContent = `URL: ${shortenUrl(currentUrl)}`;
-    break;
-  case 'clipboard':
-    labelText.textContent = `ClipB: ${displayText}`;
-    break;
-  case 'book':
-    labelText.textContent = `Book: ${displayText}`;
-    break;
-  case 'pdf':
-    labelText.textContent = ` ${displayText}`;
-    break;
-  case 'wiki':
-    labelText.textContent = `Wiki: ${shortenUrl(currentUrl)}`;
-    break;
-  case 'twitter':
-    labelText.textContent = ` ${displayText}`;
-    break;
-  case 'gmail':
-    labelText.textContent = ` ${displayText}`;
-    break;
-  case '+add+':
-    labelText.textContent = `ADD: Custom prompts menu`;
-    break;
-
-  default:
+  if (isClipboardBehaviorContext(currentContext)) {
+    // If it's a clipboard-like context (standard or custom)
+    let prefix = 'ClipB';
     if (currentContext.startsWith('custom_')) {
+      const menuData = config.getMenuData();
       const title = menuData?.header?.title || currentContext.replace(/_/g, ' ').replace('custom', 'Custom');
-      labelText.textContent = `Custom: ${title}`;
-    } else {
-      labelText.textContent = `URL: ${shortenUrl("error")}`;
+      prefix = `${title} (ClipB)`; // More descriptive for custom clipboard
+    } else if (currentContext === 'book') {
+      prefix = 'Book';
+    } else if (currentContext === 'pdf') {
+      prefix = 'PDF';
+    } else if (currentContext === 'twitter') {
+      prefix = 'X';
+    } else if (currentContext === 'gmail') {
+      prefix = 'Gmail';
     }
+    labelText.textContent = `${prefix}: ${displayText}`;
+  } else {
+    // If it's a URL-like context (standard or custom)
+    let prefix = 'URL';
+    if (currentContext.startsWith('custom_')) {
+      const menuData = config.getMenuData();
+      const title = menuData?.header?.title || currentContext.replace(/_/g, ' ').replace('custom', 'Custom');
+      prefix = `${title} (URL)`; // More descriptive for custom URL
+    } else if (currentContext === 'wiki') {
+      prefix = 'Wiki';
+    } else if (currentContext === '+add+') {
+      prefix = 'ADD';
+    }
+    labelText.textContent = `${prefix}: ${shortenUrl(currentUrl)}`;
   }
 }
 

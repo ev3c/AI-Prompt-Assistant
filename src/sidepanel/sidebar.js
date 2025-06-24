@@ -22,7 +22,8 @@ import {
   textPrompt,
   confirmPrompt,
   isAISupportedURL,
-  sendTextToAI
+  sendTextToAI,
+  isClipboardBehaviorContext // Import the moved function
 } from '/src/common/common.js';
 
 import { updateUITexts, getTranslation } from '/src/content-script/translations.js';
@@ -914,10 +915,39 @@ function extractAndCopyTweets() {
 }
 
 // Función para manejar el clic en un botón de menú custom
-function handleCustomButtonClick(context, buttonElement) {
+async function handleCustomButtonClick(context, buttonElement) {
   deselectAllButtons();
   buttonElement.classList.add('option-selected');
+
+  const behaviour = buttonElement.dataset.behaviour; // Get behaviour from data attribute
+
+  if (behaviour === 'Clipboard') {
+    config.setUseClipboard(true);
+    // If it's clipboard, try to read clipboard content
+    await tryReadClipboard();
+    updateContextDisplay();
+  } else { // Default to URL behavior
+    config.setUseClipboard(false);
+    // If it's URL, update active tab URL
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      if (tabs && tabs.length > 0) {
+        config.setCurrentUrl(tabs[0].url);
+        updateContextDisplay();
+      }
+    });
+  }
+
   changeContext(context);
+  saveMainConfig(); // Save the updated config
+
+  // Load and render sections based on the new context
+  try {
+    const newMenuData = await loadMenuData(config.getCurrentLanguage());
+    config.setMenuData(newMenuData);
+    renderSections();
+  } catch (error) {
+    console.error('Error loading menu data for custom context:', error);
+  }
 }
 
 // Función para buscar archivos JSON custom y crear los botones
@@ -941,12 +971,14 @@ async function initializeCustomButtons() {
       if (response.ok) {
         const data = await response.json();
         const title = data.header?.title || fileName.replace('.json', '');
+        const behaviour = data.header?.behaviour || 'url'; // Extract behaviour, default to 'url'
         const context = `custom_${customButtonsCreated + 1}`;
 
         const button = document.createElement('button');
         button.className = 'option-button custom-menu-button';
         button.textContent = title;
         button.dataset.context = context;
+        button.dataset.behaviour = behaviour; // Store behaviour in data attribute
 
         button.addEventListener('click', () => handleCustomButtonClick(context, button));
 
@@ -980,46 +1012,26 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Solicitar permisos de portapapeles al iniciar
     const hasClipboardPermission = await requestClipboardPermission();
 
-    // Agregar listener para el evento personalizado de cambio de portapapeles
     document.addEventListener('clipboardContentChanged', async function (event) {
-      // Solo ejecutar si estamos en el contexto de clipboard
-      if (config.getCurrentContext() === 'clipboard') {
-
-        // Actualizar la interfaz con el nuevo contenido
+      // Solo ejecutar si el contexto actual es de tipo clipboard
+      if (isClipboardBehaviorContext(config.getCurrentContext())) {
         config.setClipboardText(event.detail.newContent);
         updateContextDisplay();
-
-        // Cargar el menú correspondiente al contexto de portapapeles
-        loadMenuData(config.getCurrentLanguage()).then(newMenuData => {
-          config.setMenuData(newMenuData);
-          renderSections();
-        }).catch(error => {
-          console.error('Error al cargar el menú de portapapeles:', error);
-        });
-
-        // Mostrar notificación
-        //const notification = document.getElementById('copy-notification');
-        //notification.textContent = 'Contenido del portapapeles actualizado automáticamente';
-        //notification.classList.remove('hidden');
-        //setTimeout(() => {
-        //  notification.classList.add('hidden');
-        //}, 1500);
+        const newMenuData = await loadMenuData(config.getCurrentLanguage());
+        config.setMenuData(newMenuData);
+        renderSections();
       }
     });
 
     // Cargar los idiomas disponibles primero
     await loadAvailableLanguages();
 
-    // Cargar la configuración principal
     const mainConfig = await loadMainConfig();
 
-    // Actualizar los elementos de UI con los idiomas cargados
     updateLanguageMenus();
 
-    // Actualizar los textos de la interfaz con el idioma actual
     updateUITexts(config.getCurrentLanguage());
 
-    // Configurar los menús de idioma y modelo de IA
     configureLanguageMenu();
     configureModelMenu();
 
@@ -1027,47 +1039,47 @@ document.addEventListener('DOMContentLoaded', async function () {
     const menuData = await loadMenuData(config.getCurrentLanguage());
     config.setMenuData(menuData);
 
-    // Inicializar la interfaz de usuario
     initializeUI();
 
-    // Inicializar botones customizados
     await initializeCustomButtons();
-
-    // Obtener URL actual o contenido del portapapeles según el contexto
-    if (config.getUseClipboard() || config.getCurrentContext() === 'clipboard') {
-      // Si usamos portapapeles, leerlo inmediatamente
-      await tryReadClipboard();
-      updateContextDisplay();
-    } else {
-      // Si usamos URL, obtener la URL actual
-      chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
-        if (tabs && tabs.length > 0) {
-          config.setCurrentUrl(tabs[0].url);
-          updateContextDisplay();
-        }
-      });
-    }
 
     // Seleccionar automáticamente el contexto adecuado y renderizar el menú
     const currentContext = config.getCurrentContext();
-
-    // Usar la función de mapeo para obtener el ID del botón correcto
     const buttonId = getButtonIdFromContext(currentContext);
+    let contextButton = document.getElementById(buttonId);
 
-    const contextButton = document.getElementById(buttonId);
+    // Handle custom buttons specifically if not found by getButtonIdFromContext
+    if (!contextButton && currentContext.startsWith('custom_')) {
+      contextButton = document.querySelector(`.custom-menu-button[data-context="${currentContext}"]`);
+    }
 
     if (contextButton) {
       // Deseleccionar todos los botones
       deselectAllButtons();
-
       // Seleccionar el botón de contexto
       contextButton.classList.add('option-selected');
+
+      // Determine behaviour for the selected context and load initial data
+      const buttonBehaviour = contextButton.dataset.behaviour; // 'url' or 'Clipboard' for custom, undefined for standard
+
+      if (isClipboardBehaviorContext(currentContext)) {
+        config.setUseClipboard(true);
+        await tryReadClipboard();
+        updateContextDisplay();
+      } else { // Default to URL behavior for all other contexts
+        config.setUseClipboard(false);
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+          if (tabs && tabs.length > 0) {
+            config.setCurrentUrl(tabs[0].url);
+            updateContextDisplay();
+          }
+        });
+      }
 
       // Renderizar secciones del menú
       renderSections();
     } else {
       console.warn('No se encontró el botón para el contexto:', currentContext, 'ID:', buttonId);
-      // Si no se encontró el botón del contexto seleccionado, usar URL por defecto
       const urlButton = document.getElementById('use-url');
       if (urlButton) {
         deselectAllButtons();
@@ -1083,30 +1095,25 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
     }
 
+    function isUrlBehaviorContext(context) {
+      return !isClipboardBehaviorContext(context); // If it's not clipboard behavior, it's URL behavior
+    }
+
     // Escuchar cambios de URL en la pestaña activa
     chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
       if (changeInfo.url && tab.active) {
-        // Actualizar la URL almacenada
         config.setCurrentUrl(changeInfo.url);
-
-        // Actualizar la visualización si el contexto actual usa URL
-        const urlContexts = ['url', 'wiki', 'twitter', 'gmail'];
-        if (urlContexts.includes(config.getCurrentContext()) && !config.getUseClipboard()) {
+        if (isUrlBehaviorContext(config.getCurrentContext())) {
           updateContextDisplay();
         }
       }
     });
 
-    // Escuchar cambios de pestaña activa
     chrome.tabs.onActivated.addListener(function (activeInfo) {
       chrome.tabs.get(activeInfo.tabId, function (tab) {
         if (tab) {
-          // Actualizar la URL almacenada
           config.setCurrentUrl(tab.url);
-
-          // Actualizar la visualización si el contexto actual usa URL
-          const urlContexts = ['url', 'wiki', 'twitter', 'gmail'];
-          if (urlContexts.includes(config.getCurrentContext()) && !config.getUseClipboard()) {
+          if (isUrlBehaviorContext(config.getCurrentContext())) {
             updateContextDisplay();
           }
         }
@@ -2256,10 +2263,9 @@ function setupClipboardMonitoring() {
   hiddenInput.style.zIndex = '-1000';
   document.body.appendChild(hiddenInput);
 
-  // Añadir detector de eventos de copia global
   document.addEventListener('copy', async function (e) {
-    // Solo proceder si el botón de clipboard está activado
-    if (config.getCurrentContext() === 'clipboard') {
+    // Solo proceder si el contexto actual es de tipo clipboard
+    if (isClipboardBehaviorContext(config.getCurrentContext())) {
       console.log('Evento de copia detectado');
 
       // Necesitamos esperar un momento para que el portapapeles se actualice
@@ -2271,37 +2277,13 @@ function setupClipboardMonitoring() {
           const newClipboardContent = config.getClipboardText();
 
           // Si el contenido no es un mensaje de error y ha cambiado, ejecutar la funcionalidad de clipboardButton
-          if (!newClipboardContent.includes('[Acceso al portapapeles') &&
-            !newClipboardContent.includes('[Haga clic aquí') &&
-            oldClipboardContent !== newClipboardContent) {
-
-            //console.log('Contenido copiado detectado, ejecutando funcionalidad de clipboardButton:', newClipboardContent);
-
-            // Solicitar permisos de portapapeles de manera explícita
+          if (!newClipboardContent.includes('[Acceso al portapapeles') && !newClipboardContent.includes('[Haga clic aquí') && oldClipboardContent !== newClipboardContent) {
             const hasPermission = await requestClipboardPermission();
-
-            // Actualizar la interfaz con el resultado
             config.setClipboardText(newClipboardContent);
             updateContextDisplay();
-
-            // Cargar el menú correspondiente al contexto de portapapeles
-            loadMenuData(config.getCurrentLanguage()).then(newMenuData => {
-              config.setMenuData(newMenuData);
-              renderSections();
-            }).catch(error => {
-              console.error('Error al cargar el menú de portapapeles:', error);
-            });
-
-            /* Mostrar notificación de éxito
-            const notification = document.getElementById('copy-notification');
-            notification.textContent = 'Contenido copiado al portapapeles';
-            notification.classList.remove('hidden');
-            
-            // Ocultar notificación después de 1 segundo
-            setTimeout(() => {
-              notification.classList.add('hidden');
-            }, 1000);
-            */
+            const newMenuData = await loadMenuData(config.getCurrentLanguage());
+            config.setMenuData(newMenuData);
+            renderSections();
           }
         } catch (err) {
           console.error('Error al leer el portapapeles después de copia:', err);
@@ -2381,14 +2363,11 @@ function setupClipboardMonitoring() {
     }
 
     // Determinar el intervalo basado en si el contexto es clipboard o no
-    const pollingInterval = config.getCurrentContext() === 'clipboard' ? 1000 : 2000;
+    const pollingInterval = isClipboardBehaviorContext(config.getCurrentContext()) ? 1000 : 2000;
 
     // Verificar el portapapeles cada 1-2 segundos cuando está activo
     clipboardPollingInterval = setInterval(async () => {
-      // Comprobar contextos que usan portapapeles
-      const clipboardContexts = ['clipboard', 'book', 'pdf', 'twitter', 'gmail'];
-
-      if (clipboardContexts.includes(config.getCurrentContext()) || config.getUseClipboard()) {
+      if (isClipboardBehaviorContext(config.getCurrentContext())) {
         const oldText = config.getClipboardText();
         await tryReadClipboard();
         const newText = config.getClipboardText();
@@ -2396,7 +2375,7 @@ function setupClipboardMonitoring() {
         // Solo actualizar la visualización si el contenido cambió y el contexto es clipboard
         if (oldText !== newText) {
           // Si estamos específicamente en el contexto clipboard, actualizar más agresivamente
-          if (config.getCurrentContext() === 'clipboard') {
+          if (isClipboardBehaviorContext(config.getCurrentContext())) {
             // Intentar leer directamente del portapapeles del sistema
             try {
               const directClipboardText = await navigator.clipboard.readText();
@@ -2405,29 +2384,10 @@ function setupClipboardMonitoring() {
                 console.log('Contenido de portapapeles de Windows actualizado:', directClipboardText);
 
                 // Ejecutar la funcionalidad de clipboardButton cuando el contenido cambia
-                // Pero solo si estamos específicamente en el contexto de clipboard
-                if (config.getCurrentContext() === 'clipboard') {
-                  console.log('Ejecutando funcionalidad de clipboardButton por cambio en el portapapeles');
-
-                  // Cargar el menú correspondiente al contexto de portapapeles
-                  loadMenuData(config.getCurrentLanguage()).then(newMenuData => {
-                    config.setMenuData(newMenuData);
-                    renderSections();
-                  }).catch(error => {
-                    console.error('Error al cargar el menú de portapapeles:', error);
-                  });
-
-                  /* Mostrar notificación de cambio de portapapeles
-                  const notification = document.getElementById('copy-notification');
-                  notification.textContent = 'Contenido de portapapeles actualizado';
-                  notification.classList.remove('hidden');
-                  
-                  // Ocultar notificación después de 1 segundo
-                  setTimeout(() => {
-                    notification.classList.add('hidden');
-                  }, 1000);
-                  */
-                }
+                console.log('Ejecutando funcionalidad de clipboardButton por cambio en el portapapeles');
+                const newMenuData = await loadMenuData(config.getCurrentLanguage());
+                config.setMenuData(newMenuData);
+                renderSections();
               }
             } catch (e) {
               // Silenciar error, usar el valor de tryReadClipboard
@@ -2476,8 +2436,7 @@ function setupClipboardMonitoring() {
   // Eventos para manejo del monitoreo
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') {
-      const clipboardContexts = ['clipboard', 'book', 'pdf', 'twitter', 'gmail'];
-      if (clipboardContexts.includes(config.getCurrentContext()) || config.getUseClipboard()) {
+      if (isClipboardBehaviorContext(config.getCurrentContext())) {
         startClipboardMonitoring();
         // Leer el portapapeles inmediatamente al volver a la ventana
         tryReadClipboard().then(() => {

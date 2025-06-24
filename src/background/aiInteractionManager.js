@@ -1,4 +1,4 @@
-import { getAIUrls } from '/src/common/common.js';
+import { getAIUrls, isClipboardBehaviorContext } from '/src/common/common.js';
 
 /**
  * Devuelve el nombre del modelo IA por su id.
@@ -13,7 +13,7 @@ export async function getAIModelName(modelId) {
 /**
  * Construye el prompt final según el contexto y el tipo de botón.
  */
-export function buildPrompt(prompt, context, isClipboard, buttonType) {
+export function buildPrompt(prompt, context, isClipboard, buttonType) { // isClipboard is still needed as a direct parameter for buildPrompt
   let finalPrompt = prompt;
 
   // Contexto PDF
