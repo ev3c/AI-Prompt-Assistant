@@ -34,14 +34,6 @@
                 <option value="clipboard">Clipboard</option>
             </select>
         </div>
-        <div class="control-group">
-            <label id="platform-label" for="platform-selector">Plataforma:</label>
-            <select id="platform-selector">
-                <option value="win">Windows</option>
-                <option value="mac">Mac</option>
-                <option value="linux">Linux</option>
-            </select>
-        </div>
       </div>
       <button id="load-default-btn" class="btn btn-success">📋 Cargar Plantilla</button>
       <div class="file-input-wrapper">
@@ -49,6 +41,14 @@
         <input type="file" id="file-input" accept=".json" class="file-input">
       </div>
       <button id="save-btn" class="btn btn-primary" disabled>💾 Guardar</button>
+      <div class="control-group platform-selector-right">
+          <label id="platform-label" for="platform-selector">Plataforma:</label>
+          <select id="platform-selector">
+              <option value="win">Windows</option>
+              <option value="mac">Mac</option>
+              <option value="linux">Linux</option>
+          </select>
+      </div>
     </div>
 
     <!-- Editor Embebido -->

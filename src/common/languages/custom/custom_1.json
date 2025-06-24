@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "C1.2",
+    "title": "Wikipedia2",
     "currentUrlPlaceholder": "Página actual",
     "behaviour": "Clipboard"
   },
@@ -83,7 +83,7 @@
       ]
     }
   ],
-  "addButtonText": "TEST_11",
+  "addButtonText": "Wikipedia2",
   "jsonName": "custom_1.json",
   "origin": "url"
 }

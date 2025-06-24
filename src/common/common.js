@@ -733,38 +733,12 @@ export async function openAIWithPrompt(prompt, label) {
     }
   }
 
-  // Si el prompt original estaba vacío, enviar solo el texto del usuario sin contexto
+  // Si el prompt original estaba vacío, enviar con contexto normal
   if (isEmptyPrompt) {
-    console.log("✅ Prompt vacío detectado - Enviando solo texto del usuario:", prompt);
+    console.log("✅ Prompt vacío detectado - Enviando con contexto normal:", prompt);
     
-    // Enviar solo el texto del usuario, sin URL ni clipboard
-    chrome.runtime.sendMessage({
-      action: 'openAI',
-      prompt: prompt,
-      context: '', // Contexto vacío
-      aiModel: currentAIModel,
-      isClipboard: false, // No usar clipboard
-      buttonType: 'textOnlyButton' // Tipo especial para texto solo
-    });
-
-    // Mostrar notificación
-    const notification = document.getElementById('copy-notification');
-    notification.textContent = `Abriendo ${getAIModelName(currentAIModel)} con texto personalizado...`;
-    notification.classList.remove('hidden');
-
-    // Si estamos en el popup, cerrarlo después de un segundo
-    if (location.pathname.includes('popup.html')) {
-      setTimeout(() => {
-        window.close();
-      }, 1000);
-    } else {
-      // Si estamos en el sidebar, solo ocultar la notificación
-      setTimeout(() => {
-        notification.classList.add('hidden');
-      }, 2000);
-    }
-    
-    return; // Salir aquí para evitar el procesamiento normal
+    // Continuar con el procesamiento normal para incluir URL o clipboard
+    // No hacer return aquí, permitir que continúe el flujo normal
   }
 
   // Comprobar si estamos en el contexto de PDF

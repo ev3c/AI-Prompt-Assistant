@@ -23,7 +23,8 @@ import {
   confirmPrompt,
   isAISupportedURL,
   sendTextToAI,
-  isClipboardBehaviorContext // Import the moved function
+  isClipboardBehaviorContext, // Import the moved function
+  openAIWithPrompt // Añadir import para openAIWithPrompt
 } from '/src/common/common.js';
 
 import { updateUITexts, getTranslation } from '/src/content-script/translations.js';
@@ -946,14 +947,8 @@ async function handleCustomButtonClick(context, buttonElement) {
     config.setMenuData(newMenuData);
     renderSections();
 
-    // Actualizar el título principal de la sidebar con el título del JSON cargado
-    const titleTextElement = document.getElementById('title-text');
-    if (titleTextElement && newMenuData.header && newMenuData.header.title) {
-      titleTextElement.textContent = newMenuData.header.title;
-    } else {
-      // Fallback si no hay título específico en los datos del menú
-      titleTextElement.textContent = `${getAIModelName(config.getCurrentAIModel())} Prompt Assistant`;
-    }
+    // No actualizar el título del sidepanel para botones custom
+    // El título se mantiene como está configurado inicialmente
 
     // 3. Ahora que el contexto, los datos (URL/Portapapeles) y los datos del menú están establecidos, actualizar la visualización.
     updateContextDisplay();
@@ -1210,6 +1205,7 @@ function initializeUI() {
   const twitterButton = document.getElementById('use-twitter');
   const gmailButton = document.getElementById('use-gmail');
   const addButton = document.getElementById('use-add');
+  const directQuestionButton = document.getElementById('direct-question-btn');
 
   // Configurar el enlace de feedback
   const feedbackLink = document.getElementById('feedback-button');
@@ -1936,6 +1932,16 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     // También abrir el JSON Editor en una nueva pestaña
     window.open('/src/sidepanel/pages/jsonEditor/jsonEditor.html', '_blank');
   });
+
+  // Event listener para el botón de pregunta directa
+  if (directQuestionButton) {
+    directQuestionButton.addEventListener('click', async function () {
+      // Ejecutar el mismo código que el botón "Escribe una pregunta directamente a la AI"
+      const texts = getTranslation(config.getCurrentLanguage());
+      const label = texts.optionButtons.directQuestionButton;
+      await openAIWithPrompt("", label);
+    });
+  }
 
   // Configurar eventos para la ventana emergente de configuración
   document.getElementById('settings-button').addEventListener('click', function () {

@@ -8,7 +8,8 @@ export const translations = {
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+"
+      addButton: "+add+",
+      directQuestionButton: "Escribe una pregunta directamente a la AI"
     },
     contextMenu: {
       summaryUrl: "resumen de URL :",
@@ -53,7 +54,8 @@ export const translations = {
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+"
+      addButton: "+add+",
+      directQuestionButton: "Escriu una pregunta directament a la IA"
     },
     contextMenu: {
       summaryUrl: "resum de URL :",
@@ -98,7 +100,8 @@ export const translations = {
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+"
+      addButton: "+add+",
+      directQuestionButton: "Write a question directly to the AI"
     },
     contextMenu: {
       summaryUrl: "summary of URL :",
@@ -143,7 +146,8 @@ export const translations = {
       wikiButton: "Wikipédia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+"
+      addButton: "+add+",
+      directQuestionButton: "Écrivez une question directement à l'IA"
     },
     contextMenu: {
       summaryUrl: "résumé de URL :",
@@ -188,7 +192,8 @@ export const translations = {
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+"
+      addButton: "+add+",
+      directQuestionButton: "Schreiben Sie eine Frage direkt an die KI"
     },
     contextMenu: {
       summaryUrl: "Zusammenfassung von URL :",
@@ -233,7 +238,8 @@ export const translations = {
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+"
+      addButton: "+add+",
+      directQuestionButton: "Scrivi una domanda direttamente all'IA"
     },
     contextMenu: {
       summaryUrl: "riassunto di URL :",
@@ -278,7 +284,8 @@ export const translations = {
       wikiButton: "Википедия",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+"
+      addButton: "+add+",
+      directQuestionButton: "Напишите вопрос напрямую ИИ"
     },
     contextMenu: {
       summaryUrl: "резюме URL :",
@@ -323,7 +330,8 @@ export const translations = {
       wikiButton: "ويكيبيديا",
       twitterButton: "تويتر/X",
       gmailButton: "جيميل",
-      addButton: "+إضافة+"
+      addButton: "+إضافة+",
+      directQuestionButton: "اكتب سؤالاً مباشرة إلى الذكاء الاصطناعي"
     },
     contextMenu: {
       summaryUrl: "ملخص الرابط :",
@@ -368,7 +376,8 @@ export const translations = {
       wikiButton: "ウィキペディア",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+追加+"
+      addButton: "+追加+",
+      directQuestionButton: "AIに直接質問を書く"
     },
     contextMenu: {
       summaryUrl: "URLの要約 :",
@@ -413,7 +422,8 @@ export const translations = {
       wikiButton: "विकिपीडिया",
       twitterButton: "X/ट्विटर",
       gmailButton: "Gmail",
-      addButton: "+जोड़ें+"
+      addButton: "+जोड़ें+",
+      directQuestionButton: "AI से सीधे प्रश्न लिखें"
     },
     contextMenu: {
       summaryUrl: "URL का सारांश :",
@@ -458,7 +468,8 @@ export const translations = {
       wikiButton: "위키백과",
       twitterButton: "X/트위터",
       gmailButton: "Gmail",
-      addButton: "+추가+"
+      addButton: "+추가+",
+      directQuestionButton: "AI에게 직접 질문을 작성하세요"
     },
     contextMenu: {
       summaryUrl: "URL 요약 :",
@@ -503,7 +514,8 @@ export const translations = {
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+adicionar+"
+      addButton: "+adicionar+",
+      directQuestionButton: "Escreva uma pergunta diretamente para a IA"
     },
     contextMenu: {
       summaryUrl: "resumo de URL :",
@@ -548,7 +560,8 @@ export const translations = {
       wikiButton: "维基百科",
       twitterButton: "X/推特",
       gmailButton: "Gmail",
-      addButton: "+添加+"
+      addButton: "+添加+",
+      directQuestionButton: "直接向AI写问题"
     },
     contextMenu: {
       summaryUrl: "网址摘要 :",
@@ -605,6 +618,7 @@ export function updateUITexts(language) {
   const twitterButton = document.getElementById('use-twitter');
   const gmailButton = document.getElementById('use-gmail');
   const addButton = document.getElementById('use-add');
+  const directQuestionButton = document.getElementById('direct-question-btn');
   
   if (urlButton) urlButton.textContent = texts.optionButtons.urlButton;
   if (clipboardButton) clipboardButton.textContent = texts.optionButtons.clipboardButton;
@@ -614,6 +628,7 @@ export function updateUITexts(language) {
   if (twitterButton) twitterButton.textContent = texts.optionButtons.twitterButton;
   if (gmailButton) gmailButton.textContent = texts.optionButtons.gmailButton;
   if (addButton) addButton.textContent = texts.optionButtons.addButton;
+  if (directQuestionButton) directQuestionButton.textContent = texts.optionButtons.directQuestionButton;
 
   // Actualizar textos de configuración
   const settingsTitle = document.querySelector('.popup-header h3');
