@@ -1,11 +1,11 @@
 {
   "header": {
-    "title": "TEST_2",
+    "title": "C2",
     "currentUrlPlaceholder": "Página actual"
   },
   "sections": [
     {
-      "title": "🔍 1a sección del menú ",
+      "title": "🔍 1a sección del menú C2",
       "buttons": [
         {
           "label": "Etiqueta 1.1 en el menú. (La extensión preguntará al usuario antes de enviar el prompt)",

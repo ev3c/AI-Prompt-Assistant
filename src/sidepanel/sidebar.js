@@ -919,32 +919,44 @@ async function handleCustomButtonClick(context, buttonElement) {
   deselectAllButtons();
   buttonElement.classList.add('option-selected');
 
-  const behaviour = buttonElement.dataset.behaviour; // Get behaviour from data attribute
+  // 1. Establecer el nuevo contexto primero. Esto es crucial para que `updateContextDisplay`
+  //    interprete correctamente el tipo de contexto (URL vs. Portapapeles).
+  config.setCurrentContext(context);
+  saveMainConfig(); // Guardar la configuración actualizada inmediatamente
 
+  // 2. Determinar el comportamiento y actualizar los datos relevantes (URL o contenido del Portapapeles).
+  const behaviour = buttonElement.dataset.behaviour;
   if (behaviour === 'Clipboard') {
     config.setUseClipboard(true);
-    // If it's clipboard, try to read clipboard content
-    await tryReadClipboard();
-    updateContextDisplay();
-  } else { // Default to URL behavior
+    await tryReadClipboard(); // Esperar a que se lea el portapapeles
+  } else { // Comportamiento por defecto: URL
     config.setUseClipboard(false);
-    // If it's URL, update active tab URL
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      if (tabs && tabs.length > 0) {
-        config.setCurrentUrl(tabs[0].url);
-        updateContextDisplay();
-      }
+    await new Promise(resolve => { // Envolver chrome.tabs.query en una Promesa para esperar su finalización
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        if (tabs && tabs.length > 0) {
+          config.setCurrentUrl(tabs[0].url);
+        }
+        resolve(); // Resolver la promesa una vez que la callback se haya ejecutado
+      });
     });
   }
-
-  config.setCurrentContext(context);
-  saveMainConfig(); // Save the updated config
-
   // Load and render sections based on the new context
   try {
     const newMenuData = await loadMenuData(config.getCurrentLanguage());
     config.setMenuData(newMenuData);
     renderSections();
+
+    // Actualizar el título principal de la sidebar con el título del JSON cargado
+    const titleTextElement = document.getElementById('title-text');
+    if (titleTextElement && newMenuData.header && newMenuData.header.title) {
+      titleTextElement.textContent = newMenuData.header.title;
+    } else {
+      // Fallback si no hay título específico en los datos del menú
+      titleTextElement.textContent = `${getAIModelName(config.getCurrentAIModel())} Prompt Assistant`;
+    }
+
+    // 3. Ahora que el contexto, los datos (URL/Portapapeles) y los datos del menú están establecidos, actualizar la visualización.
+    updateContextDisplay();
   } catch (error) {
     console.error('Error loading menu data for custom context:', error);
   }
@@ -963,22 +975,24 @@ async function initializeCustomButtons() {
   const customFileNames = ['custom_1.json', 'custom_2.json', 'custom_3.json', 'custom_4.json'];
   let customButtonsCreated = 0;
 
-  const fileCheckPromises = customFileNames.map(async (fileName) => {
+  // Usar un bucle for...of para procesar los archivos secuencialmente y mantener el orden
+  for (const fileName of customFileNames) {
     try {
       const fileUrl = chrome.runtime.getURL(`src/common/languages/custom/${fileName}`);
       const response = await fetch(fileUrl);
-      
+
       if (response.ok) {
         const data = await response.json();
         const title = data.header?.title || fileName.replace('.json', '');
-        const behaviour = data.header?.behaviour || 'url'; // Extract behaviour, default to 'url'
-        const context = `custom_${customButtonsCreated + 1}`;
+        const behaviour = data.header?.behaviour || 'url';
+        // FIX: Derivar el contexto directamente del nombre del archivo para evitar race conditions
+        const context = fileName.replace('.json', ''); // e.g., "custom_1"
 
         const button = document.createElement('button');
         button.className = 'option-button custom-menu-button';
         button.textContent = title;
         button.dataset.context = context;
-        button.dataset.behaviour = behaviour; // Store behaviour in data attribute
+        button.dataset.behaviour = behaviour;
 
         button.addEventListener('click', () => handleCustomButtonClick(context, button));
 
@@ -986,11 +1000,9 @@ async function initializeCustomButtons() {
         customButtonsCreated++;
       }
     } catch (error) {
-      // El archivo no existe o es inválido, se ignora.
+      // El archivo no existe o es inválido, se ignora silenciosamente.
     }
-  });
-
-  await Promise.all(fileCheckPromises);
+  }
 
   if (customButtonsCreated > 0) {
     customToggle.classList.remove('hidden');

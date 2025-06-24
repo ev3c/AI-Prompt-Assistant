@@ -1,12 +1,12 @@
 {
   "header": {
-    "title": "TEST_11",
+    "title": "C1",
     "currentUrlPlaceholder": "Página actual",
     "behaviour": "Clipboard"
   },
   "sections": [
     {
-      "title": "🔍 Resumen TEST_1",
+      "title": "🔍 Resumen C1",
       "buttons": [
         {
           "label": "Resume en X caracteres: ",
