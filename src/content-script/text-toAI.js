@@ -77,11 +77,15 @@ async function textToAI(textPrompt, targetTab = null) {
     const isSpecialSite = tab.url.includes('facebook.com') || tab.url.includes('instagram.com') || 
                          tab.url.includes('meta.ai') || tab.url.includes('messenger.com') ||
                          tab.url.includes('copilot.microsoft.com') || tab.url.includes('github.com/features/copilot') ||
-                         tab.url.includes('grok.com') || tab.url.includes('x.ai') || tab.url.includes('deepseek.com') ||
+                         tab.url.includes('grok.com') || tab.url.includes('deepseek.com') ||
                          tab.url.includes('mistral.ai') || tab.url.includes('mail.google.com') || tab.url.includes('gmail.com') ||
                          tab.url.includes('claude.ai') || tab.url.includes('openai.com') || tab.url.includes('gemini.google.com');
     
-    await new Promise(resolve => setTimeout(resolve, isSpecialSite ? 2500 : 1500));
+    // Tiempo extra para Mistral que puede necesitar más tiempo para cargar
+    const isMistral = tab.url.includes('mistral.ai');
+    const waitTime = isMistral ? 3500 : (isSpecialSite ? 2500 : 1500);
+    
+    await new Promise(resolve => setTimeout(resolve, waitTime));
 
     return await chrome.tabs.sendMessage(tab.id, {
         action: 'insertarTexto',

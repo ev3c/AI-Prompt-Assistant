@@ -20,11 +20,13 @@
     "https://chat.mistral.ai/*",
     "https://copilot.microsoft.com/*",
     "https://gemini.google.com/*",
-    "https://x.ai/grok/*",
-    "https://meta.ai/*",
-    "https://twitter.com/*",
+    "https://grok.com/*",
+    "https://meta.com/*",
     "https://x.com/*",
+    
+    "https://twitter.com/*",
     "https://wikipedia.org/*",
+    
     "<all_urls>"
   ],
   "action": {
@@ -54,11 +56,12 @@
         "https://chat.mistral.ai/*",
         "https://copilot.microsoft.com/*",
         "https://gemini.google.com/*",
-        "https://x.ai/grok/*",
-        "https://meta.ai/*",
+        "https://grok.com/*",
+        "https://meta.com/*",
         "https://google.com/*",
         "https://wikipedia.org/*",
-        "https://facebook.com/*"
+        "https://twitter.com/*",
+        "https://x.com/*"
       ],
       "js": ["/src/content-script/content.js",
               "/src/content-script/ai_sites.js"]

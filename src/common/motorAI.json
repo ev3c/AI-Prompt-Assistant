@@ -110,8 +110,8 @@
       "orden": 8,
       "id": "grok",
       "nombre": "Grok",
-      "web": "https://x.ai/grok",
-      "web2": "https://x.ai/grok",
+      "web": "https://grok.com",
+      "web2": "https://grok.com",
       "icono": "/src/assets/images/groc.png",
       "segundos": 1,
       "modelos": [

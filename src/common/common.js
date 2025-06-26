@@ -1671,7 +1671,7 @@ export function isAISupportedURL(url = window.location.href) {
          hostname.includes('chat.mistral.ai') ||
          hostname.includes('copilot.microsoft.com') ||
          hostname.includes('gemini.google.com') ||
-         hostname.includes('x.ai/grok') ||
+         hostname.includes('grok.com') ||
          hostname.includes('meta.ai');
 }
 

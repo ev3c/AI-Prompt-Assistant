@@ -22,7 +22,7 @@
   } else if (currentURL.includes('gemini.google.com')) {
     aiSite = 'gemini';
     aiPng = '/src/assets/images/gemini-color.png';
-  } else if (currentURL.includes('x.ai/grok')) {
+      } else if (currentURL.includes('grok.com')) {
     aiSite = 'grok';
     aiPng = '/src/assets/images/grok.png';
   } else if (currentURL.includes('meta.ai')) {

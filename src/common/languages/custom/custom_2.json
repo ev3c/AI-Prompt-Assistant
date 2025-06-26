@@ -1,11 +1,11 @@
 {
   "header": {
-    "title": "C2C",
+    "title": "CUSTOM_2",
     "currentUrlPlaceholder": "Página actual"
   },
   "sections": [
     {
-      "title": "🔍 1a sección del menú C2C",
+      "title": "🔍 1a sección del menú Custom_2",
       "buttons": [
         {
           "label": "Etiqueta 1.1 en el menú. (La extensión preguntará al usuario antes de enviar el prompt)",
@@ -82,7 +82,7 @@
       ]
     }
   ],
-  "addButtonText": "C2C",
+  "addButtonText": "CUSTOM_2",
   "origin": "clipboard",
   "jsonName": "custom_2.json"
 }

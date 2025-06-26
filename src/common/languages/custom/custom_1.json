@@ -22,8 +22,8 @@
       "title": "📝 2a sección del menú en archivo",
       "buttons": [
         {
-          "label": "Etiqueta 2.1 en el menú",
-          "prompt": "Pregunta 2.1 a la AI:."
+          "label": "Cambiar idioma AI",
+          "prompt": "A partir de ahora habla en [idioma]"
         },
         {
           "label": "Etiqueta 2.2 en el menú",
@@ -85,5 +85,5 @@
   ],
   "addButtonText": "Wikipedia2",
   "jsonName": "custom_1.json",
-  "origin": "url"
+  "origin": "clipboard"
 }

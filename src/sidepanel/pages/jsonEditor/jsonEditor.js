@@ -28,9 +28,9 @@ class JSONEditor {
         pathCopied: "Ruta copiada al portapapeles:",
         pathCopyError: "No se pudo copiar la ruta al portapapeles.",
         saveMessage: "Guarda el archivo",
-        saveLocationWin: "en (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.3_0\\src\\common\\languages\\custom\\\n\nCon el siguiente formato de nombre: custom_N.json (donde N es de 1 a 4)",
-        saveLocationMac: "en (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre: custom_N.json (donde N es de 1 a 4)",
-        saveLocationLinux: "en (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre: custom_N.json (donde N es de 1 a 4)",
+        saveLocationWin: "en (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.3_0\\src\\common\\languages\\custom\\\n\nCon el siguiente formato de nombre:\n      custom_N.json     (donde N es de 1 a 4)",
+        saveLocationMac: "en (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre:\n      custom_N.json     (donde N es de 1 a 4)",
+        saveLocationLinux: "en (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre:\n      custom_N.json     (donde N es de 1 a 4)",
         jsonError: "Error al cargar el archivo JSON:",
         validationEmpty: "⚠️ Validación JSON\n\nEl editor está vacío. Por favor, ingresa contenido JSON para validar.",
         validationValid: "✅ JSON válido\n\nLa sintaxis del archivo es correcta.\n\n",
@@ -69,9 +69,9 @@ class JSONEditor {
         pathCopied: "Path copied to clipboard:",
         pathCopyError: "Could not copy path to clipboard.",
         saveMessage: "Save the file",
-        saveLocationWin: "on (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.2_0\\src\\common\\languages\\custom\\\n\nWith the following name format: custom_N.json (where N is from 1 to 4)",
-        saveLocationMac: "on (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format: custom_N.json (where N is from 1 to 4)",
-        saveLocationLinux: "on (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format: custom_N.json (where N is from 1 to 4)",
+        saveLocationWin: "on (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.2_0\\src\\common\\languages\\custom\\\n\nWith the following name format:\n      custom_N.json     (where N is from 1 to 4)",
+        saveLocationMac: "on (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format:\n      custom_N.json     (where N is from 1 to 4)",
+        saveLocationLinux: "on (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format:\n      custom_N.json     (where N is from 1 to 4)",
         jsonError: "Error loading JSON file:",
         validationEmpty: "⚠️ JSON Validation\n\nThe editor is empty. Please enter JSON content to validate.",
         validationValid: "✅ Valid JSON\n\nThe file syntax is correct.\n\n",
@@ -398,6 +398,29 @@ class JSONEditor {
 
     // Mostrar mensaje con la ruta sugerida
     alert(this.t('saveMessage') + ' ' + filename + ' ' + this.getPlatformSaveMessage());
+    
+    // Esperar 1 segundo, cerrar sidepanel, esperar 1 segundo, reabrir sidepanel
+    setTimeout(async () => {
+      try {
+        // Obtener la pestaña actual
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        
+        // Cerrar el sidepanel
+        await chrome.sidePanel.close({ tabId: tab.id });
+        
+        // Esperar 1 segundo y reabrir
+        setTimeout(async () => {
+          try {
+            await chrome.sidePanel.open({ tabId: tab.id });
+          } catch (error) {
+            console.error('Error al reabrir el sidepanel:', error);
+          }
+        }, 1000);
+        
+      } catch (error) {
+        console.error('Error al cerrar/reabrir el sidepanel:', error);
+      }
+    }, 1000);
   }
 
 

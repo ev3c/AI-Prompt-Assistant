@@ -620,6 +620,379 @@ function extractAndCopyGmailContent() {
   });
 }
 
+// Función para extraer texto de PDF
+function extractPDFText() {
+  console.log('📄 Iniciando extracción de texto del PDF...');
+  
+  // Crear notificación visual en la página del PDF
+  const notification = document.createElement('div');
+  notification.textContent = '📄 Extrayendo texto del PDF...';
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 10000;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  `;
+  document.body.appendChild(notification);
+  
+  // Función para hacer scroll al inicio
+  async function scrollToTop() {
+    console.log('⬆️ Haciendo scroll al inicio...');
+    notification.textContent = '⬆️ Navegando al inicio del PDF...';
+    
+    // Intentar diferentes métodos de scroll
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    // Buscar el iframe del visor de PDF de Chrome
+    const pdfViewer = document.querySelector('embed, iframe, object') || 
+                     document.querySelector('#viewer') || 
+                     document.querySelector('.pdf-viewer');
+    
+    if (pdfViewer && pdfViewer.contentWindow) {
+      try {
+        pdfViewer.contentWindow.scrollTo(0, 0);
+      } catch (e) {
+        console.log('No se pudo hacer scroll en el iframe del PDF');
+      }
+    }
+    
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+  
+  // Función moderna para extraer todo el texto usando selección automática
+  async function scrollAndExtractText() {
+    console.log('🔍 Iniciando extracción moderna del PDF...');
+    notification.textContent = '🔍 Analizando estructura del PDF...';
+    
+    // Método 1: Intentar seleccionar todo el texto automáticamente
+    const allTextMethod1 = await extractAllTextBySelection();
+    if (allTextMethod1 && allTextMethod1.length > 100) {
+      console.log(`✅ Método 1 exitoso: ${allTextMethod1.length} caracteres`);
+      return allTextMethod1;
+    }
+    
+    // Método 2: Extracción por páginas con scroll inteligente
+    notification.textContent = '📄 Método de respaldo: extracción por scroll...';
+    const allTextMethod2 = await extractTextByIntelligentScroll();
+    if (allTextMethod2 && allTextMethod2.length > 50) {
+      console.log(`✅ Método 2 exitoso: ${allTextMethod2.length} caracteres`);
+      return allTextMethod2;
+    }
+    
+    // Método 3: Extracción completa del DOM
+    notification.textContent = '🔧 Método final: extracción completa del DOM...';
+    const allTextMethod3 = await extractAllDOMText();
+    console.log(`✅ Método 3 completado: ${allTextMethod3.length} caracteres`);
+    return allTextMethod3;
+  }
+  
+  // Método 1: Selección automática de todo el texto
+  async function extractAllTextBySelection() {
+    console.log('🎯 Intentando seleccionar todo el texto...');
+    
+    try {
+      // Limpiar selección previa
+      if (window.getSelection) {
+        window.getSelection().removeAllRanges();
+      }
+      
+      // Intentar Ctrl+A programáticamente
+      document.execCommand('selectAll');
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Obtener texto seleccionado
+      const selection = window.getSelection();
+      if (selection && selection.toString().length > 100) {
+        const selectedText = selection.toString();
+        console.log(`📋 Texto seleccionado: ${selectedText.length} caracteres`);
+        
+        // Limpiar selección
+        selection.removeAllRanges();
+        return selectedText;
+      }
+      
+      // Método alternativo: crear rango de selección manual
+      const range = document.createRange();
+      const bodyElement = document.body || document.documentElement;
+      range.selectNodeContents(bodyElement);
+      
+      const newSelection = window.getSelection();
+      newSelection.removeAllRanges();
+      newSelection.addRange(range);
+      
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      const rangeText = newSelection.toString();
+      newSelection.removeAllRanges();
+      
+      if (rangeText && rangeText.length > 100) {
+        console.log(`📋 Texto por rango: ${rangeText.length} caracteres`);
+        return rangeText;
+      }
+      
+    } catch (error) {
+      console.error('❌ Error en selección automática:', error);
+    }
+    
+    return null;
+  }
+  
+  // Método 2: Scroll inteligente optimizado
+  async function extractTextByIntelligentScroll() {
+    console.log('📜 Iniciando scroll inteligente...');
+    
+    let allText = '';
+    let processedChunks = new Set();
+    let scrollPosition = 0;
+    let maxScrollHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight
+    );
+    
+    // Ir al inicio
+    await scrollToTop();
+    
+    const viewportHeight = window.innerHeight;
+    const scrollStep = Math.floor(viewportHeight * 0.8);
+    let attempts = 0;
+    const maxAttempts = Math.ceil(maxScrollHeight / scrollStep) + 5;
+    
+    console.log(`📊 Altura total estimada: ${maxScrollHeight}px, Pasos: ${maxAttempts}`);
+    
+    while (attempts < maxAttempts && scrollPosition < maxScrollHeight) {
+      attempts++;
+      notification.textContent = `📄 Scroll inteligente... ${attempts}/${maxAttempts}`;
+      
+      // Extraer texto de la vista actual
+      const currentViewText = extractCurrentViewText();
+      
+      if (currentViewText && currentViewText.length > 20) {
+        // Crear hash simple para evitar duplicados
+        const textHash = currentViewText.substring(0, 100);
+        if (!processedChunks.has(textHash)) {
+          allText += currentViewText + '\n\n';
+          processedChunks.add(textHash);
+          console.log(`📝 Chunk ${attempts}: ${currentViewText.length} caracteres`);
+        }
+      }
+      
+      // Scroll suave y controlado
+      const nextPosition = scrollPosition + scrollStep;
+      window.scrollTo({ top: nextPosition, behavior: 'smooth' });
+      
+      // Esperar renderizado
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Actualizar posición
+      const newScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+      
+      // Si no hay cambio significativo, intentar scroll forzado
+      if (Math.abs(newScrollPosition - scrollPosition) < 50) {
+        document.documentElement.scrollTop = nextPosition;
+        await new Promise(resolve => setTimeout(resolve, 300));
+      }
+      
+      scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+      
+      // Condición de salida si llegamos al final
+      if (scrollPosition >= maxScrollHeight - viewportHeight) {
+        console.log('📍 Llegamos al final del documento');
+        break;
+      }
+    }
+    
+    return allText.trim();
+  }
+  
+  // Método 3: Extracción completa del DOM
+  async function extractAllDOMText() {
+    console.log('🌐 Extrayendo todo el texto del DOM...');
+    
+    // Ir al inicio para asegurar que todo esté cargado
+    await scrollToTop();
+    
+    // Hacer scroll completo una vez para cargar todo el contenido
+    const maxHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+    
+    // Scroll rápido al final y luego al inicio para forzar carga
+    window.scrollTo(0, maxHeight);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    window.scrollTo(0, 0);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Extraer todo el texto usando múltiples estrategias
+    let allText = '';
+    
+    // Estrategia 1: Elementos específicos de PDF
+    const pdfElements = document.querySelectorAll(`
+      span[role="presentation"],
+      .textLayer span,
+      .textLayer div,
+      div[role="textbox"],
+      text,
+      tspan
+    `);
+    
+    if (pdfElements.length > 0) {
+      console.log(`📄 Encontrados ${pdfElements.length} elementos de PDF`);
+      const pdfTexts = Array.from(pdfElements)
+        .map(el => (el.textContent || el.innerText || '').trim())
+        .filter(text => text.length > 1)
+        .join(' ');
+      
+      if (pdfTexts.length > 100) {
+        allText = pdfTexts;
+      }
+    }
+    
+    // Estrategia 2: Si no hay elementos específicos, usar todo el body
+    if (!allText || allText.length < 100) {
+      console.log('📄 Usando extracción completa del body...');
+      const bodyText = document.body.textContent || document.body.innerText || '';
+      
+      // Limpiar el texto
+      const lines = bodyText.split('\n');
+      const cleanLines = lines
+        .map(line => line.trim())
+        .filter(line => 
+          line.length > 2 && 
+          !line.includes('chrome-extension://') &&
+          !line.includes('data:') &&
+          !/^[\s\n\r\t]*$/.test(line)
+        );
+      
+      allText = cleanLines.join(' ');
+    }
+    
+    return allText.trim();
+  }
+  
+  // Función auxiliar para extraer texto de la vista actual
+  function extractCurrentViewText() {
+    const viewportTop = window.pageYOffset;
+    const viewportBottom = viewportTop + window.innerHeight;
+    
+    const elements = document.querySelectorAll('span, div, p, text, tspan');
+    let viewText = '';
+    
+    elements.forEach(element => {
+      const rect = element.getBoundingClientRect();
+      const elementTop = rect.top + viewportTop;
+      const elementBottom = elementTop + rect.height;
+      
+      // Verificar si el elemento está en la vista actual (con margen)
+      if (elementBottom >= viewportTop - 100 && elementTop <= viewportBottom + 100) {
+        const text = (element.textContent || element.innerText || '').trim();
+        if (text.length > 1 && !/^[\s\n\r\t]*$/.test(text)) {
+          viewText += text + ' ';
+        }
+      }
+    });
+    
+    return viewText.trim();
+  }
+  
+
+  
+  // Función para copiar al clipboard
+  async function copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      console.log('📋 Texto copiado al clipboard exitosamente');
+      
+      // Enviar mensaje de éxito al sidebar
+      window.postMessage({
+        type: 'PDF_EXTRACT_COMPLETE',
+        success: true,
+        textLength: text.length
+      }, '*');
+      
+    } catch (error) {
+      console.error('❌ Error al copiar al clipboard:', error);
+      
+      // Método de respaldo usando execCommand
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        console.log('📋 Texto copiado al clipboard usando método de respaldo');
+        
+        // Enviar mensaje de éxito al sidebar
+        window.postMessage({
+          type: 'PDF_EXTRACT_COMPLETE',
+          success: true,
+          textLength: text.length
+        }, '*');
+        
+      } catch (fallbackError) {
+        console.error('❌ Error en método de respaldo:', fallbackError);
+        
+        // Enviar mensaje de error al sidebar
+        window.postMessage({
+          type: 'PDF_EXTRACT_COMPLETE',
+          success: false,
+          error: fallbackError.message
+        }, '*');
+      }
+    }
+  }
+  
+  // Ejecutar la extracción
+  scrollAndExtractText()
+    .then(extractedText => {
+      console.log(`📄 Extracción completada. Caracteres extraídos: ${extractedText.length}`);
+      
+      // Remover la notificación
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+      
+      if (extractedText.trim()) {
+        // Copiar al clipboard
+        copyToClipboard(extractedText);
+      } else {
+        console.warn('⚠️ No se pudo extraer texto del PDF');
+        window.postMessage({
+          type: 'PDF_EXTRACT_COMPLETE',
+          success: false,
+          error: 'No se pudo extraer texto del PDF'
+        }, '*');
+      }
+    })
+    .catch(error => {
+      console.error('❌ Error durante la extracción:', error);
+      
+      // Remover la notificación en caso de error
+      if (notification.parentNode) {
+        notification.parentNode.removeChild(notification);
+      }
+      
+      window.postMessage({
+        type: 'PDF_EXTRACT_COMPLETE',
+        success: false,
+        error: error.message
+      }, '*');
+  });
+}
+
 // Función para extraer y copiar tweets de Twitter/X - VERSIÓN MEJORADA
 function extractAndCopyTweets() {
   // Crear notificación mejorada
@@ -1650,17 +2023,70 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
             // Crear un nuevo objeto URL para el blob
             const blobUrl = URL.createObjectURL(pdfBlob);
 
-            // Abrir el PDF en una nueva ventana
-            const newWindow = window.open(blobUrl, '_blank', 'width=800,height=600');
+            // Abrir el PDF en una nueva pestaña
+            chrome.tabs.create({ url: blobUrl, active: true }, (newTab) => {
+              // Esperar a que la pestaña se cargue completamente
+              chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo, tab) {
+                if (tabId === newTab.id && changeInfo.status === 'complete') {
+                  // Remover el listener para evitar múltiples ejecuciones
+                  chrome.tabs.onUpdated.removeListener(listener);
+                  
+                  // Esperar un poco más para asegurar que el PDF se renderice
+                  setTimeout(() => {
+                    // Ejecutar el script para extraer texto del PDF
+                    chrome.scripting.executeScript({
+                      target: { tabId: newTab.id },
+                      function: extractPDFText
+                    });
+                  }, 2000);
+                }
+              });
+            });
 
             // Mostrar notificación de éxito
             const notification = document.getElementById('copy-notification');
-            notification.textContent = `UNDER CONSTRUCTION: PDF abierto: ${selectedFile.name}`;
+            notification.textContent = `PDF abierto: ${selectedFile.name}. Extrayendo texto...`;
             notification.classList.remove('hidden');
 
+            // Configurar listener para recibir el resultado de la extracción
+            const messageListener = (event) => {
+              if (event.data && event.data.type === 'PDF_EXTRACT_COMPLETE') {
+                if (event.data.success) {
+                  // Éxito: actualizar el texto del clipboard y la interfaz
+                  const extractedLength = event.data.textLength;
+                  config.setClipboardText(`PDF extraído: ${selectedFile.name} (${extractedLength} caracteres)`);
+                  updateContextDisplay();
+                  
+                  notification.textContent = `✅ Texto extraído del PDF: ${extractedLength} caracteres copiados al clipboard`;
             setTimeout(() => {
               notification.classList.add('hidden');
-            }, 2000);
+                  }, 4000);
+                } else {
+                  // Error: mostrar mensaje de error
+                  notification.textContent = `❌ Error extrayendo texto del PDF: ${event.data.error}`;
+                  setTimeout(() => {
+                    notification.classList.add('hidden');
+                  }, 5000);
+                }
+                
+                // Remover el listener después de recibir el resultado
+                window.removeEventListener('message', messageListener);
+              }
+            };
+            
+            // Agregar el listener
+            window.addEventListener('message', messageListener);
+
+            // Timeout de seguridad para remover el listener si no se recibe respuesta
+            setTimeout(() => {
+              window.removeEventListener('message', messageListener);
+              if (!notification.classList.contains('hidden')) {
+                notification.textContent = `⚠️ Tiempo de espera agotado para extraer texto del PDF`;
+                setTimeout(() => {
+                  notification.classList.add('hidden');
+                }, 3000);
+              }
+            }, 30000); // 30 segundos de timeout
           })
           .catch(error => {
             console.error('Error al cargar el PDF:', error);
@@ -1929,6 +2355,18 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     
     // Guardar la configuración
     saveMainConfig();
+    
+    // Desplegar los botones custom automáticamente
+    const customContainer = document.getElementById('custom-buttons-container');
+    const customToggle = document.getElementById('custom-toggle');
+    
+    if (customContainer && customToggle && !customToggle.classList.contains('hidden')) {
+      // Si los botones custom existen y el toggle está visible, desplegarlos
+      if (customContainer.classList.contains('hidden')) {
+        customContainer.classList.remove('hidden');
+        customToggle.textContent = '▲'; // Mostrar flecha hacia arriba para indicar que están desplegados
+      }
+    }
     
     // También abrir el JSON Editor en una nueva pestaña
     window.open('/src/sidepanel/pages/jsonEditor/jsonEditor.html', '_blank');

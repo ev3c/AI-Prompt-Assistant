@@ -22,7 +22,7 @@ function detectarSitio() {
     return 'copilot';
   } else if (hostname.includes('deepseek.com') || hostname.includes('chat.deepseek.com')) {
     return 'deepseek';
-  } else if (hostname.includes('grok.com') || hostname.includes('x.ai')) {
+      } else if (hostname.includes('grok.com')) {
     return 'grok';
   } else if (hostname.includes('mistral.ai') || hostname.includes('chat.mistral.ai')) {
     return 'mistral';
@@ -156,11 +156,15 @@ function obtenerSelectores(sitio) {
     },
     mistral: {
       input: [
-        'textarea[placeholder*="Send a message"]', 'div[contenteditable="true"][role="textbox"]',
-        'textarea[id*="input"]', 'main textarea', '[role="textbox"]', 'textarea'
+        'textarea[placeholder*="Send a message"]', 'textarea[placeholder*="Message"]', 
+        'div[contenteditable="true"][role="textbox"]', 'div[contenteditable="true"]',
+        'textarea[data-testid*="chat-input"]', 'textarea[class*="chat-input"]',
+        'div[role="textbox"]', 'textarea[id*="input"]', 'main textarea', 'textarea'
       ],
       sendButton: [
-        'button[class*="absolute"] > svg', 'form button[type="submit"]'
+        'button[type="submit"]', 'button[aria-label*="Send"]', 'button[aria-label*="Enviar"]',
+        'button[data-testid*="send"]', 'button[class*="send"]', 'button[class*="submit"]',
+        'button[class*="absolute"] > svg', 'form button[type="submit"]', 'button > svg'
       ]
     },
     gmail: {
@@ -195,6 +199,12 @@ function enviarTextoUniversal(texto, submit = false) {
   const sitio = detectarSitio();
   console.log('🌐 Sitio detectado:', sitio);
   console.log('🎯 Intentando insertar texto:', texto);
+  
+  // Debug específico para Mistral
+  if (sitio === 'mistral') {
+    console.log('🔧 DEBUG MISTRAL - URL actual:', window.location.href);
+    console.log('🔧 DEBUG MISTRAL - Hostname:', window.location.hostname);
+  }
   
   const { input: inputSelectors, sendButton: sendButtonSelectors } = obtenerSelectores(sitio);
   console.log('🔍 Selectores de input a usar:', inputSelectors);
@@ -333,7 +343,17 @@ function enviarTextoUniversal(texto, submit = false) {
   console.log('- Todos los textareas:', document.querySelectorAll('textarea'));
   console.log('- Todos los inputs de texto:', document.querySelectorAll('input[type="text"], input[type="search"]'));
   console.log('- Elementos contenteditable:', document.querySelectorAll('[contenteditable="true"]'));
+  console.log('- Elementos con role="textbox":', document.querySelectorAll('[role="textbox"]'));
   console.log('- URL actual:', window.location.href);
+  
+  // Debug específico para Mistral
+  if (sitio === 'mistral') {
+    console.log('🔧 Debug específico para Mistral:');
+    console.log('- Elementos con placeholder que contenga "message":', document.querySelectorAll('[placeholder*="message" i]'));
+    console.log('- Botones con type="submit":', document.querySelectorAll('button[type="submit"]'));
+    console.log('- Botones con aria-label que contenga "send":', document.querySelectorAll('button[aria-label*="send" i]'));
+    console.log('- Todos los botones:', document.querySelectorAll('button'));
+  }
   
   return false;
 }
