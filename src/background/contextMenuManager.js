@@ -1,8 +1,7 @@
 // contextMenuManager.js
-import { getAIModelName } from '/src/background/aiInteractionManager.js';
+import { getAIModelName, loadMotorAI } from '/src/common/common.js';
 import { getContextMenuTextForDisplay, copySelectedTextToClipboard } from '/src/background/utils.js';
 import { getAvailableLanguages } from '/src/background/languageManager.js';
-import { loadMotorAI } from '/src/common/common.js';
 
 // Cargar modelos IA
 let AI_MODELS = [];

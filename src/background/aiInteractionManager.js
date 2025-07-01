@@ -1,16 +1,6 @@
 import { getAIUrls, isClipboardBehaviorContext } from '/src/common/common.js';
 
 /**
- * Devuelve el nombre del modelo IA por su id.
- */
-export async function getAIModelName(modelId) {
-  const AI_URLS = await getAIUrls();
-  const model = Object.entries(AI_URLS).find(([id]) => id === modelId);
-  return model ? model[0].charAt(0).toUpperCase() + model[0].slice(1) : 'ChatGPT';
-}
-
-
-/**
  * Construye el prompt final según el contexto y el tipo de botón.
  */
 export function buildPrompt(prompt, context, isClipboard, buttonType) { // isClipboard is still needed as a direct parameter for buildPrompt
