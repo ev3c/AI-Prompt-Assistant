@@ -1144,7 +1144,7 @@ export async function requestClipboardPermission() {
 }
 
 // Función textPrompt() - Reemplazo moderno para window.prompt() con estilo de sidebar
-export function textPrompt(title = null, defaultText = "") {
+export function textPrompt(title = null, defaultText = "", aiModelId = null) {
   return new Promise((resolve) => {
     // Obtener traducciones del idioma actual
     const texts = getTranslation(currentLanguage);
@@ -1201,24 +1201,70 @@ export function textPrompt(title = null, defaultText = "") {
     header.className = 'text-prompt-header';
     header.style.cssText = `
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       background-color: #87CEEB;
       padding: 12px 16px;
       border-bottom: 1px solid #e0e0e0;
     `;
 
-    const headerTitle = document.createElement('h3');
-    headerTitle.textContent = finalTitle;
-    headerTitle.style.cssText = `
-      margin: 0;
-      font-size: 16px;
-      color: white;
-      font-weight: bold;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    `;
+    // Si se proporciona un aiModelId, crear header con imagen
+    if (aiModelId) {
+      const headerContainer = document.createElement('div');
+      headerContainer.style.cssText = `
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      `;
 
-    header.appendChild(headerTitle);
+      // Crear imagen del motor AI
+      const aiIcon = document.createElement('img');
+      const modelIconMap = {
+        'chatgpt': '/src/assets/images/chatgpt.png',
+        'claude': '/src/assets/images/claude-color.png',
+        'deepseek': '/src/assets/images/deepseek-color.png',
+        'mistral': '/src/assets/images/mistral-color.png',
+        'copilot': '/src/assets/images/copilot-color.png',
+        'gemini': '/src/assets/images/gemini-color.png',
+        'meta': '/src/assets/images/meta-color.png',
+        'grok': '/src/assets/images/grok.png',
+        'allai': '/src/assets/images/All-AI.png'
+      };
+      
+      aiIcon.src = modelIconMap[aiModelId] || '/src/assets/images/chatgpt.png';
+      aiIcon.style.cssText = `
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+      `;
+
+      const headerTitle = document.createElement('h3');
+      headerTitle.textContent = finalTitle;
+      headerTitle.style.cssText = `
+        margin: 0;
+        font-size: 16px;
+        color: white;
+        font-weight: bold;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      `;
+
+      headerContainer.appendChild(aiIcon);
+      headerContainer.appendChild(headerTitle);
+      header.appendChild(headerContainer);
+    } else {
+      // Header tradicional sin imagen
+      const headerTitle = document.createElement('h3');
+      headerTitle.textContent = finalTitle;
+      headerTitle.style.cssText = `
+        margin: 0;
+        font-size: 16px;
+        color: white;
+        font-weight: bold;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      `;
+
+      header.appendChild(headerTitle);
+    }
 
     // Crear contenido con estilo de sidebar
     const content = document.createElement('div');
@@ -1811,10 +1857,11 @@ export async function openAIWithPromptOnly(prompt, label) {
   const defaultText = prompt || "";
   
   // Crear el título dinámico con el nombre del motor actual
+  const texts = getTranslation(currentLanguage);
   const aiModelName = getAIModelName(currentAIModel);
-  const dynamicTitle = label ? `${label} ${aiModelName}` : `Editar prompt: ${aiModelName}`;
+  const dynamicTitle = `${texts.textPrompt.questionTo}${aiModelName}`;
   
-  const iPrompt = await textPrompt(dynamicTitle, defaultText);
+  const iPrompt = await textPrompt(dynamicTitle, defaultText, currentAIModel);
   
   // Si el usuario cancela o no ingresa nada, salir de la función
   if (!iPrompt) return;

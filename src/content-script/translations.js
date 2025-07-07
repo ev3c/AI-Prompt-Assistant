@@ -34,7 +34,8 @@ export const translations = {
       bookPrompt: "¿Cuál es el nombre del libro?",
       topicPrompt: "Especificar tema:",
       topicPlaceholder: "Especifique el tema a buscar",
-      selectTextClick: "Seleccione y copie el texto de la página y pulse AQUÍ"
+      selectTextClick: "Seleccione y copie el texto de la página y pulse AQUÍ",
+      questionTo: "Pregunta a "
     },
     confirmPrompt: {
       title: "Solicitud de acceso",
@@ -82,7 +83,8 @@ export const translations = {
       bookPrompt: "Quin és el nom del llibre?",
       topicPrompt: "Especificar tema:",
       topicPlaceholder: "Especifiqueu el tema a cercar",
-      selectTextClick: "Seleccioneu i copieu el text de la pàgina i premeu AQUÍ"
+      selectTextClick: "Seleccioneu i copieu el text de la pàgina i premeu AQUÍ",
+      questionTo: "Pregunta a "
     },
     confirmPrompt: {
       title: "Solicitud d'accés",
@@ -130,7 +132,8 @@ export const translations = {
       bookPrompt: "What is the name of the book?",
       topicPrompt: "Specify topic:",
       topicPlaceholder: "Please specify the topic to search",
-      selectTextClick: "Select and copy the text from the page and click HERE"
+      selectTextClick: "Select and copy the text from the page and click HERE",
+      questionTo: "Question to "
     },
     confirmPrompt: {
       title: "Access Request",
@@ -178,7 +181,8 @@ export const translations = {
       bookPrompt: "Quel est le nom du livre?",
       topicPrompt: "Spécifier le sujet:",
       topicPlaceholder: "Veuillez spécifier le sujet à rechercher",
-      selectTextClick: "Sélectionnez et copiez le texte de la page et cliquez ICI"
+      selectTextClick: "Sélectionnez et copiez le texte de la page et cliquez ICI",
+      questionTo: "Question à "
     },
     confirmPrompt: {
       title: "Demande d'accès",
@@ -226,7 +230,8 @@ export const translations = {
       bookPrompt: "Wie heißt das Buch?",
       topicPrompt: "Thema angeben:",
       topicPlaceholder: "Bitte geben Sie das zu suchende Thema an",
-      selectTextClick: "Wählen Sie den Text von der Seite aus, kopieren Sie ihn und klicken Sie HIER"
+      selectTextClick: "Wählen Sie den Text von der Seite aus, kopieren Sie ihn und klicken Sie HIER",
+      questionTo: "Frage an "
     },
     confirmPrompt: {
       title: "Zugriffsanfrage",
@@ -274,7 +279,8 @@ export const translations = {
       bookPrompt: "Qual è il nome del libro?",
       topicPrompt: "Specificare argomento:",
       topicPlaceholder: "Si prega di specificare l'argomento da cercare",
-      selectTextClick: "Seleziona e copia il testo dalla pagina e clicca QUI"
+      selectTextClick: "Seleziona e copia il testo dalla pagina e clicca QUI",
+      questionTo: "Domanda a "
     },
     confirmPrompt: {
       title: "Richiesta di accesso",
@@ -322,7 +328,8 @@ export const translations = {
       bookPrompt: "Как называется книга?",
       topicPrompt: "Указать тему:",
       topicPlaceholder: "Пожалуйста, укажите тему для поиска",
-      selectTextClick: "Выберите и скопируйте текст со страницы и нажмите ЗДЕСЬ"
+      selectTextClick: "Выберите и скопируйте текст со страницы и нажмите ЗДЕСЬ",
+      questionTo: "Вопрос к "
     },
     confirmPrompt: {
       title: "Запрос доступа",
@@ -370,7 +377,8 @@ export const translations = {
       bookPrompt: "ما اسم الكتاب؟",
       topicPrompt: "تحديد الموضوع:",
       topicPlaceholder: "يرجى تحديد الموضوع للبحث",
-      selectTextClick: "حدد وانسخ النص من الصفحة واضغط هنا"
+      selectTextClick: "حدد وانسخ النص من الصفحة واضغط هنا",
+      questionTo: "سؤال إلى "
     },
     confirmPrompt: {
       title: "طلب الدخول",
@@ -418,7 +426,8 @@ export const translations = {
       bookPrompt: "本の名前は何ですか？",
       topicPrompt: "トピックを指定:",
       topicPlaceholder: "検索するトピックを指定してください",
-      selectTextClick: "ページからテキストを選択してコピーし、ここをクリック"
+      selectTextClick: "ページからテキストを選択してコピーし、ここをクリック",
+      questionTo: "質問先 "
     },
     confirmPrompt: {
       title: "アクセスリクエスト",
@@ -466,7 +475,8 @@ export const translations = {
       bookPrompt: "पुस्तक का नाम क्या है?",
       topicPrompt: "विषय निर्दिष्ट करें:",
       topicPlaceholder: "कृपया खोजने के लिए विषय निर्दिष्ट करें",
-      selectTextClick: "पृष्ठ से टेक्स्ट चुनें और कॉपी करें और यहाँ क्लिक करें"
+      selectTextClick: "पृष्ठ से टेक्स्ट चुनें और कॉपी करें और यहाँ क्लिक करें",
+      questionTo: "प्रश्न "
     },
     confirmPrompt: {
       title: "अभियान अनुरोध",
@@ -514,7 +524,8 @@ export const translations = {
       bookPrompt: "책의 이름은 무엇입니까?",
       topicPrompt: "주제 지정:",
       topicPlaceholder: "검색할 주제를 지정하십시오",
-      selectTextClick: "페이지에서 텍스트를 선택하여 복사하고 여기를 클릭하세요"
+      selectTextClick: "페이지에서 텍스트를 선택하여 복사하고 여기를 클릭하세요",
+      questionTo: "질문 "
     },
     confirmPrompt: {
       title: "접근 요청",
@@ -562,7 +573,8 @@ export const translations = {
       bookPrompt: "Qual é o nome do livro?",
       topicPrompt: "Especificar tópico:",
       topicPlaceholder: "Por favor, especifique o tópico a pesquisar",
-      selectTextClick: "Selecione e copie o texto da página e clique AQUI"
+      selectTextClick: "Selecione e copie o texto da página e clique AQUI",
+      questionTo: "Pergunta a "
     },
     confirmPrompt: {
       title: "Solicitação de acesso",
@@ -610,7 +622,8 @@ export const translations = {
       bookPrompt: "书名是什么？",
       topicPrompt: "指定主题:",
       topicPlaceholder: "请指定要搜索的主题",
-      selectTextClick: "选择并复制页面中的文本，然后点击这里"
+      selectTextClick: "选择并复制页面中的文本，然后点击这里",
+      questionTo: "问题给 "
     },
     confirmPrompt: {
       title: "访问请求",
