@@ -9,7 +9,7 @@ export const translations = {
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Escribe una pregunta directamente a la AI"
+      directQuestionButton: "Escribe la pregunta directamente a"
     },
     contextMenu: {
       summaryUrl: "resumen de URL :",
@@ -55,7 +55,7 @@ export const translations = {
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Escriu una pregunta directament a la IA"
+      directQuestionButton: "Escriu la pregunta directament a"
     },
     contextMenu: {
       summaryUrl: "resum de URL :",
@@ -101,7 +101,7 @@ export const translations = {
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Write a question directly to the AI"
+      directQuestionButton: "Write the question directly to"
     },
     contextMenu: {
       summaryUrl: "summary of URL :",
@@ -147,7 +147,7 @@ export const translations = {
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Écrivez une question directement à l'IA"
+      directQuestionButton: "Écrivez la question directement à"
     },
     contextMenu: {
       summaryUrl: "résumé de URL :",
@@ -193,7 +193,7 @@ export const translations = {
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Schreiben Sie eine Frage direkt an die KI"
+      directQuestionButton: "Schreiben Sie die Frage direkt an"
     },
     contextMenu: {
       summaryUrl: "Zusammenfassung von URL :",
@@ -239,7 +239,7 @@ export const translations = {
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Scrivi una domanda direttamente all'IA"
+      directQuestionButton: "Scrivi la domanda direttamente a"
     },
     contextMenu: {
       summaryUrl: "riassunto di URL :",
@@ -285,7 +285,7 @@ export const translations = {
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Напишите вопрос напрямую ИИ"
+      directQuestionButton: "Напишите вопрос напрямую"
     },
     contextMenu: {
       summaryUrl: "резюме URL :",
@@ -331,7 +331,7 @@ export const translations = {
       twitterButton: "تويتر/X",
       gmailButton: "جيميل",
       addButton: "+إضافة+",
-      directQuestionButton: "اكتب سؤالاً مباشرة إلى الذكاء الاصطناعي"
+      directQuestionButton: "اكتب السؤال مباشرة إلى"
     },
     contextMenu: {
       summaryUrl: "ملخص الرابط :",
@@ -377,7 +377,7 @@ export const translations = {
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+追加+",
-      directQuestionButton: "AIに直接質問を書く"
+      directQuestionButton: "質問を直接書く"
     },
     contextMenu: {
       summaryUrl: "URLの要約 :",
@@ -423,7 +423,7 @@ export const translations = {
       twitterButton: "X/ट्विटर",
       gmailButton: "Gmail",
       addButton: "+जोड़ें+",
-      directQuestionButton: "AI से सीधे प्रश्न लिखें"
+      directQuestionButton: "प्रश्न सीधे लिखें"
     },
     contextMenu: {
       summaryUrl: "URL का सारांश :",
@@ -469,7 +469,7 @@ export const translations = {
       twitterButton: "X/트위터",
       gmailButton: "Gmail",
       addButton: "+추가+",
-      directQuestionButton: "AI에게 직접 질문을 작성하세요"
+      directQuestionButton: "질문을 직접 작성하세요"
     },
     contextMenu: {
       summaryUrl: "URL 요약 :",
@@ -515,7 +515,7 @@ export const translations = {
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+adicionar+",
-      directQuestionButton: "Escreva uma pergunta diretamente para a IA"
+      directQuestionButton: "Escreva a pergunta diretamente para"
     },
     contextMenu: {
       summaryUrl: "resumo de URL :",
@@ -561,7 +561,7 @@ export const translations = {
       twitterButton: "X/推特",
       gmailButton: "Gmail",
       addButton: "+添加+",
-      directQuestionButton: "直接向AI写问题"
+      directQuestionButton: "直接写问题给"
     },
     contextMenu: {
       summaryUrl: "网址摘要 :",
@@ -606,7 +606,7 @@ export function getTranslation(language) {
 }
 
 // Función para actualizar los textos de la interfaz
-export function updateUITexts(language) {
+export function updateUITexts(language, aiModelName = 'ChatGPT') {
   const texts = getTranslation(language);
   
   // Actualizar botones de opción
@@ -628,7 +628,7 @@ export function updateUITexts(language) {
   if (twitterButton) twitterButton.textContent = texts.optionButtons.twitterButton;
   if (gmailButton) gmailButton.textContent = texts.optionButtons.gmailButton;
   if (addButton) addButton.textContent = texts.optionButtons.addButton;
-  if (directQuestionButton) directQuestionButton.textContent = texts.optionButtons.directQuestionButton;
+  if (directQuestionButton) directQuestionButton.textContent = texts.optionButtons.directQuestionButton + ' ' + aiModelName;
 
   // Actualizar textos de configuración
   const settingsTitle = document.querySelector('.popup-header h3');
@@ -638,4 +638,14 @@ export function updateUITexts(language) {
   if (settingsTitle) settingsTitle.textContent = texts.settings.title;
   if (languageLabel) languageLabel.textContent = texts.settings.languageLabel;
   if (aiModelLabel) aiModelLabel.textContent = texts.settings.aiModelLabel;
+}
+
+// Función para actualizar solo el texto del botón de pregunta directa
+export function updateDirectQuestionButtonText(language, aiModelName) {
+  const texts = getTranslation(language);
+  const directQuestionButton = document.getElementById('direct-question-btn');
+  
+  if (directQuestionButton) {
+    directQuestionButton.textContent = texts.optionButtons.directQuestionButton + ' ' + aiModelName;
+  }
 } 

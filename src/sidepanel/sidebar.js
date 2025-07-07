@@ -28,7 +28,7 @@ import {
   openAIWithPromptOnly // Añadir import para openAIWithPromptOnly
 } from '/src/common/common.js';
 
-import { updateUITexts, getTranslation } from '/src/content-script/translations.js';
+import { updateUITexts, getTranslation, updateDirectQuestionButtonText } from '/src/content-script/translations.js';
 
 // Guardar configuración al cerrar la sidebar
 window.addEventListener('beforeunload', function () {
@@ -2570,6 +2570,11 @@ function updateMotorIcon() {
   // Actualizar la imagen del motor
   motorIcon.src = iconPath;
   motorIcon.alt = `${currentModel} AI Model`;
+  
+  // Actualizar el texto del botón de pregunta directa
+  const modelName = getAIModelName(currentModel);
+  const currentLanguage = config.getCurrentLanguage();
+  updateDirectQuestionButtonText(currentLanguage, modelName);
   
   console.log(`🧠 AI Prompt Assistant: Icono del motor actualizado a ${iconPath} para modelo ${currentModel}`);
 }

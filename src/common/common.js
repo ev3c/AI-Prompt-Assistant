@@ -404,7 +404,7 @@ export async function loadMenuData(language = 'es') {
 }
 
 // Función para cambiar el idioma
-import { updateUITexts } from '/src/content-script/translations.js';
+import { updateUITexts, updateDirectQuestionButtonText } from '/src/content-script/translations.js';
 
 export function changeLanguage(language) {
   currentLanguage = language;
@@ -418,7 +418,11 @@ export function changeLanguage(language) {
   updateLanguageButtonIcon(language);
 
   // Actualizar los textos de la interfaz
-  updateUITexts(language);
+  const modelName = getAIModelName(currentAIModel);
+  updateUITexts(language, modelName);
+  
+  // Actualizar específicamente el botón de pregunta directa
+  updateDirectQuestionButtonText(language, modelName);
 
   // Actualizar el idioma seleccionado en el menú
   updateSelectedLanguageInMenu();
