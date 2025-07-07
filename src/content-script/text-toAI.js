@@ -127,6 +127,13 @@ document.getElementById('yesButton').addEventListener('click', async function() 
         // textPrompt = textPrompt + "yes yes yes yes";
 
         if (selectedAI === 'allai') {
+            // Confirmar antes de abrir todas las AI's
+            const confirmOpen = confirm("Voy a abrir todas las AI's");
+            if (!confirmOpen) {
+                this.disabled = false; // Re-habilitar el botón si cancela
+                return;
+            }
+
             const newTabChatgpt = await openCorrectAITab('chatgpt');
             await textToAI(textPrompt, newTabChatgpt);
 

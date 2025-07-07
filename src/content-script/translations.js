@@ -42,7 +42,9 @@ export const translations = {
       yesButton: "Sí, permitir",
       noButton: "No, cancelar",
       twitterMessage: "¿Permitir extraer tweets automáticamente de esta página?",
-      gmailMessage: "¿Permitir extraer emails automáticamente de esta conversación?"
+      gmailMessage: "¿Permitir extraer emails automáticamente de esta conversación?",
+      allAiMessage: "Voy a abrir todas las AI's",
+      showAgainLabel: "Volver a mostrar "
     }
   },
   'ca': {
@@ -88,7 +90,9 @@ export const translations = {
       yesButton: "Sí, permetre",
       noButton: "No, cancel·lar",
       twitterMessage: "Permetre extreure tweets automàticament d'aquesta pàgina?",
-      gmailMessage: "Permetre extreure emails automàticament d'aquesta conversació?"
+      gmailMessage: "Permetre extreure emails automàticament d'aquesta conversació?",
+      allAiMessage: "Obriré totes les AI's",
+      showAgainLabel: "Tornar a mostrar "
     }
   },
   'gb': {
@@ -134,7 +138,9 @@ export const translations = {
       yesButton: "Yes, allow",
       noButton: "No, cancel",
       twitterMessage: "Allow automatic extraction of tweets from this page?",
-      gmailMessage: "Allow automatic extraction of emails from this conversation?"
+      gmailMessage: "Allow automatic extraction of emails from this conversation?",
+      allAiMessage: "I'm going to open all AI's",
+      showAgainLabel: "Show again "
     }
   },
   'fr': {
@@ -180,7 +186,9 @@ export const translations = {
       yesButton: "Oui, autoriser",
       noButton: "Non, annuler",
       twitterMessage: "Autoriser l'extraction automatique des tweets de cette page?",
-      gmailMessage: "Autoriser l'extraction automatique des emails de cette conversation?"
+      gmailMessage: "Autoriser l'extraction automatique des emails de cette conversation?",
+      allAiMessage: "Je vais ouvrir toutes les IA's",
+      showAgainLabel: "Afficher à nouveau "
     }
   },
   'de': {
@@ -226,7 +234,9 @@ export const translations = {
       yesButton: "Ja, erlauben",
       noButton: "Nein, abbrechen",
       twitterMessage: "Möchten Sie automatisch Tweets von dieser Seite extrahieren?",
-      gmailMessage: "Möchten Sie automatisch E-Mails aus dieser Unterhaltung extrahieren?"
+      gmailMessage: "Möchten Sie automatisch E-Mails aus dieser Unterhaltung extrahieren?",
+      allAiMessage: "Ich werde alle KI's öffnen",
+      showAgainLabel: "Wieder anzeigen "
     }
   },
   'it': {
@@ -272,7 +282,9 @@ export const translations = {
       yesButton: "Sì, consentire",
       noButton: "No, annullare",
       twitterMessage: "Permettere di estrarre automaticamente i tweet da questa pagina?",
-      gmailMessage: "Permettere di estrarre automaticamente i messaggi di posta elettronica da questa conversazione?"
+      gmailMessage: "Permettere di estrarre automaticamente i messaggi di posta elettronica da questa conversazione?",
+      allAiMessage: "Aprirò tutte le IA's",
+      showAgainLabel: "Mostra di nuovo "
     }
   },
   'ru': {
@@ -318,7 +330,9 @@ export const translations = {
       yesButton: "Да, разрешить",
       noButton: "Нет, отменить",
       twitterMessage: "Разрешить автоматическое извлечение твитов с этой страницы?",
-      gmailMessage: "Разрешить автоматическое извлечение электронных писем из этого разговора?"
+      gmailMessage: "Разрешить автоматическое извлечение электронных писем из этого разговора?",
+      allAiMessage: "Я собираюсь открыть все ИИ",
+      showAgainLabel: "Показать снова "
     }
   },
   'ar': {
@@ -364,7 +378,9 @@ export const translations = {
       yesButton: "نعم، السماح",
       noButton: "لا، إلغاء",
       twitterMessage: "هل تريد السماح باستخراج التويتات التلقائية من هذه الصفحة؟",
-      gmailMessage: "هل تريد السماح باستخراج البريد الإلكتروني التلقائي من هذه المحادثة؟"
+      gmailMessage: "هل تريد السماح باستخراج البريد الإلكتروني التلقائي من هذه المحادثة؟",
+      allAiMessage: "سأفتح جميع الذكاء الاصطناعي",
+      showAgainLabel: "إظهار مرة أخرى "
     }
   },
   'ja': {
@@ -410,7 +426,9 @@ export const translations = {
       yesButton: "はい、許可",
       noButton: "いいえ、キャンセル",
       twitterMessage: "このページから自動的にツイートを抽出することを許可しますか？",
-      gmailMessage: "この会話から自動的に電子メールを抽出することを許可しますか？"
+      gmailMessage: "この会話から自動的に電子メールを抽出することを許可しますか？",
+      allAiMessage: "すべてのAIを開きます",
+      showAgainLabel: "再度表示する "
     }
   },
   'hi': {
@@ -456,7 +474,9 @@ export const translations = {
       yesButton: "हाँ, अनुमति देना",
       noButton: "नहीं, रद्द करना",
       twitterMessage: "क्या आप इस पृष्ठ से स्वचालित रूप से ट्वीट निकालने की अनुमति देना चाहते हैं?",
-      gmailMessage: "क्या आप इस बातचीत से स्वचालित रूप से ईमेल निकालने की अनुमति देना चाहते हैं?"
+      gmailMessage: "क्या आप इस बातचीत से स्वचालित रूप से ईमेल निकालने की अनुमति देना चाहते हैं?",
+      allAiMessage: "मैं सभी AI खोलूंगा",
+      showAgainLabel: "फिर से दिखाएं "
     }
   },
   'kr': {
@@ -502,7 +522,9 @@ export const translations = {
       yesButton: "예, 허용",
       noButton: "아니오, 취소",
       twitterMessage: "이 페이지에서 자동으로 트윗을 추출하는 것을 허용하시겠습니까?",
-      gmailMessage: "이 대화에서 자동으로 이메일을 추출하는 것을 허용하시겠습니까?"
+      gmailMessage: "이 대화에서 자동으로 이메일을 추출하는 것을 허용하시겠습니까?",
+      allAiMessage: "모든 AI를 열겠습니다",
+      showAgainLabel: "다시 표시 "
     }
   },
   'pt': {
@@ -548,7 +570,9 @@ export const translations = {
       yesButton: "Sim, permitir",
       noButton: "Não, cancelar",
       twitterMessage: "Permitir extrair tweets automaticamente desta página?",
-      gmailMessage: "Permitir extrair emails automaticamente desta conversação?"
+      gmailMessage: "Permitir extrair emails automaticamente desta conversação?",
+      allAiMessage: "Vou abrir todas as IA's",
+      showAgainLabel: "Mostrar novamente "
     }
   },
   'zh': {
@@ -594,7 +618,9 @@ export const translations = {
       yesButton: "是，允许",
       noButton: "否，取消",
       twitterMessage: "允许自动提取此页面上的推文吗？",
-      gmailMessage: "允许自动提取此对话中的电子邮件吗？"
+      gmailMessage: "允许自动提取此对话中的电子邮件吗？",
+      allAiMessage: "我将打开所有AI",
+      showAgainLabel: "再次显示 "
     }
   }
   // Añadir más idiomas según sea necesario...

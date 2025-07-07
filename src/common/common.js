@@ -16,6 +16,7 @@ let currentContext = 'url'; // Default context is URL
 let availableLanguages = []; // Lista de idiomas disponibles cargada desde /src/common/languages/idiomaAI.json
 let currentPrompt = '';
 let clipboardContent = '';
+let verAcceso = true; // Variable global de acceso
 
 export async function loadMotorAI() {
   try {
@@ -69,7 +70,10 @@ export const config = {
   setHoveredTranslationButton: (button) => { hoveredTranslationButton = button; },
 
   getAvailableLanguages: () => availableLanguages,
-  setAvailableLanguages: (languages) => { availableLanguages = languages; }
+  setAvailableLanguages: (languages) => { availableLanguages = languages; },
+
+  getVerAcceso: () => verAcceso,
+  setVerAcceso: (value) => { verAcceso = value; }
 };
 
 // Helper function to determine if a context behaves like a clipboard context
@@ -1055,7 +1059,8 @@ export function saveMainConfig() {
     language: currentLanguage,
     aiModel: currentAIModel,
     context: currentContext,
-    useClipboard: useClipboard
+    useClipboard: useClipboard,
+    verAcceso: verAcceso
   };
   
   console.log('Guardando configuración:', configToSave);
@@ -1077,12 +1082,14 @@ export async function loadMainConfig() {
         currentAIModel = result.mainConfig.aiModel || 'chatgpt';
         currentContext = result.mainConfig.context || 'url';
         useClipboard = result.mainConfig.useClipboard || false;
+        verAcceso = result.mainConfig.verAcceso !== undefined ? result.mainConfig.verAcceso : true;
         
         // Actualizar valores en el objeto config
         config.setCurrentLanguage(currentLanguage);
         config.setCurrentAIModel(currentAIModel);
         config.setCurrentContext(currentContext);
         config.setUseClipboard(useClipboard);
+        config.setVerAcceso(verAcceso);
         
         console.log('Configuración principal cargada y aplicada:', result.mainConfig);
       } else {
@@ -1442,6 +1449,12 @@ export function textPrompt(title = null, defaultText = "") {
 // Función confirmPrompt() - Modal de confirmación con estilo de sidebar
 export function confirmPrompt(message = null, type = 'general') {
   return new Promise((resolve) => {
+    // Si verAcceso es false, devolver true automáticamente (permitir la acción sin mostrar ventana)
+    if (!verAcceso) {
+      resolve(true);
+      return;
+    }
+    
     // Obtener traducciones del idioma actual
     const texts = getTranslation(currentLanguage);
     
@@ -1546,6 +1559,47 @@ export function confirmPrompt(message = null, type = 'general') {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     `;
 
+    // Crear contenedor del checkbox con estilo de sidebar
+    const checkboxContainer = document.createElement('div');
+    checkboxContainer.style.cssText = `
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+      border: 1px solid #e9ecef;
+    `;
+
+    // Crear checkbox
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.id = 'verAcceso-checkbox';
+    checkbox.checked = verAcceso; // Usar el valor actual de la variable global
+    checkbox.style.cssText = `
+      width: 12px;
+      height: 12px;
+      accent-color: #87CEEB;
+      cursor: pointer;
+    `;
+
+    // Crear label para el checkbox
+    const checkboxLabel = document.createElement('label');
+    checkboxLabel.htmlFor = 'verAcceso-checkbox';
+    checkboxLabel.textContent = texts.confirmPrompt.showAgainLabel;
+    checkboxLabel.style.cssText = `
+      font-size: 12px;
+      color: #6c757d;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      cursor: pointer;
+      user-select: none;
+    `;
+
+    // Ensamblar checkbox
+    checkboxContainer.appendChild(checkbox);
+    checkboxContainer.appendChild(checkboxLabel);
+
     // Crear contenedor de botones con estilo de sidebar
     const buttonContainer = document.createElement('div');
     buttonContainer.style.cssText = `
@@ -1614,6 +1668,17 @@ export function confirmPrompt(message = null, type = 'general') {
 
     // Eventos de botones
     const closeModal = (result) => {
+      // Actualizar la variable global verAcceso según el estado del checkbox
+      const newVerAcceso = checkbox.checked;
+      
+      // Si el valor cambió, actualizar y guardar configuración
+      if (verAcceso !== newVerAcceso) {
+        verAcceso = newVerAcceso;
+        config.setVerAcceso(verAcceso);
+        saveMainConfig(); // Guardar configuración automáticamente
+        console.log('verAcceso actualizado a:', verAcceso);
+      }
+      
       overlay.style.opacity = '0';
       overlay.style.visibility = 'hidden';
       modal.style.transform = 'scale(0.95)';
@@ -1650,6 +1715,7 @@ export function confirmPrompt(message = null, type = 'general') {
     buttonContainer.appendChild(noButton);
     buttonContainer.appendChild(yesButton);
     content.appendChild(messageElement);
+    content.appendChild(checkboxContainer);
     content.appendChild(buttonContainer);
     modal.appendChild(header);
     modal.appendChild(content);
@@ -1743,7 +1809,12 @@ export function truncatePrompt(prompt, maxLength = 1000) {
 export async function openAIWithPromptOnly(prompt, label) {
   // Siempre preguntar al usuario para confirmar/modificar el prompt
   const defaultText = prompt || "";
-  const iPrompt = await textPrompt(label || "Editar prompt:", defaultText);
+  
+  // Crear el título dinámico con el nombre del motor actual
+  const aiModelName = getAIModelName(currentAIModel);
+  const dynamicTitle = label ? `${label} ${aiModelName}` : `Editar prompt: ${aiModelName}`;
+  
+  const iPrompt = await textPrompt(dynamicTitle, defaultText);
   
   // Si el usuario cancela o no ingresa nada, salir de la función
   if (!iPrompt) return;
@@ -1767,6 +1838,18 @@ export async function openAIWithPromptOnly(prompt, label) {
     } else {
       // Si el usuario no ingresa nada, usar un valor genérico
       prompt = prompt.replace(/\[TEMA\]|\[TOPIC\]/g, 'tema principal');
+    }
+  }
+
+  // Si se ha seleccionado "All AI's", mostrar confirmación antes de proceder
+  if (currentAIModel === 'allai') {
+    const texts = getTranslation(currentLanguage);
+    const confirmed = await confirmPrompt(texts.confirmPrompt.allAiMessage, 'allai');
+    
+    // Si el usuario cancela, no continuar
+    if (!confirmed) {
+      console.log('Usuario canceló la apertura de todas las AI\'s');
+      return;
     }
   }
 
