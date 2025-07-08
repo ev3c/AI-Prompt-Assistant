@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prompt Assistant - Video de Ayuda</title>
+    <link rel="stylesheet" href="help-video.css">
+    <script src="help-video.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                🎥 AI Prompt Assistant
+                <span style="font-size: 18px;">- Video de Ayuda</span>
+            </h1>
+            <p>Aprende a usar la extensión de manera fácil y rápida</p>
+        </div>
+
+        <div class="error-message" id="error-message">
+            ⚠️ Error al cargar el video. Por favor, verifica tu conexión a internet e inténtalo de nuevo.
+        </div>
+
+        <div class="video-container">
+            <div class="success-indicator" id="success-indicator">
+                ✅ Video cargado correctamente
+            </div>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                Cargando video...
+            </div>
+            <iframe 
+                id="video-iframe"
+                class="video-iframe"
+                src="https://www.youtube.com/embed/40AoSd_o7Z8?autoplay=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&fs=1&cc_load_policy=0&disablekb=0&controls=1&playsinline=1&mute=0"
+                title="AI Prompt Assistant - Video de Ayuda"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+            </iframe>
+        </div>
+
+        <div class="footer">
+            <p>🚀 ¡Gracias por usar AI Prompt Assistant!</p>
+            <button class="close-button" onclick="closeWindow()">
+                ✨ Cerrar y empezar a usar la extensión
+            </button>
+        </div>
+    </div>
+
+    <!-- La funcionalidad JavaScript principal está en help-video.js -->
+    <script>
+        // Fallback básico en caso de que el archivo JS externo no se cargue
+        window.addEventListener('load', function() {
+            // Verificar si el manager se inicializó correctamente
+            setTimeout(() => {
+                if (!window.helpVideoDebug) {
+                    console.warn('⚠️ El script principal no se cargó, usando fallback básico');
+                    
+                    // Funcionalidad mínima de respaldo
+                    const iframe = document.getElementById('video-iframe');
+                    const loading = document.getElementById('loading');
+                    
+                    if (iframe && loading) {
+                        iframe.addEventListener('load', () => {
+                            loading.style.display = 'none';
+                            console.log('✅ Video cargado (fallback)');
+                        });
+                        
+                        iframe.addEventListener('error', () => {
+                            loading.style.display = 'none';
+                            const error = document.getElementById('error-message');
+                            if (error) error.style.display = 'block';
+                            console.error('❌ Error al cargar video (fallback)');
+                        });
+                    }
+                    
+                    // Función básica para cerrar
+                    window.closeWindow = () => {
+                        window.close();
+                    };
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

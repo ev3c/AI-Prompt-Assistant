@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Help Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #87CEEB;
+            border-bottom: 2px solid #87CEEB;
+            padding-bottom: 10px;
+        }
+        .test-button {
+            background: #87CEEB;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        .test-button:hover {
+            background: #5bb4dc;
+        }
+        .info {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        .code {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎥 Test - Help Video Implementation</h1>
+        
+        <div class="info">
+            <strong>📋 Funcionalidades implementadas:</strong>
+            <ul>
+                <li>✅ Página personalizada sin anuncios de YouTube</li>
+                <li>✅ Video embebido con parámetros optimizados</li>
+                <li>✅ Detección automática de idioma</li>
+                <li>✅ Indicadores de carga y error</li>
+                <li>✅ Soporte para pantalla completa (F11)</li>
+                <li>✅ Atajos de teclado (ESC, Ctrl+R)</li>
+                <li>✅ Diseño responsive</li>
+                <li>✅ Animaciones y transiciones</li>
+                <li>✅ Analytics integrados</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <strong>🚀 Cómo funciona:</strong>
+            <ol>
+                <li>Al hacer clic en "Help / Ayuda video" en la extensión</li>
+                <li>Se abre una nueva pestaña con la página personalizada</li>
+                <li>El video se carga automáticamente sin anuncios</li>
+                <li>Se detecta el idioma del navegador para mostrar textos apropiados</li>
+                <li>Primera instalación: se abre automáticamente</li>
+            </ol>
+        </div>
+
+        <h2>🧪 Pruebas</h2>
+        
+        <button class="test-button" onclick="openHelpVideo()">
+            🎥 Abrir Video de Ayuda
+        </button>
+        
+        <button class="test-button" onclick="testYouTubeEmbed()">
+            📺 Probar Embed de YouTube
+        </button>
+        
+        <button class="test-button" onclick="testLanguageDetection()">
+            🌐 Probar Detección de Idioma
+        </button>
+        
+        <button class="test-button" onclick="showDebugInfo()">
+            🔍 Mostrar Información de Debug
+        </button>
+
+        <div id="debug-info" style="display: none; margin-top: 20px;">
+            <h3>🔍 Debug Information</h3>
+            <div class="code" id="debug-content"></div>
+        </div>
+
+        <h2>📖 URLs de Prueba</h2>
+        <div class="info">
+            <strong>URL de la página personalizada:</strong><br>
+            <code class="code">chrome-extension://[extension-id]/src/sidepanel/pages/help-video/help-video.html</code>
+        </div>
+        
+        <div class="info">
+            <strong>URL del video de YouTube (con parámetros):</strong><br>
+            <code class="code">https://www.youtube.com/embed/40AoSd_o7Z8?autoplay=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&fs=1&cc_load_policy=0&disablekb=0&controls=1&playsinline=1&mute=0</code>
+        </div>
+
+        <h2>⚙️ Configuración</h2>
+        <div class="info">
+            <strong>Archivos creados:</strong>
+            <ul>
+                <li><code>src/sidepanel/pages/help-video/help-video.html</code> - Página principal</li>
+                <li><code>src/sidepanel/pages/help-video/help-video.css</code> - Estilos</li>
+                <li><code>src/sidepanel/pages/help-video/help-video.js</code> - Funcionalidad</li>
+                <li><code>src/sidepanel/pages/help-video/test.html</code> - Esta página de prueba</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function openHelpVideo() {
+            // Simular la apertura del video de ayuda
+            window.open('./help-video.html', '_blank');
+        }
+
+        function testYouTubeEmbed() {
+            // Probar el embed directo de YouTube
+            const embedUrl = 'https://www.youtube.com/embed/40AoSd_o7Z8?autoplay=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&fs=1&cc_load_policy=0&disablekb=0&controls=1&playsinline=1&mute=0';
+            window.open(embedUrl, '_blank');
+        }
+
+        function testLanguageDetection() {
+            const userLang = navigator.language || navigator.userLanguage;
+            alert(`Idioma detectado: ${userLang}\n\nTraducción que se aplicaría: ${getLanguageTranslation(userLang)}`);
+        }
+
+        function getLanguageTranslation(lang) {
+            lang = lang.toLowerCase();
+            if (lang.startsWith('en')) return 'Inglés';
+            if (lang.startsWith('fr')) return 'Francés';
+            if (lang.startsWith('de')) return 'Alemán';
+            if (lang.startsWith('it')) return 'Italiano';
+            if (lang.startsWith('pt')) return 'Portugués';
+            return 'Español (por defecto)';
+        }
+
+        function showDebugInfo() {
+            const debugDiv = document.getElementById('debug-info');
+            const debugContent = document.getElementById('debug-content');
+            
+            if (debugDiv.style.display === 'none') {
+                const info = {
+                    'Idioma del navegador': navigator.language || navigator.userLanguage,
+                    'User Agent': navigator.userAgent,
+                    'Pantalla': `${screen.width}x${screen.height}`,
+                    'Ventana': `${window.innerWidth}x${window.innerHeight}`,
+                    'Zona horaria': Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    'Fecha actual': new Date().toISOString(),
+                    'Soporte para Chrome APIs': typeof chrome !== 'undefined' ? 'Sí' : 'No',
+                    'Es dispositivo móvil': /Mobi|Android/i.test(navigator.userAgent) ? 'Sí' : 'No'
+                };
+                
+                let debugText = '';
+                for (const [key, value] of Object.entries(info)) {
+                    debugText += `${key}: ${value}\n`;
+                }
+                
+                debugContent.textContent = debugText;
+                debugDiv.style.display = 'block';
+            } else {
+                debugDiv.style.display = 'none';
+            }
+        }
+
+        // Mensaje de bienvenida
+        console.log('🎥 AI Prompt Assistant - Help Video Test Page');
+        console.log('📝 Esta página permite probar la implementación del video de ayuda');
+        console.log('🔗 Usa los botones para probar diferentes funcionalidades');
+    </script>
+</body>
+</html> 

@@ -25,7 +25,8 @@ export const translations = {
     settings: {
       title: "Configuración",
       languageLabel: "Idioma de la extensión:",
-      aiModelLabel: "Motor de IA:"
+      aiModelLabel: "Motor de IA:",
+      helpVideoButton: "Ayuda / video"
     },
     textPrompt: {
       defaultTitle: "Editar prompt",
@@ -123,7 +124,8 @@ export const translations = {
     settings: {
       title: "Settings",
       languageLabel: "Extension language:",
-      aiModelLabel: "AI Engine:"
+      aiModelLabel: "AI Engine:",
+      helpVideoButton: "Help / video"
     },
     textPrompt: {
       defaultTitle: "Edit prompt",
@@ -172,7 +174,8 @@ export const translations = {
     settings: {
       title: "Paramètres",
       languageLabel: "Langue de l'extension:",
-      aiModelLabel: "Moteur IA:"
+      aiModelLabel: "Moteur IA:",
+      helpVideoButton: "Aide / vidéo"
     },
     textPrompt: {
       defaultTitle: "Modifier le prompt",
@@ -221,7 +224,8 @@ export const translations = {
     settings: {
       title: "Einstellungen",
       languageLabel: "Erweiterungssprache:",
-      aiModelLabel: "KI-Engine:"
+      aiModelLabel: "KI-Engine:",
+      helpVideoButton: "Hilfe / Video"
     },
     textPrompt: {
       defaultTitle: "Prompt bearbeiten",
@@ -270,7 +274,8 @@ export const translations = {
     settings: {
       title: "Impostazioni",
       languageLabel: "Lingua dell'estensione:",
-      aiModelLabel: "Motore AI:"
+      aiModelLabel: "Motore AI:",
+      helpVideoButton: "Aiuto / video"
     },
     textPrompt: {
       defaultTitle: "Modifica prompt",
@@ -319,7 +324,8 @@ export const translations = {
     settings: {
       title: "Настройки",
       languageLabel: "Язык расширения:",
-      aiModelLabel: "ИИ двигатель:"
+      aiModelLabel: "ИИ двигатель:",
+      helpVideoButton: "Помощь / видео"
     },
     textPrompt: {
       defaultTitle: "Редактировать промпт",
@@ -368,7 +374,8 @@ export const translations = {
     settings: {
       title: "الإعدادات",
       languageLabel: "لغة الإضافة:",
-      aiModelLabel: "محرك الذكاء الاصطناعي:"
+      aiModelLabel: "محرك الذكاء الاصطناعي:",
+      helpVideoButton: "مساعدة / فيديو"
     },
     textPrompt: {
       defaultTitle: "تحرير الطلب",
@@ -417,7 +424,8 @@ export const translations = {
     settings: {
       title: "設定",
       languageLabel: "拡張機能の言語:",
-      aiModelLabel: "AIエンジン:"
+      aiModelLabel: "AIエンジン:",
+      helpVideoButton: "ヘルプ / ビデオ"
     },
     textPrompt: {
       defaultTitle: "プロンプトを編集",
@@ -466,7 +474,8 @@ export const translations = {
     settings: {
       title: "सेटिंग्स",
       languageLabel: "एक्सटेंशन भाषा:",
-      aiModelLabel: "AI इंजन:"
+      aiModelLabel: "AI इंजन:",
+      helpVideoButton: "मदद / वीडियो"
     },
     textPrompt: {
       defaultTitle: "प्रॉम्प्ट संपादित करें",
@@ -515,7 +524,8 @@ export const translations = {
     settings: {
       title: "설정",
       languageLabel: "확장 프로그램 언어:",
-      aiModelLabel: "AI 엔진:"
+      aiModelLabel: "AI 엔진:",
+      helpVideoButton: "도움말 / 비디오"
     },
     textPrompt: {
       defaultTitle: "프롬프트 편집",
@@ -564,7 +574,8 @@ export const translations = {
     settings: {
       title: "Configurações",
       languageLabel: "Idioma da extensão:",
-      aiModelLabel: "Motor de IA:"
+      aiModelLabel: "Motor de IA:",
+      helpVideoButton: "Ajuda / video"
     },
     textPrompt: {
       defaultTitle: "Editar prompt",
@@ -613,7 +624,8 @@ export const translations = {
     settings: {
       title: "设置",
       languageLabel: "扩展语言:",
-      aiModelLabel: "人工智能引擎:"
+      aiModelLabel: "人工智能引擎:",
+      helpVideoButton: "帮助 / 视频"
     },
     textPrompt: {
       defaultTitle: "编辑提示",
@@ -673,10 +685,12 @@ export function updateUITexts(language, aiModelName = 'ChatGPT') {
   const settingsTitle = document.querySelector('.popup-header h3');
   const languageLabel = document.querySelector('label[for="language-selector"]');
   const aiModelLabel = document.querySelector('label[for="ai-model-selector"]');
+  const helpVideoButton = document.getElementById('help-video-button');
   
   if (settingsTitle) settingsTitle.textContent = texts.settings.title;
   if (languageLabel) languageLabel.textContent = texts.settings.languageLabel;
   if (aiModelLabel) aiModelLabel.textContent = texts.settings.aiModelLabel;
+  if (helpVideoButton) helpVideoButton.textContent = '🎥 ' + texts.settings.helpVideoButton;
 }
 
 // Función para actualizar solo el texto del botón de pregunta directa

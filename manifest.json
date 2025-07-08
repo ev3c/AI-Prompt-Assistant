@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "🧠 AI Prompt Assistant v1.3 beta",
-  "version": "1.3",
+  "name": "🧠 AI Prompt Assistant v1.4 beta",
+  "version": "1.4",
   "description": "Menú de prompts útiles para ChatGPT, DeepSeek, Gemini, Copilot, y más.",
   "permissions": [
     "clipboardWrite", 
@@ -80,6 +80,9 @@
         "/src/sidepanel/pages/jsonEditor/jsonEditor.html",
         "/src/sidepanel/pages/jsonEditor/jsonEditor.js",
         "/src/sidepanel/pages/jsonEditor/jsonEditor.css",
+        "/src/sidepanel/pages/help-video/help-video.html",
+        "/src/sidepanel/pages/help-video/help-video.css",
+        "/src/sidepanel/pages/help-video/help-video.js",
         "/src/common/languages/custom/*.json",
         "/src/common/languages/*.json"
       ],

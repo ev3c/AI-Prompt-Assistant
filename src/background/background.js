@@ -1,4 +1,11 @@
 // Script de fondo para la extensión
+// 
+// Funcionalidades principales:
+// - Inicialización automática al instalar la extensión
+// - Apertura automática del video de ayuda en la primera instalación
+// - Gestión de menús contextuales
+// - Manejo de mensajes entre diferentes partes de la extensión
+// 
 import { loadAvailableLanguages } from '/src/background/languageManager.js';
 import { createInitialContextMenus, handleContextMenuClick, updateContextMenuTitlesFromStorage } from '/src/background/contextMenuManager.js';
 import { openAIWithPrompt } from '/src/background/aiInteractionManager.js';
@@ -11,9 +18,50 @@ import { startFileWatcher } from './fileWatcher.js';
 // Ruta donde se almacenan los archivos JSON de la extensión
 const jsonPath = "C:\\Users\\Propietario\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.2_0\\idioma\\";
 
-chrome.runtime.onInstalled.addListener(async () => {
+// Función para abrir el video de ayuda (útil para testing)
+function openHelpVideo() {
+  // Usar la página personalizada de la extensión que muestra el video sin anuncios
+  const helpVideoUrl = chrome.runtime.getURL('/src/sidepanel/pages/help-video/help-video.html');
+  
+  chrome.tabs.create({
+    url: helpVideoUrl
+  }).then(() => {
+    console.log('Video de ayuda abierto en página personalizada sin anuncios');
+  }).catch((error) => {
+    console.error('Error al abrir el video de ayuda:', error);
+    
+    // Fallback: si falla la página personalizada, usar YouTube directamente
+    chrome.tabs.create({
+      url: 'https://youtu.be/40AoSd_o7Z8'
+    }).then(() => {
+      console.log('Video de ayuda abierto en YouTube (fallback)');
+    }).catch((fallbackError) => {
+      console.error('Error en fallback al abrir video de ayuda:', fallbackError);
+    });
+  });
+}
+
+chrome.runtime.onInstalled.addListener(async (details) => {
   // Abrir / Cerrar panel al click en Extensión
   chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+
+  // Verificar si es la primera instalación
+  if (details.reason === 'install') {
+    // Verificar si es realmente la primera vez ejecutando la extensión
+    chrome.storage.local.get(['firstRunCompleted'], function (result) {
+      if (!result.firstRunCompleted) {
+        // Marcar que ya se ejecutó la primera vez
+        chrome.storage.local.set({ firstRunCompleted: true });
+        
+        // Agregar un pequeño delay para que Chrome se estabilice después de la instalación
+        setTimeout(() => {
+          // Abrir el video de ayuda automáticamente
+          openHelpVideo();
+          console.log('Primera instalación detectada - Video de ayuda abierto automáticamente');
+        }, 1000); // Delay de 1 segundo
+      }
+    });
+  }
 
   // Establecer configuración por defecto
   chrome.storage.local.get(['language', 'aiModel'], async function (result) {
@@ -77,6 +125,18 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   else if (request.action === 'getJsonFolderPath') {
     // Devolver la ruta donde se almacenan los archivos JSON
     sendResponse({ path: jsonPath });
+    return true;
+  }
+  else if (request.action === 'openHelpVideo') {
+    // Abrir el video de ayuda manualmente
+    openHelpVideo();
+    sendResponse({ success: true });
+    return true;
+  }
+  else if (request.action === 'resetFirstRun') {
+    // Resetear el flag de primera ejecución (útil para testing)
+    chrome.storage.local.set({ firstRunCompleted: false });
+    sendResponse({ success: true });
     return true;
   }
   // Otros manejadores de mensajes pueden ir aquí

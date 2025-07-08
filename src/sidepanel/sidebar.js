@@ -1603,6 +1603,24 @@ function initializeUI() {
     });
   }
 
+  // Configurar el botón de ayuda/video
+  const helpVideoButton = document.getElementById('help-video-button');
+  if (helpVideoButton) {
+    helpVideoButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      // Usar el background script para abrir el video de ayuda
+      chrome.runtime.sendMessage({
+        action: 'openHelpVideo'
+      }, (response) => {
+        if (response && response.success) {
+          console.log('Video de ayuda abierto correctamente');
+        } else {
+          console.error('Error al abrir el video de ayuda');
+        }
+      });
+    });
+  }
+
   // Configurar el botón de compartir con submenú
   const shareButton = document.getElementById('share-button');
   const shareSubmenu = document.getElementById('share-submenu');
