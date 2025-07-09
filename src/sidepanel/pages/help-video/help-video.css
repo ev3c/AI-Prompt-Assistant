@@ -58,9 +58,11 @@ body {
 }
 
 .header p {
-    font-size: 14px;
+    font-size: 13px;
     opacity: 0.9;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    line-height: 1.5;
+    margin-top: 5px;
 }
 
 .video-container {
@@ -91,22 +93,25 @@ body {
 
 .footer p {
     color: #6c757d;
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom: 15px;
     font-weight: 500;
+    line-height: 1.5;
 }
 
 .close-button {
     background: linear-gradient(135deg, #87CEEB 0%, #5bb4dc 100%);
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 16px 28px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(135, 206, 235, 0.3);
+    line-height: 1.4;
+    text-align: center;
 }
 
 .close-button:hover {

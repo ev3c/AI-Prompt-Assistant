@@ -52,8 +52,19 @@ class HelpVideoManager {
 
         // Evento del botón de cerrar (delegado al window para que funcione globalmente)
         window.closeWindow = () => {
+            console.log('🚪 Botón de cerrar presionado - iniciando cierre de ventana...');
             this.closeWindow();
         };
+
+        // Asegurar que el botón de cerrar funcione correctamente
+        const closeButton = document.querySelector('.close-button');
+        if (closeButton) {
+            closeButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('🖱️ Click en botón detectado - cerrando ventana...');
+                this.closeWindow();
+            });
+        }
     }
 
     onVideoLoaded() {
@@ -95,7 +106,17 @@ class HelpVideoManager {
     }
 
     closeWindow() {
+        console.log('🚪 Iniciando proceso de cierre de ventana...');
+        
         const container = document.querySelector('.container');
+        const closeButton = document.querySelector('.close-button');
+        
+        // Cambiar texto del botón para dar feedback bilingüe
+        if (closeButton) {
+            closeButton.innerHTML = '✨ Closing... / Cerrando...';
+            closeButton.disabled = true;
+            closeButton.style.opacity = '0.7';
+        }
         
         // Animación de cierre
         if (container) {
@@ -104,16 +125,109 @@ class HelpVideoManager {
             container.style.opacity = '0';
         }
         
+        // Registrar analytics antes de cerrar
+        this.sendAnalytics('help_video_closed');
+        
+        // Aplicar múltiples estrategias de cierre
+        this.attemptWindowClose();
+    }
+
+    attemptWindowClose() {
+        console.log('🔄 Intentando cerrar ventana con múltiples métodos...');
+        
         setTimeout(() => {
-            // Intentar cerrar la pestaña
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                window.close();
+            try {
+                // Estrategia 1: Chrome tabs API (más efectivo para extensiones)
+                if (typeof chrome !== 'undefined' && chrome.tabs) {
+                    console.log('📋 Intentando cerrar con chrome.tabs API...');
+                    chrome.tabs.getCurrent((tab) => {
+                        if (tab && tab.id) {
+                            chrome.tabs.remove(tab.id, () => {
+                                console.log('✅ Ventana cerrada con chrome.tabs API');
+                            });
+                        } else {
+                            // Si no se puede obtener el tab, usar método alternativo
+                            this.fallbackClose();
+                        }
+                    });
+                } else {
+                    // Si no hay chrome API, usar métodos estándar
+                    this.fallbackClose();
+                }
+                
+            } catch (error) {
+                console.error('❌ Error en estrategia principal:', error);
+                this.fallbackClose();
             }
         }, 300);
+    }
 
-        this.sendAnalytics('help_video_closed');
+    fallbackClose() {
+        console.log('🔄 Usando métodos de cierre alternativos...');
+        
+        try {
+            // Método 1: window.close() estándar
+            console.log('🪟 Intentando window.close()...');
+            window.close();
+            
+            // Método 2: Con delay para asegurar ejecución
+            setTimeout(() => {
+                console.log('⏱️ Segundo intento con window.close()...');
+                window.close();
+            }, 100);
+            
+            // Método 3: Usar history si está disponible
+            setTimeout(() => {
+                if (window.history.length > 1) {
+                    console.log('🔙 Intentando con window.history.back()...');
+                    window.history.back();
+                } else {
+                    console.log('🪟 Tercer intento con window.close()...');
+                    window.close();
+                }
+            }, 300);
+            
+            // Método 4: Último recurso con mensaje al usuario
+            setTimeout(() => {
+                console.log('⚠️ Métodos automáticos fallaron, notificando al usuario...');
+                
+                const container = document.querySelector('.container');
+                if (container) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #2c3e50;">
+                            <h2>✅ Thank you for watching! / ¡Gracias por ver el video!</h2>
+                            <p style="margin: 20px 0;">You can close this tab manually<br>
+                            Puedes cerrar esta pestaña manualmente</p>
+                            <p style="font-size: 14px; color: #6c757d;">
+                                Press <kbd>Ctrl+W</kbd> or <kbd>Cmd+W</kbd> to close<br>
+                                Presiona <kbd>Ctrl+W</kbd> o <kbd>Cmd+W</kbd> para cerrar
+                            </p>
+                        </div>
+                    `;
+                }
+                
+                // Intentar cerrar una vez más después de mostrar el mensaje
+                setTimeout(() => {
+                    window.close();
+                }, 2000);
+                
+            }, 1000);
+            
+        } catch (error) {
+            console.error('❌ Error en métodos de fallback:', error);
+            
+            // Si todo falla, al menos mostrar mensaje de agradecimiento bilingüe
+            const container = document.querySelector('.container');
+            if (container) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #2c3e50;">
+                        <h2>✅ Video completed! / ¡Video completado!</h2>
+                        <p>Please close this tab manually<br>
+                        Por favor, cierra esta pestaña manualmente</p>
+                    </div>
+                `;
+            }
+        }
     }
 
     setupKeyboardHandlers() {
@@ -169,21 +283,16 @@ class HelpVideoManager {
     }
 
     updateLanguageTexts() {
-        const translations = this.getTranslations();
+        // Los textos ya están en formato bilingüe en el HTML
+        // Solo actualizar el título de la página y log de idioma detectado
+        console.log(`🌐 Language detected: ${this.userLanguage} (Bilingual interface active)`);
         
-        // Actualizar textos según el idioma detectado
-        document.querySelector('.header h1 span').textContent = translations.title;
-        document.querySelector('.header p').textContent = translations.subtitle;
-        document.querySelector('.footer p').textContent = translations.footerText;
-        document.querySelector('.close-button').textContent = translations.closeButton;
+        // Mantener el título bilingüe
+        document.title = 'AI Prompt Assistant - Help Video / Video de Ayuda';
         
-        // Actualizar textos de elementos con contenido dinámico
-        this.loading.innerHTML = `<div class="spinner"></div>${translations.loading}`;
-        this.errorMessage.innerHTML = translations.error;
-        this.successIndicator.textContent = translations.success;
-        
-        // Actualizar el título de la página
-        document.title = `AI Prompt Assistant ${translations.pageTitle}`;
+        // No necesitamos cambiar los textos ya que están en formato bilingüe
+        // Solo registrar el idioma para analytics
+        this.detectedLanguage = this.userLanguage;
     }
 
     getTranslations() {

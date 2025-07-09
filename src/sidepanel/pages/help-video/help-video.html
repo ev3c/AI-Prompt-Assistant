@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Prompt Assistant - Video de Ayuda</title>
+    <title>AI Prompt Assistant - Help Video / Video de Ayuda</title>
     <link rel="stylesheet" href="help-video.css">
     <script src="help-video.js" defer></script>
 </head>
@@ -12,28 +12,29 @@
         <div class="header">
             <h1>
                 🎥 AI Prompt Assistant
-                <span style="font-size: 18px;">- Video de Ayuda</span>
+                <span style="font-size: 18px;">- Help Video / Video de Ayuda</span>
             </h1>
-            <p>Aprende a usar la extensión de manera fácil y rápida</p>
+            <p>Learn to use the extension easily and quickly / Aprende a usar la extensión de manera fácil y rápida</p>
         </div>
 
         <div class="error-message" id="error-message">
-            ⚠️ Error al cargar el video. Por favor, verifica tu conexión a internet e inténtalo de nuevo.
+            ⚠️ Error loading video. Please check your internet connection and try again.<br>
+            Error al cargar el video. Por favor, verifica tu conexión a internet e inténtalo de nuevo.
         </div>
 
         <div class="video-container">
             <div class="success-indicator" id="success-indicator">
-                ✅ Video cargado correctamente
+                ✅ Video loaded successfully / Video cargado correctamente
             </div>
             <div class="loading" id="loading">
                 <div class="spinner"></div>
-                Cargando video...
+                Loading video... / Cargando video...
             </div>
             <iframe 
                 id="video-iframe"
                 class="video-iframe"
                 src="https://www.youtube.com/embed/40AoSd_o7Z8?autoplay=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&fs=1&cc_load_policy=0&disablekb=0&controls=1&playsinline=1&mute=0"
-                title="AI Prompt Assistant - Video de Ayuda"
+                title="AI Prompt Assistant - Help Video / Video de Ayuda"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
@@ -42,9 +43,9 @@
         </div>
 
         <div class="footer">
-            <p>🚀 ¡Gracias por usar AI Prompt Assistant!</p>
+            <p>🚀 Thank you for using AI Prompt Assistant! / ¡Gracias por usar AI Prompt Assistant!</p>
             <button class="close-button" onclick="closeWindow()">
-                ✨ Cerrar y empezar a usar la extensión
+                ✨ Close / Cerrar
             </button>
         </div>
     </div>
@@ -76,9 +77,46 @@
                         });
                     }
                     
-                    // Función básica para cerrar
+                    // Función básica para cerrar (fallback mejorado)
                     window.closeWindow = () => {
-                        window.close();
+                        console.log('🚪 Cerrando ventana (fallback)...');
+                        
+                        // Intentar múltiples métodos
+                        try {
+                            // Método principal
+                            window.close();
+                            
+                            // Si no funciona, intentar con delay
+                            setTimeout(() => {
+                                window.close();
+                            }, 100);
+                            
+                            // Método con Chrome API si está disponible
+                            if (typeof chrome !== 'undefined' && chrome.tabs) {
+                                chrome.tabs.getCurrent((tab) => {
+                                    if (tab && tab.id) {
+                                        chrome.tabs.remove(tab.id);
+                                    }
+                                });
+                            }
+                            
+                            // Fallback con history
+                            setTimeout(() => {
+                                if (window.history.length > 1) {
+                                    window.history.back();
+                                } else {
+                                    window.close();
+                                }
+                            }, 200);
+                            
+                        } catch (error) {
+                            console.error('Error en fallback de cierre:', error);
+                            
+                            // Último recurso: mostrar mensaje bilingüe
+                            setTimeout(() => {
+                                alert('Please close this tab manually / Por favor, cierra esta pestaña manualmente');
+                            }, 500);
+                        }
                     };
                 }
             }, 1000);
