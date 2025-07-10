@@ -42,6 +42,55 @@ document.addEventListener('visibilitychange', function () {
   }
 });
 
+// Función auxiliar para copiar contenido al portapapeles del sistema
+async function copyToSystemClipboard(text) {
+  try {
+    console.log('🔄 Copiando al portapapeles del sistema...');
+    
+    // Método principal: Chrome Extension Clipboard API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      console.log('✅ Contenido copiado al portapapeles del sistema usando API moderna');
+      return true;
+    } else {
+      throw new Error('API de portapapeles no disponible');
+    }
+  } catch (error) {
+    console.warn('Error con API principal, usando método alternativo:', error);
+
+    // Método alternativo mejorado
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.cssText = `
+        position: fixed;
+        top: -1000px;
+        left: -1000px;
+        opacity: 0;
+        pointer-events: none;
+        z-index: -1000;
+      `;
+
+      document.body.appendChild(textarea);
+      textarea.select();
+      textarea.setSelectionRange(0, text.length);
+
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textarea);
+
+      if (successful) {
+        console.log('✅ Contenido copiado al portapapeles del sistema usando método alternativo');
+        return true;
+      } else {
+        throw new Error('execCommand falló');
+      }
+    } catch (fallbackError) {
+      console.error('❌ Error en todos los métodos de copia al portapapeles del sistema:', fallbackError);
+      return false;
+    }
+  }
+}
+
 // Función para mapear el contexto al ID del botón correspondiente
 function getButtonIdFromContext(context) {
   const mapping = {
@@ -74,11 +123,11 @@ function getContextFromButtonId(buttonId) {
   return mapping[buttonId] || 'url'; // Devuelve 'url' como fallback
 }
 
-// Función para extraer y copiar contenido de Gmail - VERSIÓN MEJORADA 2024
+// Función para extraer y copiar contenido de Gmail - VERSIÓN COMPLETAMENTE REESCRITA 2024
 function extractAndCopyGmailContent() {
   // Crear notificación mejorada
   const notification = document.createElement('div');
-  notification.textContent = '📧 Iniciando captura de emails...';
+  notification.textContent = '📧 Iniciando captura avanzada de emails...';
   notification.style.cssText = `
     position: fixed;
     top: 20px;
@@ -97,11 +146,94 @@ function extractAndCopyGmailContent() {
   `;
   document.body.appendChild(notification);
 
-  // Función mejorada para ir al inicio
+  // Función mejorada para ir al inicio específica para Gmail
   async function scrollToTop() {
     notification.textContent = '⬆️ Navegando al inicio de la conversación...';
+    
+    // Método 1: Scroll del contenedor principal de Gmail
+    const gmailContainer = document.querySelector('div[role="main"]') || 
+                          document.querySelector('.nH') || 
+                          document.querySelector('.oy8Mbf') ||
+                          document.querySelector('.Tm.aeJ');
+    
+    if (gmailContainer) {
+      gmailContainer.scrollTop = 0;
+      console.log('📧 Scroll al inicio del contenedor Gmail');
+    }
+
+    // Método 2: Scroll del contenedor de conversación
+    const conversationContainer = document.querySelector('.ii.gt') || 
+                                 document.querySelector('.adn.ads') ||
+                                 document.querySelector('.zA');
+    
+    if (conversationContainer) {
+      conversationContainer.scrollTop = 0;
+      console.log('📧 Scroll al inicio del contenedor de conversación');
+    }
+
+    // Método 3: Scroll del window (fallback)
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    await new Promise(resolve => setTimeout(resolve, 2000)); // Más tiempo para Gmail
+  }
+
+  // Función auxiliar para realizar scroll específico de Gmail
+  async function performGmailScroll(scrollDistance) {
+    // Método 1: Scroll del contenedor principal de Gmail
+    const gmailContainer = document.querySelector('div[role="main"]') || 
+                          document.querySelector('.nH') || 
+                          document.querySelector('.oy8Mbf') ||
+                          document.querySelector('.Tm.aeJ');
+    
+    if (gmailContainer) {
+      gmailContainer.scrollTop += scrollDistance;
+      console.log(`📧 Scroll en contenedor Gmail: ${gmailContainer.scrollTop}`);
+    }
+
+    // Método 2: Scroll del window (fallback)
+    window.scrollBy({
+      top: scrollDistance,
+      behavior: 'smooth'
+    });
+
+    // Método 3: Scroll forzado del documento
+    setTimeout(() => {
+      document.documentElement.scrollTop += scrollDistance;
+      document.body.scrollTop += scrollDistance;
+    }, 100);
+
+    // Método 4: Scroll específico para contenedores de conversación
+    const conversationContainer = document.querySelector('.ii.gt') || 
+                                 document.querySelector('.adn.ads') ||
+                                 document.querySelector('.zA');
+    
+    if (conversationContainer && conversationContainer.scrollHeight > conversationContainer.clientHeight) {
+      conversationContainer.scrollTop += scrollDistance;
+      console.log(`📧 Scroll en contenedor de conversación: ${conversationContainer.scrollTop}`);
+    }
+  }
+
+  // Función auxiliar para obtener la altura de scroll de Gmail
+  function getGmailScrollHeight() {
+    // Intentar obtener altura del contenedor principal de Gmail
+    const gmailContainer = document.querySelector('div[role="main"]') || 
+                          document.querySelector('.nH') || 
+                          document.querySelector('.oy8Mbf') ||
+                          document.querySelector('.Tm.aeJ');
+    
+    if (gmailContainer) {
+      return gmailContainer.scrollHeight;
+    }
+
+    // Fallback a la altura del documento
+    return Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight
+    );
   }
 
   async function scrollAndCollectEmails() {
@@ -109,16 +241,16 @@ function extractAndCopyGmailContent() {
 
     const processedEmailIds = new Set();
     let allEmails = [];
-    let lastHeight = document.body.scrollHeight;
+    let lastHeight = getGmailScrollHeight();
     let stagnantScrollCount = 0;
     let scrollAttempts = 0;
 
-    // Configuración mejorada para Gmail 2024
-    const MAX_SCROLL_ATTEMPTS = 25;
-    const MAX_STAGNANT_ATTEMPTS = 3;
-    const SCROLL_DISTANCE = 500;
-    const SCROLL_DELAY = 1200;
-    const MAX_EMAILS = 20;
+    // Configuración optimizada para Gmail 2024 - MÁXIMO 30 EMAILS
+    const MAX_SCROLL_ATTEMPTS = 60; // Más intentos para Gmail
+    const MAX_STAGNANT_ATTEMPTS = 10; // Más persistencia 
+    const SCROLL_DISTANCE = 800; // Scroll más grande
+    const SCROLL_DELAY = 800; // Tiempo optimizado para Gmail
+    const MAX_EMAILS = 30; // LÍMITE MÁXIMO: 30 emails
 
     // Función principal de scroll y captura
     async function performScrollAndExtract() {
@@ -129,69 +261,125 @@ function extractAndCopyGmailContent() {
       }
 
       // Actualizar notificación con progreso detallado
-      notification.textContent = `🔍 Capturando emails... (${allEmails.length} encontrados) - Paso ${scrollAttempts}/${MAX_SCROLL_ATTEMPTS}`;
+      notification.textContent = `🔍 Extrayendo emails... (${allEmails.length}/${MAX_EMAILS}) - Intento ${scrollAttempts}/${MAX_SCROLL_ATTEMPTS}`;
 
-      // Selectores ESPECÍFICOS para Gmail 2024 - Mensajes de conversación
+      // SELECTORES MÚLTIPLES Y ROBUSTOS para emails de Gmail 2024
       const emailSelectors = [
-        // Mensajes principales en conversaciones
+        // Mensajes principales con data-message-id
         'div[data-message-id]:not([data-legacy-thread-id])',
+        'tr[data-message-id]',
+        '[data-message-id]',
+
+        // Contenedores de mensaje específicos
         '.ii.gt[data-message-id]',
         'div[jsname][data-message-id]',
         '.adn.ads .ii.gt',
         '.gs .ii.gt',
 
-        // Contenedores de mensaje expandidos
-        'div[role="listitem"][data-message-id]',
+        // Elementos de conversación
+        'div[role="listitem"]',
         '.nH .if',
         '.h7',
-
-        // Mensajes en hilos
         'tr.zA',
         '.zA',
 
-        // Contenedores de mensaje alternativos
+        // Contenedores de thread/conversación
         'div[data-legacy-thread-id]',
         '.thread-item',
-        '.message-container'
+        '.message-container',
+
+        // Selectores más generales
+        'div[jsname]',
+        'tr[jsname]',
+        'div[data-tid]',
+        'table[role="grid"] tr',
+
+        // Fallbacks para estructuras nuevas
+        'div[dir="ltr"][role="listitem"]',
+        'main div[role="main"] div',
+        '[aria-label*="conversation" i]',
+        '[aria-label*="message" i]'
       ];
 
       let emailElements = [];
-
-      // Intentar con cada selector hasta encontrar elementos
+      
+      // Buscar con múltiples selectores hasta encontrar emails
       for (const selector of emailSelectors) {
         const elements = document.querySelectorAll(selector);
         if (elements.length > 0) {
           emailElements = Array.from(elements);
+          console.log(`✅ Encontrados ${elements.length} elementos de email con selector: ${selector}`);
           break;
         }
       }
 
-      // Si no encontramos con selectores específicos, usar approach más general
+      // Si no encontramos con selectores específicos, buscar de forma más general
       if (emailElements.length === 0) {
-        emailElements = Array.from(document.querySelectorAll('div[role="listitem"], .ii.gt, .zA, div[data-message-id], div[jsname]'));
+        // Buscar cualquier elemento que contenga estructura típica de email
+        const allPotentialEmails = document.querySelectorAll('div, tr, article, [role="listitem"]');
+        emailElements = Array.from(allPotentialEmails).filter(el => {
+          // Filtrar elementos que parezcan emails por su contenido
+          const hasEmailStructure = el.textContent && el.textContent.trim().length > 50;
+          const hasTimeOrDate = el.querySelector('time') || el.textContent.includes(':') || el.textContent.includes('AM') || el.textContent.includes('PM');
+          const hasEmailSigns = el.textContent.includes('@') || el.querySelector('span[email]') || el.querySelector('[data-hovercard-id]');
+          const hasMessageId = el.getAttribute('data-message-id') || el.querySelector('[data-message-id]');
+          
+          return hasMessageId || (hasEmailStructure && (hasTimeOrDate || hasEmailSigns));
+        });
+        
+        console.log(`🔍 Fallback: Encontrados ${emailElements.length} elementos con estructura de email`);
       }
 
       let newEmailsInThisStep = 0;
 
       for (const element of emailElements) {
         try {
-          // Mejorar identificación única del email
-          const emailId = element.getAttribute('data-message-id') ||
-            element.getAttribute('data-legacy-thread-id') ||
-            element.getAttribute('id') ||
-            element.querySelector('[data-message-id]')?.getAttribute('data-message-id') ||
-            element.getAttribute('jsname') ||
-            `gmail-${Math.random().toString(36).substr(2, 9)}`;
+          // IDENTIFICACIÓN ÚNICA MEJORADA con múltiples métodos
+          let emailId = '';
+          
+          // Método 1: data-message-id (principal)
+          emailId = element.getAttribute('data-message-id');
+          
+          // Método 2: data-legacy-thread-id
+          if (!emailId) emailId = element.getAttribute('data-legacy-thread-id');
+          
+          // Método 3: ID único del elemento
+          if (!emailId) emailId = element.getAttribute('id');
+          
+          // Método 4: Buscar data-message-id en hijos
+          if (!emailId) emailId = element.querySelector('[data-message-id]')?.getAttribute('data-message-id');
+          
+          // Método 5: jsname como identificador
+          if (!emailId) emailId = element.getAttribute('jsname');
+          
+          // Método 6: data-tid como identificador
+          if (!emailId) emailId = element.getAttribute('data-tid');
+          
+          // Método 7: Hash del contenido del remitente + asunto
+          if (!emailId) {
+            const senderText = element.textContent?.match(/@[\w.-]+/)?.[0] || '';
+            const subjectText = element.textContent?.trim().substring(0, 50) || '';
+            if (senderText || subjectText) {
+              emailId = `content-${(senderText + subjectText).replace(/\s+/g, '').substring(0, 30)}-${Date.now()}`;
+            }
+          }
+          
+          // Método 8: Posición como último recurso
+          if (!emailId) {
+            const rect = element.getBoundingClientRect();
+            emailId = `pos-${Math.floor(rect.top)}-${Math.floor(rect.left)}-${Date.now()}`;
+          }
 
           if (!processedEmailIds.has(emailId)) {
             processedEmailIds.add(emailId);
 
             // Extraer datos mejorados
-            const emailData = extractEmailData(element);
+            const emailData = extractEmailDataAdvanced(element);
 
             if (emailData.isValid) {
               allEmails.push(emailData);
               newEmailsInThisStep++;
+              console.log(`📧 Email ${allEmails.length}: ${emailData.sender} - ${emailData.subject.substring(0, 30)}...`);
 
               // Límite de emails alcanzado
               if (allEmails.length >= MAX_EMAILS) {
@@ -207,20 +395,19 @@ function extractAndCopyGmailContent() {
       // Control de progreso del scroll
       if (newEmailsInThisStep > 0) {
         stagnantScrollCount = 0;
+        console.log(`✅ Encontrados ${newEmailsInThisStep} emails nuevos en este paso`);
       } else {
         stagnantScrollCount++;
+        console.log(`⚠️ No se encontraron emails nuevos. Intentos estancados: ${stagnantScrollCount}/${MAX_STAGNANT_ATTEMPTS}`);
       }
 
-      // Realizar scroll más suave y controlado
-      window.scrollBy({
-        top: SCROLL_DISTANCE,
-        behavior: 'smooth'
-      });
+      // SCROLL MEJORADO ESPECÍFICO PARA GMAIL
+      await performGmailScroll(SCROLL_DISTANCE);
 
-      // Esperar más tiempo para que cargue el contenido de Gmail
+      // Esperar tiempo optimizado para Gmail
       await new Promise(resolve => setTimeout(resolve, SCROLL_DELAY));
 
-      const currentHeight = document.body.scrollHeight;
+      const currentHeight = getGmailScrollHeight();
       const hasNewContent = currentHeight > lastHeight;
 
       // Continuar si hay nuevos emails o contenido
@@ -228,12 +415,59 @@ function extractAndCopyGmailContent() {
         lastHeight = currentHeight;
         await performScrollAndExtract();
       } else {
+        console.log(`🏁 Finalizando extracción de Gmail. Total emails: ${allEmails.length}`);
         return await finalizeEmailCollection();
       }
     }
 
-    // Función para extraer datos de un email individual - MEJORADA
-    function extractEmailData(element) {
+    // Función auxiliar para convertir HTML a texto plano
+    function htmlToPlainText(element) {
+      if (!element) return '';
+      
+      // Crear un clon del elemento para no modificar el original
+      const clone = element.cloneNode(true);
+      
+      // Remover elementos no deseados
+      const unwantedSelectors = [
+        'script', 'style', 'noscript', 'iframe',
+        '.gmail_quote', '.gmail_signature', 
+        '.moz-cite-prefix', '.yahoo_quoted',
+        '[data-smartmail="gmail_signature"]',
+        'div[class*="signature"]',
+        'div[class*="quote"]'
+      ];
+      
+      unwantedSelectors.forEach(selector => {
+        const elements = clone.querySelectorAll(selector);
+        elements.forEach(el => el.remove());
+      });
+      
+      // Reemplazar elementos de bloque con saltos de línea
+      const blockElements = clone.querySelectorAll('div, p, br, h1, h2, h3, h4, h5, h6, li, tr');
+      blockElements.forEach(el => {
+        if (el.tagName === 'BR') {
+          el.replaceWith('\n');
+        } else {
+          // Añadir salto de línea antes del contenido
+          el.before('\n');
+        }
+      });
+      
+      // Obtener texto plano
+      let text = clone.textContent || clone.innerText || '';
+      
+      // Limpiar texto
+      text = text
+        .replace(/\s+/g, ' ')              // Múltiples espacios -> uno solo
+        .replace(/\n\s*\n/g, '\n')         // Múltiples saltos -> uno solo
+        .replace(/^\s+|\s+$/g, '')         // Espacios al inicio/final
+        .replace(/\n{3,}/g, '\n\n');       // Máximo 2 saltos consecutivos
+      
+      return text;
+    }
+
+    // Función AVANZADA para extraer datos de un email individual - REESCRITA 2024
+    function extractEmailDataAdvanced(element) {
       let sender = '';
       let subject = '';
       let snippet = '';
@@ -241,8 +475,9 @@ function extractAndCopyGmailContent() {
       let emailBody = '';
 
       try {
-        // Selectores ESPECÍFICOS para remitente (Gmail 2024)
+        // EXTRACCIÓN DE REMITENTE - Múltiples estrategias
         const senderSelectors = [
+          // Selectores principales para remitente Gmail 2024
           'span[email]',                    // Atributo email directo
           '[data-hovercard-id]',           // ID de hover card
           '.go span[email]',               // Contenedor go con email
@@ -256,24 +491,48 @@ function extractAndCopyGmailContent() {
           'td .yW span',                   // En tabla
           '.bog .yW span',                 // Con bog
           'h3 span',                       // En header h3
-          '[title*="@"]'                   // Cualquier elemento con @ en title
+          '[title*="@"]',                  // Cualquier elemento con @ en title
+          
+          // Selectores adicionales 2024
+          '.c6 span',                      // Clase c6
+          '.bw span',                      // Clase bw
+          '.qg span',                      // Clase qg
+          'span[dir="auto"]',              // Dirección auto
+          '.y6 span',                      // Clase y6
+          '.gs .y6',                       // y6 en gs
+          '.h7 span',                      // Span en h7
+          '.nH .if span',                  // Span en contenedor específico
+          'div[data-hovercard-id] span',   // Span con hovercard
+          '.bA4 .yW span',                 // Combinación bA4 yW
+          
+          // Fallbacks genéricos
+          '[role="button"] span',          // Botón span
+          'div[jsname] span',              // JSName span
+          'tr[jsname] span',               // TR JSName span
+          'td span:first-child',           // Primer span en TD
+          '.zA span:first-child',          // Primer span en zA
+          '[aria-label*="from" i] span',   // Aria label "from"
+          '[aria-label*="de" i] span'      // Aria label "de"
         ];
 
         for (const selector of senderSelectors) {
-          const senderElement = element.querySelector(selector);
-          if (senderElement) {
-            sender = senderElement.textContent?.trim() ||
-              senderElement.getAttribute('email') ||
-              senderElement.getAttribute('name') ||
-              senderElement.getAttribute('title') || '';
-            if (sender && sender.length > 2) {
-              break;
+          try {
+            const senderElement = element.querySelector(selector);
+            if (senderElement) {
+              sender = senderElement.textContent?.trim() ||
+                senderElement.getAttribute('email') ||
+                senderElement.getAttribute('name') ||
+                senderElement.getAttribute('title') || '';
+              if (sender && sender.length > 2 && !sender.includes('AM') && !sender.includes('PM')) {
+                break;
+              }
             }
-          }
+          } catch (e) { /* continuar con siguiente selector */ }
         }
 
-        // Selectores ESPECÍFICOS para asunto
+        // EXTRACCIÓN DE ASUNTO - Múltiples estrategias
         const subjectSelectors = [
+          // Selectores principales para asunto
           'h2',                            // Header h2 principal
           '.bog',                          // Clase bog
           '.y6 span',                      // Clase y6
@@ -286,21 +545,74 @@ function extractAndCopyGmailContent() {
           '.thread-content .subject',      // Thread content
           'h3',                            // Header h3
           '.hP',                           // Clase hP
-          '.bzf'                           // Clase bzf
+          '.bzf',                          // Clase bzf
+          
+          // Selectores adicionales 2024
+          '.bog span',                     // Span en bog
+          '.ao4 span',                     // Clase ao4
+          '.bqe span',                     // Span en bqe
+          '.y6 > span',                    // Span hijo directo de y6
+          '.gs .y6 span',                  // y6 span en gs
+          '.h7 .bog',                      // bog en h7
+          '.nH .if .bog',                  // bog en contenedor específico
+          'b',                             // Cualquier bold
+          'strong',                        // Cualquier strong
+          '[data-thread-perm-id] span',    // Span con thread perm id
+          'div[dir="ltr"] b',              // Bold en LTR
+          '.zA .bog',                      // bog en zA
+          
+          // Fallbacks genéricos
+          'div[jsname] b',                 // Bold en JSName
+          'tr[jsname] b',                  // Bold en TR JSName
+          'td b',                          // Bold en TD
+          '[aria-label*="subject" i]',     // Aria label "subject"
+          '[aria-label*="asunto" i]'       // Aria label "asunto"
         ];
 
         for (const selector of subjectSelectors) {
-          const subjectElement = element.querySelector(selector);
-          if (subjectElement) {
-            subject = subjectElement.textContent?.trim() || '';
-            if (subject && subject.length > 3) {
-              break;
+          try {
+            const subjectElement = element.querySelector(selector);
+            if (subjectElement) {
+              subject = subjectElement.textContent?.trim() || '';
+              if (subject && subject.length > 3 && !subject.includes('AM') && !subject.includes('PM') && !subject.includes('@')) {
+                break;
+              }
             }
-          }
+          } catch (e) { /* continuar con siguiente selector */ }
         }
 
-        // Selectores ESPECÍFICOS para snippet/preview
-        const snippetSelectors = [
+        // EXTRACCIÓN DE CONTENIDO/SNIPPET - Múltiples estrategias
+        const contentSelectors = [
+          // Selectores principales para contenido HTML
+          '.ii.gt',                        // Contenedor principal del mensaje
+          '.ii.gt > div',                  // Div directo dentro de ii gt
+          '.ii.gt div[dir]',               // Div con dirección dentro de ii gt
+          '.adn.ads .ii.gt',               // Ads content
+          'div[data-message-id] .ii.gt',   // Mensaje específico
+          
+          // Selectores específicos para emails HTML
+          '.ii.gt .a3s.aiL',               // Contenido principal del mensaje HTML
+          '.ii.gt .a3s.aXjCH',             // Variante de contenido HTML
+          '.ii.gt .a3s',                   // Cualquier contenido a3s
+          '.a3s.aiL',                      // Contenido independiente
+          '.Am.Al.editable',               // Contenido editable específico
+          
+          // Selectores de contenido de texto
+          '.gmail_quote',                  // Quote Gmail
+          '.gmail_default',                // Default Gmail
+          'div[dir="ltr"]',                // LTR content
+          'div[dir="rtl"]',                // RTL content
+          '.editable',                     // Editable content
+          
+          // Selectores para contenido HTML formateado
+          '.ii.gt table',                  // Tablas en emails HTML
+          '.ii.gt table td',               // Celdas de tabla
+          '.ii.gt div[style]',             // Divs con estilo inline
+          '.moz-text-html',                // Contenido Mozilla HTML
+          '.WordSection1',                 // Contenido de Word
+          'div[class*="MsoNormal"]',       // Estilos de Word/Outlook
+          
+          // Selectores de vista previa
           '.y2',                           // Preview text
           '.y3',                           // Alternativo preview
           '.bog + span',                   // Siguiente a bog
@@ -309,177 +621,221 @@ function extractAndCopyGmailContent() {
           '.qu .y2',                       // y2 en qu
           '.gs .y2',                       // y2 en gs
           '.aLF .snippet',                 // Snippet en aLF
-          'div[dir="ltr"]',                // Contenido LTR
-          '.ii.gt > div',                  // Div dentro de ii gt
-          '.message-content'               // Content genérico
-        ];
-
-        for (const selector of snippetSelectors) {
-          const snippetElement = element.querySelector(selector);
-          if (snippetElement) {
-            snippet = snippetElement.textContent?.trim() || '';
-            if (snippet && snippet.length > 15) {
-              break;
-            }
-          }
-        }
-
-        // Selectores ESPECÍFICOS para timestamp
-        const timeSelectors = [
-          '.xW span',                      // Tiempo en xW
-          '.xY span',                      // Tiempo en xY
-          '[title*=":"]',                  // Cualquier con : en title
-          '.g3',                           // Clase g3
-          'span[title*="20"]',             // Con año 20xx
-          'span[data-tooltip*=":"]',       // Tooltip con :
-          '.qu span[title]',               // Title en qu
-          'time',                          // Elemento time HTML5
-          '.date',                         // Clase date
-          '.timestamp',                    // Clase timestamp
-          '[aria-label*="20"]'             // Aria label con año
-        ];
-
-        for (const selector of timeSelectors) {
-          const timeElement = element.querySelector(selector);
-          if (timeElement) {
-            timestamp = timeElement.getAttribute('title') ||
-              timeElement.getAttribute('data-tooltip') ||
-              timeElement.getAttribute('aria-label') ||
-              timeElement.textContent?.trim() || '';
-            if (timestamp && timestamp.length > 3) {
-              break;
-            }
-          }
-        }
-
-        // Selectores ESPECÍFICOS para cuerpo del email - ACTUALIZADOS 2024
-        const bodySelectors = [
-          // Selectores principales del cuerpo del mensaje
-          '.ii.gt',                        // Contenedor principal del mensaje
-          '.ii.gt > div',                  // Div directo dentro de ii gt
-          '.ii.gt div[dir]',               // Div con dirección dentro de ii gt
-          '.adn.ads .ii.gt',               // Ads content
-          'div[data-message-id] .ii.gt',   // Mensaje específico
-
-          // Selectores de contenido de texto
-          '.gmail_quote',                  // Quote Gmail
-          '.gmail_default',                // Default Gmail
-          'div[dir="ltr"]',                // LTR content
-          'div[dir="rtl"]',                // RTL content
-          '.editable',                     // Editable content
-          '.Am.Al.editable',               // Contenido editable específico
-
+          '.message-content',              // Content genérico
+          
           // Selectores generales
           '.message-body',                 // Message body
           '.email-content',                // Email content
           'div[role="gridcell"] div',      // Grid cell content
           '.qu div',                       // Content en qu
           '.h7 div',                       // Div en h7
-
-          // Selectores de párrafos y texto
           'p',                             // Párrafos
           'div p',                         // Párrafos en divs
           'span[dir]',                     // Spans con dirección
           '.text-content',                 // Text content
-
+          
+          // Selectores específicos para contenido expandido
+          'div[aria-expanded="true"]',     // Contenido expandido
+          'div[data-smartmail]',           // Smart mail content
+          'div[id*="message"]',            // Divs con ID de mensaje
+          
           // Selectores de fallback más específicos
           '[jsname] div',                  // Divs con jsname
           'td[colspan] div',               // Divs en celdas
           '.nH .if div',                   // Divs en contenedores específicos
-          'tr[id] div'                     // Divs en filas con ID
+          'tr[id] div',                    // Divs en filas con ID
+          
+          // Selectores ultra-generales como último recurso
+          'td',                            // Cualquier celda de tabla
+          'div[class]',                    // Cualquier div con clase
+          'span[class]'                    // Cualquier span con clase
         ];
 
-        for (const selector of bodySelectors) {
-          const bodyElements = element.querySelectorAll(selector);
-          for (const bodyElement of bodyElements) {
-            if (bodyElement) {
-              let potentialBody = bodyElement.textContent?.trim() || '';
-
-              // Filtrar contenido no deseado
-              if (potentialBody &&
-                potentialBody.length > 25 &&
-                !potentialBody.includes('Escribir') &&
-                !potentialBody.includes('Enviar') &&
-                !potentialBody.includes('Responder') &&
-                !potentialBody.includes('Reenviar') &&
-                !potentialBody.includes('Write') &&
-                !potentialBody.includes('Send') &&
-                !potentialBody.includes('Reply') &&
-                !potentialBody.includes('Forward')) {
-
-                emailBody = potentialBody;
-
-                // Limitar el cuerpo a primeras 500 caracteres
-                if (emailBody.length > 500) {
-                  emailBody = emailBody.substring(0, 500) + '...';
+        for (const selector of contentSelectors) {
+          try {
+            const contentElements = element.querySelectorAll(selector);
+            for (const contentElement of contentElements) {
+              if (contentElement) {
+                // MÉTODO 1: Extracción de texto plano desde HTML
+                let potentialContent = htmlToPlainText(contentElement);
+                
+                // MÉTODO 2: Fallback con textContent si htmlToPlainText no funciona
+                if (!potentialContent || potentialContent.length < 10) {
+                  potentialContent = contentElement.textContent?.trim() || '';
                 }
+                
+                // MÉTODO 3: Extracción específica de innerHTML para emails HTML
+                if (!potentialContent || potentialContent.length < 10) {
+                  const innerHTML = contentElement.innerHTML;
+                  if (innerHTML && innerHTML.length > 50) {
+                    // Crear elemento temporal para convertir HTML a texto
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = innerHTML;
+                    potentialContent = htmlToPlainText(tempDiv);
+                  }
+                }
+
+                // Filtrar contenido no deseado y validar
+                if (potentialContent &&
+                  potentialContent.length > 25 &&
+                  !potentialContent.includes('Escribir') &&
+                  !potentialContent.includes('Enviar') &&
+                  !potentialContent.includes('Responder') &&
+                  !potentialContent.includes('Reenviar') &&
+                  !potentialContent.includes('Write') &&
+                  !potentialContent.includes('Send') &&
+                  !potentialContent.includes('Reply') &&
+                  !potentialContent.includes('Forward') &&
+                  !potentialContent.includes('Compose') &&
+                  !potentialContent.includes('Inbox') &&
+                  !potentialContent.includes('Drafts') &&
+                  !potentialContent.includes('Sent') &&
+                  !potentialContent.includes('Trash') &&
+                  !potentialContent.includes('Show trimmed content') &&
+                  !potentialContent.includes('Mostrar contenido recortado')) {
+
+                  // Priorizar contenido más largo para emailBody
+                  if (potentialContent.length > 100) {
+                    emailBody = potentialContent.length > 800 ? potentialContent.substring(0, 800) + '...' : potentialContent;
+                    console.log(`📧 Contenido HTML extraído: ${emailBody.substring(0, 100)}...`);
+                    break;
+                  } else if (!snippet && potentialContent.length > 25) {
+                    snippet = potentialContent.length > 200 ? potentialContent.substring(0, 200) + '...' : potentialContent;
+                  }
+                }
+              }
+            }
+            if (emailBody) break; // Salir del bucle exterior si encontramos contenido largo
+          } catch (e) { 
+            console.error('Error en extracción de contenido:', e);
+            /* continuar con siguiente selector */ 
+          }
+        }
+
+        // EXTRACCIÓN DE TIMESTAMP - Múltiples estrategias
+        const timeSelectors = [
+          // Selectores principales para timestamp
+          '.xW span',                      // Tiempo en xW
+          '.xY span',                      // Tiempo en xY
+          'time',                          // Elemento time HTML5
+          '[title*=":"]',                  // Cualquier con : en title
+          '.g3',                           // Clase g3
+          'span[title*="20"]',             // Con año 20xx
+          'span[data-tooltip*=":"]',       // Tooltip con :
+          '.qu span[title]',               // Title en qu
+          '.date',                         // Clase date
+          '.timestamp',                    // Clase timestamp
+          '[aria-label*="20"]',            // Aria label con año
+          
+          // Selectores adicionales 2024
+          '.xW',                           // Clase xW completa
+          '.xY',                           // Clase xY completa
+          '.g3 span',                      // Span en g3
+          '.qu .xW',                       // xW en qu
+          '.qu .xY',                       // xY en qu
+          '.gs .xW',                       // xW en gs
+          '.gs .xY',                       // xY en gs
+          '.h7 .xW',                       // xW en h7
+          '.nH .if .xW',                   // xW en contenedor específico
+          '[data-tooltip]',                // Cualquier tooltip
+          '[title*="AM"]',                 // Título con AM
+          '[title*="PM"]',                 // Título con PM
+          'span[title*="AM"]',             // Span con AM
+          'span[title*="PM"]',             // Span con PM
+          
+          // Fallbacks genéricos
+          'div[jsname] span[title]',       // Span con title en JSName
+          'tr[jsname] span[title]',        // Span con title en TR JSName
+          'td span[title]',                // Span con title en TD
+          '[aria-label*="time" i]',        // Aria label "time"
+          '[aria-label*="fecha" i]'        // Aria label "fecha"
+        ];
+
+        for (const selector of timeSelectors) {
+          try {
+            const timeElement = element.querySelector(selector);
+            if (timeElement) {
+              timestamp = timeElement.getAttribute('title') ||
+                timeElement.getAttribute('data-tooltip') ||
+                timeElement.getAttribute('aria-label') ||
+                timeElement.getAttribute('datetime') ||
+                timeElement.textContent?.trim() || '';
+              if (timestamp && timestamp.length > 3) {
                 break;
               }
             }
-          }
-          if (emailBody) break; // Salir del bucle exterior si encontramos contenido
+          } catch (e) { /* continuar con siguiente selector */ }
         }
 
-        // Fallback agresivo si no encontramos cuerpo del email
-        if (!emailBody && (sender || subject)) {
+                 // FALLBACK ULTRA-AGRESIVO - Extracción completa de elemento
+         if (!emailBody && !snippet) {
+           console.log('🔍 Intentando fallback ultra-agresivo para extracción de contenido...');
+           
+           // Método 1: Extracción usando innerHTML completo
+           const fullHTML = element.innerHTML;
+           if (fullHTML && fullHTML.length > 100) {
+             const tempDiv = document.createElement('div');
+             tempDiv.innerHTML = fullHTML;
+             const extractedText = htmlToPlainText(tempDiv);
+             
+             if (extractedText && extractedText.length > 50) {
+               emailBody = extractedText.length > 800 ? extractedText.substring(0, 800) + '...' : extractedText;
+               console.log(`📧 Contenido extraído via innerHTML: ${emailBody.substring(0, 100)}...`);
+             }
+           }
+         }
 
-          // Buscar todos los divs que contengan texto significativo
-          const allDivs = element.querySelectorAll('div');
-          let longestText = '';
+         // FALLBACK AGRESIVO - Extracción de texto completo
+         if (!sender && !subject && !snippet && !emailBody) {
+           console.log('🔍 Aplicando fallback agresivo de extracción...');
+           
+           const allText = element.textContent?.trim() || '';
+           if (allText && allText.length > 30) {
+             // Dividir el texto en líneas para análisis
+             const lines = allText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
 
-          for (const div of allDivs) {
-            const divText = div.textContent?.trim() || '';
-            // Buscar el div con más contenido de texto (excluyendo botones y elementos de UI)
-            if (divText.length > longestText.length &&
-              divText.length > 50 &&
-              !divText.includes('Escribir') &&
-              !divText.includes('Enviar') &&
-              !divText.includes('Responder') &&
-              !divText.includes('Write') &&
-              !divText.includes('Send') &&
-              !divText.includes('Reply') &&
-              !divText.includes('Gmail') &&
-              !divText.includes('Inbox')) {
-              longestText = divText;
-            }
-          }
+             if (lines.length > 0) {
+               // Buscar patrones de email
+               const emailPattern = /@[\w.-]+\.\w+/;
+               const senderLine = lines.find(line => emailPattern.test(line));
+               if (senderLine) {
+                 sender = senderLine.length < 100 ? senderLine : 'Usuario Gmail';
+               } else {
+                 sender = lines[0].length < 100 ? lines[0] : 'Usuario Gmail';
+               }
 
-          if (longestText) {
-            emailBody = longestText.length > 500 ? longestText.substring(0, 500) + '...' : longestText;
-          }
-        }
+               // Buscar línea de asunto (generalmente la segunda o tercera)
+               if (lines.length > 1) {
+                 const potentialSubject = lines[1];
+                 if (potentialSubject.length < 150 && !potentialSubject.includes('@')) {
+                   subject = potentialSubject;
+                 } else if (lines.length > 2) {
+                   subject = lines[2].length < 150 ? lines[2] : 'Contenido extraído';
+                 }
+               }
 
-        // Si no encontramos contenido específico, extraer cualquier texto visible significativo
-        if (!sender && !subject && !snippet && !emailBody) {
-          const allText = element.textContent?.trim() || '';
-          if (allText && allText.length > 30) {
-            // Dividir el texto en partes para intentar identificar componentes
-            const lines = allText.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+               // El resto del contenido como cuerpo
+               if (lines.length > 3) {
+                 emailBody = lines.slice(3).join(' ').substring(0, 600) + '...';
+               } else if (lines.length > 2) {
+                 snippet = lines.slice(2).join(' ').substring(0, 300) + '...';
+               } else {
+                 snippet = allText.substring(0, 300) + '...';
+               }
+             }
 
-            if (lines.length > 0) {
-              // Primera línea podría ser el remitente o asunto
-              sender = lines[0].length < 100 ? lines[0] : 'Usuario Gmail';
+             console.log(`⚠️ Usando extracción de fallback completo para elemento con ${allText.length} caracteres`);
+           }
+         }
 
-              // Si hay más líneas, la segunda podría ser el asunto
-              if (lines.length > 1) {
-                subject = lines[1].length < 150 ? lines[1] : 'Contenido extraído';
-              }
+         // Log final de resultados de extracción
+         console.log(`📧 Email extraído - Remitente: "${sender.substring(0, 30)}", Asunto: "${subject.substring(0, 30)}", Contenido: ${emailBody ? emailBody.length : snippet ? snippet.length : 0} caracteres`);
 
-              // El resto podría ser el cuerpo
-              if (lines.length > 2) {
-                emailBody = lines.slice(2).join(' ').substring(0, 400) + '...';
-              } else {
-                snippet = allText.substring(0, 300) + '...';
-              }
-            } else {
-              snippet = allText.substring(0, 300) + '...';
-              sender = 'Usuario Gmail';
-              subject = 'Contenido extraído';
-            }
-
-            console.log(`⚠️ Usando extracción de fallback completo para elemento con ${allText.length} caracteres`);
-          }
-        }
+        // Limpieza final de datos
+        if (sender) sender = sender.replace(/\s+/g, ' ').trim();
+        if (subject) subject = subject.replace(/\s+/g, ' ').trim();
+        if (snippet) snippet = snippet.replace(/\s+/g, ' ').trim();
+        if (emailBody) emailBody = emailBody.replace(/\s+/g, ' ').trim();
 
       } catch (error) {
         console.error('❌ Error extrayendo datos del email:', error);
@@ -487,21 +843,23 @@ function extractAndCopyGmailContent() {
 
       const isValid = !!(sender || subject || snippet || emailBody);
 
-      const result = {
+      return {
         sender: sender || 'Usuario desconocido',
         subject: subject || 'Sin asunto',
-        snippet,
+        snippet: snippet || '',
         timestamp: timestamp || 'Sin fecha',
-        emailBody,
+        emailBody: emailBody || '',
         isValid
       };
-
-      return result;
     }
 
     // Función para finalizar y copiar emails
     async function finalizeEmailCollection() {
-      notification.textContent = `📝 Procesando ${allEmails.length} emails...`;
+      if (allEmails.length >= MAX_EMAILS) {
+        notification.textContent = `🎯 ¡Límite alcanzado! Procesando ${allEmails.length} emails...`;
+      } else {
+        notification.textContent = `📝 Procesando ${allEmails.length} emails...`;
+      }
 
       if (allEmails.length === 0) {
         notification.textContent = '❌ No se encontraron emails. Verifica que estés en una conversación de Gmail.';
@@ -513,7 +871,7 @@ function extractAndCopyGmailContent() {
       }
 
       // Formatear texto sin iconos
-      let emailText = `CONVERSACION DE GMAIL - ${allEmails.length} emails extraidos\n`;
+      let emailText = `CONVERSACION DE GMAIL - ${allEmails.length} de máximo ${MAX_EMAILS} emails extraidos\n`;
       emailText += `Capturado el ${new Date().toLocaleString('es-ES')}\n`;
       emailText += `URL: ${window.location.href}\n`;
       emailText += `${'='.repeat(60)}\n\n`;
@@ -536,7 +894,7 @@ function extractAndCopyGmailContent() {
         emailText += `${'-'.repeat(40)}\n\n`;
       });
 
-      emailText += `Total: ${allEmails.length} emails capturados exitosamente`;
+      emailText += `Total: ${allEmails.length} emails capturados exitosamente (máximo: ${MAX_EMAILS})`;
 
       // Copia mejorada al portapapeles
       await copyToClipboard(emailText, allEmails.length);
@@ -547,6 +905,9 @@ function extractAndCopyGmailContent() {
         emailText: emailText,
         emailCount: allEmails.length
       }, '*');
+      
+      // Copia adicional al portapapeles del sistema para asegurar disponibilidad
+      await copyToSystemClipboard(emailText);
     }
 
     // Función mejorada para copiar al portapapeles
@@ -557,7 +918,7 @@ function extractAndCopyGmailContent() {
         // Método principal: Chrome Extension Clipboard API
         if (navigator.clipboard && navigator.clipboard.writeText) {
           await navigator.clipboard.writeText(text);
-          notification.textContent = `✅ ¡${emailCount} emails copiados al portapapeles!`;
+          notification.textContent = `✅ ¡${emailCount}/${MAX_EMAILS} emails copiados al portapapeles!`;
           notification.style.background = 'linear-gradient(135deg, #10B981, #059669)';
         } else {
           throw new Error('API de portapapeles no disponible');
@@ -585,7 +946,7 @@ function extractAndCopyGmailContent() {
           document.body.removeChild(textarea);
 
           if (successful) {
-            notification.textContent = `✅ ¡${emailCount} emails copiados! (método alternativo)`;
+            notification.textContent = `✅ ¡${emailCount}/${MAX_EMAILS} emails copiados! (método alternativo)`;
             notification.style.background = 'linear-gradient(135deg, #10B981, #059669)';
           } else {
             throw new Error('execCommand falló');
@@ -597,12 +958,12 @@ function extractAndCopyGmailContent() {
         }
       }
 
-      // Remover notificación después de mostrar resultado
+      // Remover notificación después de mostrar resultado (optimizado)
       setTimeout(() => {
         if (notification.parentNode) {
           notification.parentNode.removeChild(notification);
         }
-      }, 4000);
+      }, 2500);
     }
 
     // Iniciar el proceso de captura
@@ -921,6 +1282,9 @@ function extractPDFText() {
         textLength: text.length
       }, '*');
       
+      // Copia adicional al portapapeles del sistema para asegurar disponibilidad
+      copyToSystemClipboard(text);
+      
     } catch (error) {
       console.error('❌ Error al copiar al clipboard:', error);
       
@@ -941,6 +1305,9 @@ function extractPDFText() {
           success: true,
           textLength: text.length
         }, '*');
+        
+        // Copia adicional al portapapeles del sistema para asegurar disponibilidad
+        copyToSystemClipboard(text);
         
       } catch (fallbackError) {
         console.error('❌ Error en método de respaldo:', fallbackError);
@@ -993,11 +1360,11 @@ function extractPDFText() {
   });
 }
 
-// Función para extraer y copiar tweets de Twitter/X - VERSIÓN MEJORADA
+// Función para extraer y copiar tweets de Twitter/X - VERSIÓN COMPLETAMENTE REESCRITA 2024
 function extractAndCopyTweets() {
   // Crear notificación mejorada
   const notification = document.createElement('div');
-  notification.textContent = '🐦 Iniciando captura de tweets...';
+  notification.textContent = '🐦 Iniciando captura avanzada de tweets...';
   notification.style.cssText = `
     position: fixed;
     top: 20px;
@@ -1020,7 +1387,7 @@ function extractAndCopyTweets() {
   async function scrollToTop() {
     notification.textContent = '⬆️ Navegando al inicio del hilo...';
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    await new Promise(resolve => setTimeout(resolve, 400)); // Optimizado para velocidad máxima
+    await new Promise(resolve => setTimeout(resolve, 800)); // Más tiempo para carga completa
   }
 
   async function scrollAndCollectTweets() {
@@ -1032,12 +1399,12 @@ function extractAndCopyTweets() {
     let stagnantScrollCount = 0;
     let scrollAttempts = 0;
 
-    // Configuración optimizada - scroll ultra rápido
-    const MAX_SCROLL_ATTEMPTS = 50;
-    const MAX_STAGNANT_ATTEMPTS = 5; // Reducido para terminar más rápido
-    const SCROLL_DISTANCE = 900; // Aumentado para hacer menos scrolls
-    const SCROLL_DELAY = 250; // Reducido significativamente para mayor velocidad
-    const MAX_TWEETS = 30;
+    // Configuración optimizada para X/Twitter 2024 - MÁXIMO 50 TWEETS
+    const MAX_SCROLL_ATTEMPTS = 120; // Aumentado para garantizar 50 tweets
+    const MAX_STAGNANT_ATTEMPTS = 15; // Más persistencia para encontrar los 50
+    const SCROLL_DISTANCE = 1000; // Scroll optimizado para captura
+    const SCROLL_DELAY = 500; // Más tiempo para asegurar carga completa
+    const MAX_TWEETS = 50; // LÍMITE MÁXIMO: 50 tweets
 
     // Función principal de scroll y captura
     async function performScrollAndExtract() {
@@ -1048,28 +1415,91 @@ function extractAndCopyTweets() {
       }
 
       // Actualizar notificación con progreso detallado
-      notification.textContent = `🔍 Capturando tweets... (${allTweets.length} encontrados) - Paso ${scrollAttempts}/${MAX_SCROLL_ATTEMPTS}`;
+      notification.textContent = `🔍 Extrayendo tweets... (${allTweets.length}/${MAX_TWEETS}) - Intento ${scrollAttempts}/${MAX_SCROLL_ATTEMPTS}`;
 
-      // Extraer tweets visibles actualmente
-      const tweetArticles = document.querySelectorAll('article[data-testid="tweet"]');
+      // SELECTORES MÚLTIPLES Y ROBUSTOS para tweets
+      const tweetSelectors = [
+        'article[data-testid="tweet"]',           // Selector principal
+        'article[role="article"]',                // Artículos genéricos
+        'div[data-testid="tweet"]',              // Divs con testid
+        '[data-testid="cellInnerDiv"] article',  // Dentro de celdas
+        'article[tabindex="-1"]',                // Artículos con tabindex
+        '[aria-label*="tweet" i]',               // Con aria-label que contenga "tweet"
+        'div[role="article"]',                   // Divs con role article
+        'article',                               // Todos los articles como fallback
+        '[data-testid="primaryColumn"] article', // En columna principal
+        'main article'                           // Articles en main
+      ];
+
+      let tweetElements = [];
+      
+      // Buscar con múltiples selectores hasta encontrar tweets
+      for (const selector of tweetSelectors) {
+        const elements = document.querySelectorAll(selector);
+        if (elements.length > 0) {
+          tweetElements = Array.from(elements);
+          console.log(`✅ Encontrados ${elements.length} elementos con selector: ${selector}`);
+          break;
+        }
+      }
+
+      // Si no encontramos con selectores específicos, buscar de forma más general
+      if (tweetElements.length === 0) {
+        // Buscar cualquier elemento que contenga estructura típica de tweet
+        const allArticles = document.querySelectorAll('article, div[role="article"], [data-testid*="tweet"], [aria-label*="tweet" i]');
+        tweetElements = Array.from(allArticles).filter(el => {
+          // Filtrar elementos que parezcan tweets por su contenido
+          const hasTime = el.querySelector('time');
+          const hasTextContent = el.textContent && el.textContent.trim().length > 10;
+          const hasUserInfo = el.querySelector('[data-testid*="User"]') || el.textContent.includes('@');
+          
+          return hasTime || (hasTextContent && hasUserInfo);
+        });
+        
+        console.log(`🔍 Fallback: Encontrados ${tweetElements.length} elementos con estructura de tweet`);
+      }
+
       let newTweetsInThisStep = 0;
 
-      for (const article of tweetArticles) {
+      for (const element of tweetElements) {
         try {
-          // Mejorar identificación única del tweet
-          const tweetLink = article.querySelector('time')?.parentElement?.getAttribute('href');
-          const ariaLabel = article.getAttribute('aria-labelledby');
-          const tweetId = tweetLink || ariaLabel || `random-${Math.random().toString(36).substr(2, 9)}`;
+          // IDENTIFICACIÓN ÚNICA MEJORADA con múltiples métodos
+          let tweetId = '';
+          
+          // Método 1: URL del tiempo
+          const timeLink = element.querySelector('time')?.closest('a')?.getAttribute('href');
+          if (timeLink) tweetId = timeLink;
+          
+          // Método 2: aria-labelledby
+          if (!tweetId) tweetId = element.getAttribute('aria-labelledby');
+          
+          // Método 3: data-testid o cualquier ID único
+          if (!tweetId) tweetId = element.getAttribute('data-testid') || element.getAttribute('id');
+          
+          // Método 4: Contenido hash como último recurso
+          if (!tweetId) {
+            const content = element.textContent?.trim().substring(0, 100);
+            if (content) {
+              tweetId = `content-${content.replace(/\s+/g, '').substring(0, 20)}-${Date.now()}`;
+            }
+          }
+          
+          // Método 5: Posición como último recurso
+          if (!tweetId) {
+            const rect = element.getBoundingClientRect();
+            tweetId = `pos-${Math.floor(rect.top)}-${Math.floor(rect.left)}-${Date.now()}`;
+          }
 
           if (!processedTweetIds.has(tweetId)) {
             processedTweetIds.add(tweetId);
 
             // Extraer datos mejorados
-            const tweetData = extractTweetData(article);
+            const tweetData = extractTweetDataAdvanced(element);
 
             if (tweetData.isValid) {
               allTweets.push(tweetData);
               newTweetsInThisStep++;
+              console.log(`📝 Tweet ${allTweets.length}: ${tweetData.tweetText.substring(0, 50)}...`);
 
               // Límite de tweets alcanzado
               if (allTweets.length >= MAX_TWEETS) {
@@ -1085,15 +1515,22 @@ function extractAndCopyTweets() {
       // Control de progreso del scroll
       if (newTweetsInThisStep > 0) {
         stagnantScrollCount = 0;
+        console.log(`✅ Encontrados ${newTweetsInThisStep} tweets nuevos en este paso`);
       } else {
         stagnantScrollCount++;
+        console.log(`⚠️ No se encontraron tweets nuevos. Intentos estancados: ${stagnantScrollCount}/${MAX_STAGNANT_ATTEMPTS}`);
       }
 
-      // Realizar scroll más suave y controlado
+      // Realizar scroll más agresivo
       window.scrollBy({
         top: SCROLL_DISTANCE,
         behavior: 'smooth'
       });
+
+      // También intentar scroll forzado si el smooth no funciona
+      setTimeout(() => {
+        document.documentElement.scrollTop += SCROLL_DISTANCE;
+      }, 100);
 
       // Esperar más tiempo para que cargue el contenido
       await new Promise(resolve => setTimeout(resolve, SCROLL_DELAY));
@@ -1101,17 +1538,18 @@ function extractAndCopyTweets() {
       const currentHeight = document.body.scrollHeight;
       const hasNewContent = currentHeight > lastHeight;
 
-      // Continuar si hay nuevos tweets o contenido, y no hemos estado demasiado tiempo sin progreso
+      // Continuar si hay nuevos tweets o contenido
       if ((hasNewContent || stagnantScrollCount < MAX_STAGNANT_ATTEMPTS) && allTweets.length < MAX_TWEETS) {
         lastHeight = currentHeight;
-        await performScrollAndExtract(); // Recursión con await para mejor control
+        await performScrollAndExtract();
       } else {
+        console.log(`🏁 Finalizando extracción. Total tweets: ${allTweets.length}`);
         return await finalizeTweetCollection();
       }
     }
 
-    // Función para extraer datos de un tweet individual
-    function extractTweetData(article) {
+    // Función AVANZADA para extraer datos de un tweet individual
+    function extractTweetDataAdvanced(element) {
       let username = '';
       let handle = '';
       let tweetText = '';
@@ -1119,24 +1557,93 @@ function extractAndCopyTweets() {
       let engagement = '';
 
       try {
-        // Extraer usuario y handle
-        const userElement = article.querySelector('div[data-testid="User-Name"]');
-        if (userElement) {
-          const spans = userElement.querySelectorAll('span');
-          if (spans.length >= 1) username = spans[0].textContent.trim();
-          if (spans.length >= 2) handle = spans[spans.length - 1].textContent.trim();
+        // EXTRACCIÓN DE USUARIO Y HANDLE - Múltiples estrategias
+        const userSelectors = [
+          'div[data-testid="User-Name"]',
+          '[data-testid="User-Names"]',
+          'div[data-testid="User-Name"] span',
+          '[data-testid="UserAvatar-Container-unknown"] + div',
+          'a[role="link"][href*="/"] span',
+          'div[dir="ltr"] span[dir="ltr"]',
+          'h3 span',
+          'div:has(time) span:first-child'
+        ];
+
+        for (const selector of userSelectors) {
+          try {
+            const userElement = element.querySelector(selector);
+            if (userElement) {
+              const spans = userElement.querySelectorAll('span');
+              if (spans.length >= 1 && !username) {
+                username = spans[0].textContent?.trim() || '';
+              }
+              if (spans.length >= 2 && !handle) {
+                const lastSpan = spans[spans.length - 1].textContent?.trim();
+                if (lastSpan && lastSpan.includes('@')) {
+                  handle = lastSpan;
+                }
+              }
+              
+              if (username && handle) break;
+            }
+          } catch (e) { /* continuar con siguiente selector */ }
         }
 
-        // Extraer texto del tweet con mejor selector
-        const tweetTextElement = article.querySelector('div[data-testid="tweetText"]') ||
-          article.querySelector('[lang]') ||
-          article.querySelector('div[dir]');
-        if (tweetTextElement) {
-          tweetText = tweetTextElement.textContent.trim();
+        // Fallback para handle: buscar cualquier texto que contenga @
+        if (!handle) {
+          const allText = element.textContent || '';
+          const handleMatch = allText.match(/@[\w_]+/);
+          if (handleMatch) handle = handleMatch[0];
         }
 
-        // Extraer timestamp mejorado
-        const timeElement = article.querySelector('time');
+        // EXTRACCIÓN DE TEXTO DEL TWEET - Múltiples estrategias
+        const textSelectors = [
+          'div[data-testid="tweetText"]',
+          '[data-testid="tweetText"]',
+          'div[dir="auto"][lang]',
+          'div[lang]:not([data-testid])',
+          'span[dir="auto"]',
+          'div[dir="ltr"]:not(:has(time))',
+          'div[data-testid="card-wrapper"] + div',
+          'article div[dir="auto"]'
+        ];
+
+        for (const selector of textSelectors) {
+          try {
+            const textElement = element.querySelector(selector);
+            if (textElement && !tweetText) {
+              const text = textElement.textContent?.trim();
+              if (text && text.length > 5 && !text.includes('Retweeted') && !text.includes('ago')) {
+                tweetText = text;
+                break;
+              }
+            }
+          } catch (e) { /* continuar con siguiente selector */ }
+        }
+
+        // Fallback: extraer el texto más largo que no sea metadata
+        if (!tweetText) {
+          const allDivs = element.querySelectorAll('div, span');
+          let longestText = '';
+          
+          for (const div of allDivs) {
+            const text = div.textContent?.trim() || '';
+            if (text.length > longestText.length && 
+                text.length > 10 && 
+                !text.includes('ago') && 
+                !text.includes('Retweet') &&
+                !text.includes('Reply') &&
+                !text.includes('Like') &&
+                !text.match(/^\d+[KM]?$/)) {
+              longestText = text;
+            }
+          }
+          
+          if (longestText) tweetText = longestText;
+        }
+
+        // EXTRACCIÓN DE TIMESTAMP - Múltiples estrategias
+        const timeElement = element.querySelector('time');
         if (timeElement) {
           const datetime = timeElement.getAttribute('datetime');
           if (datetime) {
@@ -1150,37 +1657,72 @@ function extractAndCopyTweets() {
                 minute: '2-digit'
               });
             } catch (e) {
-              timestamp = timeElement.textContent.trim();
+              timestamp = timeElement.textContent?.trim() || '';
             }
           } else {
-            timestamp = timeElement.textContent.trim();
+            timestamp = timeElement.textContent?.trim() || '';
           }
         }
 
-        // Extraer métricas de engagement (opcional)
-        const metrics = article.querySelectorAll('[data-testid*="like"], [data-testid*="retweet"], [data-testid*="reply"]');
-        if (metrics.length > 0) {
-          const engagementData = Array.from(metrics).map(m => m.textContent.trim()).filter(t => t);
-          engagement = engagementData.join(' | ');
+        // EXTRACCIÓN DE ENGAGEMENT - Buscar métricas
+        const engagementSelectors = [
+          '[data-testid*="like"]',
+          '[data-testid*="retweet"]', 
+          '[data-testid*="reply"]',
+          '[aria-label*="like" i]',
+          '[aria-label*="retweet" i]',
+          '[aria-label*="reply" i]'
+        ];
+
+        const metrics = [];
+        for (const selector of engagementSelectors) {
+          try {
+            const elements = element.querySelectorAll(selector);
+            for (const el of elements) {
+              const text = el.textContent?.trim();
+              const ariaLabel = el.getAttribute('aria-label');
+              if (text && text.match(/^\d+[KM]?$/)) {
+                metrics.push(text);
+              } else if (ariaLabel && ariaLabel.includes('like')) {
+                const match = ariaLabel.match(/\d+/);
+                if (match) metrics.push(`${match[0]} likes`);
+              }
+            }
+          } catch (e) { /* continuar */ }
         }
+        
+        if (metrics.length > 0) {
+          engagement = metrics.join(' | ');
+        }
+
+        // Limpieza final de datos
+        if (username) username = username.replace(/\s+/g, ' ').trim();
+        if (handle && !handle.startsWith('@')) handle = '@' + handle;
+        if (tweetText) tweetText = tweetText.replace(/\s+/g, ' ').trim();
 
       } catch (error) {
         console.error('Error extrayendo datos del tweet:', error);
       }
 
+      const isValid = !!(username || handle || (tweetText && tweetText.length > 5));
+
       return {
-        username,
-        handle,
-        tweetText,
-        timestamp,
-        engagement,
-        isValid: !!(username || handle || tweetText)
+        username: username || 'Usuario desconocido',
+        handle: handle || '',
+        tweetText: tweetText || 'Contenido no disponible',
+        timestamp: timestamp || 'Fecha desconocida',
+        engagement: engagement || '',
+        isValid
       };
     }
 
     // Función para finalizar y copiar tweets
     async function finalizeTweetCollection() {
-      notification.textContent = `📝 Procesando ${allTweets.length} tweets...`;
+      if (allTweets.length >= MAX_TWEETS) {
+        notification.textContent = `🎯 ¡Límite alcanzado! Procesando ${allTweets.length} tweets...`;
+      } else {
+        notification.textContent = `📝 Procesando ${allTweets.length} tweets...`;
+      }
 
       if (allTweets.length === 0) {
         notification.textContent = '❌ No se encontraron tweets';
@@ -1191,8 +1733,9 @@ function extractAndCopyTweets() {
       }
 
       // Formatear texto sin iconos
-      let threadText = `HILO DE X/TWITTER - ${allTweets.length} posts extraidos\n`;
+      let threadText = `HILO DE X/TWITTER - ${allTweets.length} de máximo 50 posts extraidos\n`;
       threadText += `Capturado el ${new Date().toLocaleString('es-ES')}\n`;
+      threadText += `URL: ${window.location.href}\n`;
       threadText += `${'='.repeat(60)}\n\n`;
 
       allTweets.forEach((tweet, index) => {
@@ -1205,7 +1748,7 @@ function extractAndCopyTweets() {
         threadText += `${'-'.repeat(40)}\n\n`;
       });
 
-      threadText += `Total: ${allTweets.length} posts capturados exitosamente`;
+      threadText += `Total: ${allTweets.length} posts capturados exitosamente (máximo: 50)`;
 
       // Copia mejorada al portapapeles
       await copyToClipboard(threadText, allTweets.length);
@@ -1216,6 +1759,9 @@ function extractAndCopyTweets() {
         threadText: threadText,
         tweetCount: allTweets.length
       }, '*');
+      
+      // Copia adicional al portapapeles del sistema para asegurar disponibilidad
+      await copyToSystemClipboard(threadText);
     }
 
     // Función mejorada para copiar al portapapeles
@@ -1226,7 +1772,7 @@ function extractAndCopyTweets() {
         // Método principal: Chrome Extension Clipboard API
         if (navigator.clipboard && navigator.clipboard.writeText) {
           await navigator.clipboard.writeText(text);
-          notification.textContent = `✅ ¡${tweetCount} tweets copiados al portapapeles!`;
+          notification.textContent = `✅ ¡${tweetCount}/50 tweets copiados al portapapeles!`;
           notification.style.background = 'linear-gradient(135deg, #10B981, #059669)';
         } else {
           throw new Error('API de portapapeles no disponible');
@@ -1254,7 +1800,7 @@ function extractAndCopyTweets() {
           document.body.removeChild(textarea);
 
           if (successful) {
-            notification.textContent = `✅ ¡${tweetCount} tweets copiados! (método alternativo)`;
+            notification.textContent = `✅ ¡${tweetCount}/50 tweets copiados! (método alternativo)`;
             notification.style.background = 'linear-gradient(135deg, #10B981, #059669)';
           } else {
             throw new Error('execCommand falló');
@@ -1899,19 +2445,22 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
           // Obtener el resultado del script ejecutado
           const selectedText = result[0].result;
 
-          // Establecer el texto seleccionado en el clipboard interno
-          config.setClipboardText(selectedText);
-          updateContextDisplay();
+                        // Establecer el texto seleccionado en el clipboard interno
+              config.setClipboardText(selectedText);
+              updateContextDisplay();
 
-          // Mostrar notificación de éxito si se obtuvo texto
-          const notification = document.getElementById('copy-notification');
-          if (selectedText && !selectedText.includes('[No hay texto') && !selectedText.includes('[Error')) {
-            notification.textContent = '✅ Texto seleccionado copiado al portapapeles';
-            notification.classList.remove('hidden');
-            setTimeout(() => {
-              notification.classList.add('hidden');
-            }, 2000);
-          }
+              // Mostrar notificación de éxito si se obtuvo texto
+              const notification = document.getElementById('copy-notification');
+              if (selectedText && !selectedText.includes('[No hay texto') && !selectedText.includes('[Error')) {
+                notification.textContent = '✅ Texto seleccionado copiado al portapapeles';
+                notification.classList.remove('hidden');
+                setTimeout(() => {
+                  notification.classList.add('hidden');
+                }, 2000);
+                
+                // Copia adicional al portapapeles del sistema
+                copyToSystemClipboard(selectedText);
+              }
 
         } catch (error) {
           console.error("Error al obtener texto seleccionado:", error);
@@ -1948,23 +2497,15 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     var nombreLibro = await textPrompt(texts.textPrompt.bookPrompt, "The Old Man and the Sea");
     if (nombreLibro) {
       config.setClipboardText(nombreLibro);
-      // Copiar al portapapeles del sistema
-      navigator.clipboard.writeText(nombreLibro).then(() => {
-        // Nombre del libro copiado al portapapeles
-      }).catch(err => {
-        console.error('Error al copiar al portapapeles: ', err);
-      });
+      // Copiar al portapapeles del sistema usando función mejorada
+      copyToSystemClipboard(nombreLibro);
       // Actualizar la visualización con el nombre del libro
       updateContextDisplay();
     } else {
       nombreLibro = "The Old Man and the Sea";
       config.setClipboardText(nombreLibro);
-      // Copiar al portapapeles del sistema
-      navigator.clipboard.writeText(nombreLibro).then(() => {
-        // Nombre del libro por defecto copiado
-      }).catch(err => {
-        console.error('Error al copiar al portapapeles: ', err);
-      });
+      // Copiar al portapapeles del sistema usando función mejorada
+      copyToSystemClipboard(nombreLibro);
       // Actualizar la visualización con el nombre del libro por defecto
       updateContextDisplay();
     }
@@ -2240,6 +2781,9 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
                 window.removeEventListener('message', messageListener);
 
                 console.log(`✅ Clipboard actualizado con ${event.data.tweetCount} posts de X/Twitter`);
+                
+                // Copia adicional al portapapeles del sistema desde la extensión
+                copyToSystemClipboard(event.data.threadText);
               }
             };
 
@@ -2322,6 +2866,9 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
                 window.removeEventListener('message', messageListener);
 
                 console.log(`✅ Clipboard actualizado con ${event.data.emailCount} emails de Gmail`);
+                
+                // Copia adicional al portapapeles del sistema desde la extensión
+                copyToSystemClipboard(event.data.emailText);
               }
             };
 

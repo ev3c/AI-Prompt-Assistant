@@ -1,160 +1,413 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Prompt Assistant - Feedback</title>
     <style>
-        /* Estilos generales */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* AI Prompt Assistant - Feedback Page Styles */
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
+            box-sizing: border-box;
         }
-        
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #87CEEB 0%, #5bb4dc 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        
-        h1 {
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #87CEEB 0%, #5bb4dc 100%);
+            color: white;
+            padding: 20px;
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
         }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 13px;
+            opacity: 0.9;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            line-height: 1.5;
+            margin-top: 5px;
+        }
+
+        .content {
+            padding: 30px;
+            background: white;
+        }
+
         
+
         .language-section {
             margin-bottom: 30px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
             border-left: 4px solid #87CEEB;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
-        
-        h2 {
+
+        .language-section h2 {
             color: #2c3e50;
-            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        
-        ul {
+
+        .language-section p {
+            color: #495057;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .language-section ul {
             padding-left: 20px;
+            color: #495057;
         }
-        
-        li {
-            margin-bottom: 10px;
-        }
-        
-        .contact {
-            text-align: center;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-        
-        .contact a {
-            color: white;
-            background-color: #87CEEB;
-            text-decoration: none;
+
+        .language-section li {
+            margin-bottom: 12px;
+            line-height: 1.5;
             font-size: 14px;
-            padding: 10px 15px;
-            border-radius: 6px;
-            display: inline-block;
-            transition: background-color 0.3s, transform 0.2s;
-            font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        
-        .contact a:hover {
-            background-color: #5bb4dc;
+
+        .language-section li strong {
+            color: #2c3e50;
+        }
+
+                 .contact {
+             text-align: center;
+             margin: 0;
+             padding: 25px;
+             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+             border-radius: 0;
+             border-top: 2px solid #87CEEB;
+             border-bottom: 2px solid #87CEEB;
+         }
+
+        .contact p {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .contact a {
+            background: linear-gradient(135deg, #87CEEB 0%, #5bb4dc 100%);
             color: white;
             text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 16px 28px;
+            border-radius: 8px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(135, 206, 235, 0.3);
+        }
+
+        .contact a:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 16px rgba(135, 206, 235, 0.4);
+            background: linear-gradient(135deg, #5bb4dc 0%, #4a9fd1 100%);
+            text-decoration: none;
         }
-        
+
+        .contact a:active {
+            transform: translateY(0);
+        }
+
         .footer {
+            padding: 20px;
             text-align: center;
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #777;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
         }
-        
-        .back-button {
-            background-color: #87CEEB;
+
+        .footer p {
+            color: #6c757d;
+            font-size: 13px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .close-button {
+            background: linear-gradient(135deg, #87CEEB 0%, #5bb4dc 100%);
             color: white;
             border: none;
-            padding: 10px 15px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 14px;
-            margin: 5px 0 20px 0;
+            padding: 16px 28px;
+            border-radius: 8px;
             cursor: pointer;
-            border-radius: 6px;
-            transition: background-color 0.3s, transform 0.2s;
-            display: inline-block;
+            font-size: 16px;
             font-weight: bold;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(135, 206, 235, 0.3);
+            line-height: 1.4;
+            text-align: center;
         }
-        
-        .back-button:hover {
-            background-color: #5bb4dc;
+
+        .close-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 16px rgba(135, 206, 235, 0.4);
+            background: linear-gradient(135deg, #5bb4dc 0%, #4a9fd1 100%);
+        }
+
+        .close-button:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 20px;
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .header p {
+                font-size: 12px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .language-section {
+                padding: 20px;
+            }
+            
+            .language-section h2 {
+                font-size: 18px;
+            }
+            
+            .footer {
+                padding: 15px;
+            }
+            
+            .close-button {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .language-section {
+                padding: 15px;
+            }
+            
+            .language-section h2 {
+                font-size: 16px;
+            }
+            
+            .language-section p,
+            .contact p {
+                font-size: 14px;
+            }
+            
+            .language-section li {
+                font-size: 13px;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .footer {
+                background: #2d3748;
+                border-top-color: #4a5568;
+            }
+            
+            .footer p {
+                color: #a0aec0;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .container {
+                border: 2px solid #000;
+            }
+            
+            .header {
+                border-bottom: 2px solid #000;
+            }
+            
+            .language-section {
+                border-left: 6px solid #000;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>AI Prompt Assistant - Feedback</h1>
-        
-        <button id="back-button" class="back-button">← Volver</button>
-        
-        <!-- Sección en español -->
-        <div class="language-section">
-            <h2>🇪🇸 Español</h2>
-            <p>¡Gracias por usar AI Prompt Assistant! Nos encantaría recibir tus comentarios para mejorar la extensión.</p>
-            <p>Por favor, comparte con nosotros:</p>
-            <ul>
-                <li><strong>Sugerencias de prompts:</strong> ¿Qué tipos de prompts te gustaría ver incluidos?</li>
-                <li><strong>Ideas para nuevas funciones:</strong> ¿Qué te gustaría que la extensión pudiera hacer?</li>
-                <li><strong>Reportes de errores:</strong> ¿Has encontrado algún problema o bug mientras usabas la extensión?</li>
-                <li><strong>Mejoras de interfaz:</strong> ¿Cómo podríamos hacer que la extensión sea más fácil de usar?</li>
-                <li><strong>Servicios de IA adicionales:</strong> ¿Hay algún modelo de IA que te gustaría que incluyéramos?</li>
-            </ul>
+        <div class="header">
+            <h1>
+                📝 AI Prompt Assistant
+                <span style="font-size: 18px;">- Feedback</span>
+            </h1>
+            <p>Help us improve the extension with your suggestions / Ayúdanos a mejorar la extensión con tus sugerencias</p>
         </div>
-        
-        <!-- Sección en inglés -->
-        <div class="language-section">
-            <h2>🇬🇧 English</h2>
-            <p>Thank you for using AI Prompt Assistant! We would love to receive your feedback to improve the extension.</p>
-            <p>Please share with us:</p>
-            <ul>
-                <li><strong>Prompt suggestions:</strong> What types of prompts would you like to see included?</li>
-                <li><strong>New feature ideas:</strong> What would you like the extension to be able to do?</li>
-                <li><strong>Bug reports:</strong> Have you encountered any issues or bugs while using the extension?</li>
-                <li><strong>Interface improvements:</strong> How could we make the extension easier to use?</li>
-                <li><strong>Additional AI services:</strong> Are there any AI models you would like us to include?</li>
-            </ul>
-        </div>
-        
+
         <div class="contact">
-            <p>Envía tus sugerencias a: / Send your suggestions to:</p>
+            <p>Send your suggestions to / Envía tus sugerencias a:</p>
             <a href="mailto:ev3c.android@gmail.com">ev3c.android@gmail.com</a>
+        </div>
+
+        <div class="content">
+            <!-- Sección en español -->
+            <div class="language-section">
+                <h2>🇪🇸 Español</h2>
+                <p>¡Gracias por usar AI Prompt Assistant! Nos encantaría recibir tus comentarios para mejorar la extensión.</p>
+                <p>Por favor, comparte con nosotros:</p>
+                <ul>
+                    <li><strong>Sugerencias de prompts:</strong> ¿Qué tipos de prompts te gustaría ver incluidos?</li>
+                    <li><strong>Ideas para nuevas funciones:</strong> ¿Qué te gustaría que la extensión pudiera hacer?</li>
+                    <li><strong>Reportes de errores:</strong> ¿Has encontrado algún problema o bug mientras usabas la extensión?</li>
+                    <li><strong>Mejoras de interfaz:</strong> ¿Cómo podríamos hacer que la extensión sea más fácil de usar?</li>
+                    <li><strong>Servicios de IA adicionales:</strong> ¿Hay algún modelo de IA que te gustaría que incluyéramos?</li>
+                </ul>
+            </div>
+            
+            <!-- Sección en inglés -->
+            <div class="language-section">
+                <h2>🇬🇧 English</h2>
+                <p>Thank you for using AI Prompt Assistant! We would love to receive your feedback to improve the extension.</p>
+                <p>Please share with us:</p>
+                <ul>
+                    <li><strong>Prompt suggestions:</strong> What types of prompts would you like to see included?</li>
+                    <li><strong>New feature ideas:</strong> What would you like the extension to be able to do?</li>
+                    <li><strong>Bug reports:</strong> Have you encountered any issues or bugs while using the extension?</li>
+                    <li><strong>Interface improvements:</strong> How could we make the extension easier to use?</li>
+                    <li><strong>Additional AI services:</strong> Are there any AI models you would like us to include?</li>
+                </ul>
+            </div>
         </div>
         
         <div class="footer">
-            <p>AI Prompt Assistant v1.3 beta</p>
+            <p>🚀 Thank you for using AI Prompt Assistant! / ¡Gracias por usar AI Prompt Assistant!</p>
+            <button class="close-button" onclick="closeWindow()" id="close-button">
+                ✨ Close / Cerrar
+            </button>
         </div>
     </div>
     
     <script src="feedback.js"></script>
+    
+    <script>
+        // Función inline de respaldo para cerrar ventana
+        function closeWindow() {
+            console.log('🚪 Cerrando ventana (inline)...');
+            
+            try {
+                // Método 1: Chrome Extension API (más confiable para extensiones)
+                if (typeof chrome !== 'undefined' && chrome.tabs) {
+                    chrome.tabs.getCurrent((tab) => {
+                        if (tab && tab.id) {
+                            chrome.tabs.remove(tab.id);
+                            console.log('✅ Ventana cerrada con Chrome API (inline)');
+                            return;
+                        }
+                    });
+                }
+                
+                // Método 2: window.close() estándar
+                window.close();
+                console.log('✅ Intentando cerrar con window.close() (inline)');
+                
+                // Método 3: Fallback con delay
+                setTimeout(() => {
+                    window.close();
+                }, 100);
+                
+                // Método 4: Fallback con history
+                setTimeout(() => {
+                    if (window.history.length > 1) {
+                        window.history.back();
+                    } else {
+                        window.close();
+                    }
+                }, 200);
+                
+            } catch (error) {
+                console.error('❌ Error al cerrar ventana (inline):', error);
+                
+                // Último recurso: mostrar mensaje bilingüe
+                setTimeout(() => {
+                    alert('Please close this tab manually / Por favor, cierra esta pestaña manualmente');
+                }, 500);
+            }
+        }
+    </script>
 </body>
 </html> 
