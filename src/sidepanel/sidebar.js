@@ -91,6 +91,314 @@ async function copyToSystemClipboard(text) {
   }
 }
 
+// Función auxiliar para abrir una nueva pestaña con texto extraído
+function openTextWindow(text, title = 'Contenido Extraído') {
+  try {
+    console.log('🪟 Abriendo nueva pestaña con texto extraído...');
+    
+    // Escapar HTML para evitar problemas de renderizado
+    const escapedText = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+    // Crear contenido HTML con formato mejorado
+    const htmlContent = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title} - AI Prompt Assistant</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1DA1F2, #1991DA);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .header p {
+            margin: 8px 0 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .text-content {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 70vh;
+            overflow-y: auto;
+            color: #333;
+        }
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1DA1F2, #1991DA);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1991DA, #1580C1);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        .stats {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .stats-item {
+            display: inline-block;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        .stats-value {
+            color: #1976d2;
+            font-size: 18px;
+        }
+        
+        /* Scrollbar personalizada */
+        .text-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .text-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .text-content::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        .text-content::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .content {
+                padding: 20px;
+            }
+            .header {
+                padding: 15px 20px;
+            }
+            .btn {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐦 ${title}</h1>
+            <p>Contenido extraído y copiado al portapapeles - ${new Date().toLocaleString('es-ES')}</p>
+        </div>
+        
+        <div class="content">
+            <div class="stats">
+                <div class="stats-item">
+                    <span class="stats-value">${text.split('\\n').length}</span>
+                    <span>líneas</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-value">${text.length.toLocaleString()}</span>
+                    <span>caracteres</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-value">${text.split(' ').length.toLocaleString()}</span>
+                    <span>palabras</span>
+                </div>
+            </div>
+            
+            <div class="text-content" id="textContent">${escapedText}</div>
+            
+            <div class="actions">
+                <button class="btn btn-primary" onclick="copyToClipboard()">
+                    📋 Copiar Todo
+                </button>
+                <button class="btn btn-secondary" onclick="selectAll()">
+                    🔘 Seleccionar Todo
+                </button>
+                <button class="btn btn-secondary" onclick="downloadAsFile()">
+                    💾 Descargar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para copiar todo el contenido
+        async function copyToClipboard() {
+            try {
+                const content = document.getElementById('textContent').textContent;
+                await navigator.clipboard.writeText(content);
+                showNotification('✅ Contenido copiado al portapapeles');
+            } catch (error) {
+                console.error('Error al copiar:', error);
+                showNotification('❌ Error al copiar al portapapeles');
+            }
+        }
+
+        // Función para seleccionar todo el texto
+        function selectAll() {
+            const textContent = document.getElementById('textContent');
+            const range = document.createRange();
+            range.selectNodeContents(textContent);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            showNotification('✅ Todo el texto seleccionado');
+        }
+
+        // Función para descargar como archivo
+        function downloadAsFile() {
+            const content = document.getElementById('textContent').textContent;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'tweets_extraidos_' + new Date().toISOString().slice(0, 10) + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showNotification('✅ Archivo descargado');
+        }
+
+        // Función para mostrar notificaciones
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = \`
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 6px;
+                z-index: 1000;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease;
+            \`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Añadir animaciones CSS
+        const style = document.createElement('style');
+        style.textContent = \`
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        \`;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>`;
+
+    // Crear un blob con el contenido HTML
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+
+    // Abrir nueva pestaña con el contenido
+    const newTab = window.open(url, '_blank');
+    
+    if (newTab) {
+      console.log('✅ Nueva pestaña abierta con contenido extraído');
+      
+      // Limpiar el blob URL después de un tiempo
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 60000); // 1 minuto
+    } else {
+      console.error('❌ No se pudo abrir la nueva pestaña. Verifica que los popups no estén bloqueados.');
+    }
+    
+  } catch (error) {
+    console.error('❌ Error al abrir ventana con texto:', error);
+  }
+}
+
 // Función para mapear el contexto al ID del botón correspondiente
 function getButtonIdFromContext(context) {
   const mapping = {
@@ -905,9 +1213,6 @@ function extractAndCopyGmailContent() {
         emailText: emailText,
         emailCount: allEmails.length
       }, '*');
-      
-      // Copia adicional al portapapeles del sistema para asegurar disponibilidad
-      await copyToSystemClipboard(emailText);
     }
 
     // Función mejorada para copiar al portapapeles
@@ -1282,9 +1587,6 @@ function extractPDFText() {
         textLength: text.length
       }, '*');
       
-      // Copia adicional al portapapeles del sistema para asegurar disponibilidad
-      copyToSystemClipboard(text);
-      
     } catch (error) {
       console.error('❌ Error al copiar al clipboard:', error);
       
@@ -1305,9 +1607,6 @@ function extractPDFText() {
           success: true,
           textLength: text.length
         }, '*');
-        
-        // Copia adicional al portapapeles del sistema para asegurar disponibilidad
-        copyToSystemClipboard(text);
         
       } catch (fallbackError) {
         console.error('❌ Error en método de respaldo:', fallbackError);
@@ -1362,6 +1661,314 @@ function extractPDFText() {
 
 // Función para extraer y copiar tweets de Twitter/X - VERSIÓN COMPLETAMENTE REESCRITA 2024
 function extractAndCopyTweets() {
+  // Función auxiliar para abrir una nueva pestaña con texto extraído (disponible en contexto de página)
+  function openTextWindow(text, title = 'Contenido Extraído') {
+    try {
+      console.log('🪟 Abriendo nueva pestaña con texto extraído...');
+      
+      // Escapar HTML para evitar problemas de renderizado
+      const escapedText = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+
+      // Crear contenido HTML con formato mejorado
+      const htmlContent = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title} - AI Prompt Assistant</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1DA1F2, #1991DA);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .header p {
+            margin: 8px 0 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .text-content {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 70vh;
+            overflow-y: auto;
+            color: #333;
+        }
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #1DA1F2, #1991DA);
+            color: white;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1991DA, #1580C1);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        .stats {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .stats-item {
+            display: inline-block;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        .stats-value {
+            color: #1976d2;
+            font-size: 18px;
+        }
+        
+        /* Scrollbar personalizada */
+        .text-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .text-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .text-content::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        .text-content::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .content {
+                padding: 20px;
+            }
+            .header {
+                padding: 15px 20px;
+            }
+            .btn {
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐦 ${title}</h1>
+            <p>Contenido extraído y copiado al portapapeles - ${new Date().toLocaleString('es-ES')}</p>
+        </div>
+        
+        <div class="content">
+            <div class="stats">
+                <div class="stats-item">
+                    <span class="stats-value">${text.split('\\n').length}</span>
+                    <span>líneas</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-value">${text.length.toLocaleString()}</span>
+                    <span>caracteres</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-value">${text.split(' ').length.toLocaleString()}</span>
+                    <span>palabras</span>
+                </div>
+            </div>
+            
+            <div class="text-content" id="textContent">${escapedText}</div>
+            
+            <div class="actions">
+                <button class="btn btn-primary" onclick="copyToClipboard()">
+                    📋 Copiar Todo
+                </button>
+                <button class="btn btn-secondary" onclick="selectAll()">
+                    🔘 Seleccionar Todo
+                </button>
+                <button class="btn btn-secondary" onclick="downloadAsFile()">
+                    💾 Descargar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para copiar todo el contenido
+        async function copyToClipboard() {
+            try {
+                const content = document.getElementById('textContent').textContent;
+                await navigator.clipboard.writeText(content);
+                showNotification('✅ Contenido copiado al portapapeles');
+            } catch (error) {
+                console.error('Error al copiar:', error);
+                showNotification('❌ Error al copiar al portapapeles');
+            }
+        }
+
+        // Función para seleccionar todo el texto
+        function selectAll() {
+            const textContent = document.getElementById('textContent');
+            const range = document.createRange();
+            range.selectNodeContents(textContent);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            showNotification('✅ Todo el texto seleccionado');
+        }
+
+        // Función para descargar como archivo
+        function downloadAsFile() {
+            const content = document.getElementById('textContent').textContent;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'tweets_extraidos_' + new Date().toISOString().slice(0, 10) + '.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showNotification('✅ Archivo descargado');
+        }
+
+        // Función para mostrar notificaciones
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = \`
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 12px 20px;
+                border-radius: 6px;
+                z-index: 1000;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                animation: slideIn 0.3s ease;
+            \`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Añadir animaciones CSS
+        const style = document.createElement('style');
+        style.textContent = \`
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        \`;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>`;
+
+      // Crear un blob con el contenido HTML
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+
+      // Abrir nueva pestaña con el contenido
+      const newTab = window.open(url, '_blank');
+      
+      if (newTab) {
+        console.log('✅ Nueva pestaña abierta con contenido extraído');
+        
+        // Limpiar el blob URL después de un tiempo
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 60000); // 1 minuto
+      } else {
+        console.error('❌ No se pudo abrir la nueva pestaña. Verifica que los popups no estén bloqueados.');
+      }
+      
+    } catch (error) {
+      console.error('❌ Error al abrir ventana con texto:', error);
+    }
+  }
+
   // Crear notificación mejorada
   const notification = document.createElement('div');
   notification.textContent = '🐦 Iniciando captura avanzada de tweets...';
@@ -1760,8 +2367,8 @@ function extractAndCopyTweets() {
         tweetCount: allTweets.length
       }, '*');
       
-      // Copia adicional al portapapeles del sistema para asegurar disponibilidad
-      await copyToSystemClipboard(threadText);
+      // Abrir nueva pestaña con el texto extraído
+      openTextWindow(threadText, `Tweets Extraídos (${allTweets.length}/50)`);
     }
 
     // Función mejorada para copiar al portapapeles
