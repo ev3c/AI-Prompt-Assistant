@@ -18,14 +18,14 @@ export async function createInitialContextMenus(loadedLangs, defaultModelId, def
     const urlText = await getContextMenuTextForDisplay(false, defaultLangIso);
     chrome.contextMenus.create({
       id: 'open-chatgpt-prompt-helper',
-      title: `🧠 ${getAIModelName(defaultModelId)} ${urlText}`,
+      title: `${getAIModelName(defaultModelId)} ${urlText}`,
       contexts: ['page']
     });
 
     const clipboardText = await getContextMenuTextForDisplay(true, defaultLangIso);
     chrome.contextMenus.create({
       id: 'open-chatgpt-prompt-helper-selection',
-      title: `🧠 ${getAIModelName(defaultModelId)} ${clipboardText}`,
+      title: `${getAIModelName(defaultModelId)} ${clipboardText}`,
       contexts: ['selection']
     });
 
@@ -82,10 +82,10 @@ export async function updateContextMenuTitles(modelId, languageIso) {
   const urlText = await getContextMenuTextForDisplay(false, languageIso);
   const clipboardText = await getContextMenuTextForDisplay(true, languageIso);
 
-  chrome.contextMenus.update('open-chatgpt-prompt-helper', { title: `🧠 ${modelName} ${urlText}` }, () => {
+  chrome.contextMenus.update('open-chatgpt-prompt-helper', { title: `${modelName} ${urlText}` }, () => {
     if (chrome.runtime.lastError) console.warn("Error actualizando menú 'page':", chrome.runtime.lastError.message);
   });
-  chrome.contextMenus.update('open-chatgpt-prompt-helper-selection', { title: `🧠 ${modelName} ${clipboardText}` }, () => {
+  chrome.contextMenus.update('open-chatgpt-prompt-helper-selection', { title: `${modelName} ${clipboardText}` }, () => {
      if (chrome.runtime.lastError) console.warn("Error actualizando menú 'selection':", chrome.runtime.lastError.message);
   });
 }
@@ -156,7 +156,7 @@ export function handleContextMenuClick(info, tab) {
 }
 
 function handleShareMenuClick(menuItemId) {
-  const baseShareText = `🧠 *AI Prompt Assistant*
+  const baseShareText = `*AI Prompt Assistant*
 
 ¡Hola! 👋 
 Encontré una extensión de Chrome que creo que te va a ser útil.

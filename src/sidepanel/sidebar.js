@@ -1667,7 +1667,7 @@ function initializeUI() {
       shareSubmenu.classList.add('hidden');
 
       // Definir subject y texto del email
-      const emailSubject = "🧠 AI Prompt Assistant ";
+      const emailSubject = "AI Prompt Assistant ";
       const emailBody = `Hola
 ¡Hola! 👋 
 Encontré una extensión de Chrome que creo que te va a ser útil.
@@ -1744,7 +1744,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
       shareSubmenu.classList.add('hidden');
 
       // Crear mensaje para WhatsApp (formato más amigable)
-      const whatsappMessage = `🧠 *AI Prompt Assistant*
+      const whatsappMessage = `*AI Prompt Assistant*
 
 ¡Hola! 👋 
 Encontré una extensión de Chrome que creo que te va a ser útil.
@@ -2598,7 +2598,7 @@ function updateMotorIcon() {
   const currentLanguage = config.getCurrentLanguage();
   updateDirectQuestionButtonText(currentLanguage, modelName);
   
-  console.log(`🧠 AI Prompt Assistant: Icono del motor actualizado a ${iconPath} para modelo ${currentModel}`);
+  console.log(`AI Prompt Assistant: Icono del motor actualizado a ${iconPath} para modelo ${currentModel}`);
 }
 
 // Configurar el menú de idiomas
@@ -3005,8 +3005,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 // Función para enviar email a través de Gmail
 function sendGmail() {
-  const subject = "🧠 AI Prompt Assistant";
-  const body = `🧠 AI Prompt Assistant
+  const subject = "AI Prompt Assistant";
+  const body = `AI Prompt Assistant
 
 ¡Hola! 👋 
 Encontré una extensión de Chrome que creo que te va a ser útil.

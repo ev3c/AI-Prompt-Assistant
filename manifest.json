@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "🧠 AI Prompt Assistant v1.4 beta",
+  "name": "AI Prompt Assistant v1.4 beta",
   "version": "1.4",
   "description": "Menú de prompts útiles para ChatGPT, DeepSeek, Gemini, Copilot, y más.",
   "permissions": [
@@ -30,7 +30,7 @@
     "<all_urls>"
   ],
   "action": {
-    "default_title": "🧠 AI Prompt Assistant",
+    "default_title": "AI Prompt Assistant",
     "default_icon": {
       "16": "/src/assets/icons/icon16.png",
       "48": "/src/assets/icons/icon48.png",
