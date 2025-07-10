@@ -1673,6 +1673,7 @@ function initializeUI() {
 Encontré una extensión de Chrome que creo que te va a ser útil.
 
 Se llama *AI Prompt Assistant* y tiene estas características increíbles:
+• 🤖 Modelos AI de ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Soporte multiidioma 
 • 📝 Editor de prompts moderno
 • 📧 Extracción de Gmail y Twitter/X
@@ -1688,6 +1689,7 @@ Hi! 👋
 I found a Chrome extension that I think you'll find useful.
 
 It's called *AI Prompt Assistant* and has these amazing features:
+• 🤖 AI models from ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Multi-language support
 • 📝 Modern prompt editor  
 • 📧 Gmail and Twitter/X extraction
@@ -1748,6 +1750,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
 Encontré una extensión de Chrome que creo que te va a ser útil.
 
 Se llama *AI Prompt Assistant* y tiene estas características increíbles:
+• 🤖 Modelos AI de ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Soporte multiidioma 
 • 📝 Editor de prompts moderno
 • 📧 Extracción de Gmail y Twitter/X
@@ -1763,6 +1766,7 @@ Hi! 👋
 I found a Chrome extension that I think you'll find useful.
 
 It's called *AI Prompt Assistant* and has these amazing features:
+• 🤖 AI models from ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Multi-language support
 • 📝 Modern prompt editor  
 • 📧 Gmail and Twitter/X extraction
@@ -3008,6 +3012,7 @@ function sendGmail() {
 Encontré una extensión de Chrome que creo que te va a ser útil.
 
 Se llama AI Prompt Assistant y tiene estas características increíbles:
+• 🤖 Modelos AI de ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Soporte multiidioma 
 • 📝 Editor de prompts moderno
 • 📧 Extracción de Gmail y Twitter/X
@@ -3023,6 +3028,7 @@ Hi! 👋
 I found a Chrome extension that I think you'll find useful.
 
 It's called AI Prompt Assistant and has these amazing features:
+• 🤖 AI models from ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Multi-language support
 • 📝 Modern prompt editor  
 • 📧 Gmail and Twitter/X extraction

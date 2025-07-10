@@ -3,20 +3,30 @@
 // Importar función de traducción
 import { getTranslation } from '/src/content-script/translations.js';
 
-// Variables que serán reutilizadas
-let menuData = null;
+// Variables globales compartidas
+let currentLanguage = 'es';
+let currentAIModel = 'chatgpt';
+let currentContext = 'url'; // 'url' para sitios web, 'clipboard' para texto copiado
+let currentButtonType = 'urlButton';
+let currentIcon = 'chatgpt';
 let currentUrl = '';
-let clipboardText = '';
-let currentSection = null;
-let currentLanguage = 'es'; // Idioma por defecto: Español
-let currentAIModel = 'chatgpt'; // Modelo por defecto: ChatGPT
-let useClipboard = false; // Por defecto, usar URL
-let hoveredTranslationButton = null; // Para guardar referencia al botón de traducción con hover
-let currentContext = 'url'; // Default context is URL
-let availableLanguages = []; // Lista de idiomas disponibles cargada desde /src/common/languages/idiomaAI.json
+let currentClipboardText = '';
+let currentBookText = '';
+let currentPdfText = '';
+let currentXText = '';
+let currentGmailText = '';
+let currentWikipediaText = '';
+let currentCustomText = '';
 let currentPrompt = '';
-let clipboardContent = '';
-let verAcceso = true; // Variable global de acceso
+let currentAIUrl = '';
+let currentMenuData = {};
+let currentAvailableLanguages = [];
+let currentLanguagesList = [];
+let currentAIModels = [];
+let currentAIUrls = {};
+let verAcceso = true; // Variable global para botón "Escribe una pregunta a..."
+let verX = true; // Variable global para X/Twitter
+let verGmail = true; // Variable global para Gmail
 
 export async function loadMotorAI() {
   try {
@@ -42,17 +52,17 @@ export async function getAIUrls() {
   return AI_URLS;
 }
 
-// Exportamos configuración que serán utilizadas por popup.js y sidebar.js
+// Configuración global exportada
 export const config = {
   // Getters y setters para variables globales
-  getMenuData: () => menuData,
-  setMenuData: (data) => { menuData = data; },
+  getMenuData: () => currentMenuData,
+  setMenuData: (data) => { currentMenuData = data; },
 
   getCurrentUrl: () => currentUrl,
   setCurrentUrl: (url) => { currentUrl = url; },
 
-  getClipboardText: () => clipboardText,
-  setClipboardText: (text) => { clipboardText = text; },
+  getClipboardText: () => currentClipboardText,
+  setClipboardText: (text) => { currentClipboardText = text; },
 
   getCurrentLanguage: () => currentLanguage,
   setCurrentLanguage: (lang) => { currentLanguage = lang; },
@@ -60,20 +70,24 @@ export const config = {
   getCurrentAIModel: () => currentAIModel,
   setCurrentAIModel: (model) => { currentAIModel = model; },
 
-  getUseClipboard: () => useClipboard,
-  setUseClipboard: (value) => { useClipboard = value; },
+  getUseClipboard: () => currentContext === 'clipboard',
+  setUseClipboard: (value) => { currentContext = value ? 'clipboard' : 'url'; },
 
   getCurrentContext: () => currentContext,
   setCurrentContext: (context) => { currentContext = context; },
 
-  getHoveredTranslationButton: () => hoveredTranslationButton,
-  setHoveredTranslationButton: (button) => { hoveredTranslationButton = button; },
+  getHoveredTranslationButton: () => null, // No se usa en el nuevo diseño
+  setHoveredTranslationButton: (button) => {}, // No se usa en el nuevo diseño
 
-  getAvailableLanguages: () => availableLanguages,
-  setAvailableLanguages: (languages) => { availableLanguages = languages; },
+  getAvailableLanguages: () => currentAvailableLanguages,
+  setAvailableLanguages: (languages) => { currentAvailableLanguages = languages; },
 
   getVerAcceso: () => verAcceso,
-  setVerAcceso: (value) => { verAcceso = value; }
+  setVerAcceso: (value) => { verAcceso = value; },
+  getVerX: () => verX,
+  setVerX: (value) => { verX = value; },
+  getVerGmail: () => verGmail,
+  setVerGmail: (value) => { verGmail = value; },
 };
 
 // Helper function to determine if a context behaves like a clipboard context
@@ -105,16 +119,16 @@ export async function loadAvailableLanguages() {
       throw new Error(`Error al cargar /src/common/languages/idiomaAI.json: ${response.status}`);
     }
     const data = await response.json();
-    availableLanguages = data.idiomas || [];
-    return availableLanguages;
+    currentAvailableLanguages = data.idiomas || [];
+    return currentAvailableLanguages;
   } catch (error) {
     console.error('Error al cargar los idiomas:', error);
     // Establecer una lista básica predeterminada en caso de error
-    availableLanguages = [
+    currentAvailableLanguages = [
       { nombreNativo: "Español", codigoISO: "es", nombreEspanol: "Español" },
       { nombreNativo: "English", codigoISO: "gb", nombreEspanol: "Inglés" }
     ];
-    return availableLanguages;
+    return currentAvailableLanguages;
   }
 }
 
@@ -130,40 +144,40 @@ export async function tryReadClipboard() {
         const text = await navigator.clipboard.readText();
         if (text && text.trim()) {
           // Almacenar el contenido anterior para comparación
-          const previousClipboardText = clipboardText;
-          clipboardText = text;
+          const previousClipboardText = currentClipboardText;
+          currentClipboardText = text;
           
           // Si el contenido cambió y estamos en un contexto que se comporta como clipboard, notificar el cambio
-          if (previousClipboardText !== clipboardText && isClipboardBehaviorContext(currentContext)) {
-            console.log('Contenido del portapapeles actualizado:', clipboardText);
+          if (previousClipboardText !== currentClipboardText && isClipboardBehaviorContext(currentContext)) {
+            console.log('Contenido del portapapeles actualizado:', currentClipboardText);
             // Disparar un evento personalizado para que otros módulos puedan reaccionar
             const clipboardChangeEvent = new CustomEvent('clipboardContentChanged', { 
               detail: { 
-                newContent: clipboardText, 
+                newContent: currentClipboardText, 
                 previousContent: previousClipboardText 
               } 
             });
             document.dispatchEvent(clipboardChangeEvent);
           }
         } else {
-          clipboardText = '[Contenido del portapapeles vacío]';
+          currentClipboardText = '[Contenido del portapapeles vacío]';
         }
       } catch (readErr) {
         console.log('Error al leer el portapapeles:', readErr);
-        clipboardText = '[No se pudo acceder al portapapeles]';
+        currentClipboardText = '[No se pudo acceder al portapapeles]';
       }
     } else {
       // No tenemos permisos, devolver texto neutro
       const texts = getTranslation(currentLanguage);
-      clipboardText = `[${texts.textPrompt.selectTextClick}]`;
+      currentClipboardText = `[${texts.textPrompt.selectTextClick}]`;
     }
     
-    return clipboardText;
+    return currentClipboardText;
   } catch (err) {
     console.log('Error general al acceder al portapapeles:', err);
     const texts = getTranslation(currentLanguage);
-    clipboardText = `[${texts.textPrompt.selectTextClick}]`;
-    return clipboardText;
+    currentClipboardText = `[${texts.textPrompt.selectTextClick}]`;
+    return currentClipboardText;
   }
 }
 
@@ -183,7 +197,7 @@ export function updateContextDisplay() {
   labelText.style.webkitBoxOrient = 'vertical';
   labelText.style.lineHeight = '1.2em';
 
-  let displayText = clipboardText || '[Portapapeles vacío]';
+  let displayText = currentClipboardText || '[Portapapeles vacío]';
   // Limitar el texto del portapapeles para la visualización
   // Aumentar el límite de caracteres ya que ahora tenemos 2 líneas
   if (displayText.length > 100) {
@@ -277,7 +291,7 @@ export async function loadMenuData(language = 'es') {
       chrome.storage.local.get(['lastSelectedPdf', 'lastSelectedPdfPath'], function(result) {
         if (result.lastSelectedPdf && result.lastSelectedPdfPath) {
           // Actualizar la información del portapapeles con la ruta del PDF
-          clipboardText = `PDF: ${result.lastSelectedPdf} (${result.lastSelectedPdfPath})`;
+          currentClipboardText = `PDF: ${result.lastSelectedPdf} (${result.lastSelectedPdfPath})`;
           updateContextDisplay(); // Actualizar la visualización si está definida
         }
       });
@@ -574,7 +588,7 @@ export function closeLanguageDropdown() {
   visibleMenus.forEach(menu => {
     menu.classList.remove('visible');
   });
-  hoveredTranslationButton = null; // Limpiar la referencia al botón con hover
+  // No se usa en el nuevo diseño
 }
 
 // Renderizar secciones del menú
@@ -582,7 +596,7 @@ export function renderSections() {
   const sectionsContainer = document.getElementById('sections-container');
   sectionsContainer.innerHTML = '';
 
-  menuData.sections.forEach((section, index) => {
+  currentMenuData.sections.forEach((section, index) => {
     const sectionElement = document.createElement('div');
     sectionElement.className = 'section';
 
@@ -645,45 +659,16 @@ export function createTranslationButton(section) {
   const button = document.createElement('button');
   button.className = 'prompt-button translation-button';
   button.textContent = section.translationButton.label;
-  button.dataset.sectionIndex = menuData.sections.indexOf(section);
+  // No se usa en el nuevo diseño
 
   // Mostrar menú al pasar el ratón sobre el botón
   button.addEventListener('mouseenter', function (event) {
-    // Guardar referencia al botón con hover
-    hoveredTranslationButton = button;
-
-    // Mostrar el menú de idiomas inline asociado a este botón
-    const sectionIndex = button.dataset.sectionIndex;
-    const menuElement = document.getElementById(`inline-language-menu-${sectionIndex}`);
-    if (menuElement) {
-      menuElement.classList.add('visible');
-
-      // Asignar evento mouseleave al menú para cerrarlo cuando el ratón sale
-      menuElement.addEventListener('mouseleave', function () {
-        menuElement.classList.remove('visible');
-        hoveredTranslationButton = null;
-      });
-
-      // Asignar evento mouseenter al menú para asegurar que se mantenga visible
-      menuElement.addEventListener('mouseenter', function () {
-        menuElement.classList.add('visible');
-      });
-    }
+    // No se usa en el nuevo diseño
   });
 
   // Ocultar menú cuando el ratón sale del botón
   button.addEventListener('mouseleave', function (event) {
-    // Revisar si el ratón se mueve hacia el menú
-    const sectionIndex = button.dataset.sectionIndex;
-    const menuElement = document.getElementById(`inline-language-menu-${sectionIndex}`);
-
-    // Dar un poco de tiempo para que el ratón pueda moverse al menú si va en esa dirección
-    setTimeout(() => {
-      if (!menuElement.matches(':hover')) {
-        menuElement.classList.remove('visible');
-        hoveredTranslationButton = null;
-      }
-    }, 100);
+    // No se usa en el nuevo diseño
   });
 
   return button;
@@ -896,7 +881,7 @@ function openAIWithStandardContext(prompt, label) {
 
 // Función para generar el HTML de opciones de idioma
 export function generateLanguageOptions() {
-  const languages = availableLanguages;
+  const languages = currentAvailableLanguages;
   let languageOptionsHTML = '';
   const currentLang = config.getCurrentLanguage();
 
@@ -949,7 +934,7 @@ export function updateSelectedLanguageInMenu() {
 
 // Función para generar opciones de idioma para el selector del menú de configuración
 export function generateLanguageSelectorOptions() {
-  const languages = availableLanguages;
+  const languages = currentAvailableLanguages;
   let optionsHTML = '';
 
   languages.forEach(lang => {
@@ -986,7 +971,7 @@ export function generateLanguageSelectorOptions() {
 // Función para cambiar el contexto
 export function changeContext(context) {
   currentContext = context;
-  useClipboard = context === 'clipboard';
+  config.setUseClipboard(context === 'clipboard');
 
   // Guardar la preferencia de contexto
   chrome.storage.local.set({ context: context }, function () {
@@ -1039,7 +1024,7 @@ export async function initializeExtensionState() {
     // Establecer contexto
     if (result.context) {
       currentContext = result.context;
-      useClipboard = currentContext === 'clipboard';
+      config.setUseClipboard(currentContext === 'clipboard');
       changeContext(currentContext);
     }
 
@@ -1059,8 +1044,10 @@ export function saveMainConfig() {
     language: currentLanguage,
     aiModel: currentAIModel,
     context: currentContext,
-    useClipboard: useClipboard,
-    verAcceso: verAcceso
+    useClipboard: config.getUseClipboard(),
+    verAcceso: verAcceso,
+    verX: verX,
+    verGmail: verGmail
   };
   
   console.log('Guardando configuración:', configToSave);
@@ -1081,15 +1068,18 @@ export async function loadMainConfig() {
         currentLanguage = result.mainConfig.language || 'es';
         currentAIModel = result.mainConfig.aiModel || 'chatgpt';
         currentContext = result.mainConfig.context || 'url';
-        useClipboard = result.mainConfig.useClipboard || false;
+        config.setUseClipboard(currentContext === 'clipboard');
         verAcceso = result.mainConfig.verAcceso !== undefined ? result.mainConfig.verAcceso : true;
+        verX = result.mainConfig.verX !== undefined ? result.mainConfig.verX : true;
+        verGmail = result.mainConfig.verGmail !== undefined ? result.mainConfig.verGmail : true;
         
         // Actualizar valores en el objeto config
         config.setCurrentLanguage(currentLanguage);
         config.setCurrentAIModel(currentAIModel);
         config.setCurrentContext(currentContext);
-        config.setUseClipboard(useClipboard);
         config.setVerAcceso(verAcceso);
+        config.setVerX(verX);
+        config.setVerGmail(verGmail);
         
         console.log('Configuración principal cargada y aplicada:', result.mainConfig);
       } else {
@@ -1495,8 +1485,24 @@ export function textPrompt(title = null, defaultText = "", aiModelId = null) {
 // Función confirmPrompt() - Modal de confirmación con estilo de sidebar
 export function confirmPrompt(message = null, type = 'general') {
   return new Promise((resolve) => {
-    // Si verAcceso es false, devolver true automáticamente (permitir la acción sin mostrar ventana)
-    if (!verAcceso) {
+    // Determinar qué variable usar según el tipo
+    let currentVerValue;
+    switch (type) {
+      case 'twitter':
+        currentVerValue = verX;
+        break;
+      case 'gmail':
+        currentVerValue = verGmail;
+        break;
+      case 'allai':
+        currentVerValue = verAcceso; // allai usa la misma variable que el general
+        break;
+      default:
+        currentVerValue = verAcceso;
+    }
+    
+    // Si la variable correspondiente es false, devolver true automáticamente (permitir la acción sin mostrar ventana)
+    if (!currentVerValue) {
       resolve(true);
       return;
     }
@@ -1621,8 +1627,8 @@ export function confirmPrompt(message = null, type = 'general') {
     // Crear checkbox
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.id = 'verAcceso-checkbox';
-    checkbox.checked = verAcceso; // Usar el valor actual de la variable global
+    checkbox.id = `ver-${type}-checkbox`;
+    checkbox.checked = currentVerValue; // Usar el valor actual de la variable apropiada
     checkbox.style.cssText = `
       width: 12px;
       height: 12px;
@@ -1632,7 +1638,7 @@ export function confirmPrompt(message = null, type = 'general') {
 
     // Crear label para el checkbox
     const checkboxLabel = document.createElement('label');
-    checkboxLabel.htmlFor = 'verAcceso-checkbox';
+    checkboxLabel.htmlFor = `ver-${type}-checkbox`;
     checkboxLabel.textContent = texts.confirmPrompt.showAgainLabel;
     checkboxLabel.style.cssText = `
       font-size: 12px;
@@ -1714,15 +1720,41 @@ export function confirmPrompt(message = null, type = 'general') {
 
     // Eventos de botones
     const closeModal = (result) => {
-      // Actualizar la variable global verAcceso según el estado del checkbox
-      const newVerAcceso = checkbox.checked;
+      // Actualizar la variable apropiada según el tipo
+      const newVerValue = checkbox.checked;
       
-      // Si el valor cambió, actualizar y guardar configuración
-      if (verAcceso !== newVerAcceso) {
-        verAcceso = newVerAcceso;
-        config.setVerAcceso(verAcceso);
-        saveMainConfig(); // Guardar configuración automáticamente
-        console.log('verAcceso actualizado a:', verAcceso);
+             // Si el valor cambió, actualizar y guardar configuración
+       let valueChanged = false;
+       switch (type) {
+         case 'twitter':
+           if (verX !== newVerValue) {
+             verX = newVerValue;
+             config.setVerX(verX);
+             valueChanged = true;
+             console.log('verX actualizado a:', verX);
+           }
+           break;
+         case 'gmail':
+           if (verGmail !== newVerValue) {
+             verGmail = newVerValue;
+             config.setVerGmail(verGmail);
+             valueChanged = true;
+             console.log('verGmail actualizado a:', verGmail);
+           }
+           break;
+         case 'allai':
+         default:
+           if (verAcceso !== newVerValue) {
+             verAcceso = newVerValue;
+             config.setVerAcceso(verAcceso);
+             valueChanged = true;
+             console.log('verAcceso actualizado a:', verAcceso);
+           }
+       }
+      
+      // Guardar configuración si hubo cambios
+      if (valueChanged) {
+        saveMainConfig();
       }
       
       overlay.style.opacity = '0';
@@ -1853,11 +1885,13 @@ export function truncatePrompt(prompt, maxLength = 1000) {
 
 // Función especial para enviar solo el prompt sin contexto adicional
 export async function openAIWithPromptOnly(prompt, label) {
+  // Obtener traducciones una sola vez
+  const texts = getTranslation(currentLanguage);
+  
   // Siempre preguntar al usuario para confirmar/modificar el prompt
   const defaultText = prompt || "";
   
   // Crear el título dinámico con el nombre del motor actual
-  const texts = getTranslation(currentLanguage);
   const aiModelName = getAIModelName(currentAIModel);
   const dynamicTitle = `${texts.textPrompt.questionTo}${aiModelName}`;
   
@@ -1877,7 +1911,6 @@ export async function openAIWithPromptOnly(prompt, label) {
   // Verificar si el prompt contiene [TEMA] o [TOPIC]
   if (prompt.includes('[TEMA]') || prompt.includes('[TOPIC]')) {
     // Pedir al usuario que ingrese el tema específico
-    const texts = getTranslation(currentLanguage);
     const userTopic = await textPrompt(texts.textPrompt.topicPrompt, texts.textPrompt.topicPlaceholder);
     if (userTopic) {
       // Reemplazar [TEMA] o [TOPIC] con el tema ingresado por el usuario
@@ -1888,9 +1921,8 @@ export async function openAIWithPromptOnly(prompt, label) {
     }
   }
 
-  // Si se ha seleccionado "All AI's", mostrar confirmación antes de proceder
+  // Mostrar confirmación solo si se ha seleccionado "All AI's"
   if (currentAIModel === 'allai') {
-    const texts = getTranslation(currentLanguage);
     const confirmed = await confirmPrompt(texts.confirmPrompt.allAiMessage, 'allai');
     
     // Si el usuario cancela, no continuar
