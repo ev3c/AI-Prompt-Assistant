@@ -9,11 +9,11 @@
       "buttons": [
         {
           "label": "Resumir artículo",
-          "prompt": "Resume este artículo de Wikipedia en menos de 200 palabras, destacando los puntos clave: [pega aquí el texto]"
+          "prompt": "Resume este artículo de Wikipedia en menos de 200 palabras, destacando los puntos clave:"
         },
         {
           "label": "Resumir estilo escolar",
-          "prompt": "Haz un resumen estilo escolar (nivel secundaria/preparatoria) de este texto de Wikipedia sobre [tema]."
+          "prompt": "Haz un resumen estilo escolar (nivel secundaria/preparatoria) de este texto de Wikipedia:"
         }
       ]
     },
@@ -22,11 +22,11 @@
       "buttons": [
         {
           "label": "Explícame este texto de Wikipedia como si tuviera 12 años",
-          "prompt": "Explícame este texto de Wikipedia como si tuviera 12 años: [texto]"
+          "prompt": "Explícame este texto de Wikipedia como si tuviera 12 años:"
         },
         {
           "label": "Haz una versión sencilla y fácil de entender de esta sección de Wikipedia",
-          "prompt": "Haz una versión sencilla y fácil de entender de esta sección de Wikipedia: [texto]"
+          "prompt": "Haz una versión sencilla y fácil de entender de esta sección de Wikipedia:"
         }
       ]
     },
@@ -35,7 +35,7 @@
       "buttons": [
         {
           "label": "Reescribe este contenido de Wikipedia con tus propias palabras, evitando plagio pero manteniendo la información",
-          "prompt": "Reescribe este contenido de Wikipedia con tus propias palabras, evitando plagio pero manteniendo la información: [texto]"
+          "prompt": "Reescribe este contenido de Wikipedia con tus propias palabras, evitando plagio pero manteniendo la información:"
         },
         {
           "label": "Haz una versión original de este contenido de Wikipedia sin copiar el texto literal",
@@ -44,24 +44,19 @@
       ]
     },
     {
-      "title": "🧠 Comparar artículos o conceptos",
-      "buttons": [
-        {
-          "label": "Compara los artículos de Wikipedia sobre [tema 1] y [tema 2]. ¿En qué se parecen y en qué se diferencian?",
-          "prompt": "Compara los artículos de Wikipedia sobre [tema 1] y [tema 2]. ¿En qué se parecen y en qué se diferencian?"
-        },
-        {
-          "label": "¿Qué diferencias hay entre [tema 1] y [tema 2] según la información en Wikipedia?",
-          "prompt": "¿Qué diferencias hay entre [tema 1] y [tema 2] según la información en Wikipedia?"
-        }
-      ]
-    },
-    {
       "title": "📝 Crear esquemas o mapas conceptuales",
       "buttons": [
         {
-          "label": "A partir de este texto de Wikipedia, crea un esquema temático o un mapa conceptual de los temas principales.",
-          "prompt": "A partir de este texto de Wikipedia, crea un esquema temático o un mapa conceptual de los temas principales."
+          "label": "Crea un esquema temático",
+          "prompt": "A partir de este texto, crea un esquema temático de los temas principales."
+        },
+        {
+          "label": "Crea un mapa conceptual",
+          "prompt": "A partir de este texto, crea un mapa conceptual de los temas principales."
+        },
+        {
+          "label": "A partir de este texto, crea ...",
+          "prompt": "A partir de este texto, crea ..."
         }
       ]
     },
@@ -69,21 +64,12 @@
       "title": "💬 Generar preguntas de repaso o examen",
       "buttons": [
         {
-          "label": "Crea 10 preguntas tipo examen sobre este artículo de Wikipedia, con sus respuestas: [pegar texto]",
-          "prompt": "Crea 10 preguntas tipo examen sobre este artículo de Wikipedia, con sus respuestas: [pegar texto]"
+          "label": "Crea 10 preguntas tipo examen sobre este artículo, con sus respuestas:",
+          "prompt": "Crea 10 preguntas tipo examen sobre este artículo de Wikipedia, con sus respuestas:"
         },
         {
-          "label": "Haz preguntas tipo opción múltiple sobre el siguiente texto de Wikipedia para estudiar.",
-          "prompt": "Haz preguntas tipo opción múltiple sobre el siguiente texto de Wikipedia para estudiar."
-        }
-      ]
-    },
-    {
-      "title": "🔎 Buscar información con contexto",
-      "buttons": [
-        {
-          "label": "Explícame qué dice Wikipedia sobre [tema], y agrega contexto histórico y ejemplos si es posible.",
-          "prompt": "Explícame qué dice Wikipedia sobre [tema], y agrega contexto histórico y ejemplos si es posible."
+          "label": "Haz preguntas tipo opción múltiple para estudiar sobre el siguiente texto",
+          "prompt": "Haz preguntas tipo opción múltiple para estudiar sobre el siguiente texto"
         }
       ]
     }

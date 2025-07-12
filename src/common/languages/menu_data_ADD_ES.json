@@ -21,14 +21,6 @@
     },
     {
       "title": "📝 3a sección del menú en archivo",
-      "buttons": [
-        {"label": "Etiqueta 3.1 en el menú", "prompt": "Pregunta 3.1 a la AI:."},
-        {"label": "Etiqueta 3.2 en el menú", "prompt": "Pregunta 3.2 a la AI:."},
-        {"label": "Etiqueta 3.3 en el menú", "prompt": "Pregunta 3.3 a la AI:."}
-      ]  
-    },
-    {
-      "title": "💬 4a sección del menú en archivo",
       "translationButton": {"label": "Traduce página/texto al idioma: "},
       "translationSubmenu": [
         {"label": "🇪🇸 Español", "prompt": "Traduce esta página al español."},

@@ -63,6 +63,10 @@
         {
           "label": "Para redes sociales",
           "prompt": "Reescribe este contenido para una publicación de redes sociales."
+        },
+        {
+          "label": "A cuento corto",
+          "prompt": "Convierte este texto en un cuento corto."
         }
       ]
     }
