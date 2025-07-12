@@ -1,0 +1,95 @@
+// v1.1 alpha
+// OK cambiant titol per motorAI + "Prompt Assistant" + idiomaAI
+
+
+// OK afegir etiqueta +add+ per programa crear menús prompts
+// OK idiomaAI en color blau al menú el idiomaAI actual
+// OK afegir idiomes a translations.js
+
+// crear tots els .jason amb diferents idiomes
+
+// connectar-se bé amb totes les AI i enviar prompt correcte
+
+// versió 1.1 beta
+
+// OK afegir etiqueta +add+ per programa crear menús prompts
+
+// 11/05/2025 - 13 idiomes implementats en gairebé tots els menus del programa (encara en falten)
+// 11/05/2025 - afegida etiqueta +add+ per programa crear menús prompts
+// 11/05/2025 - cShoot.bat modificat per fer backup a ..\_backup
+
+// prompts per wikipedia en es
+// 
+
+
+////// poder carregar fitxers PDF, etc per enviar a AI
+
+// crear els prompts correctes per cada etiqueta
+
+// mirar si es pot personalitzar per negocis (advocads, que necessitin trobar informació legal, etc)
+
+// guardar els +add+ de forma remota per poder carregar-los... o com fer-ho?
+
+// crear més @prompts interactius 
+// crear @load_file per carregar fitxers
+// crear @save_file per guardar fitxers
+
+
+todo ok. 
+si urlButton pasar la url al final del prompt, 
+si clipboardButton el texto tel cliproard, 
+si bookButton el texto tel cliproard, 
+si pdfButton el texto tel cliproard, 
+si wikiButton el texto tel url, 
+si xButton el texto tel cliproard, 
+si gmailButton el texto tel cliproard,
+else url 
+
+
+Hola
+Encontré una extensión de Chrome que creo que te va a ser útil.
+Se llama 🧠 AI Prompt Assistant 
+La puedes instalar desde la chrome store en este link:
+  https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=item-share-cb
+
+Hi,
+I found a Chrome extension that I think you'll find useful.
+It's called 🧠 AI Prompt Assistant.
+You can install it from the Chrome Store at this link:
+  https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=item-share-cb
+
+
+
+
+
+
+
+  🧠 AI Prompt Assistant
+
+¡Hola! 👋 
+Encontré una extensión de Chrome que creo que te va a ser útil.
+
+Se llama AI Prompt Assistant y tiene estas características increíbles:
+• 🌐 Soporte multiidioma 
+• 📝 Editor de prompts moderno
+• 📧 Extracción de Gmail y Twitter/X
+• 📚 Soporte para libros y PDFs
+• 🎯 Interfaz intuitiva y elegante
+
+🔗 La puedes instalar gratis aquí desde la Chrome Store de Google:
+https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=whatsapp-share
+
+---
+
+Hi! 👋
+I found a Chrome extension that I think you'll find useful.
+
+It's called AI Prompt Assistant and has these amazing features:
+• 🌐 Multi-language support
+• 📝 Modern prompt editor  
+• 📧 Gmail and Twitter/X extraction
+• 📚 Support for books and PDFs
+• 🎯 Intuitive and elegant interface
+
+🔗 You can install it for free here from the Google Chrome Store:
+https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_source=whatsapp-share 
