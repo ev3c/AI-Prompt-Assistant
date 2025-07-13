@@ -1,0 +1,95 @@
+{
+  "header": {
+    "title": "E-Mail-Assistent",
+    "currentUrlPlaceholder": "Aktuelle Seite"
+  },
+  "sections": [
+    {
+      "title": "📩 Eine E-Mail von Grund auf verfassen",
+      "buttons": [
+        {
+          "label": "Professionelle E-Mail mit Vorschlag",
+          "prompt": "Verfasse eine professionelle E-Mail für [Kunde / Kollege / Unternehmen], in der ich [deine Idee oder Vorschlag] vorschlage. Der Ton sollte [formal / nahbar / enthusiastisch] sein."
+        },
+        {
+          "label": "Meeting für Demo",
+          "prompt": "Verfasse eine professionelle E-Mail für einen potentiellen Kunden, in der ich ein Meeting vorschlage, um ihm eine Demo unserer Virtual-Reality-Lösung zu zeigen."
+        }
+      ]
+    },
+    {
+      "title": "✍️ Eine bereits geschriebene E-Mail verbessern",
+      "buttons": [
+        {
+          "label": "Bestehende E-Mail verbessern",
+          "prompt": "Verbessere diese E-Mail, damit sie klarer und professioneller klingt, aber behalte die ursprüngliche Nachricht bei: "
+        },
+        {
+          "label": "E-Mail kürzen",
+          "prompt": "Mache diese E-Mail kürzer und direkter, ohne Höflichkeit oder Klarheit zu verlieren: "
+        }
+      ]
+    },
+    {
+      "title": "🎯 Follow-up E-Mail",
+      "buttons": [
+        {
+          "label": "Nachfassen ohne Antwort",
+          "prompt": "Verfasse eine höfliche und professionelle Follow-up E-Mail für jemanden, der nicht auf meinen vor [X Tagen/einer Woche] gesendeten Vorschlag geantwortet hat."
+        }
+      ]
+    },
+    {
+      "title": "🔁 Wiederholende oder Batch-E-Mails (Vorlagen)",
+      "buttons": [
+        {
+          "label": "Vorlage für potentielle Kunden",
+          "prompt": "Erstelle eine E-Mail-Vorlage zur Kontaktaufnahme mit potentiellen Kunden, die an [deinem Produkt oder Service] interessiert sind. Sie sollte kurz sein, mit einem klaren Call-to-Action."
+        }
+      ]
+    },
+    {
+      "title": "🙋‍♂️ Etwas erbitten",
+      "buttons": [
+        {
+          "label": "Etwas Spezifisches anfordern",
+          "prompt": "Verfasse eine höfliche E-Mail, um [ein Meeting / Feedback / ein Dokument / weitere Informationen] von [Name oder Personentyp] anzufordern."
+        }
+      ]
+    },
+    {
+      "title": "💬 E-Mails mit spezifischem Ton",
+      "buttons": [
+        {
+          "label": "Professionell",
+          "prompt": "Wandle diese E-Mail in eine mit professionellerem Ton um, ohne den Hauptinhalt zu ändern: "
+        },
+        {
+          "label": "Herzlich",
+          "prompt": "Wandle diese E-Mail in eine mit wärmerem Ton um, ohne den Hauptinhalt zu ändern: "
+        },
+        {
+          "label": "Inspirierend",
+          "prompt": "Wandle diese E-Mail in eine mit inspirierenderem Ton um, ohne den Hauptinhalt zu ändern: "
+        },
+        {
+          "label": "Informal aber respektvoll",
+          "prompt": "Wandle diese E-Mail in eine mit informellerem aber respektvollem Ton um, ohne den Hauptinhalt zu ändern:"
+        },
+        {
+          "label": "Bestimmt aber diplomatisch",
+          "prompt": "Wandle diese E-Mail in eine mit bestimmterem aber diplomatischem Ton um, ohne den Hauptinhalt zu ändern: "
+        }
+      ]
+    },
+    {
+      "title": "🧠 Extra-Tipp: Verwende Variablen",
+      "buttons": [
+        {
+          "label": "E-Mail mit Variablen",
+          "prompt": "Verfasse eine E-Mail für [Kundenname], in der ich ihm für sein Interesse an [Produkt] danke und ihm einen Anruf am [Tag] um [Uhrzeit] vorschlage."
+        }
+      ]
+    }
+  ]
+} 

@@ -1,38 +1,38 @@
 {
   "header": {
-    "title": "X prompt assistant",
+    "title": "X Prompt Assistant",
     "currentUrlPlaceholder": "Current page"
   },
   "sections": [
     {
       "title": "🧵 Thread Content Analysis",
       "buttons": [
-        {"label": "Summary in 3 key phrases","prompt": "Summarize this X thread in 3 key phrases."},
-        {"label": "Thread summary","prompt": "Summarize this thread:"},
-        {"label": "Thread moral or lesson","prompt": "What is the main moral or lesson from this thread?"},
-        {"label": "Summary without brands or promotions","prompt": "Create a bullet-point summary of the thread without brand mentions or promotions."},
+        {"label": "Summary in 3 key sentences","prompt": "Summarize this X thread in 3 key sentences."},
+        {"label": "X thread summary","prompt": "Summarize this thread :"},
+        {"label": "Thread moral or lesson","prompt": "What is the main moral or lesson of this thread?"},
+        {"label": "Summary without brands or promotions","prompt": "Make a bullet point summary of the thread without brand mentions or promotions."},
         {"label": "Short version for TikTok or Reels","prompt": "Create a shorter version of this thread for TikTok or Reels."},
-        {"label": "Most emotional or impactful part","prompt": "Which part of the thread has the greatest emotional impact?"}
+        {"label": "Most emotional or impactful part","prompt": "Which part of the thread has the greatest emotional charge or impact?"}
       ]
     },
     {
       "title": "💬 Comments Analysis",
       "buttons": [
-        {"label": "Most relevant or viral comments","prompt": "Extract the most relevant comments or those with the most engagement from this thread."},
-        {"label": "Classification by emotional tone","prompt": "Classify the comments as positive, negative, or ironic."},
+        {"label": "Most relevant or viral comments","prompt": "Extract the most relevant or highest engagement comments from this thread."},
+        {"label": "Classification by emotional tone","prompt": "Classify the comments between positive, negative and ironic."},
         {"label": "General summary of comments tone","prompt": "What do users think in the comments? Give me a general summary of the tone."},
-        {"label": "Repeated patterns in responses","prompt": "Are there any patterns or comments that repeat frequently?"},
-        {"label": "Top 5 creative or viral responses","prompt": "Make a top 5 of the most creative responses or those with the most viral potential."}
+        {"label": "Repeated patterns in responses","prompt": "Is there any pattern or comment that repeats a lot?"},
+        {"label": "Top 5 creative or viral responses","prompt": "Make a top 5 of most creative responses or with most viral potential."}
       ]
     },
     {
       "title": "📈 Data and Marketing",
       "buttons": [
-        {"label": "Ideas for creating similar content","prompt": "What insights can I get from this thread to create similar content?"},
-        {"label": "Hooks for future posts","prompt": "Which parts of the thread could be good hooks for future posts?"},
-        {"label": "Notable phrases as headlines","prompt": "Extract phrases that could be used as headlines or impact statements."},
-        {"label": "Predominant emotions in the thread","prompt": "What emotions dominate this thread (amazement, laughter, inspiration, criticism)?"},
-        {"label": "Ideas to improve engagement","prompt": "How would you improve this thread to get more interaction?"}
+        {"label": "Ideas to create similar content","prompt": "What insights can I extract from this thread to create similar content?"},
+        {"label": "Hooks for future posts","prompt": "What parts of the thread could be good hooks for future posts?"},
+        {"label": "Standout phrases as headlines","prompt": "Extract phrases that can be used as headlines or impact phrases."},
+        {"label": "Predominant emotions in the thread","prompt": "What emotions predominate in this thread (amazement, laughter, inspiration, criticism)?"},
+        {"label": "Ideas to improve engagement","prompt": "How would I improve this thread to get more interaction?"}
       ]
     },
     {
@@ -58,11 +58,15 @@
       "buttons": [
         {
           "label": "To presentation",
-          "prompt": "Convert this article into a slide presentation."
+          "prompt": "Convert this article into a presentation with slides."
         },
         {
           "label": "For social media",
           "prompt": "Rewrite this content for a social media post."
+        },
+        {
+          "label": "To short story",
+          "prompt": "Convert this text into a short story."
         }
       ]
     }

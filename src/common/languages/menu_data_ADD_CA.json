@@ -1,0 +1,36 @@
+{
+  "header": {
+    "title": "ADD",
+    "currentUrlPlaceholder": "Pàgina actual"
+  },
+  "sections": [
+    {
+      "title": "🔍 1a secció del menú ",
+      "buttons": [
+        {"label": "Etiqueta 1.1 al menú. (L'extensió preguntarà a l'usuari abans d'enviar el prompt)", "prompt": "Aquest és el text que preguntarà a l'usuari"},
+        {"label": "Etiqueta 1.2 al menú", "prompt": "Pregunta 1.2 a l'IA:."}     
+      ]
+    },    
+    {
+      "title": "📝 2a secció del menú a l'arxiu",
+      "buttons": [
+        {"label": "Etiqueta 2.1 al menú", "prompt": "Pregunta 2.1 a l'IA:."},
+        {"label": "Etiqueta 2.2 al menú", "prompt": "Pregunta 2.2 a l'IA:."},
+        {"label": "Etiqueta 2.3 al menú", "prompt": "Pregunta 2.3 a l'IA:."}
+      ]
+    },
+    {
+      "title": "📝 3a secció del menú a l'arxiu",
+      "translationButton": {"label": "Tradueix pàgina/text a l'idioma: "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 Espanyol", "prompt": "Tradueix aquesta pàgina a l'espanyol."},
+        {"label": "🇬🇧 Anglès", "prompt": "Tradueix aquesta pàgina a l'anglès."},
+        {"label": "xx Llenguatge", "prompt": "Tradueix aquesta pàgina al llenguatge."}
+      ],
+      "buttons": [
+        {"label": "Etiqueta 4.1 al menú", "prompt": "Pregunta 4.1 a l'IA:."},
+        {"label": "Etiqueta 4.2 al menú", "prompt": "Pregunta 4.2 a l'IA:."}
+      ]
+    }
+  ]
+} 

@@ -9,11 +9,11 @@
       "buttons": [
         {
           "label": "Summarize article",
-          "prompt": "Summarize this Wikipedia article in less than 200 words, highlighting the key points: [paste text here]"
+          "prompt": "Summarize this Wikipedia article in less than 200 words, highlighting the key points:"
         },
         {
           "label": "School-style summary",
-          "prompt": "Create a school-style summary (middle/high school level) of this Wikipedia text about [topic]."
+          "prompt": "Make a school-style summary (secondary/high school level) of this Wikipedia text:"
         }
       ]
     },
@@ -21,12 +21,12 @@
       "title": "🔍 Explain difficult concepts",
       "buttons": [
         {
-          "label": "Explain this Wikipedia text as if I were 12 years old",
-          "prompt": "Explain this Wikipedia text as if I were 12 years old: [text]"
+          "label": "Explain this Wikipedia text to me as if I were 12 years old",
+          "prompt": "Explain this Wikipedia text to me as if I were 12 years old:"
         },
         {
-          "label": "Make a simple, easy-to-understand version of this Wikipedia section",
-          "prompt": "Make a simple, easy-to-understand version of this Wikipedia section: [text]"
+          "label": "Make a simple and easy-to-understand version of this Wikipedia section",
+          "prompt": "Make a simple and easy-to-understand version of this Wikipedia section:"
         }
       ]
     },
@@ -34,25 +34,12 @@
       "title": "🔄 Paraphrase to avoid plagiarism",
       "buttons": [
         {
-          "label": "Rewrite this Wikipedia content in your own words, avoiding plagiarism but maintaining the information",
-          "prompt": "Rewrite this Wikipedia content in your own words, avoiding plagiarism but maintaining the information: [text]"
+          "label": "Rewrite this Wikipedia content in your own words, avoiding plagiarism while maintaining the information",
+          "prompt": "Rewrite this Wikipedia content in your own words, avoiding plagiarism while maintaining the information:"
         },
         {
-          "label": "Create an original version of this Wikipedia content without copying the literal text",
-          "prompt": "Create an original version of this Wikipedia content without copying the literal text."
-        }
-      ]
-    },
-    {
-      "title": "🧠 Compare articles or concepts",
-      "buttons": [
-        {
-          "label": "Compare the Wikipedia articles about [topic 1] and [topic 2]. How are they similar and how do they differ?",
-          "prompt": "Compare the Wikipedia articles about [topic 1] and [topic 2]. How are they similar and how do they differ?"
-        },
-        {
-          "label": "What are the differences between [topic 1] and [topic 2] according to the information on Wikipedia?",
-          "prompt": "What are the differences between [topic 1] and [topic 2] according to the information on Wikipedia?"
+          "label": "Make an original version of this Wikipedia content without copying the literal text",
+          "prompt": "Make an original version of this Wikipedia content without copying the literal text."
         }
       ]
     },
@@ -60,8 +47,16 @@
       "title": "📝 Create outlines or concept maps",
       "buttons": [
         {
-          "label": "Based on this Wikipedia text, create a thematic outline or concept map of the main topics.",
-          "prompt": "Based on this Wikipedia text, create a thematic outline or concept map of the main topics."
+          "label": "Create a thematic outline",
+          "prompt": "From this text, create a thematic outline of the main topics."
+        },
+        {
+          "label": "Create a concept map",
+          "prompt": "From this text, create a concept map of the main topics."
+        },
+        {
+          "label": "From this text, create ...",
+          "prompt": "From this text, create ..."
         }
       ]
     },
@@ -69,21 +64,12 @@
       "title": "💬 Generate review or exam questions",
       "buttons": [
         {
-          "label": "Create 10 exam-style questions about this Wikipedia article, with their answers: [paste text]",
-          "prompt": "Create 10 exam-style questions about this Wikipedia article, with their answers: [paste text]"
+          "label": "Create 10 exam-type questions about this article, with their answers:",
+          "prompt": "Create 10 exam-type questions about this Wikipedia article, with their answers:"
         },
         {
-          "label": "Make multiple-choice questions about the following Wikipedia text for study purposes.",
-          "prompt": "Make multiple-choice questions about the following Wikipedia text for study purposes."
-        }
-      ]
-    },
-    {
-      "title": "🔎 Search for information with context",
-      "buttons": [
-        {
-          "label": "Explain what Wikipedia says about [topic], and add historical context and examples if possible.",
-          "prompt": "Explain what Wikipedia says about [topic], and add historical context and examples if possible."
+          "label": "Make multiple choice questions to study about the following text",
+          "prompt": "Make multiple choice questions to study about the following text"
         }
       ]
     }

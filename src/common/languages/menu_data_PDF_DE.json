@@ -1,0 +1,58 @@
+{
+  "header": {
+    "title": "PDF-Prompt-Assistent",
+    "currentUrlPlaceholder": "Aktuelle PDF-Datei"
+  },
+  "sections": [
+    {
+      "title": "📄 Grundlegende PDF-Analyse",
+      "buttons": [
+        {"label": "Diese PDF zusammenfassen", "prompt": "Fassen Sie den Inhalt der Datei [PDF] zusammen"},
+        {"label": "Schlüsselpunkte extrahieren", "prompt": "Extrahieren Sie die Schlüsselpunkte und wichtigen Konzepte aus der Datei [PDF]"},
+        {"label": "Was ist das Hauptthema?", "prompt": "Was ist das Hauptthema des Dokuments [PDF]?"},
+        {"label": "Struktur analysieren", "prompt": "Analysieren und beschreiben Sie die Struktur und Organisation des Dokuments [PDF]"},
+        {"label": "Jeden Abschnitt zusammenfassen", "prompt": "Fassen Sie jeden wichtigen Abschnitt des Dokuments [PDF] zusammen"}
+      ]
+    },
+    {
+      "title": "📊 Technische Analyse",
+      "buttons": [
+        {"label": "Daten und Statistiken extrahieren", "prompt": "Extrahieren Sie die numerischen Daten, Statistiken und wichtigen Zahlen aus dem Dokument [PDF]"},
+        {"label": "Technische Terminologie erklären", "prompt": "Identifizieren und erklären Sie die technische oder spezialisierte Terminologie, die in [PDF] verwendet wird"},
+        {"label": "Methodologie identifizieren", "prompt": "Welche Methodologie wird in diesem Dokument [PDF] verwendet? Erklären Sie sie detailliert"},
+        {"label": "Gültigkeit analysieren", "prompt": "Analysieren Sie die Gültigkeit und Zuverlässigkeit der in [PDF] präsentierten Informationen"},
+        {"label": "Mit Standards vergleichen", "prompt": "Vergleichen Sie die in [PDF] präsentierten Informationen mit aktuellen Standards in diesem Bereich"}
+      ]
+    },
+    {
+      "title": "🔍 Suche und Extraktion",
+      "buttons": [
+        {"label": "Spezifische Informationen suchen", "prompt": "Suchen Sie nach Informationen über [TEMA] im Dokument [PDF]"},
+        {"label": "Alle Daten extrahieren", "prompt": "Extrahieren Sie alle wichtigen Daten und die im Dokument [PDF] erwähnte Chronologie"},
+        {"label": "Alle Referenzen auflisten", "prompt": "Listen Sie alle Referenzen, Zitate oder Quellen auf, die in [PDF] erwähnt werden"},
+        {"label": "Definitionen finden", "prompt": "Finden und extrahieren Sie alle Definitionen, die im Dokument [PDF] präsentiert werden"},
+        {"label": "Tabellen und Figuren extrahieren", "prompt": "Beschreiben Sie die Tabellen, Diagramme, Grafiken und Figuren, die in [PDF] erscheinen, und ihre Relevanz"}
+      ]
+    },
+    {
+      "title": "📝 Kritische Bewertung",
+      "buttons": [
+        {"label": "Hauptargument bewerten", "prompt": "Bewerten Sie kritisch das Hauptargument und die in [PDF] präsentierten Belege"},
+        {"label": "Vorurteile identifizieren", "prompt": "Identifizieren Sie mögliche Vorurteile, Einschränkungen oder Lücken in den Informationen von [PDF]"},
+        {"label": "Stärken und Schwächen", "prompt": "Was sind die Hauptstärken und -schwächen dieses Dokuments [PDF]?"},
+        {"label": "Perspektiven vergleichen", "prompt": "Identifizieren Sie verschiedene Perspektiven oder Standpunkte, die in [PDF] präsentiert werden"},
+        {"label": "Verbesserungen vorschlagen", "prompt": "Wie könnte die Analyse oder Präsentation der Informationen in diesem Dokument [PDF] verbessert werden?"}
+      ]
+    },
+    {
+      "title": "📋 Erweiterte Aktionen",
+      "buttons": [
+        {"label": "Prüfungsfragen erstellen", "prompt": "Erstellen Sie 10 Prüfungsfragen basierend auf dem Inhalt von [PDF], mit ihren jeweiligen richtigen Antworten"},
+        {"label": "Zusammenfassung für Studenten erstellen", "prompt": "Erstellen Sie eine Zusammenfassung für Studenten des Dokuments [PDF], wobei Sie die wichtigsten Konzepte hervorheben und sie einfach erklären"},
+        {"label": "Informationen überprüfen", "prompt": "Überprüfen Sie die Genauigkeit der in [PDF] präsentierten Schlüsselinformationen und weisen Sie auf alle Daten hin, die ungenau oder kontrovers sein könnten"},
+        {"label": "Unterstützungsmaterial erstellen", "prompt": "Erstellen Sie Unterstützungsmaterial wie Schemata, Konzeptdiagramme oder visuelle Hilfsmittel basierend auf dem Inhalt von [PDF]"},
+        {"label": "Mit anderen Quellen vergleichen", "prompt": "Vergleichen Sie den Inhalt von [PDF] mit anderen Quellen oder aktueller Literatur zum gleichen Thema"}
+      ]
+    }
+  ]
+} 

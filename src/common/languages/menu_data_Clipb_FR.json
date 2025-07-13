@@ -7,62 +7,57 @@
     {
       "title": "📝 Résumé et compréhension",
       "buttons": [
-        {"label": "Fais un résumé de la page/du texte", "prompt": "Fais un résumé de :."},
+        {"label": "Faire un résumé du texte : ", "prompt": "Faire un résumé de :"},
         {"label": "Points principaux", "prompt": "Quels sont les points principaux de cet article ?"},
-        {"label": "Résumé en 3 phrases", "prompt": "Résume cette page en 3 phrases."},
-        {"label": "Version pour enfants", "prompt": "Donne-moi une version pour enfants de ces informations."},
-        {"label": "Conclusion principale", "prompt": "Quelle est la conclusion principale de cette page ?"}
+        {"label": "Résumé en 3 phrases", "prompt": "Résumez ce texte en 3 phrases."},
+        {"label": "Résumé en X caractères", "prompt": "Résumez ce texte en X caractères."},
+        {"label": "Version pour enfants", "prompt": "Donnez-moi une version pour enfants de cette information."},
+        {"label": "Conclusion principale", "prompt": "Quelle est la conclusion principale de ce texte ?"}
       ]
     },
     {
       "title": "🔍 Analyse de contenu",
       "buttons": [
-        {"label": "Quel est le ton ?", "prompt": "Quel est le ton de cette page ? (objectif, persuasif, émotionnel, etc.)"},
-        {"label": "Arguments principaux", "prompt": "Quels sont les arguments principaux utilisés sur cette page ?"},
-        {"label": "Identifier les biais", "prompt": "Peux-tu identifier des biais dans ce texte ?"},
-        {"label": "Sources utilisées", "prompt": "Quelles sont les sources utilisées sur cette page ?"},
-        {"label": "Évaluer la fiabilité", "prompt": "Cette information est-elle fiable ? Pourquoi ou pourquoi pas ?"}
+        {"label": "Quel ton a-t-il ?", "prompt": "Quel ton a ce texte ? (objectif, persuasif, émotionnel, etc.)"},
+        {"label": "Arguments principaux", "prompt": "Quels arguments principaux sont utilisés dans ce texte ?"},
+        {"label": "Identifier les biais", "prompt": "Pouvez-vous identifier des biais dans ce texte ?"},
+        {"label": "Sources utilisées", "prompt": "Quelles sont les sources qu'utilise ce texte ?"},
+        {"label": "Évaluer la fiabilité", "prompt": "Cette information est-elle fiable ? Pourquoi oui ou pourquoi non ?"}
       ]
     },
     {
       "title": "📊 Extraction de données",
       "buttons": [
-        {"label": "Données statistiques", "prompt": "Extrais toutes les données statistiques présentes sur cette page."},
-        {"label": "Tableau récapitulatif", "prompt": "Donne-moi un tableau avec les informations les plus importantes de cet article."},
-        {"label": "Produits mentionnés", "prompt": "Énumère tous les produits mentionnés."},
-        {"label": "Entités mentionnées", "prompt": "Quels sont les noms des personnes/lieux/entreprises présents ici ?"}
-      ]
-    },
-    {
-      "title": "🤖 Interaction ou aide avec des actions",
-      "buttons": [
-        {"label": "Remplir un formulaire", "prompt": "Aide-moi à remplir ce formulaire avec mes données."},
+        {"label": "Données statistiques", "prompt": "Extrayez toutes les données statistiques qui apparaissent dans ce texte."},
+        {"label": "Tableau résumé", "prompt": "Donnez-moi un tableau avec les informations les plus importantes de ce texte."},
+        {"label": "Produits mentionnés", "prompt": "Énumérez tous les produits qui sont mentionnés."},
+        {"label": "Entités mentionnées", "prompt": "Quels sont les noms des personnes/lieux/entreprises qui apparaissent ?"},
         {"label": "Comment s'inscrire", "prompt": "Comment puis-je m'inscrire ici ?"},
-        {"label": "Infos de contact", "prompt": "Où se trouvent les informations de contact ?"},
-        {"label": "Étapes à suivre", "prompt": "Résume les étapes pour faire [action spécifique de la page]."}
+        {"label": "Info de contact", "prompt": "Où sont les informations de contact ?"}
       ]
     },
     {
       "title": "💬 Traduction ou changement de format",
-      "translationButton": {"label": "Traduire la page/le texte en : "},
+      "translationButton": {"label": "Traduire page/texte en langue : "},
       "translationSubmenu": [
-        {"label": "🇪🇸 Espagnol", "prompt": "Traduis cette page en espagnol."},
-        {"label": "🇬🇧 Anglais", "prompt": "Traduis cette page en anglais."},
-        {"label": "ca Catalan", "prompt": "Traduis cette page en catalan."},
-        {"label": "🇩🇪 Allemand", "prompt": "Traduis cette page en allemand."},
-        {"label": "🇫🇷 Français", "prompt": "Traduis cette page en français."}, 
-        {"label": "🇮🇹 Italien", "prompt": "Traduis cette page en italien."},
-        {"label": "🇵🇹 Portugais", "prompt": "Traduis cette page en portugais."},
-        {"label": "🇨🇳 Chinois", "prompt": "Traduis cette page en chinois."},
-        {"label": "🇷🇺 Russe", "prompt": "Traduis cette page en russe."},
-        {"label": "🇸🇦 Arabe", "prompt": "Traduis cette page en arabe."},
-        {"label": "🇯🇵 Japonais", "prompt": "Traduis cette page en japonais."},
-        {"label": "🇮🇳 Hindi", "prompt": "Traduis cette page en hindi."},
-        {"label": "🇰🇷 Coréen", "prompt": "Traduis cette page en coréen."}
+        {"label": "🇪🇸 Espagnol", "prompt": "Traduisez cette page en espagnol."},
+        {"label": "🇬🇧 Anglais", "prompt": "Traduisez cette page en anglais."},
+        {"label": "ca Catalan", "prompt": "Traduisez cette page en catalan."},
+        {"label": "🇩🇪 Allemand", "prompt": "Traduisez cette page en allemand."},
+        {"label": "🇫🇷 Français", "prompt": "Traduisez cette page en français."}, 
+        {"label": "🇮🇹 Italien", "prompt": "Traduisez cette page en italien."},
+        {"label": "🇵🇹 Portugais", "prompt": "Traduisez cette page en portugais."},
+        {"label": "🇨🇳 Chinois", "prompt": "Traduisez cette page en chinois."},
+        {"label": "🇷🇺 Russe", "prompt": "Traduisez cette page en russe."},
+        {"label": "🇸🇦 Arabe", "prompt": "Traduisez cette page en arabe."},
+        {"label": "🇯🇵 Japonais", "prompt": "Traduisez cette page en japonais."},
+        {"label": "🇮🇳 Hindi", "prompt": "Traduisez cette page en hindi."},
+        {"label": "🇰🇷 Coréen", "prompt": "Traduisez cette page en coréen."}
       ],
       "buttons": [
-        {"label": "En présentation", "prompt": "Transforme cet article en présentation avec des diapositives."},
-        {"label": "Pour les réseaux sociaux", "prompt": "Réécris ce contenu pour une publication sur les réseaux sociaux."}
+        {"label": "En présentation", "prompt": "Convertissez ce texte en présentation avec diapositives."},
+        {"label": "Pour réseaux sociaux", "prompt": "Réécrivez ce contenu pour une publication sur les réseaux sociaux."},
+        {"label": "En nouvelle courte", "prompt": "Convertissez ce texte en nouvelle courte."}
       ]
     }
   ]

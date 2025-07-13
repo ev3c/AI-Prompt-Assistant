@@ -1,0 +1,36 @@
+{
+  "header": {
+    "title": "ADD",
+    "currentUrlPlaceholder": "Page actuelle"
+  },
+  "sections": [
+    {
+      "title": "🔍 1ère section du menu ",
+      "buttons": [
+        {"label": "Étiquette 1.1 dans le menu. (L'extension demandera à l'utilisateur avant d'envoyer le prompt)", "prompt": "Ceci est le texte qui demandera à l'utilisateur"},
+        {"label": "Étiquette 1.2 dans le menu", "prompt": "Question 1.2 à l'IA:."}     
+      ]
+    },    
+    {
+      "title": "📝 2ème section du menu dans le fichier",
+      "buttons": [
+        {"label": "Étiquette 2.1 dans le menu", "prompt": "Question 2.1 à l'IA:."},
+        {"label": "Étiquette 2.2 dans le menu", "prompt": "Question 2.2 à l'IA:."},
+        {"label": "Étiquette 2.3 dans le menu", "prompt": "Question 2.3 à l'IA:."}
+      ]
+    },
+    {
+      "title": "📝 3ème section du menu dans le fichier",
+      "translationButton": {"label": "Traduire la page/texte en langue : "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 Espagnol", "prompt": "Traduis cette page en espagnol."},
+        {"label": "🇬🇧 Anglais", "prompt": "Traduis cette page en anglais."},
+        {"label": "xx Langue", "prompt": "Traduis cette page en langue."}
+      ],
+      "buttons": [
+        {"label": "Étiquette 4.1 dans le menu", "prompt": "Question 4.1 à l'IA:."},
+        {"label": "Étiquette 4.2 dans le menu", "prompt": "Question 4.2 à l'IA:."}
+      ]
+    }
+  ]
+} 

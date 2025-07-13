@@ -1,0 +1,74 @@
+{
+  "header": {
+    "title": "Assistente di suggerimenti X",
+    "currentUrlPlaceholder": "Pagina attuale"
+  },
+  "sections": [
+    {
+      "title": "🧵 Analisi del Contenuto del Thread",
+      "buttons": [
+        {"label": "Riassunto in 3 frasi chiave","prompt": "Riassumi questo thread di X in 3 frasi chiave."},
+        {"label": "Riassunto del thread di X","prompt": "Riassumi questo thread :"},
+        {"label": "Morale o insegnamento del thread","prompt": "Qual è la morale o l'insegnamento principale di questo thread?"},
+        {"label": "Riassunto senza marchi o promozioni","prompt": "Fai un riassunto a punti del thread senza menzioni di marchio o promozioni."},
+        {"label": "Versione corta per TikTok o Reels","prompt": "Crea una versione più corta di questo thread per TikTok o Reels."},
+        {"label": "Parte più emotiva o d'impatto","prompt": "Quale parte del thread ha maggiore carica emotiva o impatto?"}
+      ]
+    },
+    {
+      "title": "💬 Analisi dei Commenti",
+      "buttons": [
+        {"label": "Commenti più rilevanti o virali","prompt": "Estrai i commenti più rilevanti o con più engagement da questo thread."},
+        {"label": "Classificazione per tono emotivo","prompt": "Classifica i commenti tra positivi, negativi e ironici."},
+        {"label": "Riassunto generale del tono dei commenti","prompt": "Cosa pensano gli utenti nei commenti? Dammi un riassunto generale del tono."},
+        {"label": "Pattern ripetuti nelle risposte","prompt": "C'è qualche pattern o commento che si ripete molto?"},
+        {"label": "Top 5 di risposte creative o virali","prompt": "Fai una top 5 di risposte più creative o con più potenziale virale."}
+      ]
+    },
+    {
+      "title": "📈 Dati e Marketing",
+      "buttons": [
+        {"label": "Idee per creare contenuto simile","prompt": "Quali insights posso trarre da questo thread per creare contenuto simile?"},
+        {"label": "Hook per futuri post","prompt": "Quali parti del thread potrebbero essere buoni hook per futuri post?"},
+        {"label": "Frasi evidenti come titoli","prompt": "Estrai frasi che possano essere usate come titoli o frasi d'impatto."},
+        {"label": "Emozioni predominanti nel thread","prompt": "Quali emozioni predominano in questo thread (stupore, risate, ispirazione, critica)?"},
+        {"label": "Idee per migliorare l'engagement","prompt": "Come migliorerei questo thread perché abbia più interazione?"}
+      ]
+    },
+    {
+      "title": "💬 Traduzione o cambio di formato",
+      "translationButton": {
+        "label": "Traduci pagina/testo nella lingua: "
+      },
+      "translationSubmenu": [
+        {"label": "🇪🇸 Spagnolo", "prompt": "Traduci questa pagina in spagnolo."},
+        {"label": "🇬🇧 Inglese", "prompt": "Traduci questa pagina in inglese."},
+        {"label": "ca Catalano", "prompt": "Traduci questa pagina in catalano."},
+        {"label": "🇩🇪 Tedesco", "prompt": "Traduci questa pagina in tedesco."},
+        {"label": "🇫🇷 Francese", "prompt": "Traduci questa pagina in francese."}, 
+        {"label": "🇮🇹 Italiano", "prompt": "Traduci questa pagina in italiano."},
+        {"label": "🇵🇹 Portoghese", "prompt": "Traduci questa pagina in portoghese."},
+        {"label": "🇨🇳 Cinese", "prompt": "Traduci questa pagina in cinese."},
+        {"label": "🇷🇺 Russo", "prompt": "Traduci questa pagina in russo."},
+        {"label": "🇸🇦 Arabo", "prompt": "Traduci questa pagina in arabo."},
+        {"label": "🇯🇵 Giapponese", "prompt": "Traduci questa pagina in giapponese."},
+        {"label": "🇮🇳 Hindi", "prompt": "Traduci questa pagina in hindi."},
+        {"label": "🇰🇷 Coreano", "prompt": "Traduci questa pagina in coreano."}
+      ],
+      "buttons": [
+        {
+          "label": "A presentazione",
+          "prompt": "Converti questo articolo in una presentazione con diapositive."
+        },
+        {
+          "label": "Per social media",
+          "prompt": "Riscrivi questo contenuto per un post sui social media."
+        },
+        {
+          "label": "A racconto breve",
+          "prompt": "Converti questo testo in un racconto breve."
+        }
+      ]
+    }
+  ]
+} 

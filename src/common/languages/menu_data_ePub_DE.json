@@ -7,39 +7,38 @@
     {
       "title": "📘 Allgemeines Verständnis",
       "buttons": [
-        {"label": "Was ist die Zusammenfassung des Buches?", "prompt": "Was ist die Zusammenfassung des Buches?"},
-        {"label": "Wer sind die Hauptfiguren und wie sind sie?", "prompt": "Wer sind die Hauptfiguren und wie sind sie?"},
-        {"label": "Welcher zentrale Konflikt wird dargestellt?", "prompt": "Welcher zentrale Konflikt wird dargestellt?"},
-        {"label": "Wie endet die Geschichte?", "prompt": "Wie endet die Geschichte?"},
-        {"label": "Welche Elemente der Handlung sind am wichtigsten?", "prompt": "Welche Elemente der Handlung sind am wichtigsten?"}
+        {"label": "Zusammenfassung des Buches", "prompt": "Was ist die Zusammenfassung des Buches?"},
+        {"label": "Hauptcharaktere und wie sie sind", "prompt": "Wer sind die Hauptcharaktere und wie sind sie?"},
+        {"label": "Welcher zentrale Konflikt wird präsentiert", "prompt": "Welcher zentrale Konflikt wird präsentiert?"},
+        {"label": "Ende der Geschichte", "prompt": "Wie endet die Geschichte?"},
+        {"label": "Wichtigste Elemente der Handlung", "prompt": "Welche Elemente der Handlung sind am wichtigsten?"}
       ]
     },
     {
       "title": "🎭 Literarische Analyse",
       "buttons": [
-        {"label": "Was ist das Hauptthema des Buches?", "prompt": "Was ist das Hauptthema des Buches?"},
-        {"label": "Welche Symbolik wird verwendet und was bedeutet sie?", "prompt": "Welche Symbolik wird verwendet und was bedeutet sie?"},
-        {"label": "Wie entwickelt sich der Protagonist?", "prompt": "Wie entwickelt sich der Protagonist?"},
-        {"label": "Welche Botschaft vermittelt der Autor?", "prompt": "Welche Botschaft vermittelt der Autor?"},
-        {"label": "Was repräsentiert diese Figur oder Szene?", "prompt": "Was repräsentiert diese Figur oder Szene?"}
+        {"label": "Hauptthema des Buches", "prompt": "Was ist das Hauptthema des Buches?"},
+        {"label": "Symbolik und was sie bedeutet", "prompt": "Welche Symbolik wird verwendet und was bedeutet sie?"},
+        {"label": "Wie sich der Protagonist entwickelt", "prompt": "Wie entwickelt sich der Protagonist?"},
+        {"label": "Welche Botschaft der Autor vermittelt", "prompt": "Welche Botschaft vermittelt der Autor?"},
+        {"label": "Was der Charakter oder die Szene repräsentiert", "prompt": "Was repräsentiert der Charakter oder die Szene?"}
       ]
     },
     {
       "title": "🧠 Philosophische Interpretation",
       "buttons": [
-        {"label": "Welche Kritik übt das Buch an der Gesellschaft?", "prompt": "Welche Kritik übt das Buch an der Gesellschaft?"},
-        {"label": "Wie bezieht sich diese Geschichte auf das reale Leben?", "prompt": "Wie bezieht sich diese Geschichte auf das reale Leben?"},
-        {"label": "Welche Lehren können heute angewendet werden?", "prompt": "Welche Lehren können heute angewendet werden?"},
-        {"label": "Was bedeutet das Ende?", "prompt": "Was bedeutet das Ende?"}
+        {"label": "Welche Kritik das Buch an der Gesellschaft übt", "prompt": "Welche Kritik übt das Buch an der Gesellschaft?"},
+        {"label": "Wie sich diese Geschichte auf das echte Leben bezieht", "prompt": "Wie bezieht sich diese Geschichte auf das echte Leben?"},
+        {"label": "Welche Lehren heute angewendet werden können", "prompt": "Welche Lehren können heute angewendet werden?"},
+        {"label": "Welche Bedeutung das Ende hat", "prompt": "Welche Bedeutung hat das Ende?"}
       ]
     },
     {
       "title": "✍️ Aufsätze und Aufgaben",
       "buttons": [
-        {"label": "Wie verhält sich dieses Buch zu anderen Texten/Literatur?", "prompt": "Wie verhält sich dieses Buch zu anderen Texten/Literatur?"},
-        {"label": "Welche Werte oder Ideen werden in dem Werk gefördert?", "prompt": "Welche Werte oder Ideen werden in dem Werk gefördert?"},
-        {"label": "Wie wird Sprache verwendet, um Emotion oder Wirkung zu erzeugen?", "prompt": "Wie wird Sprache verwendet, um Emotion oder Wirkung zu erzeugen?"},
-        {"label": "Welche literarischen Stilmittel kommen vor und wofür sind sie?", "prompt": "Welche literarischen Stilmittel kommen vor und wofür sind sie?"}
+        {"label": "Welche Werte oder Ideen im Werk gefördert werden", "prompt": "Welche Werte oder Ideen werden im Werk gefördert?"},
+        {"label": "Wie Sprache verwendet wird, um Emotion oder Wirkung zu erzeugen", "prompt": "Wie wird Sprache verwendet, um Emotion oder Wirkung zu erzeugen?"},
+        {"label": "Welche literarischen Figuren erscheinen und wofür", "prompt": "Welche literarischen Figuren erscheinen und wofür?"} 
       ]
     }
   ]

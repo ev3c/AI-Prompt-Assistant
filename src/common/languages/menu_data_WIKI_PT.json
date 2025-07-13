@@ -1,0 +1,77 @@
+{
+  "header": {
+    "title": "Assistente de prompts IA",
+    "currentUrlPlaceholder": "Página atual"
+  },
+  "sections": [
+    {
+      "title": "📚 Resumir artigos da Wikipedia",
+      "buttons": [
+        {
+          "label": "Resumir artigo",
+          "prompt": "Resuma este artigo da Wikipedia em menos de 200 palavras, destacando os pontos principais:"
+        },
+        {
+          "label": "Resumir estilo escolar",
+          "prompt": "Faça um resumo estilo escolar (nível secundário/ensino médio) deste texto da Wikipedia:"
+        }
+      ]
+    },
+    {
+      "title": "🔍 Explicar conceitos difíceis",
+      "buttons": [
+        {
+          "label": "Explique-me este texto da Wikipedia como se eu tivesse 12 anos",
+          "prompt": "Explique-me este texto da Wikipedia como se eu tivesse 12 anos:"
+        },
+        {
+          "label": "Faça uma versão simples e fácil de entender desta seção da Wikipedia",
+          "prompt": "Faça uma versão simples e fácil de entender desta seção da Wikipedia:"
+        }
+      ]
+    },
+    {
+      "title": "🔄 Parafrasear para evitar plágio",
+      "buttons": [
+        {
+          "label": "Reescreva este conteúdo da Wikipedia com suas próprias palavras, evitando plágio mas mantendo a informação",
+          "prompt": "Reescreva este conteúdo da Wikipedia com suas próprias palavras, evitando plágio mas mantendo a informação:"
+        },
+        {
+          "label": "Faça uma versão original deste conteúdo da Wikipedia sem copiar o texto literal",
+          "prompt": "Faça uma versão original deste conteúdo da Wikipedia sem copiar o texto literal."
+        }
+      ]
+    },
+    {
+      "title": "📝 Criar esquemas ou mapas conceituais",
+      "buttons": [
+        {
+          "label": "Criar um esquema temático",
+          "prompt": "A partir deste texto, crie um esquema temático dos tópicos principais."
+        },
+        {
+          "label": "Criar um mapa conceitual",
+          "prompt": "A partir deste texto, crie um mapa conceitual dos tópicos principais."
+        },
+        {
+          "label": "A partir deste texto, crie ...",
+          "prompt": "A partir deste texto, crie ..."
+        }
+      ]
+    },
+    {
+      "title": "💬 Gerar perguntas de revisão ou exame",
+      "buttons": [
+        {
+          "label": "Crie 10 perguntas tipo exame sobre este artigo, com suas respostas:",
+          "prompt": "Crie 10 perguntas tipo exame sobre este artigo da Wikipedia, com suas respostas:"
+        },
+        {
+          "label": "Faça perguntas tipo múltipla escolha para estudar sobre o seguinte texto",
+          "prompt": "Faça perguntas tipo múltipla escolha para estudar sobre o seguinte texto"
+        }
+      ]
+    }
+  ]
+} 

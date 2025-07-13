@@ -1,0 +1,95 @@
+{
+  "header": {
+    "title": "Assistent d'emails",
+    "currentUrlPlaceholder": "Pàgina actual"
+  },
+  "sections": [
+    {
+      "title": "📩 Redactar un email des de zero",
+      "buttons": [
+        {
+          "label": "Email professional amb proposta",
+          "prompt": "Redacta un email professional per a [client / col·lega / empresa] on li proposo [la teva idea o proposta]. El to ha de ser [formal / proper / entusiasta]."
+        },
+        {
+          "label": "Reunió per demo",
+          "prompt": "Redacta un email professional per a un possible client en què proposo una reunió per mostrar-li una demo de la nostra solució de realitat virtual."
+        }
+      ]
+    },
+    {
+      "title": "✍️ Millorar un email que ja has escrit",
+      "buttons": [
+        {
+          "label": "Millorar email existent",
+          "prompt": "Millora aquest email perquè soni més clar i professional, però manté el missatge original: "
+        },
+        {
+          "label": "Escurçar email",
+          "prompt": "Fes aquest email més breu i directe, però sense perdre cortesia ni claredat: "
+        }
+      ]
+    },
+    {
+      "title": "🎯 Email de seguiment",
+      "buttons": [
+        {
+          "label": "Seguiment sense resposta",
+          "prompt": "Redacta un email de seguiment amable i professional per a algú que no ha respost a la meva proposta enviada fa [X dies/una setmana]."
+        }
+      ]
+    },
+    {
+      "title": "🔁 Emails repetitius o en lot (plantilles)",
+      "buttons": [
+        {
+          "label": "Plantilla per clients potencials",
+          "prompt": "Crea una plantilla d'email per contactar amb potencials clients interessats en [el teu producte o servei]. Ha de ser breu, amb una crida a l'acció clara."
+        }
+      ]
+    },
+    {
+      "title": "🙋‍♂️ Demanar alguna cosa",
+      "buttons": [
+        {
+          "label": "Sol·licitar alguna cosa específica",
+          "prompt": "Redacta un email cortès per sol·licitar [una reunió / feedback / un document / més informació] a [nom o tipus de persona]."
+        }
+      ]
+    },
+    {
+      "title": "💬 Emails amb to específic",
+      "buttons": [
+        {
+          "label": "Professional",
+          "prompt": "Converteix aquest email en un amb to més professional, sense canviar el contingut principal: "
+        },
+        {
+          "label": "Cordial",
+          "prompt": "Converteix aquest email en un amb to més càlid, sense canviar el contingut principal: "
+        },
+        {
+          "label": "Inspirador",
+          "prompt": "Converteix aquest email en un amb to més inspirador, sense canviar el contingut principal: "
+        },
+        {
+          "label": "Informal però respectuós",
+          "prompt": "Converteix aquest email en un amb to més informal però respectuós, sense canviar el contingut principal:"
+        },
+        {
+          "label": "Assertiu però diplomàtic",
+          "prompt": "Converteix aquest email en un amb to més assertiu però diplomàtic, sense canviar el contingut principal: "
+        }
+      ]
+    },
+    {
+      "title": "🧠 Consell extra: Usa variables",
+      "buttons": [
+        {
+          "label": "Email amb variables",
+          "prompt": "Redacta un email per a [nom_del_client] en què li agraeixo el seu interès en [producte] i li proposo una trucada el [dia] a les [hora]."
+        }
+      ]
+    }
+  ]
+} 

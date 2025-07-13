@@ -1,0 +1,36 @@
+{
+  "header": {
+    "title": "ADD",
+    "currentUrlPlaceholder": "현재 페이지"
+  },
+  "sections": [
+    {
+      "title": "🔍 메뉴의 첫 번째 섹션 ",
+      "buttons": [
+        {"label": "메뉴의 라벨 1.1. (확장 프로그램이 프롬프트를 보내기 전에 사용자에게 물어볼 것입니다)", "prompt": "이것은 사용자에게 물어볼 텍스트입니다"},
+        {"label": "메뉴의 라벨 1.2", "prompt": "AI에게 질문 1.2:."}     
+      ]
+    },    
+    {
+      "title": "📝 파일의 메뉴 두 번째 섹션",
+      "buttons": [
+        {"label": "메뉴의 라벨 2.1", "prompt": "AI에게 질문 2.1:."},
+        {"label": "메뉴의 라벨 2.2", "prompt": "AI에게 질문 2.2:."},
+        {"label": "메뉴의 라벨 2.3", "prompt": "AI에게 질문 2.3:."}
+      ]
+    },
+    {
+      "title": "📝 파일의 메뉴 세 번째 섹션",
+      "translationButton": {"label": "페이지/텍스트를 언어로 번역: "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 스페인어", "prompt": "이 페이지를 스페인어로 번역해주세요."},
+        {"label": "🇬🇧 영어", "prompt": "이 페이지를 영어로 번역해주세요."},
+        {"label": "xx 언어", "prompt": "이 페이지를 언어로 번역해주세요."}
+      ],
+      "buttons": [
+        {"label": "메뉴의 라벨 4.1", "prompt": "AI에게 질문 4.1:."},
+        {"label": "메뉴의 라벨 4.2", "prompt": "AI에게 질문 4.2:."}
+      ]
+    }
+  ]
+} 

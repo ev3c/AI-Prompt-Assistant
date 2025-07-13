@@ -1,0 +1,77 @@
+{
+  "header": {
+    "title": "KI-Prompt-Assistent",
+    "currentUrlPlaceholder": "Aktuelle Seite"
+  },
+  "sections": [
+    {
+      "title": "📚 Wikipedia-Artikel zusammenfassen",
+      "buttons": [
+        {
+          "label": "Artikel zusammenfassen",
+          "prompt": "Fassen Sie diesen Wikipedia-Artikel in weniger als 200 Wörtern zusammen und heben Sie die wichtigsten Punkte hervor:"
+        },
+        {
+          "label": "Schulstil-Zusammenfassung",
+          "prompt": "Erstellen Sie eine Zusammenfassung im Schulstil (Sekundarstufe/Gymnasium) dieses Wikipedia-Textes:"
+        }
+      ]
+    },
+    {
+      "title": "🔍 Schwierige Konzepte erklären",
+      "buttons": [
+        {
+          "label": "Erklären Sie mir diesen Wikipedia-Text, als wäre ich 12 Jahre alt",
+          "prompt": "Erklären Sie mir diesen Wikipedia-Text, als wäre ich 12 Jahre alt:"
+        },
+        {
+          "label": "Erstellen Sie eine einfache und leicht verständliche Version dieses Wikipedia-Abschnitts",
+          "prompt": "Erstellen Sie eine einfache und leicht verständliche Version dieses Wikipedia-Abschnitts:"
+        }
+      ]
+    },
+    {
+      "title": "🔄 Umschreiben zur Plagiatsvermeidung",
+      "buttons": [
+        {
+          "label": "Schreiben Sie diesen Wikipedia-Inhalt mit eigenen Worten um, vermeiden Sie Plagiate, behalten Sie aber die Informationen bei",
+          "prompt": "Schreiben Sie diesen Wikipedia-Inhalt mit eigenen Worten um, vermeiden Sie Plagiate, behalten Sie aber die Informationen bei:"
+        },
+        {
+          "label": "Erstellen Sie eine originelle Version dieses Wikipedia-Inhalts ohne wörtliches Kopieren des Textes",
+          "prompt": "Erstellen Sie eine originelle Version dieses Wikipedia-Inhalts ohne wörtliches Kopieren des Textes."
+        }
+      ]
+    },
+    {
+      "title": "📝 Schemata oder Concept Maps erstellen",
+      "buttons": [
+        {
+          "label": "Thematisches Schema erstellen",
+          "prompt": "Erstellen Sie aus diesem Text ein thematisches Schema der Hauptthemen."
+        },
+        {
+          "label": "Concept Map erstellen",
+          "prompt": "Erstellen Sie aus diesem Text eine Concept Map der Hauptthemen."
+        },
+        {
+          "label": "Aus diesem Text erstellen Sie ...",
+          "prompt": "Aus diesem Text erstellen Sie ..."
+        }
+      ]
+    },
+    {
+      "title": "💬 Wiederholungs- oder Prüfungsfragen generieren",
+      "buttons": [
+        {
+          "label": "Erstellen Sie 10 prüfungsähnliche Fragen zu diesem Artikel mit Antworten:",
+          "prompt": "Erstellen Sie 10 prüfungsähnliche Fragen zu diesem Wikipedia-Artikel mit Antworten:"
+        },
+        {
+          "label": "Erstellen Sie Multiple-Choice-Fragen zum Lernen über den folgenden Text",
+          "prompt": "Erstellen Sie Multiple-Choice-Fragen zum Lernen über den folgenden Text"
+        }
+      ]
+    }
+  ]
+} 

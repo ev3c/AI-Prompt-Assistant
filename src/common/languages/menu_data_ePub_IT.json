@@ -1,45 +1,44 @@
 {
   "header": {
-    "title": "Assistente prompt ePub",
+    "title": "Assistente di suggerimenti ePub",
     "currentUrlPlaceholder": "Pagina attuale"
   },
   "sections": [
     {
       "title": "📘 Comprensione generale",
       "buttons": [
-        {"label": "Qual è il riassunto del libro?", "prompt": "Qual è il riassunto del libro?"},
-        {"label": "Chi sono i personaggi principali e come sono?", "prompt": "Chi sono i personaggi principali e come sono?"},
-        {"label": "Quale conflitto centrale viene presentato?", "prompt": "Quale conflitto centrale viene presentato?"},
-        {"label": "Come finisce la storia?", "prompt": "Come finisce la storia?"},
-        {"label": "Quali elementi della trama sono più importanti?", "prompt": "Quali elementi della trama sono più importanti?"}
+        {"label": "Riassunto del libro", "prompt": "Qual è il riassunto del libro?"},
+        {"label": "Personaggi principali e come sono", "prompt": "Chi sono i personaggi principali e come sono?"},
+        {"label": "Quale conflitto centrale è presentato", "prompt": "Quale conflitto centrale è presentato?"},
+        {"label": "Fine della storia", "prompt": "Come finisce la storia?"},
+        {"label": "Elementi della trama più importanti", "prompt": "Quali elementi della trama sono più importanti?"}
       ]
     },
     {
       "title": "🎭 Analisi letteraria",
       "buttons": [
-        {"label": "Qual è il tema principale del libro?", "prompt": "Qual è il tema principale del libro?"},
-        {"label": "Quali simbolismi vengono utilizzati e cosa significano?", "prompt": "Quali simbolismi vengono utilizzati e cosa significano?"},
-        {"label": "Come si evolve il protagonista?", "prompt": "Come si evolve il protagonista?"},
-        {"label": "Quale messaggio trasmette l'autore?", "prompt": "Quale messaggio trasmette l'autore?"},
-        {"label": "Cosa rappresenta questo personaggio o scena?", "prompt": "Cosa rappresenta questo personaggio o scena?"}
+        {"label": "Tema principale del libro", "prompt": "Qual è il tema principale del libro?"},
+        {"label": "Simbolismi e cosa significano", "prompt": "Quali simbolismi vengono usati e cosa significano?"},
+        {"label": "Come evolve il protagonista", "prompt": "Come evolve il protagonista?"},
+        {"label": "Quale messaggio trasmette l'autore", "prompt": "Quale messaggio trasmette l'autore?"},
+        {"label": "Cosa rappresenta il personaggio o la scena", "prompt": "Cosa rappresenta il personaggio o la scena?"}
       ]
     },
     {
       "title": "🧠 Interpretazione filosofica",
       "buttons": [
-        {"label": "Quale critica fa il libro alla società?", "prompt": "Quale critica fa il libro alla società?"},
-        {"label": "Come si collega questa storia alla vita reale?", "prompt": "Come si collega questa storia alla vita reale?"},
-        {"label": "Quali lezioni si possono applicare oggi?", "prompt": "Quali lezioni si possono applicare oggi?"},
-        {"label": "Qual è il significato del finale?", "prompt": "Qual è il significato del finale?"}
+        {"label": "Che critica fa il libro alla società", "prompt": "Che critica fa il libro alla società?"},
+        {"label": "Come si relaziona questa storia con la vita reale", "prompt": "Come si relaziona questa storia con la vita reale?"},
+        {"label": "Quali insegnamenti si possono applicare oggi", "prompt": "Quali insegnamenti si possono applicare oggi?"},
+        {"label": "Che significato ha il finale", "prompt": "Che significato ha il finale?"}
       ]
     },
     {
       "title": "✍️ Saggi e compiti",
       "buttons": [
-        {"label": "Come si relaziona questo libro con altri testi/letteratura?", "prompt": "Come si relaziona questo libro con altri testi/letteratura?"},
-        {"label": "Quali valori o idee vengono promossi nell'opera?", "prompt": "Quali valori o idee vengono promossi nell'opera?"},
-        {"label": "Come viene usato il linguaggio per creare emozione o impatto?", "prompt": "Come viene usato il linguaggio per creare emozione o impatto?"},
-        {"label": "Quali figure letterarie appaiono e a cosa servono?", "prompt": "Quali figure letterarie appaiono e a cosa servono?"}
+        {"label": "Quali valori o idee vengono promossi nell'opera", "prompt": "Quali valori o idee vengono promossi nell'opera?"},
+        {"label": "Come si usa il linguaggio per creare emozione o impatto", "prompt": "Come si usa il linguaggio per creare emozione o impatto?"},
+        {"label": "Quali figure letterarie appaiono e perché", "prompt": "Quali figure letterarie appaiono e perché?"} 
       ]
     }
   ]

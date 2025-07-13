@@ -1,44 +1,44 @@
 {
   "header": {
-    "title": "X prompt assistant",
+    "title": "Assistant de suggestions X",
     "currentUrlPlaceholder": "Page actuelle"
   },
   "sections": [
     {
-      "title": "🧵 Analyse du contenu du fil",
+      "title": "🧵 Analyse du Contenu du Fil",
       "buttons": [
         {"label": "Résumé en 3 phrases clés","prompt": "Résume ce fil X en 3 phrases clés."},
         {"label": "Résumé du fil X","prompt": "Résume ce fil :"},
-        {"label": "Morale ou enseignement du fil","prompt": "Quelle est la morale ou l'enseignement principal de ce fil ?"},
-        {"label": "Résumé sans marques ni promotions","prompt": "Fais un résumé à puces du fil sans mentions de marque ni promotions."},
+        {"label": "Morale ou enseignement du fil","prompt": "Quelle est la morale ou l'enseignement principal de ce fil?"},
+        {"label": "Résumé sans marques ni promotions","prompt": "Fais un résumé à puces du fil sans mentions de marque ou promotions."},
         {"label": "Version courte pour TikTok ou Reels","prompt": "Crée une version plus courte de ce fil pour TikTok ou Reels."},
-        {"label": "Partie la plus émouvante ou percutante","prompt": "Quelle partie du fil a la plus grande charge émotionnelle ou impact ?"}
+        {"label": "Partie la plus émotionnelle ou percutante","prompt": "Quelle partie du fil a la plus grande charge émotionnelle ou impact?"}
       ]
     },
     {
-      "title": "💬 Analyse des commentaires",
+      "title": "💬 Analyse des Commentaires",
       "buttons": [
         {"label": "Commentaires les plus pertinents ou viraux","prompt": "Extrais les commentaires les plus pertinents ou avec le plus d'engagement de ce fil."},
         {"label": "Classification par ton émotionnel","prompt": "Classe les commentaires entre positifs, négatifs et ironiques."},
-        {"label": "Résumé général du ton des commentaires","prompt": "Que pensent les utilisateurs dans les commentaires ? Donne-moi un résumé général du ton."},
-        {"label": "Schémas répétés dans les réponses","prompt": "Y a-t-il des schémas ou des commentaires qui se répètent beaucoup ?"},
+        {"label": "Résumé général du ton des commentaires","prompt": "Que pensent les utilisateurs dans les commentaires? Donne-moi un résumé général du ton."},
+        {"label": "Motifs répétés dans les réponses","prompt": "Y a-t-il un motif ou commentaire qui se répète beaucoup?"},
         {"label": "Top 5 des réponses créatives ou virales","prompt": "Fais un top 5 des réponses les plus créatives ou avec le plus de potentiel viral."}
       ]
     },
     {
       "title": "📈 Données et Marketing",
       "buttons": [
-        {"label": "Idées pour créer un contenu similaire","prompt": "Quels insights puis-je tirer de ce fil pour créer un contenu similaire ?"},
-        {"label": "Accroches pour futurs posts","prompt": "Quelles parties du fil pourraient être de bonnes accroches pour de futurs posts ?"},
-        {"label": "Phrases remarquables comme titres","prompt": "Extrais des phrases qui peuvent être utilisées comme titres ou phrases d'impact."},
-        {"label": "Émotions prédominantes dans le fil","prompt": "Quelles émotions prédominent dans ce fil (étonnement, rire, inspiration, critique) ?"},
-        {"label": "Idées pour améliorer l'engagement","prompt": "Comment améliorerais-tu ce fil pour qu'il ait plus d'interaction ?"}
+        {"label": "Idées pour créer du contenu similaire","prompt": "Quels insights puis-je tirer de ce fil pour créer du contenu similaire?"},
+        {"label": "Accroches pour futurs posts","prompt": "Quelles parties du fil pourraient être de bonnes accroches pour de futurs posts?"},
+        {"label": "Phrases marquantes comme titres","prompt": "Extrais des phrases qui peuvent être utilisées comme titres ou phrases d'impact."},
+        {"label": "Émotions prédominantes dans le fil","prompt": "Quelles émotions prédominent dans ce fil (étonnement, rire, inspiration, critique)?"},
+        {"label": "Idées pour améliorer l'engagement","prompt": "Comment améliorerais-je ce fil pour qu'il ait plus d'interaction?"}
       ]
     },
     {
       "title": "💬 Traduction ou changement de format",
       "translationButton": {
-        "label": "Traduis la page/texte en langue : "
+        "label": "Traduis page/texte vers la langue : "
       },
       "translationSubmenu": [
         {"label": "🇪🇸 Espagnol", "prompt": "Traduis cette page en espagnol."},
@@ -58,11 +58,15 @@
       "buttons": [
         {
           "label": "En présentation",
-          "prompt": "Convertis cet article en une présentation avec diapositives."
+          "prompt": "Convertis cet article en présentation avec diapositives."
         },
         {
           "label": "Pour réseaux sociaux",
-          "prompt": "Réécris ce contenu pour une publication sur les réseaux sociaux."
+          "prompt": "Réécris ce contenu pour une publication de réseaux sociaux."
+        },
+        {
+          "label": "En nouvelle courte",
+          "prompt": "Convertis ce texte en nouvelle courte."
         }
       ]
     }

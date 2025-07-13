@@ -1,0 +1,95 @@
+{
+  "header": {
+    "title": "Assistant d'emails",
+    "currentUrlPlaceholder": "Page actuelle"
+  },
+  "sections": [
+    {
+      "title": "📩 Rédiger un email depuis zéro",
+      "buttons": [
+        {
+          "label": "Email professionnel avec proposition",
+          "prompt": "Rédige un email professionnel pour [client / collègue / entreprise] où je propose [ton idée ou proposition]. Le ton doit être [formel / chaleureux / enthousiaste]."
+        },
+        {
+          "label": "Réunion pour démo",
+          "prompt": "Rédige un email professionnel pour un client potentiel dans lequel je propose une réunion pour lui montrer une démo de notre solution de réalité virtuelle."
+        }
+      ]
+    },
+    {
+      "title": "✍️ Améliorer un email déjà écrit",
+      "buttons": [
+        {
+          "label": "Améliorer email existant",
+          "prompt": "Améliore cet email pour qu'il sonne plus clair et professionnel, mais garde le message original : "
+        },
+        {
+          "label": "Raccourcir email",
+          "prompt": "Rends cet email plus bref et direct, mais sans perdre la courtoisie ni la clarté : "
+        }
+      ]
+    },
+    {
+      "title": "🎯 Email de suivi",
+      "buttons": [
+        {
+          "label": "Suivi sans réponse",
+          "prompt": "Rédige un email de suivi aimable et professionnel pour quelqu'un qui n'a pas répondu à ma proposition envoyée il y a [X jours/une semaine]."
+        }
+      ]
+    },
+    {
+      "title": "🔁 Emails répétitifs ou en lot (modèles)",
+      "buttons": [
+        {
+          "label": "Modèle pour clients potentiels",
+          "prompt": "Crée un modèle d'email pour contacter des clients potentiels intéressés par [ton produit ou service]. Il doit être bref, avec un appel à l'action clair."
+        }
+      ]
+    },
+    {
+      "title": "🙋‍♂️ Demander quelque chose",
+      "buttons": [
+        {
+          "label": "Solliciter quelque chose de spécifique",
+          "prompt": "Rédige un email courtois pour demander [une réunion / des retours / un document / plus d'informations] à [nom ou type de personne]."
+        }
+      ]
+    },
+    {
+      "title": "💬 Emails avec ton spécifique",
+      "buttons": [
+        {
+          "label": "Professionnel",
+          "prompt": "Convertis cet email en un avec un ton plus professionnel, sans changer le contenu principal : "
+        },
+        {
+          "label": "Cordial",
+          "prompt": "Convertis cet email en un avec un ton plus chaleureux, sans changer le contenu principal : "
+        },
+        {
+          "label": "Inspirant",
+          "prompt": "Convertis cet email en un avec un ton plus inspirant, sans changer le contenu principal : "
+        },
+        {
+          "label": "Informel mais respectueux",
+          "prompt": "Convertis cet email en un avec un ton plus informel mais respectueux, sans changer le contenu principal :"
+        },
+        {
+          "label": "Assertif mais diplomatique",
+          "prompt": "Convertis cet email en un avec un ton plus assertif mais diplomatique, sans changer le contenu principal : "
+        }
+      ]
+    },
+    {
+      "title": "🧠 Conseil extra : Utilise des variables",
+      "buttons": [
+        {
+          "label": "Email avec variables",
+          "prompt": "Rédige un email pour [nom_du_client] dans lequel je le remercie pour son intérêt pour [produit] et lui propose un appel le [jour] à [heure]."
+        }
+      ]
+    }
+  ]
+} 

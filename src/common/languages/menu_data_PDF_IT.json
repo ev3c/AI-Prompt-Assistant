@@ -1,0 +1,58 @@
+{
+  "header": {
+    "title": "Assistente prompt PDF",
+    "currentUrlPlaceholder": "File PDF corrente"
+  },
+  "sections": [
+    {
+      "title": "📄 Analisi base del PDF",
+      "buttons": [
+        {"label": "Riassumi questo PDF", "prompt": "Riassumi il contenuto del file [PDF]"},
+        {"label": "Estrai i punti chiave", "prompt": "Estrai i punti chiave e i concetti importanti dal file [PDF]"},
+        {"label": "Qual è l'argomento principale?", "prompt": "Qual è l'argomento principale del documento [PDF]?"},
+        {"label": "Analizza la struttura", "prompt": "Analizza e descrivi la struttura e l'organizzazione del documento [PDF]"},
+        {"label": "Riassumi ogni sezione", "prompt": "Riassumi ogni sezione importante del documento [PDF]"}
+      ]
+    },
+    {
+      "title": "📊 Analisi tecnica",
+      "buttons": [
+        {"label": "Estrai dati e statistiche", "prompt": "Estrai i dati numerici, le statistiche e le cifre importanti dal documento [PDF]"},
+        {"label": "Spiega terminologia tecnica", "prompt": "Identifica e spiega la terminologia tecnica o specializzata utilizzata in [PDF]"},
+        {"label": "Identifica metodologia", "prompt": "Quale metodologia viene utilizzata in questo documento [PDF]? Spiegala dettagliatamente"},
+        {"label": "Analizza la validità", "prompt": "Analizza la validità e l'affidabilità delle informazioni presentate in [PDF]"},
+        {"label": "Confronta con standard", "prompt": "Confronta le informazioni presentate in [PDF] con gli standard attuali in questo campo"}
+      ]
+    },
+    {
+      "title": "🔍 Ricerca ed estrazione",
+      "buttons": [
+        {"label": "Cerca informazioni specifiche", "prompt": "Cerca informazioni su [TEMA] nel documento [PDF]"},
+        {"label": "Estrai tutte le date", "prompt": "Estrai tutte le date importanti e la cronologia menzionata nel documento [PDF]"},
+        {"label": "Elenca tutti i riferimenti", "prompt": "Elenca tutti i riferimenti, le citazioni o le fonti menzionate in [PDF]"},
+        {"label": "Trova definizioni", "prompt": "Trova ed estrai tutte le definizioni presentate nel documento [PDF]"},
+        {"label": "Estrai tabelle e figure", "prompt": "Descrivi le tabelle, i grafici, i diagrammi e le figure che appaiono in [PDF] e la loro rilevanza"}
+      ]
+    },
+    {
+      "title": "📝 Valutazione critica",
+      "buttons": [
+        {"label": "Valuta argomento principale", "prompt": "Valuta criticamente l'argomento principale e le prove presentate in [PDF]"},
+        {"label": "Identifica pregiudizi", "prompt": "Identifica possibili pregiudizi, limitazioni o lacune nelle informazioni di [PDF]"},
+        {"label": "Punti di forza e debolezza", "prompt": "Quali sono i principali punti di forza e debolezza di questo documento [PDF]?"},
+        {"label": "Confronta prospettive", "prompt": "Identifica diverse prospettive o punti di vista presentati in [PDF]"},
+        {"label": "Suggerisci miglioramenti", "prompt": "Come si potrebbe migliorare l'analisi o la presentazione delle informazioni in questo documento [PDF]?"}
+      ]
+    },
+    {
+      "title": "📋 Azioni avanzate",
+      "buttons": [
+        {"label": "Elabora domande d'esame", "prompt": "Crea 10 domande d'esame basate sul contenuto di [PDF], con le rispettive risposte corrette"},
+        {"label": "Genera riassunto per studenti", "prompt": "Genera un riassunto per studenti del documento [PDF], evidenziando i concetti più importanti e spiegandoli in modo semplice"},
+        {"label": "Verifica le informazioni", "prompt": "Verifica l'accuratezza delle informazioni chiave presentate in [PDF], segnalando qualsiasi dato che potrebbe essere inaccurato o controverso"},
+        {"label": "Crea materiale di supporto", "prompt": "Crea materiale di supporto come schemi, diagrammi concettuali o aiuti visivi basati sul contenuto di [PDF]"},
+        {"label": "Confronta con altre fonti", "prompt": "Confronta il contenuto di [PDF] con altre fonti o letteratura recente sullo stesso argomento"}
+      ]
+    }
+  ]
+} 

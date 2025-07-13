@@ -319,38 +319,33 @@ export async function loadMenuData(language = 'es') {
     // Determinar el sufijo del idioma
     let langSuffix = 'ES'; // Español por defecto
 
-    // Lógica especial para contexto ADD: solo ES o GB
-    if (context === '+add+') {
-      langSuffix = (language === 'es') ? 'ES' : 'GB';
-    } else {
-      // Lógica normal para otros contextos
-      if (language === 'gb') {
-        langSuffix = 'GB';
-      } else if (language === 'fr') {
-        langSuffix = 'FR';
-      } else if (language === 'ca') {
-        langSuffix = 'CA';
-      } else if (language === 'de') {
-        langSuffix = 'DE';
-      } else if (language === 'it') {
-        langSuffix = 'IT';
-      } else if (language === 'pt') {
-        langSuffix = 'PT';
-      } else if (language === 'ja') {
-        langSuffix = 'JA';
-      } else if (language === 'zh') {
-        langSuffix = 'ZH';
-      } else if (language === 'ru') {
-        langSuffix = 'RU';
-      } else if (language === 'ar') {
-        langSuffix = 'AR';
-      } else if (language === 'kr') {
-        langSuffix = 'KR';
-      } else if (language === 'hi') {
-        langSuffix = 'HI';
-      } else if (language === 'es') {
-        langSuffix = 'ES';
-      }
+    // Lógica para todos los contextos (incluido ADD)
+    if (language === 'gb') {
+      langSuffix = 'GB';
+    } else if (language === 'fr') {
+      langSuffix = 'FR';
+    } else if (language === 'ca') {
+      langSuffix = 'CA';
+    } else if (language === 'de') {
+      langSuffix = 'DE';
+    } else if (language === 'it') {
+      langSuffix = 'IT';
+    } else if (language === 'pt') {
+      langSuffix = 'PT';
+    } else if (language === 'ja') {
+      langSuffix = 'JA';
+    } else if (language === 'zh') {
+      langSuffix = 'ZH';
+    } else if (language === 'ru') {
+      langSuffix = 'RU';
+    } else if (language === 'ar') {
+      langSuffix = 'AR';
+    } else if (language === 'kr') {
+      langSuffix = 'KR';
+    } else if (language === 'hi') {
+      langSuffix = 'HI';
+    } else if (language === 'es') {
+      langSuffix = 'ES';
     }
 
     // Generar el nombre del archivo con la carpeta /src/common/languages/

@@ -1,0 +1,77 @@
+{
+  "header": {
+    "title": "Assistente prompt IA",
+    "currentUrlPlaceholder": "Pagina corrente"
+  },
+  "sections": [
+    {
+      "title": "📚 Riassumere articoli di Wikipedia",
+      "buttons": [
+        {
+          "label": "Riassumere articolo",
+          "prompt": "Riassumi questo articolo di Wikipedia in meno di 200 parole, evidenziando i punti chiave:"
+        },
+        {
+          "label": "Riassunto stile scolastico",
+          "prompt": "Fai un riassunto in stile scolastico (livello secondario/superiore) di questo testo di Wikipedia:"
+        }
+      ]
+    },
+    {
+      "title": "🔍 Spiegare concetti difficili",
+      "buttons": [
+        {
+          "label": "Spiegami questo testo di Wikipedia come se avessi 12 anni",
+          "prompt": "Spiegami questo testo di Wikipedia come se avessi 12 anni:"
+        },
+        {
+          "label": "Fai una versione semplice e facile da capire di questa sezione di Wikipedia",
+          "prompt": "Fai una versione semplice e facile da capire di questa sezione di Wikipedia:"
+        }
+      ]
+    },
+    {
+      "title": "🔄 Parafrasare per evitare il plagio",
+      "buttons": [
+        {
+          "label": "Riscrivi questo contenuto di Wikipedia con parole tue, evitando il plagio ma mantenendo le informazioni",
+          "prompt": "Riscrivi questo contenuto di Wikipedia con parole tue, evitando il plagio ma mantenendo le informazioni:"
+        },
+        {
+          "label": "Fai una versione originale di questo contenuto di Wikipedia senza copiare il testo letterale",
+          "prompt": "Fai una versione originale di questo contenuto di Wikipedia senza copiare il testo letterale."
+        }
+      ]
+    },
+    {
+      "title": "📝 Creare schemi o mappe concettuali",
+      "buttons": [
+        {
+          "label": "Crea uno schema tematico",
+          "prompt": "Da questo testo, crea uno schema tematico degli argomenti principali."
+        },
+        {
+          "label": "Crea una mappa concettuale",
+          "prompt": "Da questo testo, crea una mappa concettuale degli argomenti principali."
+        },
+        {
+          "label": "Da questo testo, crea ...",
+          "prompt": "Da questo testo, crea ..."
+        }
+      ]
+    },
+    {
+      "title": "💬 Generare domande di ripasso o esame",
+      "buttons": [
+        {
+          "label": "Crea 10 domande tipo esame su questo articolo, con le loro risposte:",
+          "prompt": "Crea 10 domande tipo esame su questo articolo di Wikipedia, con le loro risposte:"
+        },
+        {
+          "label": "Fai domande a scelta multipla per studiare sul seguente testo",
+          "prompt": "Fai domande a scelta multipla per studiare sul seguente testo"
+        }
+      ]
+    }
+  ]
+} 

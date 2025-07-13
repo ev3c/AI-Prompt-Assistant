@@ -1,0 +1,58 @@
+{
+  "header": {
+    "title": "Assistent de prompts per PDF",
+    "currentUrlPlaceholder": "Arxiu PDF actual"
+  },
+  "sections": [
+    {
+      "title": "📄 Anàlisi bàsica de PDF",
+      "buttons": [
+        {"label": "Resume aquest PDF", "prompt": "Resume el contingut de l'arxiu [PDF]"},
+        {"label": "Extreu els punts clau", "prompt": "Extreu els punts clau i conceptes importants de l'arxiu [PDF]"},
+        {"label": "Quin és el tema principal?", "prompt": "Quin és el tema principal del document [PDF]?"},
+        {"label": "Analitza l'estructura", "prompt": "Analitza i descriu l'estructura i organització del document [PDF]"},
+        {"label": "Resume cada secció", "prompt": "Resume cada secció important del document [PDF]"}
+      ]
+    },
+    {
+      "title": "📊 Anàlisi tècnica",
+      "buttons": [
+        {"label": "Extreu dades i estadístiques", "prompt": "Extreu les dades numèriques, estadístiques i xifres importants del document [PDF]"},
+        {"label": "Explica terminologia tècnica", "prompt": "Identifica i explica la terminologia tècnica o especialitzada utilitzada en [PDF]"},
+        {"label": "Identifica metodologia", "prompt": "Quina metodologia s'utilitza en aquest document [PDF]? Explica-la detalladament"},
+        {"label": "Analitza la validesa", "prompt": "Analitza la validesa i fiabilitat de la informació presentada en [PDF]"},
+        {"label": "Compara amb estàndards", "prompt": "Compara la informació presentada en [PDF] amb els estàndards actuals en aquest camp"}
+      ]
+    },
+    {
+      "title": "🔍 Cerca i extracció",
+      "buttons": [
+        {"label": "Busca informació específica", "prompt": "Busca informació sobre [TEMA] en el document [PDF]"},
+        {"label": "Extreu totes les dates", "prompt": "Extreu totes les dates importants i la cronologia esmentada en el document [PDF]"},
+        {"label": "Llista totes les referències", "prompt": "Llista totes les referències, cites o fonts esmentades en [PDF]"},
+        {"label": "Troba definicions", "prompt": "Troba i extreu totes les definicions presentades en el document [PDF]"},
+        {"label": "Extreu taules i figures", "prompt": "Descriu les taules, gràfics, diagrames i figures que apareixen en [PDF] i la seva rellevància"}
+      ]
+    },
+    {
+      "title": "📝 Avaluació crítica",
+      "buttons": [
+        {"label": "Avalua argument principal", "prompt": "Avalua críticament l'argument principal i l'evidència presentada en [PDF]"},
+        {"label": "Identifica biaixos", "prompt": "Identifica possibles biaixos, limitacions o buits en la informació de [PDF]"},
+        {"label": "Fortaleses i debilitats", "prompt": "Quines són les principals fortaleses i debilitats d'aquest document [PDF]?"},
+        {"label": "Compara perspectives", "prompt": "Identifica diferents perspectives o punts de vista presentats en [PDF]"},
+        {"label": "Suggereix millores", "prompt": "Com es podria millorar l'anàlisi o la presentació d'informació en aquest document [PDF]?"}
+      ]
+    },
+    {
+      "title": "📋 Accions avançades",
+      "buttons": [
+        {"label": "Elabora preguntes d'examen", "prompt": "Crea 10 preguntes d'examen basades en el contingut de [PDF], amb les seves respectives respostes correctes"},
+        {"label": "Genera resum per estudiants", "prompt": "Genera un resum per estudiants del document [PDF], destacat els conceptes més importants i explicant-los de manera senzilla"},
+        {"label": "Verifica la informació", "prompt": "Verifica la precisió de la informació clau presentada en [PDF], assenyalant qualsevol dada que pugui ser inexacta o controvertida"},
+        {"label": "Crea material de suport", "prompt": "Crea material de suport com esquemes, diagrames conceptuals o ajudes visuals basades en el contingut de [PDF]"},
+        {"label": "Compara amb altres fonts", "prompt": "Compara el contingut de [PDF] amb altres fonts o literatura recent sobre el mateix tema"}
+      ]
+    }
+  ]
+} 

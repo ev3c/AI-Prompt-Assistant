@@ -1,0 +1,58 @@
+{
+  "header": {
+    "title": "Assistente de prompts PDF",
+    "currentUrlPlaceholder": "Arquivo PDF atual"
+  },
+  "sections": [
+    {
+      "title": "📄 Análise básica do PDF",
+      "buttons": [
+        {"label": "Resumir este PDF", "prompt": "Resuma o conteúdo do arquivo [PDF]"},
+        {"label": "Extrair pontos-chave", "prompt": "Extraia os pontos-chave e conceitos importantes do arquivo [PDF]"},
+        {"label": "Qual é o tema principal?", "prompt": "Qual é o tema principal do documento [PDF]?"},
+        {"label": "Analisar estrutura", "prompt": "Analise e descreva a estrutura e organização do documento [PDF]"},
+        {"label": "Resumir cada seção", "prompt": "Resuma cada seção importante do documento [PDF]"}
+      ]
+    },
+    {
+      "title": "📊 Análise técnica",
+      "buttons": [
+        {"label": "Extrair dados e estatísticas", "prompt": "Extraia os dados numéricos, estatísticas e cifras importantes do documento [PDF]"},
+        {"label": "Explicar terminologia técnica", "prompt": "Identifique e explique a terminologia técnica ou especializada utilizada em [PDF]"},
+        {"label": "Identificar metodologia", "prompt": "Que metodologia é utilizada neste documento [PDF]? Explique-a detalhadamente"},
+        {"label": "Analisar validade", "prompt": "Analise a validade e confiabilidade das informações apresentadas em [PDF]"},
+        {"label": "Comparar com padrões", "prompt": "Compare as informações apresentadas em [PDF] com os padrões atuais neste campo"}
+      ]
+    },
+    {
+      "title": "🔍 Busca e extração",
+      "buttons": [
+        {"label": "Buscar informações específicas", "prompt": "Busque informações sobre [TEMA] no documento [PDF]"},
+        {"label": "Extrair todas as datas", "prompt": "Extraia todas as datas importantes e a cronologia mencionada no documento [PDF]"},
+        {"label": "Listar todas as referências", "prompt": "Liste todas as referências, citações ou fontes mencionadas em [PDF]"},
+        {"label": "Encontrar definições", "prompt": "Encontre e extraia todas as definições apresentadas no documento [PDF]"},
+        {"label": "Extrair tabelas e figuras", "prompt": "Descreva as tabelas, gráficos, diagramas e figuras que aparecem em [PDF] e sua relevância"}
+      ]
+    },
+    {
+      "title": "📝 Avaliação crítica",
+      "buttons": [
+        {"label": "Avaliar argumento principal", "prompt": "Avalie criticamente o argumento principal e as evidências apresentadas em [PDF]"},
+        {"label": "Identificar vieses", "prompt": "Identifique possíveis vieses, limitações ou lacunas nas informações de [PDF]"},
+        {"label": "Pontos fortes e fracos", "prompt": "Quais são os principais pontos fortes e fracos deste documento [PDF]?"},
+        {"label": "Comparar perspectivas", "prompt": "Identifique diferentes perspectivas ou pontos de vista apresentados em [PDF]"},
+        {"label": "Sugerir melhorias", "prompt": "Como poderia ser melhorada a análise ou apresentação de informações neste documento [PDF]?"}
+      ]
+    },
+    {
+      "title": "📋 Ações avançadas",
+      "buttons": [
+        {"label": "Elaborar questões de exame", "prompt": "Crie 10 questões de exame baseadas no conteúdo de [PDF], com suas respectivas respostas corretas"},
+        {"label": "Gerar resumo para estudantes", "prompt": "Gere um resumo para estudantes do documento [PDF], destacando os conceitos mais importantes e explicando-os de forma simples"},
+        {"label": "Verificar informações", "prompt": "Verifique a precisão das informações-chave apresentadas em [PDF], sinalizando qualquer dado que possa ser impreciso ou controverso"},
+        {"label": "Criar material de apoio", "prompt": "Crie material de apoio como esquemas, diagramas conceituais ou ajudas visuais baseadas no conteúdo de [PDF]"},
+        {"label": "Comparar com outras fontes", "prompt": "Compare o conteúdo de [PDF] com outras fontes ou literatura recente sobre o mesmo tema"}
+      ]
+    }
+  ]
+} 

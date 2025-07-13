@@ -1,0 +1,36 @@
+{
+  "header": {
+    "title": "ADD",
+    "currentUrlPlaceholder": "Aktuelle Seite"
+  },
+  "sections": [
+    {
+      "title": "🔍 1. Menübereich ",
+      "buttons": [
+        {"label": "Bezeichnung 1.1 im Menü. (Die Erweiterung fragt den Benutzer vor dem Senden des Prompts)", "prompt": "Dies ist der Text, der den Benutzer fragen wird"},
+        {"label": "Bezeichnung 1.2 im Menü", "prompt": "Frage 1.2 an die KI:."}     
+      ]
+    },    
+    {
+      "title": "📝 2. Menübereich in der Datei",
+      "buttons": [
+        {"label": "Bezeichnung 2.1 im Menü", "prompt": "Frage 2.1 an die KI:."},
+        {"label": "Bezeichnung 2.2 im Menü", "prompt": "Frage 2.2 an die KI:."},
+        {"label": "Bezeichnung 2.3 im Menü", "prompt": "Frage 2.3 an die KI:."}
+      ]
+    },
+    {
+      "title": "📝 3. Menübereich in der Datei",
+      "translationButton": {"label": "Seite/Text in die Sprache übersetzen: "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 Spanisch", "prompt": "Übersetze diese Seite ins Spanische."},
+        {"label": "🇬🇧 Englisch", "prompt": "Übersetze diese Seite ins Englische."},
+        {"label": "xx Sprache", "prompt": "Übersetze diese Seite in die Sprache."}
+      ],
+      "buttons": [
+        {"label": "Bezeichnung 4.1 im Menü", "prompt": "Frage 4.1 an die KI:."},
+        {"label": "Bezeichnung 4.2 im Menü", "prompt": "Frage 4.2 an die KI:."}
+      ]
+    }
+  ]
+} 

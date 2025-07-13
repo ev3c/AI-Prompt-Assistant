@@ -1,0 +1,36 @@
+{
+  "header": {
+    "title": "ADD",
+    "currentUrlPlaceholder": "Pagina corrente"
+  },
+  "sections": [
+    {
+      "title": "🔍 1a sezione del menu ",
+      "buttons": [
+        {"label": "Etichetta 1.1 nel menu. (L'estensione chiederà all'utente prima di inviare il prompt)", "prompt": "Questo è il testo che chiederà all'utente"},
+        {"label": "Etichetta 1.2 nel menu", "prompt": "Domanda 1.2 all'AI:."}     
+      ]
+    },    
+    {
+      "title": "📝 2a sezione del menu nel file",
+      "buttons": [
+        {"label": "Etichetta 2.1 nel menu", "prompt": "Domanda 2.1 all'AI:."},
+        {"label": "Etichetta 2.2 nel menu", "prompt": "Domanda 2.2 all'AI:."},
+        {"label": "Etichetta 2.3 nel menu", "prompt": "Domanda 2.3 all'AI:."}
+      ]
+    },
+    {
+      "title": "📝 3a sezione del menu nel file",
+      "translationButton": {"label": "Traduci pagina/testo in lingua: "},
+      "translationSubmenu": [
+        {"label": "🇪🇸 Spagnolo", "prompt": "Traduci questa pagina in spagnolo."},
+        {"label": "🇬🇧 Inglese", "prompt": "Traduci questa pagina in inglese."},
+        {"label": "xx Lingua", "prompt": "Traduci questa pagina in lingua."}
+      ],
+      "buttons": [
+        {"label": "Etichetta 4.1 nel menu", "prompt": "Domanda 4.1 all'AI:."},
+        {"label": "Etichetta 4.2 nel menu", "prompt": "Domanda 4.2 all'AI:."}
+      ]
+    }
+  ]
+} 

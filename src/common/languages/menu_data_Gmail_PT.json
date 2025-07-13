@@ -1,0 +1,95 @@
+{
+  "header": {
+    "title": "Assistente de emails",
+    "currentUrlPlaceholder": "Página atual"
+  },
+  "sections": [
+    {
+      "title": "📩 Redigir um email do zero",
+      "buttons": [
+        {
+          "label": "Email profissional com proposta",
+          "prompt": "Redija um email profissional para [cliente / colega / empresa] onde proponho [sua ideia ou proposta]. O tom deve ser [formal / caloroso / entusiasmado]."
+        },
+        {
+          "label": "Reunião para demo",
+          "prompt": "Redija um email profissional para um cliente em potencial no qual proponho uma reunião para mostrar-lhe uma demo da nossa solução de realidade virtual."
+        }
+      ]
+    },
+    {
+      "title": "✍️ Melhorar um email já escrito",
+      "buttons": [
+        {
+          "label": "Melhorar email existente",
+          "prompt": "Melhore este email para soar mais claro e profissional, mas mantenha a mensagem original: "
+        },
+        {
+          "label": "Encurtar email",
+          "prompt": "Torne este email mais breve e direto, mas sem perder cortesia ou clareza: "
+        }
+      ]
+    },
+    {
+      "title": "🎯 Email de acompanhamento",
+      "buttons": [
+        {
+          "label": "Acompanhamento sem resposta",
+          "prompt": "Redija um email de acompanhamento gentil e profissional para alguém que não respondeu à minha proposta enviada há [X dias/uma semana]."
+        }
+      ]
+    },
+    {
+      "title": "🔁 Emails repetitivos ou em lote (templates)",
+      "buttons": [
+        {
+          "label": "Template para clientes em potencial",
+          "prompt": "Crie um template de email para contatar clientes em potencial interessados em [seu produto ou serviço]. Deve ser breve, com uma chamada para ação clara."
+        }
+      ]
+    },
+    {
+      "title": "🙋‍♂️ Pedir algo",
+      "buttons": [
+        {
+          "label": "Solicitar algo específico",
+          "prompt": "Redija um email cortês para solicitar [uma reunião / feedback / um documento / mais informações] de [nome ou tipo de pessoa]."
+        }
+      ]
+    },
+    {
+      "title": "💬 Emails com tom específico",
+      "buttons": [
+        {
+          "label": "Profissional",
+          "prompt": "Converta este email em um com tom mais profissional, sem alterar o conteúdo principal: "
+        },
+        {
+          "label": "Cordial",
+          "prompt": "Converta este email em um com tom mais caloroso, sem alterar o conteúdo principal: "
+        },
+        {
+          "label": "Inspirador",
+          "prompt": "Converta este email em um com tom mais inspirador, sem alterar o conteúdo principal: "
+        },
+        {
+          "label": "Informal mas respeitoso",
+          "prompt": "Converta este email em um com tom mais informal mas respeitoso, sem alterar o conteúdo principal:"
+        },
+        {
+          "label": "Assertivo mas diplomático",
+          "prompt": "Converta este email em um com tom mais assertivo mas diplomático, sem alterar o conteúdo principal: "
+        }
+      ]
+    },
+    {
+      "title": "🧠 Dica extra: Use variáveis",
+      "buttons": [
+        {
+          "label": "Email com variáveis",
+          "prompt": "Redija um email para [nome_do_cliente] agradecendo seu interesse em [produto] e propondo uma chamada no [dia] às [hora]."
+        }
+      ]
+    }
+  ]
+} 

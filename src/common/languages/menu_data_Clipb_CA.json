@@ -1,45 +1,39 @@
 {
   "header": {
-    "title": "AI prompt assistant",
+    "title": "Assistent de prompts d'IA",
     "currentUrlPlaceholder": "Pàgina actual"
   },
   "sections": [
     {
       "title": "📝 Resum i comprensió",
       "buttons": [
-        {"label": "Fes un resum de pàgina/text", "prompt": "Fes un resum de:"},
+        {"label": "Fes un resum del text: ", "prompt": "Fes un resum de:"},
         {"label": "Punts principals", "prompt": "Quins són els punts principals d'aquest article?"},
-        {"label": "Resum en 3 frases", "prompt": "Resumeix aquesta pàgina en 3 frases."},
-        {"label": "Versió per a nens", "prompt": "Dóna'm una versió per a nens d'aquesta informació."},
-        {"label": "Conclusió principal", "prompt": "Quina és la conclusió principal d'aquesta pàgina?"}
+        {"label": "Resum en 3 frases", "prompt": "Resume aquest text en 3 frases."},
+        {"label": "Resum en X caràcters", "prompt": "Resume aquest text en X caràcters."},
+        {"label": "Versió per a nens", "prompt": "Dona'm una versió per a nens d'aquesta informació."},
+        {"label": "Conclusió principal", "prompt": "Quina és la conclusió principal d'aquest text?"}
       ]
     },
     {
       "title": "🔍 Anàlisi de contingut",
       "buttons": [
-        {"label": "Quin to té?", "prompt": "Quin to té aquesta pàgina? (objectiu, persuasiu, emocional, etc.)"},
-        {"label": "Arguments principals", "prompt": "Quins arguments principals s'utilitzen en aquesta pàgina?"},
+        {"label": "Quin to té?", "prompt": "Quin to té aquest text? (objectiu, persuasiu, emocional, etc.)"},
+        {"label": "Arguments principals", "prompt": "Quins arguments principals s'usen en aquest text?"},
         {"label": "Identificar biaixos", "prompt": "Pots identificar algun biaix en aquest text?"},
-        {"label": "Fonts utilitzades", "prompt": "Quines són les fonts que utilitza aquesta pàgina?"},
-        {"label": "Avaluar fiabilitat", "prompt": "Aquesta informació és fiable? Per què sí o per què no?"}
+        {"label": "Fonts utilitzades", "prompt": "Quines són les fonts que usa aquest text?"},
+        {"label": "Avaluar confiabilitat", "prompt": "És confiable aquesta informació? Per què sí o per què no?"}
       ]
     },
     {
       "title": "📊 Extracció de dades",
       "buttons": [
-        {"label": "Dades estadístiques", "prompt": "Extreu totes les dades estadístiques que apareixen en aquesta pàgina."},
-        {"label": "Taula resum", "prompt": "Dóna'm una taula amb la informació més important d'aquest article."},
-        {"label": "Productes esmentats", "prompt": "Enumera tots els productes que s'esmenten."},
-        {"label": "Entitats esmentades", "prompt": "Quins són els noms de les persones/llocs/empreses que apareixen aquí?"}
-      ]
-    },
-    {
-      "title": "🤖 Interacció o ajuda amb accions",
-      "buttons": [
-        {"label": "Emplenar formulari", "prompt": "Ajuda'm a emplenar aquest formulari amb les meves dades."},
+        {"label": "Dades estadístiques", "prompt": "Extreu totes les dades estadístiques que apareixen en aquest text."},
+        {"label": "Taula resum", "prompt": "Dona'm una taula amb la informació més important d'aquest text."},
+        {"label": "Productes esmentats", "prompt": "Enumera tots els productes que es mencionen."},
+        {"label": "Entitats esmentades", "prompt": "Quins són els noms de les persones/llocs/empreses que apareixen?"},
         {"label": "Com registrar-se", "prompt": "Com puc registrar-me aquí?"},
-        {"label": "Info de contacte", "prompt": "On està la informació de contacte?"},
-        {"label": "Passos d'acció", "prompt": "Resumeix els passos per fer [acció específica de la pàgina]."}
+        {"label": "Info de contacte", "prompt": "On està la informació de contacte?"}
       ]
     },
     {
@@ -61,8 +55,9 @@
         {"label": "🇰🇷 Coreà", "prompt": "Tradueix aquesta pàgina al coreà."}
       ],
       "buttons": [
-        {"label": "A presentació", "prompt": "Converteix aquest article en una presentació amb diapositives."},
-        {"label": "Per a xarxes socials", "prompt": "Reescriu aquest contingut per a una publicació de xarxes socials."}
+        {"label": "A presentació", "prompt": "Converteix aquest text en una presentació amb diapositives."},
+        {"label": "Per a xarxes socials", "prompt": "Reescriu aquest contingut per a una publicació de xarxes socials."},
+        {"label": "A conte curt", "prompt": "Converteix aquest text en un conte curt."}
       ]
     }
   ]

@@ -1,0 +1,74 @@
+{
+  "header": {
+    "title": "X Prompt-Assistent",
+    "currentUrlPlaceholder": "Aktuelle Seite"
+  },
+  "sections": [
+    {
+      "title": "🧵 Analyse des Thread-Inhalts",
+      "buttons": [
+        {"label": "Zusammenfassung in 3 Kernaussagen","prompt": "Fasse diesen X-Thread in 3 Kernaussagen zusammen."},
+        {"label": "Zusammenfassung des X-Threads","prompt": "Fasse diesen Thread zusammen :"},
+        {"label": "Moral oder Lehre des Threads","prompt": "Was ist die Moral oder Hauptlehre dieses Threads?"},
+        {"label": "Zusammenfassung ohne Marken oder Werbung","prompt": "Erstelle eine Stichpunkt-Zusammenfassung des Threads ohne Markenerwähnungen oder Werbung."},
+        {"label": "Kurze Version für TikTok oder Reels","prompt": "Erstelle eine kürzere Version dieses Threads für TikTok oder Reels."},
+        {"label": "Emotionalster oder eindrucksvollster Teil","prompt": "Welcher Teil des Threads hat die stärkste emotionale Ladung oder Wirkung?"}
+      ]
+    },
+    {
+      "title": "💬 Kommentar-Analyse",
+      "buttons": [
+        {"label": "Relevanteste oder viralste Kommentare","prompt": "Extrahiere die relevantesten oder meist-engagierten Kommentare aus diesem Thread."},
+        {"label": "Klassifizierung nach emotionalem Ton","prompt": "Klassifiziere die Kommentare in positive, negative und ironische."},
+        {"label": "Allgemeine Zusammenfassung des Kommentar-Tons","prompt": "Was denken die Nutzer in den Kommentaren? Gib mir eine allgemeine Zusammenfassung des Tons."},
+        {"label": "Wiederkehrende Muster in Antworten","prompt": "Gibt es ein Muster oder einen Kommentar, der sich oft wiederholt?"},
+        {"label": "Top 5 kreativer oder viraler Antworten","prompt": "Erstelle eine Top 5 der kreativsten Antworten oder mit dem meisten viralen Potenzial."}
+      ]
+    },
+    {
+      "title": "📈 Daten und Marketing",
+      "buttons": [
+        {"label": "Ideen für ähnlichen Content","prompt": "Welche Erkenntnisse kann ich aus diesem Thread ziehen, um ähnlichen Content zu erstellen?"},
+        {"label": "Hooks für zukünftige Posts","prompt": "Welche Teile des Threads könnten gute Hooks für zukünftige Posts sein?"},
+        {"label": "Hervorstechende Phrasen als Schlagzeilen","prompt": "Extrahiere Phrasen, die als Schlagzeilen oder Wirkungssprüche verwendet werden können."},
+        {"label": "Vorherrschende Emotionen im Thread","prompt": "Welche Emotionen überwiegen in diesem Thread (Erstaunen, Lachen, Inspiration, Kritik)?"},
+        {"label": "Ideen zur Verbesserung des Engagements","prompt": "Wie würde ich diesen Thread verbessern, damit er mehr Interaktion bekommt?"}
+      ]
+    },
+    {
+      "title": "💬 Übersetzung oder Formatänderung",
+      "translationButton": {
+        "label": "Übersetze Seite/Text in die Sprache: "
+      },
+      "translationSubmenu": [
+        {"label": "🇪🇸 Spanisch", "prompt": "Übersetze diese Seite ins Spanische."},
+        {"label": "🇬🇧 Englisch", "prompt": "Übersetze diese Seite ins Englische."},
+        {"label": "ca Katalanisch", "prompt": "Übersetze diese Seite ins Katalanische."},
+        {"label": "🇩🇪 Deutsch", "prompt": "Übersetze diese Seite ins Deutsche."},
+        {"label": "🇫🇷 Französisch", "prompt": "Übersetze diese Seite ins Französische."}, 
+        {"label": "🇮🇹 Italienisch", "prompt": "Übersetze diese Seite ins Italienische."},
+        {"label": "🇵🇹 Portugiesisch", "prompt": "Übersetze diese Seite ins Portugiesische."},
+        {"label": "🇨🇳 Chinesisch", "prompt": "Übersetze diese Seite ins Chinesische."},
+        {"label": "🇷🇺 Russisch", "prompt": "Übersetze diese Seite ins Russische."},
+        {"label": "🇸🇦 Arabisch", "prompt": "Übersetze diese Seite ins Arabische."},
+        {"label": "🇯🇵 Japanisch", "prompt": "Übersetze diese Seite ins Japanische."},
+        {"label": "🇮🇳 Hindi", "prompt": "Übersetze diese Seite ins Hindi."},
+        {"label": "🇰🇷 Koreanisch", "prompt": "Übersetze diese Seite ins Koreanische."}
+      ],
+      "buttons": [
+        {
+          "label": "Zu Präsentation",
+          "prompt": "Wandle diesen Artikel in eine Präsentation mit Folien um."
+        },
+        {
+          "label": "Für soziale Medien",
+          "prompt": "Schreibe diesen Inhalt für einen Social-Media-Post um."
+        },
+        {
+          "label": "Zu Kurzgeschichte",
+          "prompt": "Wandle diesen Text in eine Kurzgeschichte um."
+        }
+      ]
+    }
+  ]
+} 

@@ -1,89 +1,75 @@
 {
   "header": {
-    "title": "AI prompt assistant",
-    "currentUrlPlaceholder": "Página actual"
+    "title": "Assistent de prompts d'IA",
+    "currentUrlPlaceholder": "Pàgina actual"
   },
   "sections": [
     {
-      "title": "📚 Resumir artículos de Wikipedia",
+      "title": "📚 Resumir articles de Wikipedia",
       "buttons": [
         {
-          "label": "Resumir artículo",
-          "prompt": "Resume este artículo de Wikipedia en menos de 200 palabras, destacando los puntos clave: [pega aquí el texto]"
+          "label": "Resumir article",
+          "prompt": "Resumeix aquest article de Wikipedia en menys de 200 paraules, destacat els punts clau:"
         },
         {
-          "label": "Resumir estilo escolar",
-          "prompt": "Haz un resumen estilo escolar (nivel secundaria/preparatoria) de este texto de Wikipedia sobre [tema]."
+          "label": "Resumir estil escolar",
+          "prompt": "Fes un resum estil escolar (nivell secundària/batxillerat) d'aquest text de Wikipedia:"
         }
       ]
     },
     {
-      "title": "🔍 Explicar conceptos difíciles",
+      "title": "🔍 Explicar conceptes difícils",
       "buttons": [
         {
-          "label": "Explícame este texto de Wikipedia como si tuviera 12 años",
-          "prompt": "Explícame este texto de Wikipedia como si tuviera 12 años: [texto]"
+          "label": "Explica'm aquest text de Wikipedia com si tingués 12 anys",
+          "prompt": "Explica'm aquest text de Wikipedia com si tingués 12 anys:"
         },
         {
-          "label": "Haz una versión sencilla y fácil de entender de esta sección de Wikipedia",
-          "prompt": "Haz una versión sencilla y fácil de entender de esta sección de Wikipedia: [texto]"
+          "label": "Fes una versió senzilla i fàcil d'entendre d'aquesta secció de Wikipedia",
+          "prompt": "Fes una versió senzilla i fàcil d'entendre d'aquesta secció de Wikipedia:"
         }
       ]
     },
     {
-      "title": "🔄 Parafrasear para evitar plagio",
+      "title": "🔄 Parafrasear per evitar plagi",
       "buttons": [
         {
-          "label": "Reescribe este contenido de Wikipedia con tus propias palabras, evitando plagio pero manteniendo la información",
-          "prompt": "Reescribe este contenido de Wikipedia con tus propias palabras, evitando plagio pero manteniendo la información: [texto]"
+          "label": "Reescriu aquest contingut de Wikipedia amb les teves pròpies paraules, evitant plagi però mantenint la informació",
+          "prompt": "Reescriu aquest contingut de Wikipedia amb les teves pròpies paraules, evitant plagi però mantenint la informació:"
         },
         {
-          "label": "Haz una versión original de este contenido de Wikipedia sin copiar el texto literal",
-          "prompt": "Haz una versión original de este contenido de Wikipedia sin copiar el texto literal."
+          "label": "Fes una versió original d'aquest contingut de Wikipedia sense copiar el text literal",
+          "prompt": "Fes una versió original d'aquest contingut de Wikipedia sense copiar el text literal."
         }
       ]
     },
     {
-      "title": "🧠 Comparar artículos o conceptos",
+      "title": "📝 Crear esquemes o mapes conceptuals",
       "buttons": [
         {
-          "label": "Compara los artículos de Wikipedia sobre [tema 1] y [tema 2]. ¿En qué se parecen y en qué se diferencian?",
-          "prompt": "Compara los artículos de Wikipedia sobre [tema 1] y [tema 2]. ¿En qué se parecen y en qué se diferencian?"
+          "label": "Crea un esquema temàtic",
+          "prompt": "A partir d'aquest text, crea un esquema temàtic dels temes principals."
         },
         {
-          "label": "¿Qué diferencias hay entre [tema 1] y [tema 2] según la información en Wikipedia?",
-          "prompt": "¿Qué diferencias hay entre [tema 1] y [tema 2] según la información en Wikipedia?"
-        }
-      ]
-    },
-    {
-      "title": "📝 Crear esquemas o mapas conceptuales",
-      "buttons": [
-        {
-          "label": "A partir de este texto de Wikipedia, crea un esquema temático o un mapa conceptual de los temas principales.",
-          "prompt": "A partir de este texto de Wikipedia, crea un esquema temático o un mapa conceptual de los temas principales."
-        }
-      ]
-    },
-    {
-      "title": "💬 Generar preguntas de repaso o examen",
-      "buttons": [
-        {
-          "label": "Crea 10 preguntas tipo examen sobre este artículo de Wikipedia, con sus respuestas: [pegar texto]",
-          "prompt": "Crea 10 preguntas tipo examen sobre este artículo de Wikipedia, con sus respuestas: [pegar texto]"
+          "label": "Crea un mapa conceptual",
+          "prompt": "A partir d'aquest text, crea un mapa conceptual dels temes principals."
         },
         {
-          "label": "Haz preguntas tipo opción múltiple sobre el siguiente texto de Wikipedia para estudiar.",
-          "prompt": "Haz preguntas tipo opción múltiple sobre el siguiente texto de Wikipedia para estudiar."
+          "label": "A partir d'aquest text, crea ...",
+          "prompt": "A partir d'aquest text, crea ..."
         }
       ]
     },
     {
-      "title": "🔎 Buscar información con contexto",
+      "title": "💬 Generar preguntes de repàs o examen",
       "buttons": [
         {
-          "label": "Explícame qué dice Wikipedia sobre [tema], y agrega contexto histórico y ejemplos si es posible.",
-          "prompt": "Explícame qué dice Wikipedia sobre [tema], y agrega contexto histórico y ejemplos si es posible."
+          "label": "Crea 10 preguntes tipus examen sobre aquest article, amb les seves respostes:",
+          "prompt": "Crea 10 preguntes tipus examen sobre aquest article de Wikipedia, amb les seves respostes:"
+        },
+        {
+          "label": "Fes preguntes tipus opció múltiple per estudiar sobre el següent text",
+          "prompt": "Fes preguntes tipus opció múltiple per estudiar sobre el següent text"
         }
       ]
     }

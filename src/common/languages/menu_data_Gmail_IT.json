@@ -1,0 +1,95 @@
+{
+  "header": {
+    "title": "Assistente email",
+    "currentUrlPlaceholder": "Pagina attuale"
+  },
+  "sections": [
+    {
+      "title": "📩 Scrivere un'email da zero",
+      "buttons": [
+        {
+          "label": "Email professionale con proposta",
+          "prompt": "Scrivi un'email professionale per [cliente / collega / azienda] dove propongo [la tua idea o proposta]. Il tono deve essere [formale / caloroso / entusiasta]."
+        },
+        {
+          "label": "Riunione per demo",
+          "prompt": "Scrivi un'email professionale per un potenziale cliente in cui propongo una riunione per mostrargli una demo della nostra soluzione di realtà virtuale."
+        }
+      ]
+    },
+    {
+      "title": "✍️ Migliorare un'email già scritta",
+      "buttons": [
+        {
+          "label": "Migliorare email esistente",
+          "prompt": "Migliora questa email per renderla più chiara e professionale, ma mantieni il messaggio originale: "
+        },
+        {
+          "label": "Accorciare email",
+          "prompt": "Rendi questa email più breve e diretta, senza perdere cortesia o chiarezza: "
+        }
+      ]
+    },
+    {
+      "title": "🎯 Email di follow-up",
+      "buttons": [
+        {
+          "label": "Follow-up senza risposta",
+          "prompt": "Scrivi un'email di follow-up gentile e professionale per qualcuno che non ha risposto alla mia proposta inviata [X giorni/una settimana] fa."
+        }
+      ]
+    },
+    {
+      "title": "🔁 Email ripetitive o in lotto (modelli)",
+      "buttons": [
+        {
+          "label": "Modello per clienti potenziali",
+          "prompt": "Crea un modello di email per contattare potenziali clienti interessati a [il tuo prodotto o servizio]. Deve essere breve, con una chiara call to action."
+        }
+      ]
+    },
+    {
+      "title": "🙋‍♂️ Chiedere qualcosa",
+      "buttons": [
+        {
+          "label": "Richiedere qualcosa di specifico",
+          "prompt": "Scrivi un'email cortese per richiedere [una riunione / feedback / un documento / più informazioni] a [nome o tipo di persona]."
+        }
+      ]
+    },
+    {
+      "title": "💬 Email con tono specifico",
+      "buttons": [
+        {
+          "label": "Professionale",
+          "prompt": "Converti questa email in una con tono più professionale, senza cambiare il contenuto principale: "
+        },
+        {
+          "label": "Cordiale",
+          "prompt": "Converti questa email in una con tono più caloroso, senza cambiare il contenuto principale: "
+        },
+        {
+          "label": "Ispirante",
+          "prompt": "Converti questa email in una con tono più ispirante, senza cambiare il contenuto principale: "
+        },
+        {
+          "label": "Informale ma rispettoso",
+          "prompt": "Converti questa email in una con tono più informale ma rispettoso, senza cambiare il contenuto principale:"
+        },
+        {
+          "label": "Assertivo ma diplomatico",
+          "prompt": "Converti questa email in una con tono più assertivo ma diplomatico, senza cambiare il contenuto principale: "
+        }
+      ]
+    },
+    {
+      "title": "🧠 Suggerimento extra: Usa variabili",
+      "buttons": [
+        {
+          "label": "Email con variabili",
+          "prompt": "Scrivi un'email per [nome_cliente] ringraziandolo per il suo interesse in [prodotto] e proponendogli una chiamata il [giorno] alle [ora]."
+        }
+      ]
+    }
+  ]
+} 

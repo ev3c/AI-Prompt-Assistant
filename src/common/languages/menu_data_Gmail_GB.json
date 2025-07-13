@@ -9,24 +9,24 @@
       "buttons": [
         {
           "label": "Professional email with proposal",
-          "prompt": "Write a professional email to [client / colleague / company] where I propose [your idea or proposal]. The tone should be [formal / friendly / enthusiastic]."
+          "prompt": "Write a professional email for [client / colleague / company] where I propose [your idea or proposal]. The tone should be [formal / warm / enthusiastic]."
         },
         {
           "label": "Meeting for demo",
-          "prompt": "Write a professional email to a potential client where I propose a meeting to show them a demo of our virtual reality solution."
+          "prompt": "Write a professional email for a potential client proposing a meeting to show them a demo of our virtual reality solution."
         }
       ]
     },
     {
-      "title": "✍️ Improve an email you've already written",
+      "title": "✍️ Improve an email you already wrote",
       "buttons": [
         {
           "label": "Improve existing email",
-          "prompt": "Improve this email to make it sound clearer and more professional, but keep the original message: [Paste your email here]"
+          "prompt": "Improve this email to sound clearer and more professional, but keep the original message: "
         },
         {
           "label": "Shorten email",
-          "prompt": "Make this email more brief and direct, without losing courtesy or clarity: [Paste your email here]"
+          "prompt": "Make this email shorter and more direct, without losing courtesy or clarity: "
         }
       ]
     },
@@ -35,7 +35,7 @@
       "buttons": [
         {
           "label": "Follow-up without response",
-          "prompt": "Write a friendly and professional follow-up email for someone who hasn't responded to my proposal sent [X days/a week] ago."
+          "prompt": "Write a kind and professional follow-up email for someone who hasn't responded to my proposal sent [X days/a week] ago."
         }
       ]
     },
@@ -62,23 +62,23 @@
       "buttons": [
         {
           "label": "Professional",
-          "prompt": "Convert this email to a more professional tone, without changing the main content: [Paste your text]"
+          "prompt": "Convert this email to one with a more professional tone, without changing the main content: "
         },
         {
           "label": "Cordial",
-          "prompt": "Convert this email to a warmer tone, without changing the main content: [Paste your text]"
+          "prompt": "Convert this email to one with a warmer tone, without changing the main content: "
         },
         {
           "label": "Inspiring",
-          "prompt": "Convert this email to a more inspiring tone, without changing the main content: [Paste your text]"
+          "prompt": "Convert this email to one with a more inspiring tone, without changing the main content: "
         },
         {
           "label": "Informal but respectful",
-          "prompt": "Convert this email to a more informal but respectful tone, without changing the main content: [Paste your text]"
+          "prompt": "Convert this email to one with a more informal but respectful tone, without changing the main content:"
         },
         {
           "label": "Assertive but diplomatic",
-          "prompt": "Convert this email to a more assertive but diplomatic tone, without changing the main content: [Paste your text]"
+          "prompt": "Convert this email to one with a more assertive but diplomatic tone, without changing the main content: "
         }
       ]
     },
@@ -87,7 +87,7 @@
       "buttons": [
         {
           "label": "Email with variables",
-          "prompt": "Write an email to {{client_name}} thanking them for their interest in {{product}} and proposing a call on {{day}} at {{time}}."
+          "prompt": "Write an email for [client_name] thanking them for their interest in [product] and proposing a call on [day] at [time]."
         }
       ]
     }

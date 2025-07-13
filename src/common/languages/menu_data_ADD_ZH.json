@@ -1,0 +1,36 @@
+{
+  "header": {
+    "title": "ADD",
+    "currentUrlPlaceholder": "当前页面"
+  },
+  "sections": [
+    {
+      "title": "🔍 菜单第一部分 ",
+      "buttons": [
+        {"label": "菜单中的标签1.1。（扩展程序将在发送提示之前询问用户）", "prompt": "这是将询问用户的文本"},
+        {"label": "菜单中的标签1.2", "prompt": "向AI的问题1.2:."}     
+      ]
+    },    
+    {
+      "title": "📝 文件中的菜单第二部分",
+      "buttons": [
+        {"label": "菜单中的标签2.1", "prompt": "向AI的问题2.1:."},
+        {"label": "菜单中的标签2.2", "prompt": "向AI的问题2.2:."},
+        {"label": "菜单中的标签2.3", "prompt": "向AI的问题2.3:."}
+      ]
+    },
+    {
+      "title": "📝 文件中的菜单第三部分",
+      "translationButton": {"label": "将页面/文本翻译为语言："},
+      "translationSubmenu": [
+        {"label": "🇪🇸 西班牙语", "prompt": "将此页面翻译为西班牙语。"},
+        {"label": "🇬🇧 英语", "prompt": "将此页面翻译为英语。"},
+        {"label": "xx 语言", "prompt": "将此页面翻译为语言。"}
+      ],
+      "buttons": [
+        {"label": "菜单中的标签4.1", "prompt": "向AI的问题4.1:."},
+        {"label": "菜单中的标签4.2", "prompt": "向AI的问题4.2:."}
+      ]
+    }
+  ]
+} 

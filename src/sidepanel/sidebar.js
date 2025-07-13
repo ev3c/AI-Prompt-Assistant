@@ -3540,6 +3540,14 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
       }
     }
     
+    // Cargar el menú correspondiente al contexto ADD (siempre recarga)
+    loadMenuData(config.getCurrentLanguage()).then(newMenuData => {
+      config.setMenuData(newMenuData);
+      renderSections();
+    }).catch(error => {
+      console.error('Error al cargar el menú ADD:', error);
+    });
+    
     // También abrir el JSON Editor en una nueva pestaña
     window.open('/src/sidepanel/pages/jsonEditor/jsonEditor.html', '_blank');
   });

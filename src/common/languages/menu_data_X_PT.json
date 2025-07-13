@@ -1,0 +1,74 @@
+{
+  "header": {
+    "title": "Assistente de sugestões X",
+    "currentUrlPlaceholder": "Página atual"
+  },
+  "sections": [
+    {
+      "title": "🧵 Análise de Conteúdo da Thread",
+      "buttons": [
+        {"label": "Resumo em 3 frases-chave","prompt": "Resume esta thread do X em 3 frases-chave."},
+        {"label": "Resumo da thread do X","prompt": "Resume esta thread :"},
+        {"label": "Moral ou ensinamento da thread","prompt": "Qual é a moral ou ensinamento principal desta thread?"},
+        {"label": "Resumo sem marcas ou promoções","prompt": "Faz um resumo com tópicos da thread sem menções de marca ou promoções."},
+        {"label": "Versão curta para TikTok ou Reels","prompt": "Cria uma versão mais curta desta thread para TikTok ou Reels."},
+        {"label": "Parte mais emocional ou impactante","prompt": "Que parte da thread tem maior carga emocional ou impacto?"}
+      ]
+    },
+    {
+      "title": "💬 Análise de Comentários",
+      "buttons": [
+        {"label": "Comentários mais relevantes ou virais","prompt": "Extrai os comentários mais relevantes ou com mais engagement desta thread."},
+        {"label": "Classificação por tom emocional","prompt": "Classifica os comentários entre positivos, negativos e irônicos."},
+        {"label": "Resumo geral do tom dos comentários","prompt": "O que pensam os utilizadores nos comentários? Dá-me um resumo geral do tom."},
+        {"label": "Padrões repetidos nas respostas","prompt": "Há algum padrão ou comentário que se repete muito?"},
+        {"label": "Top 5 de respostas criativas ou virais","prompt": "Faz um top 5 de respostas mais criativas ou com mais potencial viral."}
+      ]
+    },
+    {
+      "title": "📈 Dados e Marketing",
+      "buttons": [
+        {"label": "Ideias para criar conteúdo similar","prompt": "Que insights posso tirar desta thread para criar conteúdo similar?"},
+        {"label": "Ganchos para futuros posts","prompt": "Que partes da thread poderiam ser bons ganchos para futuros posts?"},
+        {"label": "Frases destacáveis como títulos","prompt": "Extrai frases que possam ser usadas como títulos ou frases de impacto."},
+        {"label": "Emoções predominantes na thread","prompt": "Que emoções predominam nesta thread (espanto, riso, inspiração, crítica)?"},
+        {"label": "Ideias para melhorar o engagement","prompt": "Como melhoraria esta thread para ter mais interação?"}
+      ]
+    },
+    {
+      "title": "💬 Tradução ou mudança de formato",
+      "translationButton": {
+        "label": "Traduz página/texto para o idioma: "
+      },
+      "translationSubmenu": [
+        {"label": "🇪🇸 Espanhol", "prompt": "Traduz esta página para espanhol."},
+        {"label": "🇬🇧 Inglês", "prompt": "Traduz esta página para inglês."},
+        {"label": "ca Catalão", "prompt": "Traduz esta página para catalão."},
+        {"label": "🇩🇪 Alemão", "prompt": "Traduz esta página para alemão."},
+        {"label": "🇫🇷 Francês", "prompt": "Traduz esta página para francês."}, 
+        {"label": "🇮🇹 Italiano", "prompt": "Traduz esta página para italiano."},
+        {"label": "🇵🇹 Português", "prompt": "Traduz esta página para português."},
+        {"label": "🇨🇳 Chinês", "prompt": "Traduz esta página para chinês."},
+        {"label": "🇷🇺 Russo", "prompt": "Traduz esta página para russo."},
+        {"label": "🇸🇦 Árabe", "prompt": "Traduz esta página para árabe."},
+        {"label": "🇯🇵 Japonês", "prompt": "Traduz esta página para japonês."},
+        {"label": "🇮🇳 Hindi", "prompt": "Traduz esta página para hindi."},
+        {"label": "🇰🇷 Coreano", "prompt": "Traduz esta página para coreano."}
+      ],
+      "buttons": [
+        {
+          "label": "Para apresentação",
+          "prompt": "Converte este artigo numa apresentação com diapositivos."
+        },
+        {
+          "label": "Para redes sociais",
+          "prompt": "Reescreve este conteúdo para uma publicação de redes sociais."
+        },
+        {
+          "label": "Para conto curto",
+          "prompt": "Converte este texto num conto curto."
+        }
+      ]
+    }
+  ]
+} 
