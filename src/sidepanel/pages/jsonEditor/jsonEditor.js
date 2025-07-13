@@ -125,17 +125,17 @@ class JSONEditor {
   }
 
   changeLanguage(lang) {
-    console.log('Changing language to:', lang);
+    console.log('Changing jsonEditor interface language to:', lang);
     this.currentLanguage = lang;
     
     // Actualizar botones activos
     document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`lang-${lang}`).classList.add('active');
     
+    // Solo actualizar la interfaz del jsonEditor, NO recargar el archivo
     this.updateLanguage();
     
-    // Recargar el archivo por defecto según el nuevo idioma
-    this.loadDefaultFile();
+    console.log('Interface language changed. Current file remains unchanged.');
   }
 
   updateLanguage() {
@@ -171,11 +171,48 @@ class JSONEditor {
     if (embeddedJsonEditor) embeddedJsonEditor.placeholder = this.t('editorPlaceholder');
   }
 
+  // Función para obtener el idioma actual de la extensión principal
+  async getExtensionLanguage() {
+    return new Promise((resolve) => {
+      chrome.storage.local.get(['mainConfig'], function(result) {
+        const extensionLanguage = result.mainConfig?.language || 'es';
+        resolve(extensionLanguage);
+      });
+    });
+  }
+
+  // Función para convertir código de idioma a sufijo de archivo
+  getLanguageSuffix(languageCode) {
+    const languageMap = {
+      'es': 'ES',
+      'gb': 'GB',
+      'fr': 'FR',
+      'ca': 'CA',
+      'de': 'DE',
+      'it': 'IT',
+      'pt': 'PT',
+      'ja': 'JA',
+      'zh': 'ZH',
+      'ru': 'RU',
+      'ar': 'AR',
+      'kr': 'KR',
+      'hi': 'HI'
+    };
+    return languageMap[languageCode] || 'ES';
+  }
+
   async loadDefaultFile() {
     try {
-      // Determinar el archivo por defecto según el idioma (archivos locales en jsonEditor)
-      const defaultFileName = this.currentLanguage === 'en' ? 'menu_data_ADD_GB.json' : 'menu_data_ADD_ES.json';
+      // Obtener el idioma actual de la extensión principal
+      const extensionLanguage = await this.getExtensionLanguage();
+      const langSuffix = this.getLanguageSuffix(extensionLanguage);
+      
+      // Determinar el archivo por defecto según el idioma de la extensión principal
+      const defaultFileName = `menu_data_ADD_${langSuffix}.json`;
       const fileUrl = chrome.runtime.getURL(`src/common/languages/${defaultFileName}`);
+      
+      console.log(`Cargando archivo para idioma de extensión: ${extensionLanguage} -> ${defaultFileName}`);
+      
       const response = await fetch(fileUrl);
       const jsonData = await response.json();
       
