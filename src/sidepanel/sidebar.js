@@ -435,7 +435,7 @@ function getContextFromButtonId(buttonId) {
 function extractAndCopyGmailContent() {
   // Crear notificación mejorada
   const notification = document.createElement('div');
-  notification.textContent = '📧 Iniciando captura avanzada de emails...';
+  notification.textContent = '📧 Iniciando captura con scroll automático...';
   notification.style.cssText = `
     position: fixed;
     top: 20px;
@@ -454,98 +454,213 @@ function extractAndCopyGmailContent() {
   `;
   document.body.appendChild(notification);
 
-  // Función mejorada para ir al inicio específica para Gmail
+  // Función optimizada para ir al inicio específica para Gmail - MEJORADA PARA CONVERSACIONES
   async function scrollToTop() {
     notification.textContent = '⬆️ Navegando al inicio de la conversación...';
     
-    // Método 1: Scroll del contenedor principal de Gmail
-    const gmailContainer = document.querySelector('div[role="main"]') || 
-                          document.querySelector('.nH') || 
-                          document.querySelector('.oy8Mbf') ||
-                          document.querySelector('.Tm.aeJ');
+    // Método 1: Scroll de TODOS los contenedores principales de Gmail
+    const gmailContainers = [
+      document.querySelector('div[role="main"]'),        // Contenedor principal
+      document.querySelector('.nH'),                     // Contenedor nH
+      document.querySelector('.oy8Mbf'),                 // Contenedor oy8Mbf
+      document.querySelector('.Tm.aeJ'),                 // Contenedor Tm aeJ
+      document.querySelector('main'),                    // Elemento main
+      document.querySelector('.adf'),                    // Contenedor adf
+      document.querySelector('.Bs.nH'),                  // Contenedor Bs nH
+      document.querySelector('.no'),                     // Contenedor no
+      document.querySelector('.nH.if'),                  // Contenedor nH if
+      document.querySelector('.nH.nn'),                  // Contenedor nH nn
+      document.querySelector('[data-action-data]'),      // Contenedor con data-action
+      document.querySelector('.nH .if .nH')              // Contenedor anidado
+    ];
     
-    if (gmailContainer) {
-      gmailContainer.scrollTop = 0;
-      console.log('📧 Scroll al inicio del contenedor Gmail');
-    }
+    gmailContainers.forEach(container => {
+      if (container) {
+        container.scrollTop = 0;
+        console.log(`📧 Scroll al inicio del contenedor Gmail: ${container.className || container.tagName}`);
+      }
+    });
 
-    // Método 2: Scroll del contenedor de conversación
-    const conversationContainer = document.querySelector('.ii.gt') || 
-                                 document.querySelector('.adn.ads') ||
-                                 document.querySelector('.zA');
+    // Método 2: Scroll de TODOS los contenedores de conversación
+    const conversationContainers = [
+      document.querySelector('.ii.gt'),                  // Contenedor principal mensaje
+      document.querySelector('.adn.ads'),               // Contenedor ads
+      document.querySelector('.zA'),                     // Contenedor zA
+      document.querySelector('.gs'),                     // Contenedor gs
+      document.querySelector('.h7'),                     // Contenedor h7
+      document.querySelector('.nH .if'),                 // Contenedor if
+      document.querySelector('div[data-thread-id]'),     // Thread container
+      document.querySelector('div[data-legacy-thread-id]'), // Legacy thread
+      document.querySelector('.thread-item'),            // Thread item
+      document.querySelector('.message-container'),      // Message container
+      document.querySelector('div[role="listitem"]'),    // List item
+      document.querySelector('table[role="grid"]'),      // Grid table
+      document.querySelector('tbody'),                   // Table body
+      document.querySelector('div[jsname]'),             // JSName container
+      document.querySelector('div[data-message-id]')     // Message ID container
+    ];
     
-    if (conversationContainer) {
-      conversationContainer.scrollTop = 0;
-      console.log('📧 Scroll al inicio del contenedor de conversación');
-    }
+    conversationContainers.forEach(container => {
+      if (container) {
+        container.scrollTop = 0;
+        console.log(`📧 Scroll al inicio del contenedor de conversación: ${container.className || container.tagName}`);
+      }
+    });
 
-    // Método 3: Scroll del window (fallback)
+    // Método 3: Scroll de elementos scrollables ocultos
+    const scrollableElements = document.querySelectorAll('div[style*="overflow"], div[style*="scroll"]');
+    scrollableElements.forEach(element => {
+      if (element.scrollHeight > element.clientHeight) {
+        element.scrollTop = 0;
+        console.log(`📧 Scroll al inicio de elemento scrollable`);
+      }
+    });
+
+    // Método 4: Scroll del window (como Twitter)
     window.scrollTo({ top: 0, behavior: 'smooth' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
     
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Más tiempo para Gmail
+    console.log('📧 Scroll al inicio completado - esperando carga de contenido...');
+    await new Promise(resolve => setTimeout(resolve, 1200)); // Más tiempo para cargar contenido
   }
 
-  // Función auxiliar para realizar scroll específico de Gmail
+  // Función auxiliar para realizar scroll específico de Gmail MEJORADA
   async function performGmailScroll(scrollDistance) {
-    // Método 1: Scroll del contenedor principal de Gmail
-    const gmailContainer = document.querySelector('div[role="main"]') || 
-                          document.querySelector('.nH') || 
-                          document.querySelector('.oy8Mbf') ||
-                          document.querySelector('.Tm.aeJ');
+    let scrollPerformed = false;
     
-    if (gmailContainer) {
-      gmailContainer.scrollTop += scrollDistance;
-      console.log(`📧 Scroll en contenedor Gmail: ${gmailContainer.scrollTop}`);
-    }
+    // Método 1: Scroll de contenedores principales de Gmail ACTUALIZADOS
+    const gmailContainers = [
+      document.querySelector('div[role="main"]'),        // Contenedor principal
+      document.querySelector('.nH'),                     // Contenedor nH
+      document.querySelector('.oy8Mbf'),                 // Contenedor oy8Mbf
+      document.querySelector('.Tm.aeJ'),                 // Contenedor Tm aeJ
+      document.querySelector('main'),                    // Elemento main
+      document.querySelector('.adf'),                    // Contenedor adf
+      document.querySelector('.Bs.nH'),                  // Contenedor Bs nH
+      document.querySelector('.no'),                     // Contenedor no
+      document.querySelector('.nH.if'),                  // Contenedor nH if
+      document.querySelector('.nH.nn'),                  // Contenedor nH nn
+      document.querySelector('[data-action-data]'),      // Contenedor con data-action
+      document.querySelector('.nH .if .nH')              // Contenedor anidado
+    ];
+    
+    gmailContainers.forEach(container => {
+      if (container && container.scrollHeight > container.clientHeight) {
+        container.scrollTop += scrollDistance;
+        console.log(`📧 Scroll en contenedor Gmail: ${container.className} - ${container.scrollTop}`);
+        scrollPerformed = true;
+      }
+    });
 
-    // Método 2: Scroll del window (fallback)
+    // Método 2: Scroll de contenedores de conversación ESPECÍFICOS
+    const conversationContainers = [
+      document.querySelector('.ii.gt'),                  // Contenedor principal mensaje
+      document.querySelector('.adn.ads'),               // Contenedor ads
+      document.querySelector('.zA'),                     // Contenedor zA
+      document.querySelector('.gs'),                     // Contenedor gs
+      document.querySelector('.h7'),                     // Contenedor h7
+      document.querySelector('.nH .if'),                 // Contenedor if
+      document.querySelector('div[data-thread-id]'),     // Thread container
+      document.querySelector('div[data-legacy-thread-id]'), // Legacy thread
+      document.querySelector('.thread-item'),            // Thread item
+      document.querySelector('.message-container'),      // Message container
+      document.querySelector('div[role="listitem"]'),    // List item
+      document.querySelector('table[role="grid"]'),      // Grid table
+      document.querySelector('tbody'),                   // Table body
+      document.querySelector('div[jsname]'),             // JSName container
+      document.querySelector('div[data-message-id]')     // Message ID container
+    ];
+    
+    conversationContainers.forEach(container => {
+      if (container && container.scrollHeight > container.clientHeight) {
+        container.scrollTop += scrollDistance;
+        console.log(`📧 Scroll en contenedor de conversación: ${container.className} - ${container.scrollTop}`);
+        scrollPerformed = true;
+      }
+    });
+
+    // Método 3: Scroll del window (siempre activo)
     window.scrollBy({
       top: scrollDistance,
       behavior: 'smooth'
     });
 
-    // Método 3: Scroll forzado del documento
+    // Método 4: Scroll forzado del documento
     setTimeout(() => {
       document.documentElement.scrollTop += scrollDistance;
       document.body.scrollTop += scrollDistance;
     }, 100);
 
-    // Método 4: Scroll específico para contenedores de conversación
-    const conversationContainer = document.querySelector('.ii.gt') || 
-                                 document.querySelector('.adn.ads') ||
-                                 document.querySelector('.zA');
-    
-    if (conversationContainer && conversationContainer.scrollHeight > conversationContainer.clientHeight) {
-      conversationContainer.scrollTop += scrollDistance;
-      console.log(`📧 Scroll en contenedor de conversación: ${conversationContainer.scrollTop}`);
+    // Método 5: Scroll específico para SCROLLBARS OCULTOS en Gmail
+    const scrollableElements = document.querySelectorAll('div[style*="overflow"], div[style*="scroll"]');
+    scrollableElements.forEach(element => {
+      if (element.scrollHeight > element.clientHeight) {
+        element.scrollTop += scrollDistance;
+        console.log(`📧 Scroll en elemento scrollable: ${element.scrollTop}`);
+      }
+    });
+
+    if (scrollPerformed) {
+      console.log(`✅ Scroll realizado exitosamente: ${scrollDistance}px`);
     }
   }
 
-  // Función auxiliar para obtener la altura de scroll de Gmail
+  // Función auxiliar para obtener la altura de scroll de Gmail MEJORADA
   function getGmailScrollHeight() {
-    // Intentar obtener altura del contenedor principal de Gmail
-    const gmailContainer = document.querySelector('div[role="main"]') || 
-                          document.querySelector('.nH') || 
-                          document.querySelector('.oy8Mbf') ||
-                          document.querySelector('.Tm.aeJ');
+    // Intentar obtener altura de múltiples contenedores de Gmail
+    const gmailContainers = [
+      document.querySelector('div[role="main"]'),        // Contenedor principal
+      document.querySelector('.nH'),                     // Contenedor nH
+      document.querySelector('.oy8Mbf'),                 // Contenedor oy8Mbf
+      document.querySelector('.Tm.aeJ'),                 // Contenedor Tm aeJ
+      document.querySelector('main'),                    // Elemento main
+      document.querySelector('.adf'),                    // Contenedor adf
+      document.querySelector('.Bs.nH'),                  // Contenedor Bs nH
+      document.querySelector('.no'),                     // Contenedor no
+      document.querySelector('.nH.if'),                  // Contenedor nH if
+      document.querySelector('.nH.nn'),                  // Contenedor nH nn
+      document.querySelector('[data-action-data]'),      // Contenedor con data-action
+      document.querySelector('.nH .if .nH'),             // Contenedor anidado
+      document.querySelector('div[data-thread-id]'),     // Thread container
+      document.querySelector('div[data-legacy-thread-id]'), // Legacy thread
+      document.querySelector('.thread-item'),            // Thread item
+      document.querySelector('.message-container'),      // Message container
+      document.querySelector('table[role="grid"]'),      // Grid table
+      document.querySelector('tbody')                    // Table body
+    ];
     
-    if (gmailContainer) {
-      return gmailContainer.scrollHeight;
+    // Encontrar el contenedor con mayor altura de scroll
+    let maxHeight = 0;
+    gmailContainers.forEach(container => {
+      if (container && container.scrollHeight > maxHeight) {
+        maxHeight = container.scrollHeight;
+        console.log(`📧 Altura máxima encontrada en: ${container.className || container.tagName} - ${maxHeight}px`);
+      }
+    });
+    
+    if (maxHeight > 0) {
+      return maxHeight;
     }
 
     // Fallback a la altura del documento
-    return Math.max(
+    const documentHeight = Math.max(
       document.body.scrollHeight,
       document.documentElement.scrollHeight,
       document.body.offsetHeight,
       document.documentElement.offsetHeight
     );
+    
+    console.log(`📧 Usando altura del documento como fallback: ${documentHeight}px`);
+    return documentHeight;
   }
 
   async function scrollAndCollectEmails() {
     await scrollToTop();
+
+    // Tiempo adicional para que Gmail cargue el contenido completo
+    console.log('⏳ Esperando carga completa de conversación...');
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     const processedEmailIds = new Set();
     let allEmails = [];
@@ -553,11 +668,11 @@ function extractAndCopyGmailContent() {
     let stagnantScrollCount = 0;
     let scrollAttempts = 0;
 
-    // Configuración optimizada para Gmail 2024 - MÁXIMO 30 EMAILS
-    const MAX_SCROLL_ATTEMPTS = 60; // Más intentos para Gmail
-    const MAX_STAGNANT_ATTEMPTS = 10; // Más persistencia 
-    const SCROLL_DISTANCE = 800; // Scroll más grande
-    const SCROLL_DELAY = 800; // Tiempo optimizado para Gmail
+    // Configuración optimizada para Gmail 2024 - MÁXIMO 30 EMAILS CON SCROLL AUTOMÁTICO AGRESIVO
+    const MAX_SCROLL_ATTEMPTS = 150; // Más intentos para conversaciones largas
+    const MAX_STAGNANT_ATTEMPTS = 20; // Más persistencia para conversaciones complejas
+    const SCROLL_DISTANCE = 1200; // Scroll más agresivo para conversaciones
+    const SCROLL_DELAY = 800; // Más tiempo para carga de contenido dinámico
     const MAX_EMAILS = 30; // LÍMITE MÁXIMO: 30 emails
 
     // Función principal de scroll y captura
@@ -569,44 +684,68 @@ function extractAndCopyGmailContent() {
       }
 
       // Actualizar notificación con progreso detallado
-      notification.textContent = `🔍 Extrayendo emails... (${allEmails.length}/${MAX_EMAILS}) - Intento ${scrollAttempts}/${MAX_SCROLL_ATTEMPTS}`;
+      notification.textContent = `🔄 Scroll automático... (${allEmails.length}/${MAX_EMAILS}) - Intento ${scrollAttempts}/${MAX_SCROLL_ATTEMPTS}`;
 
-      // SELECTORES MÚLTIPLES Y ROBUSTOS para emails de Gmail 2024
+      // SELECTORES ACTUALIZADOS Y ROBUSTOS para conversaciones de Gmail 2024
       const emailSelectors = [
-        // Mensajes principales con data-message-id
-        'div[data-message-id]:not([data-legacy-thread-id])',
-        'tr[data-message-id]',
-        '[data-message-id]',
-
-        // Contenedores de mensaje específicos
-        '.ii.gt[data-message-id]',
-        'div[jsname][data-message-id]',
-        '.adn.ads .ii.gt',
-        '.gs .ii.gt',
-
-        // Elementos de conversación
-        'div[role="listitem"]',
-        '.nH .if',
-        '.h7',
-        'tr.zA',
-        '.zA',
-
-        // Contenedores de thread/conversación
-        'div[data-legacy-thread-id]',
-        '.thread-item',
-        '.message-container',
-
-        // Selectores más generales
-        'div[jsname]',
-        'tr[jsname]',
-        'div[data-tid]',
-        'table[role="grid"] tr',
-
-        // Fallbacks para estructuras nuevas
-        'div[dir="ltr"][role="listitem"]',
-        'main div[role="main"] div',
-        '[aria-label*="conversation" i]',
-        '[aria-label*="message" i]'
+        // Selectores principales para CONVERSACIONES ABIERTAS
+        'div[data-message-id]',                    // Mensaje principal con ID
+        'tr[data-message-id]',                     // Fila con mensaje ID
+        '[data-message-id]',                       // Cualquier elemento con mensaje ID
+        
+        // Contenedores de mensaje específicos para CONVERSACIONES
+        '.ii.gt',                                  // Contenedor principal de mensaje 
+        'div[jsname] .ii.gt',                      // ii.gt dentro de jsname
+        '.adn.ads .ii.gt',                         // ii.gt en ads
+        '.gs .ii.gt',                              // ii.gt en gs
+        'div[role="listitem"] .ii.gt',             // ii.gt en listitem
+        
+        // Elementos de CONVERSACIÓN ESPECÍFICOS
+        'div[role="listitem"]',                    // Items de lista principal
+        '.nH .if',                                 // Contenedor if en nH
+        '.h7',                                     // Contenedor h7
+        'tr.zA',                                   // Fila zA
+        '.zA',                                     // Elemento zA
+        '.gs',                                     // Elemento gs
+        'div[data-thread-id]',                     // Elementos con thread ID
+        
+        // Selectores para ELEMENTOS DE EMAIL INDIVIDUALES
+        'div[jsname]',                             // Elementos con jsname
+        'tr[jsname]',                              // Filas con jsname  
+        'div[data-tid]',                           // Elementos con data-tid
+        'table[role="grid"] tr',                   // Filas de tabla grid
+        'div[data-legacy-thread-id]',              // Legacy thread ID
+        
+        // Selectores para CONVERSACIONES DINÁMICAS
+        'div[dir="ltr"][role="listitem"]',         // Items LTR
+        'main div[role="main"] div',               // Divs en main
+        '[aria-label*="conversation" i]',          // Conversación en aria-label
+        '[aria-label*="message" i]',               // Mensaje en aria-label
+        '[aria-label*="email" i]',                 // Email en aria-label
+        
+        // Selectores ESPECÍFICOS para GMAIL NUEVO
+        'div[data-legacy-thread-id]',              // Thread legacy
+        '.thread-item',                            // Items de thread
+        '.message-container',                      // Contenedor de mensaje
+        '.email-container',                        // Contenedor de email
+        'div[data-message-id][jsname]',            // Mensaje con jsname
+        'tr[data-message-id][jsname]',             // Fila con jsname
+        
+        // Selectores de FALLBACK MEJORADOS
+        'div[class*="ii"]',                        // Cualquier div con ii
+        'tr[class*="zA"]',                         // Cualquier tr con zA
+        'div[class*="gs"]',                        // Cualquier div con gs
+        'div[class*="h7"]',                        // Cualquier div con h7
+        '[data-thread-perm-id]',                   // Thread permanente ID
+        '[data-smartmail]',                        // Smart mail
+        'div[contenteditable="true"]',             // Contenido editable
+        
+        // Selectores ULTRA-ESPECÍFICOS para CONTENIDO
+        'div[role="main"] div[jsname]',            // jsname en main
+        'table[role="grid"] tbody tr',             // Filas de tabla
+        'main section div',                        // Divs en section
+        'div[aria-expanded="true"]',               // Contenido expandido
+        'div[data-action-data]'                    // Data action
       ];
 
       let emailElements = [];
@@ -623,19 +762,37 @@ function extractAndCopyGmailContent() {
 
       // Si no encontramos con selectores específicos, buscar de forma más general
       if (emailElements.length === 0) {
+        console.log('⚠️ No se encontraron elementos con selectores específicos. Intentando fallback...');
+        
         // Buscar cualquier elemento que contenga estructura típica de email
-        const allPotentialEmails = document.querySelectorAll('div, tr, article, [role="listitem"]');
+        const allPotentialEmails = document.querySelectorAll('div, tr, article, [role="listitem"], table, tbody, section, main');
         emailElements = Array.from(allPotentialEmails).filter(el => {
           // Filtrar elementos que parezcan emails por su contenido
           const hasEmailStructure = el.textContent && el.textContent.trim().length > 50;
           const hasTimeOrDate = el.querySelector('time') || el.textContent.includes(':') || el.textContent.includes('AM') || el.textContent.includes('PM');
           const hasEmailSigns = el.textContent.includes('@') || el.querySelector('span[email]') || el.querySelector('[data-hovercard-id]');
           const hasMessageId = el.getAttribute('data-message-id') || el.querySelector('[data-message-id]');
+          const hasEmailClasses = el.className.includes('ii') || el.className.includes('zA') || el.className.includes('gs') || el.className.includes('h7');
+          const hasJsName = el.getAttribute('jsname') || el.querySelector('[jsname]');
           
-          return hasMessageId || (hasEmailStructure && (hasTimeOrDate || hasEmailSigns));
+          return hasMessageId || hasEmailClasses || hasJsName || (hasEmailStructure && (hasTimeOrDate || hasEmailSigns));
         });
         
         console.log(`🔍 Fallback: Encontrados ${emailElements.length} elementos con estructura de email`);
+      }
+
+      // Debug: Mostrar información sobre los elementos encontrados
+      console.log(`📊 Total elementos encontrados: ${emailElements.length}`);
+      if (emailElements.length > 0) {
+        console.log(`📊 Muestra de elementos encontrados:`, emailElements.slice(0, 3).map(el => ({
+          tagName: el.tagName,
+          className: el.className,
+          id: el.id,
+          hasMessageId: !!el.getAttribute('data-message-id'),
+          hasJsName: !!el.getAttribute('jsname'),
+          textLength: el.textContent?.length || 0,
+          textPreview: el.textContent?.substring(0, 100) + '...'
+        })));
       }
 
       let newEmailsInThisStep = 0;
@@ -709,8 +866,20 @@ function extractAndCopyGmailContent() {
         console.log(`⚠️ No se encontraron emails nuevos. Intentos estancados: ${stagnantScrollCount}/${MAX_STAGNANT_ATTEMPTS}`);
       }
 
-      // SCROLL MEJORADO ESPECÍFICO PARA GMAIL
+      // SCROLL AUTOMÁTICO MEJORADO ESPECÍFICO PARA GMAIL - IGUAL QUE TWITTER
       await performGmailScroll(SCROLL_DISTANCE);
+
+      // También hacer scroll forzado del window como en Twitter
+      window.scrollBy({
+        top: SCROLL_DISTANCE,
+        behavior: 'smooth'
+      });
+
+      // Scroll forzado adicional si el smooth no funciona
+      setTimeout(() => {
+        document.documentElement.scrollTop += SCROLL_DISTANCE;
+        document.body.scrollTop += SCROLL_DISTANCE;
+      }, 100);
 
       // Esperar tiempo optimizado para Gmail
       await new Promise(resolve => setTimeout(resolve, SCROLL_DELAY));
@@ -718,7 +887,7 @@ function extractAndCopyGmailContent() {
       const currentHeight = getGmailScrollHeight();
       const hasNewContent = currentHeight > lastHeight;
 
-      // Continuar si hay nuevos emails o contenido
+      // Continuar si hay nuevos emails o contenido - SCROLL AUTOMÁTICO CONTINUO
       if ((hasNewContent || stagnantScrollCount < MAX_STAGNANT_ATTEMPTS) && allEmails.length < MAX_EMAILS) {
         lastHeight = currentHeight;
         await performScrollAndExtract();
@@ -735,14 +904,19 @@ function extractAndCopyGmailContent() {
       // Crear un clon del elemento para no modificar el original
       const clone = element.cloneNode(true);
       
-      // Remover elementos no deseados
+      // Remover elementos no deseados EXPANDIDO
       const unwantedSelectors = [
-        'script', 'style', 'noscript', 'iframe',
-        '.gmail_quote', '.gmail_signature', 
-        '.moz-cite-prefix', '.yahoo_quoted',
+        'script', 'style', 'noscript', 'iframe', 'object', 'embed',
+        '.gmail_quote', '.gmail_signature', '.gmail_extra',
+        '.moz-cite-prefix', '.yahoo_quoted', '.outlook_quoted',
         '[data-smartmail="gmail_signature"]',
-        'div[class*="signature"]',
-        'div[class*="quote"]'
+        'div[class*="signature"]', 'div[class*="quote"]',
+        'div[class*="footer"]', 'div[class*="disclaimer"]',
+        '.moz-forward-container', '.moz-email-headers-table',
+        'blockquote[type="cite"]', 'blockquote.gmail_quote',
+        '[data-ogsc]', '[data-ogsb]', // Outlook tracking
+        'img[src*="tracking"]', 'img[src*="pixel"]', // Tracking pixels
+        'meta', 'link', 'head', 'title'
       ];
       
       unwantedSelectors.forEach(selector => {
@@ -750,26 +924,87 @@ function extractAndCopyGmailContent() {
         elements.forEach(el => el.remove());
       });
       
-      // Reemplazar elementos de bloque con saltos de línea
-      const blockElements = clone.querySelectorAll('div, p, br, h1, h2, h3, h4, h5, h6, li, tr');
+      // Procesar elementos HTML especiales para mejor conversión
+      const htmlElements = clone.querySelectorAll('*');
+      htmlElements.forEach(el => {
+        const tagName = el.tagName.toLowerCase();
+        
+        // Convertir elementos de lista a texto con formato
+        if (tagName === 'li') {
+          const textContent = el.textContent?.trim();
+          if (textContent) {
+            el.textContent = `• ${textContent}`;
+          }
+        }
+        
+        // Convertir enlaces a texto con URL
+        if (tagName === 'a') {
+          const href = el.getAttribute('href');
+          const text = el.textContent?.trim();
+          if (href && text && href !== text) {
+            el.textContent = `${text} (${href})`;
+          }
+        }
+        
+        // Convertir elementos de encabezado con formato
+        if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
+          const text = el.textContent?.trim();
+          if (text) {
+            el.textContent = `\n${text.toUpperCase()}\n`;
+          }
+        }
+        
+        // Convertir elementos de tabla a texto estructurado
+        if (tagName === 'td' || tagName === 'th') {
+          const text = el.textContent?.trim();
+          if (text) {
+            el.textContent = `${text} | `;
+          }
+        }
+        
+        // Manejar elementos de párrafo
+        if (tagName === 'p') {
+          const text = el.textContent?.trim();
+          if (text) {
+            el.textContent = `\n${text}\n`;
+          }
+        }
+        
+        // Convertir elementos de división con saltos de línea
+        if (tagName === 'div') {
+          const text = el.textContent?.trim();
+          if (text && text.length > 20) {
+            el.textContent = `\n${text}`;
+          }
+        }
+      });
+      
+      // Reemplazar elementos de bloque con saltos de línea apropiados
+      const blockElements = clone.querySelectorAll('div, p, br, h1, h2, h3, h4, h5, h6, li, tr, td, th, blockquote, pre, article, section, header, footer, aside, nav, main');
       blockElements.forEach(el => {
         if (el.tagName === 'BR') {
           el.replaceWith('\n');
         } else {
-          // Añadir salto de línea antes del contenido
-          el.before('\n');
+          // Añadir salto de línea antes del contenido para separar bloques
+          const textNode = document.createTextNode('\n');
+          el.parentNode?.insertBefore(textNode, el);
         }
       });
       
       // Obtener texto plano
       let text = clone.textContent || clone.innerText || '';
       
-      // Limpiar texto
+      // Limpiar texto de manera más agresiva
       text = text
         .replace(/\s+/g, ' ')              // Múltiples espacios -> uno solo
         .replace(/\n\s*\n/g, '\n')         // Múltiples saltos -> uno solo
         .replace(/^\s+|\s+$/g, '')         // Espacios al inicio/final
-        .replace(/\n{3,}/g, '\n\n');       // Máximo 2 saltos consecutivos
+        .replace(/\n{3,}/g, '\n\n')        // Máximo 2 saltos consecutivos
+        .replace(/\|\s*\|/g, '|')          // Limpiar separadores de tabla
+        .replace(/\n\s*\n/g, '\n')         // Segundo pase de limpieza
+        .replace(/([.!?])\s*\n\s*([A-Z])/g, '$1 $2') // Unir líneas de párrafos
+        .replace(/\n\s*([•\-\*])/g, '\n$1') // Ajustar formato de listas
+        .trim();
       
       return text;
     }
@@ -889,38 +1124,64 @@ function extractAndCopyGmailContent() {
           } catch (e) { /* continuar con siguiente selector */ }
         }
 
-        // EXTRACCIÓN DE CONTENIDO/SNIPPET - Múltiples estrategias
+        // EXTRACCIÓN DE CONTENIDO/SNIPPET - Múltiples estrategias MEJORADAS
         const contentSelectors = [
-          // Selectores principales para contenido HTML
+          // Selectores principales para contenido HTML COMPLETO
           '.ii.gt',                        // Contenedor principal del mensaje
           '.ii.gt > div',                  // Div directo dentro de ii gt
           '.ii.gt div[dir]',               // Div con dirección dentro de ii gt
           '.adn.ads .ii.gt',               // Ads content
           'div[data-message-id] .ii.gt',   // Mensaje específico
           
-          // Selectores específicos para emails HTML
+          // Selectores específicos para emails HTML EXPANDIDOS
           '.ii.gt .a3s.aiL',               // Contenido principal del mensaje HTML
           '.ii.gt .a3s.aXjCH',             // Variante de contenido HTML
           '.ii.gt .a3s',                   // Cualquier contenido a3s
           '.a3s.aiL',                      // Contenido independiente
           '.Am.Al.editable',               // Contenido editable específico
+          '.ii.gt .a3s.aiL .a3s.aXjCH',    // Contenido específico HTML
+          '.ii.gt .a3s[dir]',              // Contenido con dirección
           
-          // Selectores de contenido de texto
-          '.gmail_quote',                  // Quote Gmail
-          '.gmail_default',                // Default Gmail
-          'div[dir="ltr"]',                // LTR content
-          'div[dir="rtl"]',                // RTL content
-          '.editable',                     // Editable content
-          
-          // Selectores para contenido HTML formateado
+          // Selectores para emails HTML RICOS y FORMATEADOS
           '.ii.gt table',                  // Tablas en emails HTML
           '.ii.gt table td',               // Celdas de tabla
+          '.ii.gt table tbody',            // Cuerpo de tablas
+          '.ii.gt table tbody tr',         // Filas de tabla
           '.ii.gt div[style]',             // Divs con estilo inline
-          '.moz-text-html',                // Contenido Mozilla HTML
-          '.WordSection1',                 // Contenido de Word
-          'div[class*="MsoNormal"]',       // Estilos de Word/Outlook
+          '.ii.gt div[bgcolor]',           // Divs con color de fondo
+          '.ii.gt div[class*="MsoNormal"]', // Estilos de Word/Outlook
+          '.ii.gt .WordSection1',          // Contenido de Word
+          '.ii.gt .moz-text-html',         // Contenido Mozilla HTML
+          '.ii.gt .OutlookMessageBody',    // Cuerpo de mensaje Outlook
+          '.ii.gt .x_MsoNormal',           // Estilos MsoNormal de Outlook
           
-          // Selectores de vista previa
+          // Selectores para contenido HTML ESTRUCTURADO
+          '.ii.gt article',                // Artículos HTML
+          '.ii.gt section',                // Secciones HTML
+          '.ii.gt main',                   // Contenido principal
+          '.ii.gt .content',               // Contenido genérico
+          '.ii.gt .email-body',            // Cuerpo de email
+          '.ii.gt .message-body',          // Cuerpo de mensaje
+          '.ii.gt [role="main"]',          // Contenido principal por rol
+          '.ii.gt [role="article"]',       // Artículo por rol
+          
+          // Selectores para contenido MULTIIDIOMA
+          '.ii.gt div[dir="ltr"]',         // Contenido LTR
+          '.ii.gt div[dir="rtl"]',         // Contenido RTL
+          '.ii.gt div[dir="auto"]',        // Contenido auto-dirección
+          '.ii.gt div[lang]',              // Contenido con idioma
+          '.ii.gt span[dir]',              // Spans con dirección
+          
+          // Selectores para contenido EXPANDIDO Y COMPLETO
+          '.ii.gt .gmail_default',         // Default Gmail
+          '.ii.gt .editable',              // Contenido editable
+          '.ii.gt div[aria-expanded="true"]', // Contenido expandido
+          '.ii.gt div[data-smartmail]',    // Smart mail content
+          '.ii.gt div[id*="message"]',     // Divs con ID de mensaje
+          '.ii.gt div[id*="content"]',     // Divs con ID de contenido
+          '.ii.gt div[id*="body"]',        // Divs con ID de cuerpo
+          
+          // Selectores de vista previa MEJORADOS
           '.y2',                           // Preview text
           '.y3',                           // Alternativo preview
           '.bog + span',                   // Siguiente a bog
@@ -931,7 +1192,7 @@ function extractAndCopyGmailContent() {
           '.aLF .snippet',                 // Snippet en aLF
           '.message-content',              // Content genérico
           
-          // Selectores generales
+          // Selectores generales AMPLIADOS
           '.message-body',                 // Message body
           '.email-content',                // Email content
           'div[role="gridcell"] div',      // Grid cell content
@@ -941,11 +1202,6 @@ function extractAndCopyGmailContent() {
           'div p',                         // Párrafos en divs
           'span[dir]',                     // Spans con dirección
           '.text-content',                 // Text content
-          
-          // Selectores específicos para contenido expandido
-          'div[aria-expanded="true"]',     // Contenido expandido
-          'div[data-smartmail]',           // Smart mail content
-          'div[id*="message"]',            // Divs con ID de mensaje
           
           // Selectores de fallback más específicos
           '[jsname] div',                  // Divs con jsname
@@ -964,28 +1220,45 @@ function extractAndCopyGmailContent() {
             const contentElements = element.querySelectorAll(selector);
             for (const contentElement of contentElements) {
               if (contentElement) {
-                // MÉTODO 1: Extracción de texto plano desde HTML
+                // MÉTODO 1: Extracción COMPLETA de HTML a texto plano
                 let potentialContent = htmlToPlainText(contentElement);
                 
-                // MÉTODO 2: Fallback con textContent si htmlToPlainText no funciona
-                if (!potentialContent || potentialContent.length < 10) {
-                  potentialContent = contentElement.textContent?.trim() || '';
-                }
-                
-                // MÉTODO 3: Extracción específica de innerHTML para emails HTML
-                if (!potentialContent || potentialContent.length < 10) {
+                // MÉTODO 2: Extracción específica de innerHTML para emails HTML RICOS
+                if (!potentialContent || potentialContent.length < 20) {
                   const innerHTML = contentElement.innerHTML;
-                  if (innerHTML && innerHTML.length > 50) {
+                  if (innerHTML && innerHTML.length > 100) {
                     // Crear elemento temporal para convertir HTML a texto
                     const tempDiv = document.createElement('div');
                     tempDiv.innerHTML = innerHTML;
                     potentialContent = htmlToPlainText(tempDiv);
+                    console.log(`📧 Extracción HTML rica: ${potentialContent.substring(0, 100)}...`);
+                  }
+                }
+                
+                // MÉTODO 3: Fallback con textContent si los métodos HTML no funcionan
+                if (!potentialContent || potentialContent.length < 20) {
+                  potentialContent = contentElement.textContent?.trim() || '';
+                }
+                
+                // MÉTODO 4: Extracción AGRESIVA de contenido HTML completo
+                if (!potentialContent || potentialContent.length < 20) {
+                  const allElements = contentElement.querySelectorAll('p, div, span, td, th, li, h1, h2, h3, h4, h5, h6');
+                  const textParts = [];
+                  allElements.forEach(el => {
+                    const text = el.textContent?.trim();
+                    if (text && text.length > 5) {
+                      textParts.push(text);
+                    }
+                  });
+                  if (textParts.length > 0) {
+                    potentialContent = textParts.join(' ');
+                    console.log(`📧 Extracción agresiva: ${potentialContent.substring(0, 100)}...`);
                   }
                 }
 
-                // Filtrar contenido no deseado y validar
+                // Filtrar contenido no deseado y validar - FILTROS EXPANDIDOS
                 if (potentialContent &&
-                  potentialContent.length > 25 &&
+                  potentialContent.length > 15 &&
                   !potentialContent.includes('Escribir') &&
                   !potentialContent.includes('Enviar') &&
                   !potentialContent.includes('Responder') &&
@@ -1000,15 +1273,22 @@ function extractAndCopyGmailContent() {
                   !potentialContent.includes('Sent') &&
                   !potentialContent.includes('Trash') &&
                   !potentialContent.includes('Show trimmed content') &&
-                  !potentialContent.includes('Mostrar contenido recortado')) {
+                  !potentialContent.includes('Mostrar contenido recortado') &&
+                  !potentialContent.includes('Unsubscribe') &&
+                  !potentialContent.includes('Darse de baja') &&
+                  !potentialContent.includes('Privacy Policy') &&
+                  !potentialContent.includes('Terms of Service') &&
+                  !potentialContent.includes('Click here') &&
+                  !potentialContent.includes('Haga clic aquí') &&
+                  !potentialContent.match(/^[\s\n]*$/)) {
 
-                  // Priorizar contenido más largo para emailBody
-                  if (potentialContent.length > 100) {
-                    emailBody = potentialContent.length > 800 ? potentialContent.substring(0, 800) + '...' : potentialContent;
-                    console.log(`📧 Contenido HTML extraído: ${emailBody.substring(0, 100)}...`);
+                  // Priorizar contenido más largo para emailBody - LÍMITE EXPANDIDO
+                  if (potentialContent.length > 50) {
+                    emailBody = potentialContent.length > 2000 ? potentialContent.substring(0, 2000) + '...' : potentialContent;
+                    console.log(`📧 Contenido HTML completo extraído: ${emailBody.substring(0, 150)}...`);
                     break;
-                  } else if (!snippet && potentialContent.length > 25) {
-                    snippet = potentialContent.length > 200 ? potentialContent.substring(0, 200) + '...' : potentialContent;
+                  } else if (!snippet && potentialContent.length > 15) {
+                    snippet = potentialContent.length > 300 ? potentialContent.substring(0, 300) + '...' : potentialContent;
                   }
                 }
               }
@@ -1075,20 +1355,59 @@ function extractAndCopyGmailContent() {
           } catch (e) { /* continuar con siguiente selector */ }
         }
 
-                 // FALLBACK ULTRA-AGRESIVO - Extracción completa de elemento
+                 // FALLBACK ULTRA-AGRESIVO - Extracción completa de elemento MEJORADA
          if (!emailBody && !snippet) {
-           console.log('🔍 Intentando fallback ultra-agresivo para extracción de contenido...');
+           console.log('🔍 Intentando fallback ultra-agresivo para extracción de contenido HTML...');
            
-           // Método 1: Extracción usando innerHTML completo
+           // Método 1: Extracción usando innerHTML completo con procesamiento mejorado
            const fullHTML = element.innerHTML;
            if (fullHTML && fullHTML.length > 100) {
              const tempDiv = document.createElement('div');
              tempDiv.innerHTML = fullHTML;
              const extractedText = htmlToPlainText(tempDiv);
              
-             if (extractedText && extractedText.length > 50) {
-               emailBody = extractedText.length > 800 ? extractedText.substring(0, 800) + '...' : extractedText;
-               console.log(`📧 Contenido extraído via innerHTML: ${emailBody.substring(0, 100)}...`);
+             if (extractedText && extractedText.length > 30) {
+               emailBody = extractedText.length > 2000 ? extractedText.substring(0, 2000) + '...' : extractedText;
+               console.log(`📧 Contenido extraído via innerHTML completo: ${emailBody.substring(0, 150)}...`);
+             }
+           }
+           
+           // Método 2: Extracción específica de elementos HTML comunes
+           if (!emailBody) {
+             const htmlElements = element.querySelectorAll('p, div, span, table, tr, td, th, li, ul, ol, h1, h2, h3, h4, h5, h6, article, section, main, blockquote, pre');
+             const contentParts = [];
+             
+             htmlElements.forEach(el => {
+               const text = el.textContent?.trim();
+               if (text && text.length > 10 && !text.includes('Escribir') && !text.includes('Enviar') && !text.includes('Reply') && !text.includes('Forward')) {
+                 contentParts.push(text);
+               }
+             });
+             
+             if (contentParts.length > 0) {
+               const combinedContent = contentParts.join(' ');
+               emailBody = combinedContent.length > 2000 ? combinedContent.substring(0, 2000) + '...' : combinedContent;
+               console.log(`📧 Contenido extraído via elementos HTML: ${emailBody.substring(0, 150)}...`);
+             }
+           }
+           
+           // Método 3: Extracción de texto directo con limpieza agresiva
+           if (!emailBody) {
+             const rawText = element.textContent?.trim() || '';
+             if (rawText && rawText.length > 50) {
+               // Limpiar texto de manera agresiva
+               const cleanedText = rawText
+                 .replace(/\s+/g, ' ')
+                 .replace(/\n\s*\n/g, '\n')
+                 .replace(/^\s+|\s+$/g, '')
+                 .replace(/\b(Escribir|Enviar|Reply|Forward|Compose|Inbox|Drafts|Sent|Trash)\b/gi, '')
+                 .replace(/\b(Show trimmed content|Mostrar contenido recortado)\b/gi, '')
+                 .trim();
+               
+               if (cleanedText.length > 30) {
+                 emailBody = cleanedText.length > 2000 ? cleanedText.substring(0, 2000) + '...' : cleanedText;
+                 console.log(`📧 Contenido extraído via texto directo: ${emailBody.substring(0, 150)}...`);
+               }
              }
            }
          }
@@ -1161,6 +1480,178 @@ function extractAndCopyGmailContent() {
       };
     }
 
+    // Función auxiliar para abrir una nueva pestaña con emails extraídos
+    function openTextWindow(text, title = 'Emails Extraídos') {
+      try {
+        console.log('🪟 Abriendo nueva pestaña con emails extraídos...');
+        
+        // Escapar HTML para evitar problemas de renderizado
+        const escapedText = text
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+
+        // Crear contenido HTML con formato mejorado específico para emails
+        const htmlContent = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title} - AI Prompt Assistant</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #EA4335, #D33B2C);
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .header p {
+            margin: 8px 0 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .text-content {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 70vh;
+            overflow-y: auto;
+            color: #333;
+        }
+
+        .stats {
+            background: #fce4ec;
+            border: 1px solid #f8bbd9;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .stats-item {
+            display: inline-block;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        .stats-value {
+            color: #c2185b;
+            font-size: 18px;
+        }
+        
+        /* Scrollbar personalizada */
+        .text-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .text-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .text-content::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        .text-content::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .content {
+                padding: 20px;
+            }
+            .header {
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📧 ${title}</h1>
+            <p>Emails extraídos y copiados al portapapeles - ${new Date().toLocaleString('es-ES')}</p>
+        </div>
+        
+        <div class="content">
+            <div class="stats">
+                <div class="stats-item">
+                    <span class="stats-value">${text.split('\\n').length}</span>
+                    <span>líneas</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-value">${text.length.toLocaleString()}</span>
+                    <span>caracteres</span>
+                </div>
+                <div class="stats-item">
+                    <span class="stats-value">${text.split(' ').length.toLocaleString()}</span>
+                    <span>palabras</span>
+                </div>
+            </div>
+            
+            <div class="text-content" id="textContent">${escapedText}</div>
+        </div>
+    </div>
+</body>
+</html>`;
+
+        // Crear un blob con el contenido HTML
+        const blob = new Blob([htmlContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+
+        // Abrir nueva pestaña con el contenido
+        const newTab = window.open(url, '_blank');
+        
+        if (newTab) {
+          console.log('✅ Nueva pestaña abierta con emails extraídos');
+          
+          // Limpiar el blob URL después de un tiempo
+          setTimeout(() => {
+            URL.revokeObjectURL(url);
+          }, 60000); // 1 minuto
+        } else {
+          console.error('❌ No se pudo abrir la nueva pestaña. Verifica que los popups no estén bloqueados.');
+        }
+        
+      } catch (error) {
+        console.error('❌ Error al abrir ventana con emails:', error);
+      }
+    }
+
     // Función para finalizar y copiar emails
     async function finalizeEmailCollection() {
       if (allEmails.length >= MAX_EMAILS) {
@@ -1190,9 +1681,9 @@ function extractAndCopyGmailContent() {
         emailText += `Asunto: ${email.subject}\n`;
         emailText += `Fecha: ${email.timestamp}\n`;
 
-        // Mostrar el cuerpo completo del email si está disponible
+        // Mostrar el contenido completo del email priorizando emailBody (HTML procesado)
         if (email.emailBody && email.emailBody.length > 10) {
-          emailText += `Contenido completo: ${email.emailBody}\n`;
+          emailText += `Contenido completo (HTML): ${email.emailBody}\n`;
         } else if (email.snippet && email.snippet.length > 10) {
           emailText += `Vista previa: ${email.snippet}\n`;
         } else {
@@ -1213,6 +1704,9 @@ function extractAndCopyGmailContent() {
         emailText: emailText,
         emailCount: allEmails.length
       }, '*');
+      
+      // Abrir nueva pestaña con el texto extraído
+      openTextWindow(emailText, `Emails Extraídos (${allEmails.length}/${MAX_EMAILS})`);
     }
 
     // Función mejorada para copiar al portapapeles
@@ -1271,7 +1765,9 @@ function extractAndCopyGmailContent() {
       }, 2500);
     }
 
-    // Iniciar el proceso de captura
+    // Iniciar el proceso de captura con logging mejorado
+    console.log('🚀 Iniciando scroll automático para conversaciones de Gmail...');
+    console.log(`📊 Parámetros: MAX_SCROLL_ATTEMPTS=${MAX_SCROLL_ATTEMPTS}, SCROLL_DISTANCE=${SCROLL_DISTANCE}px, SCROLL_DELAY=${SCROLL_DELAY}ms`);
     await performScrollAndExtract();
   }
 
@@ -1732,42 +2228,6 @@ function extractAndCopyTweets() {
             overflow-y: auto;
             color: #333;
         }
-        .actions {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #1DA1F2, #1991DA);
-            color: white;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #1991DA, #1580C1);
-            transform: translateY(-2px);
-        }
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        .btn-secondary:hover {
-            background: #5a6268;
-            transform: translateY(-2px);
-        }
         .stats {
             background: #e3f2fd;
             border: 1px solid #bbdefb;
@@ -1813,10 +2273,6 @@ function extractAndCopyTweets() {
             .header {
                 padding: 15px 20px;
             }
-            .btn {
-                padding: 10px 20px;
-                font-size: 13px;
-            }
         }
     </style>
 </head>
@@ -1844,105 +2300,8 @@ function extractAndCopyTweets() {
             </div>
             
             <div class="text-content" id="textContent">${escapedText}</div>
-            
-            <div class="actions">
-                <button class="btn btn-primary" onclick="copyToClipboard()">
-                    📋 Copiar Todo
-                </button>
-                <button class="btn btn-secondary" onclick="selectAll()">
-                    🔘 Seleccionar Todo
-                </button>
-                <button class="btn btn-secondary" onclick="downloadAsFile()">
-                    💾 Descargar
-                </button>
-            </div>
         </div>
     </div>
-
-    <script>
-        // Función para copiar todo el contenido
-        async function copyToClipboard() {
-            try {
-                const content = document.getElementById('textContent').textContent;
-                await navigator.clipboard.writeText(content);
-                showNotification('✅ Contenido copiado al portapapeles');
-            } catch (error) {
-                console.error('Error al copiar:', error);
-                showNotification('❌ Error al copiar al portapapeles');
-            }
-        }
-
-        // Función para seleccionar todo el texto
-        function selectAll() {
-            const textContent = document.getElementById('textContent');
-            const range = document.createRange();
-            range.selectNodeContents(textContent);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            showNotification('✅ Todo el texto seleccionado');
-        }
-
-        // Función para descargar como archivo
-        function downloadAsFile() {
-            const content = document.getElementById('textContent').textContent;
-            const blob = new Blob([content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'tweets_extraidos_' + new Date().toISOString().slice(0, 10) + '.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showNotification('✅ Archivo descargado');
-        }
-
-        // Función para mostrar notificaciones
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.textContent = message;
-            notification.style.cssText = \`
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: #28a745;
-                color: white;
-                padding: 12px 20px;
-                border-radius: 6px;
-                z-index: 1000;
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                font-size: 14px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                animation: slideIn 0.3s ease;
-            \`;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
-                }, 300);
-            }, 3000);
-        }
-
-        // Añadir animaciones CSS
-        const style = document.createElement('style');
-        style.textContent = \`
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        \`;
-        document.head.appendChild(style);
-    </script>
 </body>
 </html>`;
 
@@ -2826,6 +3185,7 @@ function initializeUI() {
 Encontré una extensión de Chrome que creo que te va a ser útil.
 
 Se llama *AI Prompt Assistant* y tiene estas características increíbles:
+• 🤖 Modelos AI de ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Soporte multiidioma 
 • 📝 Editor de prompts moderno
 • 📧 Extracción de Gmail y Twitter/X
@@ -2841,6 +3201,7 @@ Hi! 👋
 I found a Chrome extension that I think you'll find useful.
 
 It's called *AI Prompt Assistant* and has these amazing features:
+• 🤖 AI models from ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Multi-language support
 • 📝 Modern prompt editor  
 • 📧 Gmail and Twitter/X extraction
@@ -2901,6 +3262,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
 Encontré una extensión de Chrome que creo que te va a ser útil.
 
 Se llama *AI Prompt Assistant* y tiene estas características increíbles:
+• 🤖 Modelos AI de ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Soporte multiidioma 
 • 📝 Editor de prompts moderno
 • 📧 Extracción de Gmail y Twitter/X
@@ -2916,6 +3278,7 @@ Hi! 👋
 I found a Chrome extension that I think you'll find useful.
 
 It's called *AI Prompt Assistant* and has these amazing features:
+• 🤖 AI models from ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Multi-language support
 • 📝 Modern prompt editor  
 • 📧 Gmail and Twitter/X extraction
@@ -4170,6 +4533,7 @@ function sendGmail() {
 Encontré una extensión de Chrome que creo que te va a ser útil.
 
 Se llama AI Prompt Assistant y tiene estas características increíbles:
+• 🤖 Modelos AI de ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Soporte multiidioma 
 • 📝 Editor de prompts moderno
 • 📧 Extracción de Gmail y Twitter/X
@@ -4185,6 +4549,7 @@ Hi! 👋
 I found a Chrome extension that I think you'll find useful.
 
 It's called AI Prompt Assistant and has these amazing features:
+• 🤖 AI models from ChatGPT, Claude, Gemini, DeepSeek, etc...
 • 🌐 Multi-language support
 • 📝 Modern prompt editor  
 • 📧 Gmail and Twitter/X extraction
