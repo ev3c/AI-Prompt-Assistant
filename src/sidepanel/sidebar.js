@@ -2843,45 +2843,60 @@ async function handleCustomButtonClick(context, buttonElement) {
   }
 }
 
-// Función para buscar archivos JSON custom y crear los botones
+// Función para buscar JSONs custom (en storage o archivos) y crear los botones
 async function initializeCustomButtons() {
   const customToggle = document.getElementById('custom-toggle');
   const customContainer = document.getElementById('custom-buttons-container');
 
   if (!customToggle || !customContainer) {
-    console.warn('Elementos para botones custom no encontrados.');
+    console.warn('Elementos para botones personalizados no encontrados.');
     return;
   }
 
   const customFileNames = ['custom_1.json', 'custom_2.json', 'custom_3.json', 'custom_4.json'];
   let customButtonsCreated = 0;
 
-  // Usar un bucle for...of para procesar los archivos secuencialmente y mantener el orden
   for (const fileName of customFileNames) {
-    try {
-      const fileUrl = chrome.runtime.getURL(`src/common/languages/custom/${fileName}`);
-      const response = await fetch(fileUrl);
+    const context = fileName.replace('.json', ''); // e.g., "custom_1"
+    const slot = context.split('_')[1];
+    const storageKey = `custom_json_${slot}`;
 
-      if (response.ok) {
-        const data = await response.json();
-        const title = data.header?.title || fileName.replace('.json', '');
-        const behaviour = data.header?.behaviour || 'url';
-        // FIX: Derivar el contexto directamente del nombre del archivo para evitar race conditions
-        const context = fileName.replace('.json', ''); // e.g., "custom_1"
+    // Comprobar si existe en storage
+    const storageData = await new Promise(resolve => chrome.storage.local.get(storageKey, result => resolve(result[storageKey])));
 
-        const button = document.createElement('button');
-        button.className = 'option-button custom-menu-button';
-        button.textContent = title;
-        button.dataset.context = context;
-        button.dataset.behaviour = behaviour;
+    let data;
+    let source;
 
-        button.addEventListener('click', () => handleCustomButtonClick(context, button));
+    if (storageData) {
+      data = storageData;
+      source = 'storage';
+    } else {
+      // Si no está en storage, comprobar si existe el archivo por defecto
+      try {
+        const fileUrl = chrome.runtime.getURL(`src/common/languages/custom/${fileName}`);
+        const response = await fetch(fileUrl);
+        if (response.ok) {
+          data = await response.json();
+          source = 'file';
+        }
+      } catch (error) { /* El archivo no existe, ignorar */ }
+    }
 
-        customContainer.appendChild(button);
-        customButtonsCreated++;
-      }
-    } catch (error) {
-      // El archivo no existe o es inválido, se ignora silenciosamente.
+    if (data) {
+      const title = data.header?.title || context;
+      const behaviour = data.header?.behaviour || 'url';
+
+      const button = document.createElement('button');
+      button.className = 'option-button custom-menu-button';
+      button.textContent = title;
+      button.dataset.context = context;
+      button.dataset.behaviour = behaviour;
+      button.title = `Cargado desde: ${source}`; // Tooltip útil para depuración
+
+      button.addEventListener('click', () => handleCustomButtonClick(context, button));
+
+      customContainer.appendChild(button);
+      customButtonsCreated++;
     }
   }
 

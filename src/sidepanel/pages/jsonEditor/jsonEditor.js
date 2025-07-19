@@ -28,6 +28,8 @@ class JSONEditor {
         pathCopied: "Ruta copiada al portapapeles:",
         pathCopyError: "No se pudo copiar la ruta al portapapeles.",
         saveMessage: "Guarda el archivo",
+        saveSuccess: "✅ ¡Tu menú personalizado ha sido guardado y actualizado!",
+        saveError: "❌ Error al guardar el menú personalizado.",
         saveLocationWin: "en (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.3_0\\src\\common\\languages\\custom\\\n\nCon el siguiente formato de nombre:\n      custom_N.json     (donde N es de 1 a 4)",
         saveLocationMac: "en (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre:\n      custom_N.json     (donde N es de 1 a 4)",
         saveLocationLinux: "en (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre:\n      custom_N.json     (donde N es de 1 a 4)",
@@ -69,6 +71,8 @@ class JSONEditor {
         pathCopied: "Path copied to clipboard:",
         pathCopyError: "Could not copy path to clipboard.",
         saveMessage: "Save the file",
+        saveSuccess: "✅ Your custom menu has been saved and updated!",
+        saveError: "❌ Error saving the custom menu.",
         saveLocationWin: "on (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.2_0\\src\\common\\languages\\custom\\\n\nWith the following name format:\n      custom_N.json     (where N is from 1 to 4)",
         saveLocationMac: "on (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format:\n      custom_N.json     (where N is from 1 to 4)",
         saveLocationLinux: "on (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format:\n      custom_N.json     (where N is from 1 to 4)",
@@ -379,11 +383,21 @@ class JSONEditor {
     };
   }
 
-  saveFile() {
+  async saveFile() {
     const embeddedEditor = document.getElementById('embedded-json-editor');
     const titleInput = document.getElementById('add-button-text');
     const originSelector = document.getElementById('origin-selector');
     
+    // --- Comprobación de robustez: Asegurarse de que el selector de slot existe ---
+    const slotSelector = document.getElementById('custom-file-selector');
+    if (!slotSelector) {
+        // Este es un error crítico del desarrollador. Falta el elemento HTML.
+        const errorMessage = "Error de desarrollador: El elemento 'custom-file-selector' no se encuentra en jsonEditor.html. Por favor, añádelo para poder guardar.";
+        console.error(errorMessage);
+        alert(errorMessage);
+        return; // Detener la ejecución
+    }
+
     const jsonStringFromEditor = embeddedEditor.value;
     const titleFromInput = titleInput.value.trim();
     const originFromSelector = originSelector.value;
@@ -417,47 +431,31 @@ class JSONEditor {
     // 4. Sincronizar la UI para que refleje el estado que se va a guardar.
     this.updateJsonPreview(); // Actualiza el <textarea> con el JSON formateado.
 
-    // 5. Proceder a guardar el archivo.
-    const jsonString = JSON.stringify(this.currentData, null, 2);
-    const fileNameParts = this.spritFileName();
-    const filename = fileNameParts.fullFileName;
-    
-    const blob = new Blob([jsonString], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    // 5. Proceder a guardar en chrome.storage.local
+    const selectedSlot = slotSelector.value; // e.g., "custom_1"
+    if (!selectedSlot) {
+        alert("Por favor, selecciona un 'Slot' donde guardar tu menú personalizado.");
+        return;
+    }
+    const storageKey = `custom_json_${selectedSlot.split('_')[1]}`; // e.g., "custom_json_1"
 
-    // Mostrar mensaje con la ruta sugerida
-    alert(this.t('saveMessage') + ' ' + filename + ' ' + this.getPlatformSaveMessage());
-    
-    // Esperar 1 segundo, cerrar sidepanel, esperar 1 segundo, reabrir sidepanel
-    setTimeout(async () => {
-      try {
-        // Obtener la pestaña actual
-        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        
-        // Cerrar el sidepanel
-        await chrome.sidePanel.close({ tabId: tab.id });
-        
-        // Esperar 1 segundo y reabrir
-        setTimeout(async () => {
-          try {
-            await chrome.sidePanel.open({ tabId: tab.id });
-          } catch (error) {
-            console.error('Error al reabrir el sidepanel:', error);
-          }
-        }, 1000);
-        
-      } catch (error) {
-        console.error('Error al cerrar/reabrir el sidepanel:', error);
+    const dataToStore = { [storageKey]: this.currentData };
+
+    chrome.storage.local.set(dataToStore, () => {
+      if (chrome.runtime.lastError) {
+        console.error('Error al guardar en chrome.storage:', chrome.runtime.lastError);
+        alert(this.t('saveError'));
+      } else {
+        console.log(`Datos guardados en ${storageKey}:`, this.currentData);
+        alert(this.t('saveSuccess'));
+
+        // Enviar un mensaje para que el sidebar se recargue si está abierto.
+        // El listener en background.js ya se encarga de esto, pero una notificación
+        // directa puede ser más rápida si el editor y el sidebar están en la misma extensión.
+        chrome.runtime.sendMessage({ action: 'reloadSidebar' });
       }
-    }, 1000);
+    });
+
   }
 
 

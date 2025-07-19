@@ -255,21 +255,32 @@ export async function loadMenuData(language = 'es') {
     const model = currentAIModel || 'chatgpt'; // Usar 'chatgpt' como valor por defecto
     const context = currentContext || 'url'; // Usar 'url' como contexto por defecto
 
-    // Manejar contextos custom primero
+    // Manejar contextos custom: intentar cargar desde storage, si no, desde archivo.
     if (context.startsWith('custom_')) {
-      const customFileName = context.replace('custom_', 'custom_') + '.json';
-      const customFilePath = `/src/common/languages/custom/${customFileName}`;
-      
-      try {
-        const response = await fetch(chrome.runtime.getURL(customFilePath));
-        if (response.ok) {
-          return await response.json();
-        }
-      } catch (error) {
-        console.error(`Error al cargar el archivo custom ${customFileName}:`, error);
-      }
-      // Si llegamos aquí, el archivo custom no se encontró o falló al cargar.
-      throw new Error(`No se pudo cargar el archivo de menú custom: ${fileName}`);
+      return new Promise(async (resolve, reject) => {
+        const slot = context.split('_')[1];
+        const storageKey = `custom_json_${slot}`;
+
+        // 1. Intentar cargar desde chrome.storage.local
+        chrome.storage.local.get(storageKey, async (result) => {
+          if (result[storageKey]) {
+            console.log(`✅ Menú custom '${context}' cargado desde chrome.storage.`);
+            resolve(result[storageKey]);
+          } else {
+            // 2. Si no está en storage, cargar el archivo por defecto del paquete
+            console.log(`⚠️ Menú custom '${context}' no encontrado en storage. Cargando desde archivo por defecto.`);
+            const customFileName = `${context}.json`;
+            const customFilePath = `/src/common/languages/custom/${customFileName}`;
+            try {
+              const response = await fetch(chrome.runtime.getURL(customFilePath));
+              if (response.ok) resolve(await response.json());
+              else reject(new Error(`No se pudo cargar el archivo de menú custom por defecto: ${customFileName}`));
+            } catch (error) {
+              reject(error);
+            }
+          }
+        });
+      });
     }
 
     // Si el contexto es PDF, verificar si tenemos información del PDF seleccionado
