@@ -102,7 +102,8 @@ class JSONEditor {
     return {
       header: {
         title: "AI prompt assistant",
-        currentUrlPlaceholder: "Página actual"
+        currentUrlPlaceholder: "Página actual",
+        behaviour: "URL"
       },
       addButtonText: "Añadir",
       origin: "url",
@@ -350,15 +351,23 @@ class JSONEditor {
       }
     }
 
-    // Extraer el origen del JSON cargado
-    if (this.currentData && this.currentData.origin) {
-      const originFromJSON = this.currentData.origin;
-      const originSelector = document.getElementById('origin-selector');
-      
-      if (originSelector) {
-        originSelector.value = originFromJSON;
-      }
+    // Sincronizar el origen y el comportamiento.
+    // Si el JSON cargado no tiene 'origin', se asume 'url' por defecto para mantener la consistencia.
+    const originFromJSON = this.currentData.origin || 'url';
+    this.currentData.origin = originFromJSON; // Asegurarse de que la propiedad exista en el objeto de datos.
+
+    const originSelector = document.getElementById('origin-selector');
+    if (originSelector) {
+      originSelector.value = originFromJSON;
     }
+
+    // Asegurarse de que el header exista antes de añadirle propiedades.
+    if (!this.currentData.header) {
+      this.currentData.header = {};
+    }
+    
+    // Actualizar (o añadir) el 'behaviour' basado en el 'origin' que hemos determinado.
+    this.currentData.header.behaviour = originFromJSON === 'clipboard' ? 'Clipboard' : 'URL';
   }
 
   spritFileName() {
@@ -503,6 +512,12 @@ class JSONEditor {
       // Agregar o actualizar la propiedad origin en los datos
       data.origin = origin;
       
+      // Actualizar la propiedad behaviour en el header
+      if (!data.header) {
+        data.header = {}; // Asegurarse de que el header exista
+      }
+      data.header.behaviour = origin === 'clipboard' ? 'Clipboard' : 'URL';
+
       this.currentData = data;
       this.updateJsonPreview();
       this.enableSave();
@@ -511,6 +526,10 @@ class JSONEditor {
     } catch (e) {
       // Si el JSON del editor no es válido, solo actualizar el estado interno
       this.currentData.origin = origin;
+      if (!this.currentData.header) {
+        this.currentData.header = {};
+      }
+      this.currentData.header.behaviour = origin === 'clipboard' ? 'Clipboard' : 'URL';
       console.log('Origin updated to:', origin, '(JSON editor invalid, updated internal state only)');
     }
   }
