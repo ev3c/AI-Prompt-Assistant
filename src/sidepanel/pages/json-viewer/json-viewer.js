@@ -12,8 +12,8 @@ function categorizeFile(filename) {
     return "Archivos de Menú ePub";
   } else if (filename.includes('menu_data_Gmail_')) {
     return "Archivos de Menú Gmail";
-  } else if (filename.includes('menu_data_ADD_')) {
-    return "Archivos de Menú ADD";
+  } else if (filename.includes('menu_data_CUSTOM_')) {
+      return "Archivos de Menú CUSTOM";
   } else if (filename === 'idiomaAI.json' || filename === 'motorAI.json' || filename === 'json-iconos.json') {
     return "Archivos de Configuración";
   } else {
@@ -85,7 +85,7 @@ async function loadJsonFilesAlternative() {
     "menu_data_PDF_",
     "menu_data_ePub_",
     "menu_data_Gmail_",
-    "menu_data_ADD_"
+    "menu_data_CUSTOM_"
   ];
   
   // Lista de sufijos (códigos de idioma) para probar

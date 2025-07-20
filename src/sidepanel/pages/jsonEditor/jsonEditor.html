@@ -25,38 +25,84 @@
       <div class="controls-wrapper">
         <div class="button-name-field">
           <label for="add-button-text" class="button-name-label">🏷️ Title:</label>
-          <input type="text" id="add-button-text" maxlength="12" placeholder="Máx. 12 chars" value="ButtonName" class="button-name-input">
-        </div>
-        <div class="form-group">
-            <label for="custom-file-selector" class="form-label">💾 Guardar en Slot:</label>
-            <select id="custom-file-selector" class="form-control">
-                <option value="custom_1">Custom 1</option>
-                <option value="custom_2">Custom 2</option>
-                <option value="custom_3">Custom 3</option>
-                <option value="custom_4">Custom 4</option>
-            </select>
+          <div class="tooltip-container">
+            <input type="text" id="add-button-text" maxlength="12" placeholder="Máx. 12 chars" value="ButtonName" class="button-name-input">
+            <div class="modern-tooltip multiline" id="add-button-text-tooltip">
+              <div class="tooltip-content">
+                <div class="tooltip-line">📋 Nombre que tendrá el botón de AI Prompt Assistant</div>
+                <div class="tooltip-line">📋 Name of the AI Prompt Assistant button</div>
+              </div>
+              <div class="tooltip-arrow"></div>
+            </div>
+          </div>
         </div>
         <div class="control-group">
             <label id="origin-label" for="origin-selector">Origen:</label>
-            <select id="origin-selector">
-                <option value="url">URL</option>
-                <option value="clipboard">Clipboard</option>
-            </select>
+            <div class="tooltip-container">
+                <select id="origin-selector">
+                    <option value="url">URL</option>
+                    <option value="clipboard">Clipboard</option>
+                </select>
+                <div class="modern-tooltip" id="origin-tooltip">
+                    <div class="tooltip-content">
+                        <div class="tooltip-line">📋 Se pasará la URL de la web o el contenido del Portapapeles a la AI</div>
+                        <div class="tooltip-line">📋 The web URL or clipboard content will be passed to the AI</div>
+                    </div>
+                    <div class="tooltip-arrow"></div>
+                </div>
+            </div>
         </div>
       </div>
-      <button id="load-default-btn" class="btn btn-success">📋 Cargar Plantilla</button>
-      <div class="file-input-wrapper">
-        <label for="file-input" class="file-label">📁 Abrir JSON</label>
-        <input type="file" id="file-input" accept=".json" class="file-input">
+      <div class="tooltip-container">
+        <button id="load-default-btn" class="btn btn-success">📋 Cargar Plantilla</button>
+        <div class="modern-tooltip multiline" id="load-default-tooltip">
+          <div class="tooltip-content">
+            <div class="tooltip-line">📁 Seleccionar plantilla predeterminada desde la extensión</div>
+            <div class="tooltip-line">📁 Select default template from the extension</div>
+          </div>
+          <div class="tooltip-arrow"></div>
+        </div>
       </div>
-      <button id="save-btn" class="btn btn-primary" disabled>💾 Guardar</button>
-      <div class="control-group platform-selector-right">
-          <label id="platform-label" for="platform-selector">Plataforma:</label>
-          <select id="platform-selector">
-              <option value="win">Windows</option>
-              <option value="mac">Mac</option>
-              <option value="linux">Linux</option>
-          </select>
+      <div class="file-input-wrapper">
+        <div class="tooltip-container">
+          <label for="file-input" class="file-label">📁 Abrir JSON</label>
+          <input type="file" id="file-input" accept=".json" class="file-input">
+          <div class="modern-tooltip multiline" id="file-input-tooltip">
+            <div class="tooltip-content">
+              <div class="tooltip-line">📁 Seleccionar un archivo JSON desde tu disco</div>
+              <div class="tooltip-line">📁 Select a JSON file from your disk</div>
+            </div>
+            <div class="tooltip-arrow"></div>
+          </div>
+        </div>
+      </div>
+      <div class="tooltip-container">
+        <button id="save-btn" class="btn btn-primary" disabled>💾 Guardar</button>
+        <div class="modern-tooltip multiline" id="save-btn-tooltip">
+          <div class="tooltip-content">
+            <div class="tooltip-line">📁 Seleccionar ubicación para guardar el archivo JSON</div>
+            <div class="tooltip-line">📁 Select location to save the JSON file</div>
+          </div>
+          <div class="tooltip-arrow"></div>
+        </div>
+      </div>
+      <div class="form-group">
+          <div class="tooltip-container">
+              <select id="custom-file-selector" class="form-control">
+                  <option value="custom_1">Custom 1</option>
+                  <option value="custom_2">Custom 2</option>
+                  <option value="custom_3">Custom 3</option>
+                  <option value="custom_4">Custom 4</option>
+                  <option value="custom_5">Hard Disk</option>
+              </select>
+              <div class="modern-tooltip multiline" id="custom-file-selector-tooltip">
+                  <div class="tooltip-content">
+                      <div class="tooltip-line">💾 Seleccionar slot de almacenamiento (Custom 1-4: extensión, Hard Disk: descargar)</div>
+                      <div class="tooltip-line">💾 Select storage slot (Custom 1-4: extension, Hard Disk: download)</div>
+                  </div>
+                  <div class="tooltip-arrow"></div>
+              </div>
+          </div>
       </div>
     </div>
 
@@ -65,9 +111,36 @@
       <div class="editor-header">
         <h3>📝 Editor de Texto JSON</h3>
         <div class="editor-controls">
-          <button id="validate-json-btn" class="btn btn-small btn-primary">✅ Validar JSON</button>
-          <button id="copy-path-btn" class="btn btn-small btn-secondary" title="Copiar ruta al portapapeles">📋 Copiar Ruta</button>
-          <button id="copy-json-btn" class="btn btn-small btn-secondary">📋 Copiar Archivo</button>
+          <div class="tooltip-container">
+            <button id="validate-json-btn" class="btn btn-small btn-primary">✅ Validar JSON</button>
+            <div class="modern-tooltip multiline" id="validate-json-tooltip">
+              <div class="tooltip-content">
+                <div class="tooltip-line">✅ Verificar si el JSON tiene errores de sintaxis</div>
+                <div class="tooltip-line">✅ Check if the JSON has syntax errors</div>
+              </div>
+              <div class="tooltip-arrow"></div>
+            </div>
+          </div>
+          <div class="tooltip-container">
+            <button id="copy-path-btn" class="btn btn-small btn-secondary">📋 Copiar Ruta</button>
+            <div class="modern-tooltip multiline" id="copy-path-tooltip">
+              <div class="tooltip-content">
+                <div class="tooltip-line">📋 Copiar ruta al portapapeles</div>
+                <div class="tooltip-line">📋 Copy path to clipboard</div>
+              </div>
+              <div class="tooltip-arrow"></div>
+            </div>
+          </div>
+          <div class="tooltip-container">
+            <button id="copy-json-btn" class="btn btn-small btn-secondary">📋 Copiar Archivo</button>
+            <div class="modern-tooltip multiline" id="copy-json-tooltip">
+              <div class="tooltip-content">
+                <div class="tooltip-line">📋 Copiar todo el contenido JSON al portapapeles</div>
+                <div class="tooltip-line">📋 Copy all JSON content to clipboard</div>
+              </div>
+              <div class="tooltip-arrow"></div>
+            </div>
+          </div>
         </div>
       </div>
       <textarea id="embedded-json-editor" placeholder="Edit your JSON here..."></textarea>

@@ -2,7 +2,7 @@
   "header": {
     "title": "Wikipedia2",
     "currentUrlPlaceholder": "Página actual",
-    "behaviour": "Clipboard"
+    "behaviour": "URL"
   },
   "sections": [
     {
@@ -68,5 +68,5 @@
   ],
   "addButtonText": "Wikipedia2",
   "jsonName": "custom_1.json",
-  "origin": "clipboard"
+  "origin": "url"
 }

@@ -8,7 +8,7 @@
       "title": "📝 Summary and understanding",
       "buttons": [
         {
-          "label": "Make a page summary: ",
+          "label": "Make a web page summary: ",
           "prompt": "Make a summary of:"
         },
         {

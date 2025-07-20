@@ -16,7 +16,7 @@ class JSONEditor {
         titlePlaceholder: "Máx. 12 chars",
         loadTemplate: "📋 Cargar Plantilla",
         openJson: "📁 Abrir JSON",
-        save: "💾 Guardar",
+        save: "💾 Guardar en :",
         loadingDefault: "Cargando archivo por defecto...",
         textEditor: "📝 Editor de Texto JSON",
         validateJson: "✅ Validar JSON",
@@ -24,15 +24,11 @@ class JSONEditor {
         copyFile: "📋 Copiar Archivo",
         editorPlaceholder: "Edita tu JSON aquí...",
         originLabel: "Origen:",
-        platformLabel: "Plataforma:",
         pathCopied: "Ruta copiada al portapapeles:",
         pathCopyError: "No se pudo copiar la ruta al portapapeles.",
         saveMessage: "Guarda el archivo",
         saveSuccess: "✅ ¡Tu menú personalizado ha sido guardado y actualizado!",
         saveError: "❌ Error al guardar el menú personalizado.",
-        saveLocationWin: "en (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.3_0\\src\\common\\languages\\custom\\\n\nCon el siguiente formato de nombre:\n      custom_N.json     (donde N es de 1 a 4)",
-        saveLocationMac: "en (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre:\n      custom_N.json     (donde N es de 1 a 4)",
-        saveLocationLinux: "en (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.3_0/src/common/languages/custom/\n\nCon el siguiente formato de nombre:\n      custom_N.json     (donde N es de 1 a 4)",
         jsonError: "Error al cargar el archivo JSON:",
         validationEmpty: "⚠️ Validación JSON\n\nEl editor está vacío. Por favor, ingresa contenido JSON para validar.",
         validationValid: "✅ JSON válido\n\nLa sintaxis del archivo es correcta.\n\n",
@@ -59,7 +55,7 @@ class JSONEditor {
         titlePlaceholder: "Max. 12 chars",
         loadTemplate: "📋 Load Template",
         openJson: "📁 Open JSON",
-        save: "💾 Save",
+        save: "💾 Save in :",
         loadingDefault: "Loading default file...",
         textEditor: "📝 JSON Text Editor",
         validateJson: "✅ Validate JSON",
@@ -67,15 +63,11 @@ class JSONEditor {
         copyFile: "📋 Copy File",
         editorPlaceholder: "Edit your JSON here...",
         originLabel: "Origin:",
-        platformLabel: "Platform:",
         pathCopied: "Path copied to clipboard:",
         pathCopyError: "Could not copy path to clipboard.",
         saveMessage: "Save the file",
         saveSuccess: "✅ Your custom menu has been saved and updated!",
         saveError: "❌ Error saving the custom menu.",
-        saveLocationWin: "on (Windows):\n\n%localappdata%\\Google\\Chrome\\User Data\\Default\\Extensions\\jimdgbjdhdoiejncgdfcjpakokcpnalg\\1.2_0\\src\\common\\languages\\custom\\\n\nWith the following name format:\n      custom_N.json     (where N is from 1 to 4)",
-        saveLocationMac: "on (Mac):\n\n~/Library/Application Support/Google/Chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format:\n      custom_N.json     (where N is from 1 to 4)",
-        saveLocationLinux: "on (Linux):\n\n~/.config/google-chrome/Default/Extensions/jimdgbjdhdoiejncgdfcjpakokcpnalg/1.2_0/src/common/languages/custom/\n\nWith the following name format:\n      custom_N.json     (where N is from 1 to 4)",
         jsonError: "Error loading JSON file:",
         validationEmpty: "⚠️ JSON Validation\n\nThe editor is empty. Please enter JSON content to validate.",
         validationValid: "✅ Valid JSON\n\nThe file syntax is correct.\n\n",
@@ -120,7 +112,8 @@ class JSONEditor {
     // Inicializar el campo Title con valor por defecto
     this.initializeButtonNameField();
     this.initializeOriginSelector();
-    this.initializePlatformSelector();
+    this.initializeAllModernTooltips();
+    
     // Aplicar traducciones iniciales
     this.updateLanguage();
   }
@@ -149,7 +142,6 @@ class JSONEditor {
     const headerP = document.querySelector('.header p');
     const buttonNameLabel = document.querySelector('.button-name-label');
     const originLabel = document.getElementById('origin-label');
-    const platformLabel = document.getElementById('platform-label');
     const addButtonText = document.getElementById('add-button-text');
     const loadDefaultBtn = document.getElementById('load-default-btn');
     const fileLabel = document.querySelector('.file-label');
@@ -164,7 +156,6 @@ class JSONEditor {
     if (headerP) headerP.textContent = this.t('subtitle');
     if (buttonNameLabel) buttonNameLabel.textContent = this.t('titleLabel');
     if (originLabel) originLabel.textContent = this.t('originLabel');
-    if (platformLabel) platformLabel.textContent = this.t('platformLabel');
     if (addButtonText) addButtonText.placeholder = this.t('titlePlaceholder');
     if (loadDefaultBtn) loadDefaultBtn.textContent = this.t('loadTemplate');
     if (fileLabel) fileLabel.textContent = this.t('openJson');
@@ -213,7 +204,7 @@ class JSONEditor {
       const langSuffix = this.getLanguageSuffix(extensionLanguage);
       
       // Determinar el archivo por defecto según el idioma de la extensión principal
-      const defaultFileName = `menu_data_ADD_${langSuffix}.json`;
+      const defaultFileName = `menu_data_CUSTOM_${langSuffix}.json`;
       const fileUrl = chrome.runtime.getURL(`src/common/languages/${defaultFileName}`);
       
       console.log(`Cargando archivo para idioma de extensión: ${extensionLanguage} -> ${defaultFileName}`);
@@ -256,9 +247,9 @@ class JSONEditor {
 
     // Copy path button
     document.getElementById('copy-path-btn').addEventListener('click', () => {
-      const pathOnly = this.getPlatformPathOnly();
-      navigator.clipboard.writeText(pathOnly).then(() => {
-        alert(this.t('pathCopied') + '\n\n' + pathOnly);
+      const customPath = 'src/common/languages/custom/';
+      navigator.clipboard.writeText(customPath).then(() => {
+        alert(this.t('pathCopied') + '\n\n' + customPath);
       }, () => {
         alert(this.t('pathCopyError'));
       });
@@ -440,14 +431,21 @@ class JSONEditor {
     // 4. Sincronizar la UI para que refleje el estado que se va a guardar.
     this.updateJsonPreview(); // Actualiza el <textarea> con el JSON formateado.
 
-    // 5. Proceder a guardar en chrome.storage.local
-    const selectedSlot = slotSelector.value; // e.g., "custom_1"
+    // 5. Determinar si guardar en chrome.storage.local o descargar al disco
+    const selectedSlot = slotSelector.value; // e.g., "custom_1" o "custom_5"
     if (!selectedSlot) {
         alert("Por favor, selecciona un 'Slot' donde guardar tu menú personalizado.");
         return;
     }
-    const storageKey = `custom_json_${selectedSlot.split('_')[1]}`; // e.g., "custom_json_1"
 
+    // Si es "custom_5" (Hard Disk), descargar al disco
+    if (selectedSlot === 'custom_5') {
+        this.downloadToDisk();
+        return;
+    }
+
+    // Para los demás slots, guardar en chrome.storage.local
+    const storageKey = `custom_json_${selectedSlot.split('_')[1]}`; // e.g., "custom_json_1"
     const dataToStore = { [storageKey]: this.currentData };
 
     chrome.storage.local.set(dataToStore, () => {
@@ -467,7 +465,34 @@ class JSONEditor {
 
   }
 
-
+  downloadToDisk() {
+    const titleInput = document.getElementById('add-button-text');
+    const fileName = titleInput.value.trim() || 'custom_menu';
+    
+    // Crear el contenido JSON formateado
+    const jsonContent = JSON.stringify(this.currentData, null, 2);
+    
+    // Crear un blob con el contenido JSON
+    const blob = new Blob([jsonContent], { type: 'application/json' });
+    
+    // Crear un enlace de descarga temporal
+    const downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = `${fileName}.json`;
+    
+    // Agregar el enlace al DOM, hacer clic y removerlo
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    
+    // Limpiar el objeto URL
+    URL.revokeObjectURL(downloadLink.href);
+    
+    // Mostrar mensaje de éxito
+    alert(`✅ Archivo "${fileName}.json" descargado exitosamente al disco.`);
+    
+    console.log(`Archivo JSON descargado: ${fileName}.json`, this.currentData);
+  }
 
   enableSave() {
     document.getElementById('save-btn').disabled = false;
@@ -558,45 +583,253 @@ class JSONEditor {
     originSelector.value = 'url';
   }
 
-  initializePlatformSelector() {
-    const platformSelector = document.getElementById('platform-selector');
-    if (!platformSelector) return;
+  initializeAllModernTooltips() {
+    // Inicializar todos los tooltips específicos
+    this.initializeOriginTooltip();
+    this.initializeStaticTooltips();
+    
+    // Listener para reajustar tooltips visibles al redimensionar ventana
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.modern-tooltip.show').forEach(tooltip => {
+        // Resetear la flecha antes de reajustar posición
+        const arrow = tooltip.querySelector('.tooltip-arrow');
+        if (arrow) {
+          arrow.style.left = '';
+          arrow.style.right = '';
+          arrow.style.transform = '';
+        }
+        this.adjustTooltipPosition(tooltip);
+      });
+    });
+  }
 
-    const platform = navigator.platform.toLowerCase();
-    if (platform.includes('win')) {
-      platformSelector.value = 'win';
-    } else if (platform.includes('mac')) {
-      platformSelector.value = 'mac';
-    } else if (platform.includes('linux')) {
-      platformSelector.value = 'linux';
+  initializeOriginTooltip() {
+    const originSelector = document.getElementById('origin-selector');
+    const tooltip = document.getElementById('origin-tooltip');
+    
+    if (!originSelector || !tooltip) return;
+    
+    let tooltipTimeout;
+    
+    const showTooltip = () => {
+      clearTimeout(tooltipTimeout);
+      tooltip.classList.add('show');
+    };
+    
+    const hideTooltip = () => {
+      tooltipTimeout = setTimeout(() => {
+        tooltip.classList.remove('show');
+      }, 200);
+    };
+    
+    // Eventos para mostrar/ocultar tooltip
+    originSelector.addEventListener('mouseenter', showTooltip);
+    originSelector.addEventListener('mouseleave', hideTooltip);
+    originSelector.addEventListener('focus', showTooltip);
+    originSelector.addEventListener('blur', hideTooltip);
+    
+    // Mantener tooltip visible si el mouse está sobre él
+    tooltip.addEventListener('mouseenter', () => {
+      clearTimeout(tooltipTimeout);
+    });
+    
+    tooltip.addEventListener('mouseleave', hideTooltip);
+  }
+
+  initializeStaticTooltips() {
+    // Lista de tooltips con sus elementos y IDs correspondientes
+    const tooltipConfig = [
+      { elementId: 'add-button-text', tooltipId: 'add-button-text-tooltip' },
+      { elementId: 'load-default-btn', tooltipId: 'load-default-tooltip' },
+      { elementId: 'file-input', tooltipId: 'file-input-tooltip', useLabel: true },
+      { elementId: 'save-btn', tooltipId: 'save-btn-tooltip' },
+      { elementId: 'custom-file-selector', tooltipId: 'custom-file-selector-tooltip' },
+      { elementId: 'validate-json-btn', tooltipId: 'validate-json-tooltip' },
+      { elementId: 'copy-path-btn', tooltipId: 'copy-path-tooltip' },
+      { elementId: 'copy-json-btn', tooltipId: 'copy-json-tooltip' }
+    ];
+    
+    tooltipConfig.forEach(config => {
+      let element = document.getElementById(config.elementId);
+      const tooltip = document.getElementById(config.tooltipId);
+      
+      // Para file-input, usar el label en su lugar
+      if (config.useLabel && element) {
+        element = element.previousElementSibling; // El label está antes del input
+      }
+      
+      if (element && tooltip) {
+        this.setupTooltipEvents(element, tooltip);
+      }
+    });
+  }
+
+  setupTooltipEvents(element, tooltip) {
+    let tooltipTimeout;
+    let mousePosition = { x: 0, y: 0 };
+    
+    const showTooltip = (event) => {
+      clearTimeout(tooltipTimeout);
+      
+      // Capturar posición del mouse si está disponible
+      if (event && event.clientX !== undefined) {
+        const elementRect = element.getBoundingClientRect();
+        mousePosition.x = event.clientX - elementRect.left;
+        mousePosition.y = event.clientY - elementRect.top;
+      }
+      
+      // Resetear clases de posición y estilos inline
+      tooltip.classList.remove('adjust-left', 'adjust-right');
+      tooltip.style.left = '';
+      tooltip.style.right = '';
+      tooltip.style.maxWidth = '';
+      
+      // Resetear posición de la flecha
+      const arrow = tooltip.querySelector('.tooltip-arrow');
+      if (arrow) {
+        arrow.style.left = '';
+        arrow.style.right = '';
+        arrow.style.transform = '';
+      }
+      
+      tooltip.classList.add('show');
+      
+      // Verificar y ajustar posición después de que se muestre
+      setTimeout(() => {
+        this.adjustTooltipPosition(tooltip, element, mousePosition);
+      }, 10);
+    };
+    
+    const hideTooltip = () => {
+      tooltipTimeout = setTimeout(() => {
+        tooltip.classList.remove('show');
+        // Resetear posición de la flecha al ocultar
+        const arrow = tooltip.querySelector('.tooltip-arrow');
+        if (arrow) {
+          arrow.style.left = '';
+          arrow.style.right = '';
+          arrow.style.transform = '';
+        }
+      }, 200);
+    };
+    
+    // Eventos para mostrar/ocultar tooltip con captura de posición del mouse
+    element.addEventListener('mouseenter', showTooltip);
+    element.addEventListener('mousemove', (event) => {
+      if (tooltip.classList.contains('show')) {
+        const elementRect = element.getBoundingClientRect();
+        mousePosition.x = event.clientX - elementRect.left;
+        mousePosition.y = event.clientY - elementRect.top;
+        this.adjustTooltipArrow(tooltip, element, mousePosition);
+      }
+    });
+    element.addEventListener('mouseleave', hideTooltip);
+    element.addEventListener('focus', showTooltip);
+    element.addEventListener('blur', hideTooltip);
+    
+    // Mantener tooltip visible si el mouse está sobre él
+    tooltip.addEventListener('mouseenter', () => {
+      clearTimeout(tooltipTimeout);
+    });
+    
+    tooltip.addEventListener('mouseleave', hideTooltip);
+  }
+
+  adjustTooltipPosition(tooltip, element = null, mousePosition = null) {
+    const rect = tooltip.getBoundingClientRect();
+    const viewportWidth = window.innerWidth;
+    
+    // Margen de seguridad dinámico según el tamaño de pantalla
+    let margin = 15;
+    let leftOffset = 10;
+    
+    if (viewportWidth < 480) {
+      margin = 8;
+      leftOffset = 8;
+    } else if (viewportWidth < 768) {
+      margin = 10;
+      leftOffset = 10;
+    }
+    
+    // Verificar si se desborda por la izquierda
+    if (rect.left < margin) {
+      tooltip.classList.add('adjust-left');
+      tooltip.classList.remove('adjust-right');
+      
+      // Asegurar que el tooltip no sobresalga del borde izquierdo
+      tooltip.style.left = `${leftOffset}px`;
+      
+      // Verificar después del ajuste que no sobresalga por la derecha
+      setTimeout(() => {
+        const newRect = tooltip.getBoundingClientRect();
+        if (newRect.right > viewportWidth - margin) {
+          // Si aún sobresale, reducir el ancho máximo dinámicamente
+          const maxAllowedWidth = viewportWidth - leftOffset - margin;
+          tooltip.style.maxWidth = `${maxAllowedWidth}px`;
+        }
+        // Ajustar flecha después del reposicionamiento
+        if (element && mousePosition) {
+          this.adjustTooltipArrow(tooltip, element, mousePosition);
+        }
+      }, 5);
+    }
+    // Verificar si se desborda por la derecha
+    else if (rect.right > viewportWidth - margin) {
+      tooltip.classList.add('adjust-right');
+      tooltip.classList.remove('adjust-left');
+      tooltip.style.left = '';
+      tooltip.style.maxWidth = '';
+    }
+    // Si está bien centrado, mantener posición original
+    else {
+      tooltip.classList.remove('adjust-left', 'adjust-right');
+      tooltip.style.left = '';
+      tooltip.style.maxWidth = '';
+    }
+    
+    // Ajustar posición de la flecha según la posición del mouse
+    if (element && mousePosition) {
+      this.adjustTooltipArrow(tooltip, element, mousePosition);
     }
   }
 
-  getPlatformSaveMessage() {
-    const platformSelector = document.getElementById('platform-selector');
-    const selectedPlatform = platformSelector ? platformSelector.value : 'win';
-
-    switch (selectedPlatform) {
-      case 'win':
-        return this.t('saveLocationWin');
-      case 'mac':
-        return this.t('saveLocationMac');
-      case 'linux':
-        return this.t('saveLocationLinux');
-      default:
-        return this.t('saveLocationWin');
+  adjustTooltipArrow(tooltip, element, mousePosition) {
+    const arrow = tooltip.querySelector('.tooltip-arrow');
+    if (!arrow) return;
+    
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const elementRect = element.getBoundingClientRect();
+    
+    // Calcular posición relativa del mouse respecto al tooltip
+    let arrowLeft;
+    const arrowMargin = 12; // Margen mínimo desde los bordes
+    
+    if (tooltip.classList.contains('adjust-left')) {
+      // Si el tooltip está ajustado a la izquierda
+      arrowLeft = Math.max(arrowMargin, Math.min(mousePosition.x, tooltipRect.width - arrowMargin));
+    } else if (tooltip.classList.contains('adjust-right')) {
+      // Si el tooltip está ajustado a la derecha
+      const tooltipLeft = parseInt(tooltip.style.left) || 0;
+      const elementLeft = elementRect.left - tooltipRect.left + tooltipLeft;
+      const relativeMouseX = elementLeft + mousePosition.x;
+      arrowLeft = Math.max(arrowMargin, Math.min(relativeMouseX, tooltipRect.width - arrowMargin));
+    } else {
+      // Tooltip centrado - calcular posición relativa
+      const tooltipCenter = tooltipRect.width / 2;
+      const elementCenter = elementRect.width / 2;
+      const mouseOffset = mousePosition.x - elementCenter;
+      arrowLeft = Math.max(arrowMargin, Math.min(tooltipCenter + mouseOffset, tooltipRect.width - arrowMargin));
     }
+    
+    // Aplicar la posición calculada con suavizado
+    arrow.style.left = `${Math.round(arrowLeft)}px`;
+    arrow.style.right = 'auto';
+    arrow.style.transform = 'translateX(0)';
   }
 
-  getPlatformPathOnly() {
-    const fullMessage = this.getPlatformSaveMessage();
-    const parts = fullMessage.split('\n\n');
-    if (parts.length > 1) {
-      // La ruta es la segunda parte del mensaje
-      return parts[1].trim();
-    }
-    return fullMessage; // Fallback si el formato no es el esperado
-  }
+
+
+
 
   validateEmbeddedJSON() {
     const jsonEditor = document.getElementById('embedded-json-editor');

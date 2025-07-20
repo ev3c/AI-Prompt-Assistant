@@ -8,7 +8,7 @@
       "title": "📝 Resumen y comprensión",
       "buttons": [
         {
-          "label": "Haz un resumen de página: ",
+          "label": "Haz un resumen de página web: ",
           "prompt": "Haz un resumen de:"
         },
         {
@@ -19,7 +19,10 @@
           "label": "Resumen en 3 frases",
           "prompt": "Resume esta página en 3 frases."
         },
-        {"label": "Resumen en X caracteres", "prompt": "Resume esta página en [X] caracteres."},
+        {
+          "label": "Resumen en X caracteres",
+          "prompt": "Resume esta página en [X] caracteres."
+        },
         {
           "label": "Versión para niños",
           "prompt": "Dame una versión para niños de esta información."

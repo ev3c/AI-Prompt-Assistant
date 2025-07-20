@@ -31,6 +31,7 @@ export async function createInitialContextMenus(loadedLangs, defaultModelId, def
 
     chrome.contextMenus.create({ id: 'extension-config', title: '⚙️ Configuración', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'open-json-files', title: '📁 Open / Abrir .json files', contexts: ['action'] });
+    chrome.contextMenus.create({ id: 'help-video', title: '🎥 Ayuda / Video', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'send-feedback', title: '📝 Send / Enviar feedback', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'rate-extension', title: '⭐ Rate / Calificar extensión', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'share-extension', title: '🚀 Share / Compartir extensión', contexts: ['action'] });
@@ -127,6 +128,10 @@ export function handleContextMenuClick(info, tab) {
     chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/pages/jsonEditor/jsonEditor.html') });
     console.log("Abriendo JSON Editor");
    // chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/pages/json-viewer/json-viewer.html') });
+  }
+  else if (menuItemId === 'help-video') {
+    chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/pages/help-video/help-video.html') });
+    console.log("Abriendo página de ayuda/video");
   }
   else if (menuItemId === 'send-feedback') {
     chrome.tabs.create({ url: chrome.runtime.getURL('/src/sidepanel/pages/feedback/feedback.html') });

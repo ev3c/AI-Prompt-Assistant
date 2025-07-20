@@ -387,10 +387,10 @@ export async function loadMenuData(language = 'es') {
       console.log(`No se encontró ${aiFileName}, intentando con ADD...`);
     }
 
-    // Si no se encuentra el archivo de AI, intentar con el archivo ADD en el idioma actual
-    const addFile = `/src/common/languages/menu_data_ADD_${langSuffix}.json`;
+    // Si no se encuentra el archivo de AI, intentar con el archivo CUSTOM en el idioma actual
+    const addFile = `/src/common/languages/menu_data_CUSTOM_${langSuffix}.json`;
     try {
-      console.log(`Intentando cargar archivo ADD: ${addFile}`);
+      console.log(`Intentando cargar archivo CUSTOM: ${addFile}`);
       const addResponse = await fetch(addFile);
       if (addResponse.ok) {
         return await addResponse.json();
@@ -400,8 +400,8 @@ export async function loadMenuData(language = 'es') {
     }
 
     // Como último recurso, intentar con el archivo en español
-    console.log(`Intentando cargar archivo: /src/common/languages/menu_data_ADD_ES.json`);
-    const fallbackResponse = await fetch('/src/common/languages/menu_data_ADD_ES.json');
+    console.log(`Intentando cargar archivo: /src/common/languages/menu_data_CUSTOM_ES.json`);
+      const fallbackResponse = await fetch('/src/common/languages/menu_data_CUSTOM_ES.json');
     if (fallbackResponse.ok) {
       return await fallbackResponse.json();
     }
