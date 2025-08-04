@@ -4,6 +4,9 @@ import {
   tryReadClipboard,
   requestClipboardPermission,
   updateContextDisplay,
+  getPriorityText,
+  getSelectedTextFromPage,
+  setSimulatedSelectedText,
   getAIModelName,
   changeLanguage,
   changeAIModel,
@@ -29,6 +32,53 @@ import {
 } from '/src/common/common.js';
 
 import { updateUITexts, getTranslation, updateDirectQuestionButtonText } from '/src/content-script/translations.js';
+
+// Variables para actualización automática del labelText en clipboardButton
+let clipboardLabelUpdateInterval = null;
+let lastDisplayedSelectedText = '';
+
+// Función para iniciar actualización automática del labelText en clipboardButton
+function startClipboardLabelAutoUpdate() {
+  console.log('🔄 Iniciando actualización automática del labelText para clipboardButton');
+  
+  // Limpiar intervalo anterior si existe
+  if (clipboardLabelUpdateInterval) {
+    clearInterval(clipboardLabelUpdateInterval);
+  }
+  
+  // Actualizar inmediatamente al iniciar
+  if (config.getCurrentContext() === 'clipboard') {
+    updateContextDisplay().catch(error => {
+      console.log('Error en actualización inmediata del labelText:', error);
+    });
+  }
+  
+  // Actualizar cada 300ms para mayor responsividad
+  clipboardLabelUpdateInterval = setInterval(async () => {
+    // Solo actualizar si estamos en contexto clipboard
+    if (config.getCurrentContext() === 'clipboard') {
+      try {
+        await updateContextDisplay();
+        console.log('🔄 Actualización automática del displayText ejecutada');
+      } catch (error) {
+        console.log('Error en actualización automática del labelText:', error);
+      }
+    } else {
+      // Si no estamos en contexto clipboard, detener la actualización
+      console.log('⏹️ Deteniendo actualización automática - contexto cambió');
+      stopClipboardLabelAutoUpdate();
+    }
+  }, 300); // Actualizar cada 300ms (más frecuente)
+}
+
+// Función para detener actualización automática del labelText
+function stopClipboardLabelAutoUpdate() {
+  if (clipboardLabelUpdateInterval) {
+    console.log('⏹️ Deteniendo actualización automática del labelText');
+    clearInterval(clipboardLabelUpdateInterval);
+    clipboardLabelUpdateInterval = null;
+  }
+}
 
 // Guardar configuración al cerrar la sidebar
 window.addEventListener('beforeunload', function () {
@@ -2837,7 +2887,7 @@ async function handleCustomButtonClick(context, buttonElement) {
     // El título se mantiene como está configurado inicialmente
 
     // 3. Ahora que el contexto, los datos (URL/Portapapeles) y los datos del menú están establecidos, actualizar la visualización.
-    updateContextDisplay();
+    await updateContextDisplay();
   } catch (error) {
     console.error('Error loading menu data for custom context:', error);
   }
@@ -2924,7 +2974,8 @@ document.addEventListener('DOMContentLoaded', async function () {
       // Solo ejecutar si el contexto actual es de tipo clipboard
       if (isClipboardBehaviorContext(config.getCurrentContext())) {
         config.setClipboardText(event.detail.newContent);
-        updateContextDisplay();
+        await updateContextDisplay();
+        console.log('📋 DisplayText actualizado automáticamente por cambio en clipboard:', event.detail.newContent.substring(0, 50) + '...');
         const newMenuData = await loadMenuData(config.getCurrentLanguage());
         config.setMenuData(newMenuData);
         renderSections();
@@ -2973,13 +3024,16 @@ document.addEventListener('DOMContentLoaded', async function () {
       if (isClipboardBehaviorContext(currentContext)) {
         config.setUseClipboard(true);
         await tryReadClipboard();
-        updateContextDisplay();
+        await updateContextDisplay();
+        // Iniciar actualización automática del labelText cuando el sidebar se abre con clipboardButton seleccionado
+        startClipboardLabelAutoUpdate();
+        console.log('✅ Actualización automática del displayText iniciada al cargar sidebar con clipboardButton');
       } else { // Default to URL behavior for all other contexts
         config.setUseClipboard(false);
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
           if (tabs && tabs.length > 0) {
             config.setCurrentUrl(tabs[0].url);
-            updateContextDisplay();
+            await updateContextDisplay();
           }
         });
       }
@@ -2994,7 +3048,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         urlButton.classList.add('option-selected');
         config.setUseClipboard(false);
         config.setCurrentContext('url');
-        updateContextDisplay();
+        await updateContextDisplay();
 
         // Cargar el menú correspondiente al contexto de URL
         const newMenuData = await loadMenuData(config.getCurrentLanguage());
@@ -3008,21 +3062,21 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     // Escuchar cambios de URL en la pestaña activa
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    chrome.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
       if (changeInfo.url && tab.active) {
         config.setCurrentUrl(changeInfo.url);
         if (isUrlBehaviorContext(config.getCurrentContext())) {
-          updateContextDisplay();
+          await updateContextDisplay();
         }
       }
     });
 
     chrome.tabs.onActivated.addListener(function (activeInfo) {
-      chrome.tabs.get(activeInfo.tabId, function (tab) {
+      chrome.tabs.get(activeInfo.tabId, async function (tab) {
         if (tab) {
           config.setCurrentUrl(tab.url);
           if (isUrlBehaviorContext(config.getCurrentContext())) {
-            updateContextDisplay();
+            await updateContextDisplay();
           }
         }
       });
@@ -3346,16 +3400,18 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
   // Eventos para los botones de opción
   urlButton.addEventListener('click', function () {
     deselectAllButtons();
+    // Detener actualización automática del clipboardButton si estaba activa
+    stopClipboardLabelAutoUpdate();
     urlButton.classList.add('option-selected');
     config.setUseClipboard(false);
     config.setCurrentContext('url');
 
     // Actualizar URL activa inmediatamente
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
       if (tabs && tabs.length > 0) {
         config.setCurrentUrl(tabs[0].url);
         // Actualizar la visualización del contexto con la URL actual
-        updateContextDisplay();
+        await updateContextDisplay();
       }
     });
 
@@ -3377,79 +3433,15 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     config.setUseClipboard(true);
     config.setCurrentContext('clipboard');
 
-    // Obtener el texto seleccionado de la pestaña activa
-    chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
-        if (tabs && tabs.length > 0) {
-        try {
-          const url = tabs[0].url;
-          if (
-            url.startsWith('chrome://') ||
-            url.startsWith('chrome-extension://') ||
-            url.startsWith('https://chrome.google.com/webstore')
-          ) {
-            // Mostrar mensaje de error en la sidebar
-            mostrarError('No se puede acceder al portapapeles en esta página.');
-            return;
-          }
-          // Ejecutar script para copiar texto seleccionado al portapapeles
-          const result = await chrome.scripting.executeScript({
-            target: { tabId: tabs[0].id },
-            function: function () {
-              // Función que se ejecuta en el contexto de la página
-              try {
-                const selection = window.getSelection();
-                if (selection.rangeCount > 0) {
-                  const selectedText = selection.toString().trim();
-                  if (selectedText) {
-                    // Usar la API moderna de clipboard si está disponible
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                      navigator.clipboard.writeText(selectedText).then(() => {
-                        // Texto copiado exitosamente
-                      }).catch(err => {
-                        console.error('❌ Error al copiar con API moderna:', err);
-                      });
-                    }
-                    return selectedText;
-                  } else {
-                    return '[No hay texto seleccionado en la página]';
-                  }
-                } else {
-                  return '[No hay texto seleccionado en la página]';
-                }
-              } catch (error) {
-                console.error('❌ Error al acceder a la selección:', error);
-                return '[Error al acceder al texto seleccionado]';
-              }
-            }
-          });
+    console.log('📝 ClipboardButton activado - Configurando para mostrar texto seleccionado o clipboard');
 
-          // Obtener el resultado del script ejecutado
-          const selectedText = result[0].result;
-
-                        // Establecer el texto seleccionado en el clipboard interno
-              config.setClipboardText(selectedText);
-              updateContextDisplay();
-
-              // Mostrar notificación de éxito si se obtuvo texto
-              const notification = document.getElementById('copy-notification');
-              if (selectedText && !selectedText.includes('[No hay texto') && !selectedText.includes('[Error')) {
-                notification.textContent = '✅ Texto seleccionado copiado al portapapeles';
-                notification.classList.remove('hidden');
-                setTimeout(() => {
-                  notification.classList.add('hidden');
-                }, 2000);
-                
-                // Copia adicional al portapapeles del sistema
-                copyToSystemClipboard(selectedText);
-              }
-
-        } catch (error) {
-          console.error("Error al obtener texto seleccionado:", error);
-          config.setClipboardText("[Error al obtener texto seleccionado]");
-          updateContextDisplay();
-        }
-      }
-    });
+    // Actualizar display inmediatamente
+    await updateContextDisplay();
+    
+    // Iniciar actualización automática del labelText cada 300ms
+    startClipboardLabelAutoUpdate();
+    
+    console.log('✅ Actualización automática del displayText iniciada para clipboardButton');
 
     // Asegurar que el monitoreo está activo
     clipboardMonitor.start();
@@ -3468,6 +3460,8 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
 
   bookButton.addEventListener('click', async function () {
     deselectAllButtons();
+    // Detener actualización automática del clipboardButton si estaba activa
+    stopClipboardLabelAutoUpdate();
     bookButton.classList.add('option-selected');
     config.setCurrentContext('book');
     // Establecer explícitamente que se usará el portapapeles
@@ -3481,14 +3475,14 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
       // Copiar al portapapeles del sistema usando función mejorada
       copyToSystemClipboard(nombreLibro);
       // Actualizar la visualización con el nombre del libro
-      updateContextDisplay();
+      await updateContextDisplay();
     } else {
       nombreLibro = "The Old Man and the Sea";
       config.setClipboardText(nombreLibro);
       // Copiar al portapapeles del sistema usando función mejorada
       copyToSystemClipboard(nombreLibro);
       // Actualizar la visualización con el nombre del libro por defecto
-      updateContextDisplay();
+      await updateContextDisplay();
     }
     // Guardar configuración principal
     saveMainConfig();
@@ -3504,20 +3498,22 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
 
   pdfButton.addEventListener('click', function () {
     deselectAllButtons();
+    // Detener actualización automática del clipboardButton si estaba activa
+    stopClipboardLabelAutoUpdate();
     pdfButton.classList.add('option-selected');
     config.setCurrentContext('pdf');
     config.setUseClipboard(false);
 
     // Comprobar si ya tenemos información de un PDF seleccionado previamente
-    chrome.storage.local.get(['lastSelectedPdf'], function (result) {
+    chrome.storage.local.get(['lastSelectedPdf'], async function (result) {
       if (result.lastSelectedPdf) {
         // Mostrar el PDF seleccionado anteriormente
         config.setClipboardText(`PDF: ${result.lastSelectedPdf}`);
-        updateContextDisplay();
+        await updateContextDisplay();
       } else {
         // No hay PDF seleccionado, mostrar mensaje genérico
         config.setClipboardText('Seleccione un PDF...');
-        updateContextDisplay();
+        await updateContextDisplay();
       }
     });
 
@@ -3532,13 +3528,13 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     fileInput.click();
 
     // Manejar la selección del archivo
-    fileInput.addEventListener('change', function () {
+    fileInput.addEventListener('change', async function () {
       if (fileInput.files && fileInput.files[0]) {
         const selectedFile = fileInput.files[0];
 
         // Mostrar el nombre del archivo seleccionado en la interfaz
         config.setClipboardText(`PDF: ${selectedFile.name}`);
-        updateContextDisplay();
+        await updateContextDisplay();
 
         // Crear un objeto URL para el archivo
         const fileUrl = URL.createObjectURL(selectedFile);
@@ -3593,13 +3589,13 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
             notification.classList.remove('hidden');
 
             // Configurar listener para recibir el resultado de la extracción
-            const messageListener = (event) => {
+            const messageListener = async (event) => {
               if (event.data && event.data.type === 'PDF_EXTRACT_COMPLETE') {
                 if (event.data.success) {
                   // Éxito: actualizar el texto del clipboard y la interfaz
                   const extractedLength = event.data.textLength;
                   config.setClipboardText(`PDF extraído: ${selectedFile.name} (${extractedLength} caracteres)`);
-                  updateContextDisplay();
+                  await updateContextDisplay();
                   
                   notification.textContent = `✅ Texto extraído del PDF: ${extractedLength} caracteres copiados al clipboard`;
             setTimeout(() => {
@@ -3664,34 +3660,36 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
 
   wikiButton.addEventListener('click', function () {
     deselectAllButtons();
+    // Detener actualización automática del clipboardButton si estaba activa
+    stopClipboardLabelAutoUpdate();
     wikiButton.classList.add('option-selected');
     config.setCurrentContext('wiki');
     config.setUseClipboard(false);
 
     // Actualizar URL activa inmediatamente
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
       if (tabs && tabs.length > 0) {
         config.setCurrentUrl(tabs[0].url);
         // Actualizar la visualización para mostrar Wiki y la URL
-        updateContextDisplay();
+        await updateContextDisplay();
       }
     });
 
     // Lógica específica para Wikipedia: obtener la pestaña actual y verificar si es Wikipedia
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
       if (tabs && tabs.length > 0) {
         const currentUrl = tabs[0].url;
         if (currentUrl.includes('wikipedia.org')) {
           // Ya estamos en Wikipedia, sólo actualizamos la visualización
           config.setCurrentUrl(currentUrl);
-          updateContextDisplay();
+          await updateContextDisplay();
           // Ya estamos en Wikipedia
         } else {
           // No estamos en Wikipedia, abrir una nueva pestaña
-          chrome.tabs.create({ url: 'https://www.wikipedia.org/' }, function (newTab) {
+          chrome.tabs.create({ url: 'https://www.wikipedia.org/' }, async function (newTab) {
             // Actualizar con la nueva URL de Wikipedia
             config.setCurrentUrl('https://www.wikipedia.org/');
-            updateContextDisplay();
+            await updateContextDisplay();
           });
           // Abriendo Wikipedia en nueva pestaña
         }
@@ -3712,6 +3710,8 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
 
   twitterButton.addEventListener('click', async function () {
     deselectAllButtons();
+    // Detener actualización automática del clipboardButton si estaba activa
+    stopClipboardLabelAutoUpdate();
     twitterButton.classList.add('option-selected');
     config.setCurrentContext('twitter');
     config.setUseClipboard(true); // Cambiado a true para usar el clipboard para tweets
@@ -3728,7 +3728,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
         } else {
           config.setClipboardText('No estamos en Twitter/X');
         }
-        updateContextDisplay();
+        await updateContextDisplay();
       }
     });
 
@@ -3743,7 +3743,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
           if (userConfirmed) {
             // El usuario confirmó, proceder con la extracción
             config.setClipboardText('Extrayendo tweets...');
-            updateContextDisplay();
+            await updateContextDisplay();
 
             // Ejecutar el script para extraer los tweets
             chrome.scripting.executeScript({
@@ -3752,16 +3752,21 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
             });
 
             // Configurar listener para recibir el resultado
-            const messageListener = (event) => {
+            const messageListener = async (event) => {
               if (event.data && event.data.type === 'TWITTER_EXTRACT_COMPLETE') {
                 // Actualizar clipboard interno y etiqueta
                 config.setClipboardText(event.data.threadText);
-                updateContextDisplay();
+                
+                // NUEVO: Simular que el texto extraído de Twitter es texto seleccionado
+                setSimulatedSelectedText(event.data.threadText);
+                
+                await updateContextDisplay();
 
                 // Remover listener después del uso
                 window.removeEventListener('message', messageListener);
 
                 console.log(`✅ Clipboard actualizado con ${event.data.tweetCount} posts de X/Twitter`);
+                console.log('📝 Texto de Twitter establecido como selectedTextFromPage simulado');
                 
                 // Copia adicional al portapapeles del sistema desde la extensión
                 copyToSystemClipboard(event.data.threadText);
@@ -3777,15 +3782,15 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
           } else {
             // El usuario canceló, no hacer nada
             config.setClipboardText('Extracción cancelada por el usuario');
-            updateContextDisplay();
+            await updateContextDisplay();
           }
         } else {
           // No estamos en Twitter/X, abrir una nueva pestaña
-          chrome.tabs.create({ url: 'https://twitter.com' }, function (newTab) {
+          chrome.tabs.create({ url: 'https://twitter.com' }, async function (newTab) {
             // Actualizar con la nueva URL de Twitter
             config.setCurrentUrl('https://twitter.com');
             config.setClipboardText('Navegando a Twitter/X...');
-            updateContextDisplay();
+            await updateContextDisplay();
           });
         }
       }
@@ -3808,6 +3813,8 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
 
   gmailButton.addEventListener('click', async function () {
     deselectAllButtons();
+    // Detener actualización automática del clipboardButton si estaba activa
+    stopClipboardLabelAutoUpdate();
     gmailButton.classList.add('option-selected');
     config.setCurrentContext('gmail');
     config.setUseClipboard(true);
@@ -3815,7 +3822,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     // Leer portapapeles inmediatamente
     const clipText = await tryReadClipboard();
     config.setClipboardText('Gmail: ' + clipText);
-    updateContextDisplay();
+    await updateContextDisplay();
 
     // Lógica específica para Gmail: obtener la pestaña actual y verificar si es Gmail
     chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
@@ -3828,7 +3835,7 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
           if (userConfirmed) {
             // El usuario confirmó, proceder con la extracción
             config.setClipboardText('Extrayendo emails...');
-            updateContextDisplay();
+            await updateContextDisplay();
 
             // Ya estamos en Gmail, ejecutar el script para extraer emails
             chrome.scripting.executeScript({
@@ -3837,11 +3844,11 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
             });
 
             // Configurar listener para recibir el resultado
-            const messageListener = (event) => {
+            const messageListener = async (event) => {
               if (event.data && event.data.type === 'GMAIL_EXTRACT_COMPLETE') {
                 // Actualizar clipboard interno y etiqueta
                 config.setClipboardText(event.data.emailText);
-                updateContextDisplay();
+                await updateContextDisplay();
 
                 // Remover listener después del uso
                 window.removeEventListener('message', messageListener);
@@ -3864,15 +3871,15 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
           } else {
             // El usuario canceló, no hacer nada
             config.setClipboardText('Extracción cancelada por el usuario');
-            updateContextDisplay();
+            await updateContextDisplay();
           }
         } else {
           // No estamos en Gmail, abrir una nueva pestaña
-          chrome.tabs.create({ url: 'https://mail.google.com/' }, function (newTab) {
+          chrome.tabs.create({ url: 'https://mail.google.com/' }, async function (newTab) {
             // Actualizar con la nueva URL de Gmail
             config.setCurrentUrl('https://mail.google.com/');
             config.setClipboardText('Navegando a Gmail...');
-            updateContextDisplay();
+            await updateContextDisplay();
           });
           // Abriendo Gmail en nueva pestaña
         }
@@ -3901,6 +3908,8 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     
     // Actualizar el botón seleccionado
     deselectAllButtons();
+    // Detener actualización automática del clipboardButton si estaba activa
+    stopClipboardLabelAutoUpdate();
     addButton.classList.add('option-selected');
     
     // Guardar la configuración
@@ -4299,7 +4308,7 @@ function setupClipboardMonitoring() {
           if (!newClipboardContent.includes('[Acceso al portapapeles') && !newClipboardContent.includes('[Haga clic aquí') && oldClipboardContent !== newClipboardContent) {
             const hasPermission = await requestClipboardPermission();
             config.setClipboardText(newClipboardContent);
-            updateContextDisplay();
+            await updateContextDisplay();
             const newMenuData = await loadMenuData(config.getCurrentLanguage());
             config.setMenuData(newMenuData);
             renderSections();
@@ -4331,7 +4340,7 @@ function setupClipboardMonitoring() {
   });
 
   // Manejar evento de pegado en el input oculto
-  hiddenInput.addEventListener('paste', function (e) {
+  hiddenInput.addEventListener('paste', async function (e) {
     e.preventDefault();
     const pasteData = e.clipboardData.getData('text');
     if (pasteData) {
@@ -4360,7 +4369,7 @@ function setupClipboardMonitoring() {
           config.setClipboardText(pasteData);
           break;
       }
-      updateContextDisplay();
+      await updateContextDisplay();
 
       /* Mostrar notificación de éxito
       const notification = document.getElementById('copy-notification');
@@ -4435,7 +4444,7 @@ function setupClipboardMonitoring() {
               // Para clipboard, no añadir prefijo
               break;
           }
-          updateContextDisplay();
+          await updateContextDisplay();
         }
       }
     }, pollingInterval);
@@ -4458,12 +4467,38 @@ function setupClipboardMonitoring() {
       if (isClipboardBehaviorContext(config.getCurrentContext())) {
         startClipboardMonitoring();
         // Leer el portapapeles inmediatamente al volver a la ventana
-        tryReadClipboard().then(() => {
-          updateContextDisplay();
+        tryReadClipboard().then(async () => {
+          await updateContextDisplay();
         });
+        
+        // Para contexto clipboard específico, actualizar también después de un pequeño delay
+        // para capturar cambios de clipboard que pudieron haber ocurrido mientras la ventana no estaba visible
+        if (config.getCurrentContext() === 'clipboard') {
+          setTimeout(async () => {
+            await tryReadClipboard();
+            await updateContextDisplay();
+            console.log('🔄 Actualización adicional del clipboard al cambiar de ventana');
+          }, 500);
+        }
+      } else {
+        // Para contextos no-clipboard, actualizar display al cambiar de ventana
+        updateContextDisplay();
       }
     } else {
       stopClipboardMonitoring();
+    }
+  });
+
+  // Evento adicional para capturar cambios al volver de otra aplicación/ventana
+  window.addEventListener('focus', async () => {
+    console.log('🔍 Ventana enfocada - Verificando actualizaciones del clipboard');
+    if (config.getCurrentContext() === 'clipboard') {
+      // Pequeño delay para asegurar que el clipboard se haya actualizado
+      setTimeout(async () => {
+        await tryReadClipboard();
+        await updateContextDisplay();
+        console.log('📋 Clipboard verificado al enfocar ventana');
+      }, 200);
     }
   });
 

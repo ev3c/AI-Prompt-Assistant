@@ -80,14 +80,46 @@ export async function createInitialContextMenus(loadedLangs, defaultModelId, def
 
 export async function updateContextMenuTitles(modelId, languageIso) {
   const modelName = getAIModelName(modelId);
+  
+  console.log('🔄 Actualizando menús contextuales...');
+  console.log('⏰ Timestamp actual:', Date.now());
+  
+  // Obtener textos con logging detallado
   const urlText = await getContextMenuTextForDisplay(false, languageIso);
   const clipboardText = await getContextMenuTextForDisplay(true, languageIso);
 
-  chrome.contextMenus.update('open-chatgpt-prompt-helper', { title: `${modelName} ${urlText}` }, () => {
-    if (chrome.runtime.lastError) console.warn("Error actualizando menú 'page':", chrome.runtime.lastError.message);
-  });
-  chrome.contextMenus.update('open-chatgpt-prompt-helper-selection', { title: `${modelName} ${clipboardText}` }, () => {
-     if (chrome.runtime.lastError) console.warn("Error actualizando menú 'selection':", chrome.runtime.lastError.message);
+  console.log('📋 summaryClipboard (SOLO texto seleccionado):', clipboardText);
+  console.log('🌐 summaryUrl obtenido:', urlText);
+
+  // Siempre recrear completamente para asegurar actualización
+  chrome.contextMenus.removeAll(() => {
+    console.log('🗑️ Menús contextuales eliminados, recreando...');
+    
+    // Recrear menús con títulos actualizados
+    chrome.contextMenus.create({
+      id: 'open-chatgpt-prompt-helper',
+      title: `${modelName} ${urlText}`,
+      contexts: ['page']
+    });
+
+    chrome.contextMenus.create({
+      id: 'open-chatgpt-prompt-helper-selection',
+      title: `${modelName} ${clipboardText}`,
+      contexts: ['selection']
+    });
+
+    // Recrear otros menús de la extensión
+    chrome.contextMenus.create({ id: 'extension-config', title: '⚙️ Configuración', contexts: ['action'] });
+    chrome.contextMenus.create({ id: 'open-json-files', title: '📁 Open / Abrir .json files', contexts: ['action'] });
+    chrome.contextMenus.create({ id: 'help-video', title: '🎥 Ayuda / Video', contexts: ['action'] });
+    chrome.contextMenus.create({ id: 'send-feedback', title: '📝 Send / Enviar feedback', contexts: ['action'] });
+    chrome.contextMenus.create({ id: 'rate-extension', title: '⭐ Rate / Calificar extensión', contexts: ['action'] });
+    chrome.contextMenus.create({ id: 'share-extension', title: '🚀 Share / Compartir extensión', contexts: ['action'] });
+
+    console.log('✅ Menús contextuales RECREADOS:');
+    console.log('   📋 summaryClipboard (SOLO texto seleccionado):', clipboardText);
+    console.log('   🌐 summaryUrl:', urlText);
+    console.log('   ⏰ Completado en:', Date.now());
   });
 }
 
@@ -102,6 +134,9 @@ export async function updateContextMenuTitlesFromStorage(newModelId, newLanguage
 
 export function handleContextMenuClick(info, tab) {
   const menuItemId = info.menuItemId;
+  
+  // Forzar actualización de menús antes de procesar el clic
+  updateContextMenuTitlesFromStorage();
 
   if (menuItemId === 'open-chatgpt-prompt-helper' || menuItemId === 'open-chatgpt-prompt-helper-selection') {
     chrome.sidePanel.open({ tabId: tab.id });

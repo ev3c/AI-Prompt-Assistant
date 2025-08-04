@@ -167,8 +167,109 @@ export async function tryReadClipboard() {
   }
 }
 
+// Función para obtener texto seleccionado de la página actual
+let selectedText = '';
+let lastSelectedTextUpdate = 0;
+
+// Función para simular texto seleccionado (útil para contextos como Twitter/X)
+export function setSimulatedSelectedText(text) {
+  if (text && typeof text === 'string') {
+    selectedText = text;
+    lastSelectedTextUpdate = Date.now();
+    console.log('📝 Texto seleccionado simulado establecido:', text.substring(0, 100) + (text.length > 100 ? '...' : ''));
+    return true;
+  }
+  return false;
+}
+
+export async function getSelectedTextFromPage() {
+  try {
+    // Obtener la pestaña activa
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (!tabs || tabs.length === 0) {
+      console.log('No hay pestaña activa');
+      return '';
+    }
+
+    const tab = tabs[0];
+    
+    // Verificar si la página permite scripting
+    if (tab.url.startsWith('chrome://') || 
+        tab.url.startsWith('chrome-extension://') || 
+        tab.url.startsWith('edge://') || 
+        tab.url.startsWith('about:') ||
+        tab.url.startsWith('moz-extension://')) {
+      console.log('Página no permite scripting:', tab.url);
+      return '';
+    }
+
+    // Usar executeScript para obtener texto seleccionado directamente
+    const results = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      function: () => {
+        try {
+          const selection = window.getSelection();
+          if (selection.rangeCount > 0) {
+            const selectedText = selection.toString().trim();
+            return selectedText;
+          }
+          return '';
+        } catch (error) {
+          console.log('Error al obtener selección:', error);
+          return '';
+        }
+      }
+    });
+
+    const textFromPage = results[0]?.result || '';
+    
+    // Actualizar cache solo si hay texto seleccionado
+    if (textFromPage) {
+      selectedText = textFromPage;
+      lastSelectedTextUpdate = Date.now();
+      console.log('✅ Texto seleccionado obtenido:', textFromPage);
+    }
+    
+    return textFromPage;
+  } catch (error) {
+    console.log('Error al obtener texto seleccionado:', error);
+    return '';
+  }
+}
+
+// Función para obtener el texto prioritario (seleccionado + clipboard)
+export async function getPriorityText() {
+  try {
+    // PRIORIDAD 1: Texto seleccionado en la página
+    const currentSelectedText = await getSelectedTextFromPage();
+    if (currentSelectedText) {
+      console.log('📝 Usando texto seleccionado:', currentSelectedText);
+      return currentSelectedText;
+    }
+
+    // PRIORIDAD 2: Texto seleccionado en cache reciente (< 5 segundos)
+    const cacheAge = Date.now() - lastSelectedTextUpdate;
+    if (selectedText && cacheAge < 5000) {
+      console.log('⚡ Usando texto seleccionado del cache:', selectedText);
+      return selectedText;
+    }
+
+    // PRIORIDAD 3: Clipboard si no hay texto seleccionado
+    if (clipboardText && !clipboardText.startsWith('[')) {
+      console.log('📋 Usando clipboard:', clipboardText);
+      return clipboardText;
+    }
+
+    console.log('❌ No hay texto seleccionado ni clipboard válido');
+    return '';
+  } catch (error) {
+    console.log('Error en getPriorityText:', error);
+    return clipboardText || '';
+  }
+}
+
 // Actualizar la visualización del contexto (URL o portapapeles)
-export function updateContextDisplay() {
+export async function updateContextDisplay() {
   const labelText = document.getElementById('current-url');
 
   // Configurar el estilo para que ocupe dos líneas
@@ -183,30 +284,152 @@ export function updateContextDisplay() {
   labelText.style.webkitBoxOrient = 'vertical';
   labelText.style.lineHeight = '1.2em';
 
-  let displayText = clipboardText || '[Portapapeles vacío]';
-  // Limitar el texto del portapapeles para la visualización
-  // Aumentar el límite de caracteres ya que ahora tenemos 2 líneas
-  if (displayText.length > 100) {
-    displayText = displayText.substring(0, 100) + '...';
-  }
-
   if (isClipboardBehaviorContext(currentContext)) {
-    // If it's a clipboard-like context (standard or custom)
-    let prefix = 'ClipB';
-    if (currentContext.startsWith('custom_')) {
-      const menuData = config.getMenuData();
-      const title = menuData?.header?.title || currentContext.replace(/_/g, ' ').replace('custom', 'Custom');
-      prefix = `${title} (ClipB)`; // More descriptive for custom clipboard
-    } else if (currentContext === 'book') {
-      prefix = 'Book';
-    } else if (currentContext === 'pdf') {
-      prefix = 'PDF';
-    } else if (currentContext === 'twitter') {
-      prefix = 'X';
-    } else if (currentContext === 'gmail') {
-      prefix = 'Gmail';
+    // Para contextos de clipboard, mostrar ÚNICAMENTE texto seleccionado de página web
+    // Excepción: para 'book', usar el texto introducido por el usuario
+    try {
+      let displayText;
+      
+      if (currentContext === 'book') {
+        // Para contexto book, usar el texto introducido por el usuario
+        const userBookText = config.getClipboardText();
+        if (userBookText) {
+          displayText = userBookText;
+          console.log('📚 Mostrando texto del libro introducido por el usuario:', userBookText);
+        } else {
+          displayText = '[introduzca el nombre del libro]';
+          console.log('📚 No hay texto de libro del usuario');
+        }
+      } else if (currentContext === 'twitter') {
+        // Para contexto Twitter, usar prioritariamente el texto extraído de Twitter
+        const twitterText = config.getClipboardText();
+        if (twitterText && !twitterText.includes('Preparando') && !twitterText.includes('Extrayendo') && !twitterText.includes('Navegando')) {
+          displayText = twitterText;
+          console.log('🐦 Mostrando texto extraído de X/Twitter:', twitterText.substring(0, 100) + (twitterText.length > 100 ? '...' : ''));
+        } else {
+          // Fallback al texto seleccionado de la página si no hay texto de Twitter aún
+          const selectedTextFromPage = await getSelectedTextFromPage();
+          if (selectedTextFromPage) {
+            displayText = selectedTextFromPage;
+            console.log('📝 Mostrando texto seleccionado de página para Twitter:', selectedTextFromPage);
+          } else {
+            displayText = '[procesando tweets...]';
+            console.log('🐦 Esperando extracción de tweets de X/Twitter');
+          }
+        }
+      } else {
+        // Para otros contextos de clipboard, obtener SOLO texto seleccionado de la página web activa
+        const selectedTextFromPage = await getSelectedTextFromPage();
+        
+        if (selectedTextFromPage) {
+          displayText = selectedTextFromPage;
+          console.log('📝 Mostrando SOLO texto seleccionado de página:', selectedTextFromPage);
+        } else {
+          // Si no hay texto seleccionado y estamos en contexto clipboard, usar contenido del clipboard
+          if (currentContext === 'clipboard') {
+            const clipboardContent = config.getClipboardText();
+            if (clipboardContent && !clipboardContent.startsWith('[')) {
+              displayText = clipboardContent;
+              console.log('📋 No hay texto seleccionado, mostrando contenido del clipboard:', clipboardContent);
+            } else {
+              const texts = getTranslation(config.getCurrentLanguage());
+              displayText = texts.textPrompt.selectTextMessage;
+              console.log('📝 No hay texto seleccionado ni contenido válido en clipboard');
+            }
+          } else {
+            const texts = getTranslation(config.getCurrentLanguage());
+            displayText = texts.textPrompt.selectTextMessage;
+            console.log('📝 No hay texto seleccionado en la página web activa');
+          }
+        }
+      }
+      
+      // Limitar el texto para la visualización (2 líneas)
+      if (displayText.length > 100) {
+        displayText = displayText.substring(0, 100) + '...';
+      }
+
+      // Determinar el prefijo según el contexto
+      let prefix = 'ClipB';
+      if (currentContext.startsWith('custom_')) {
+        const menuData = config.getMenuData();
+        const title = menuData?.header?.title || currentContext.replace(/_/g, ' ').replace('custom', 'Custom');
+        prefix = `${title} (ClipB)`;
+      } else if (currentContext === 'book') {
+        prefix = 'Book';
+      } else if (currentContext === 'pdf') {
+        prefix = 'PDF';
+      } else if (currentContext === 'twitter') {
+        prefix = 'X';
+      } else if (currentContext === 'gmail') {
+        prefix = 'Gmail';
+      }
+      
+      labelText.textContent = `${prefix}: ${displayText}`;
+      console.log('✅ labelText actualizado con SOLO texto seleccionado:', `${prefix}: ${displayText}`);
+      
+    } catch (error) {
+      console.log('❌ Error obteniendo texto seleccionado de página:', error);
+      
+      // Para contexto book, intentar usar el texto del usuario como fallback
+      if (currentContext === 'book') {
+        const userBookText = config.getClipboardText();
+        if (userBookText) {
+          let displayText = userBookText;
+          if (displayText.length > 100) {
+            displayText = displayText.substring(0, 100) + '...';
+          }
+          labelText.textContent = `Book: ${displayText}`;
+          console.log('📚 Usando texto del libro como fallback:', displayText);
+          return; // Salir aquí para evitar mostrar mensaje de error
+        }
+      }
+      
+      // Para contexto Twitter, intentar usar el texto extraído como fallback
+      if (currentContext === 'twitter') {
+        const twitterText = config.getClipboardText();
+        if (twitterText && !twitterText.includes('Preparando') && !twitterText.includes('Extrayendo') && !twitterText.includes('Navegando')) {
+          let displayText = twitterText;
+          if (displayText.length > 100) {
+            displayText = displayText.substring(0, 100) + '...';
+          }
+          labelText.textContent = `X: ${displayText}`;
+          console.log('🐦 Usando texto de Twitter como fallback:', displayText);
+          return; // Salir aquí para evitar mostrar mensaje de error
+        }
+      }
+      
+      // Para contexto clipboard, intentar usar el contenido del clipboard como fallback
+      if (currentContext === 'clipboard') {
+        const clipboardContent = config.getClipboardText();
+        if (clipboardContent && !clipboardContent.startsWith('[')) {
+          let displayText = clipboardContent;
+          if (displayText.length > 100) {
+            displayText = displayText.substring(0, 100) + '...';
+          }
+          labelText.textContent = `ClipB: ${displayText}`;
+          console.log('📋 Error accediendo a página, usando contenido del clipboard como fallback:', displayText);
+          return; // Salir aquí para evitar mostrar mensaje de error
+        }
+      }
+      
+      // Sin fallback al clipboard - solo mostrar mensaje de error para otros contextos
+      let prefix = 'ClipB';
+      if (currentContext.startsWith('custom_')) {
+        const menuData = config.getMenuData();
+        const title = menuData?.header?.title || currentContext.replace(/_/g, ' ').replace('custom', 'Custom');
+        prefix = `${title} (ClipB)`;
+      } else if (currentContext === 'book') {
+        prefix = 'Book';
+      } else if (currentContext === 'pdf') {
+        prefix = 'PDF';
+      } else if (currentContext === 'twitter') {
+        prefix = 'X';
+      } else if (currentContext === 'gmail') {
+        prefix = 'Gmail';
+      }
+      labelText.textContent = `${prefix}: [error accediendo a la página]`;
     }
-    labelText.textContent = `${prefix}: ${displayText}`;
   } else {
     // If it's a URL-like context (standard or custom)
     let prefix = 'URL';
@@ -640,6 +863,60 @@ export function createButton(label, prompt) {
   button.textContent = label;
 
   button.addEventListener('click', async function () {
+    console.log('🖱️ Clic en opción del menú JSON - Obteniendo texto seleccionado de página...');
+    
+    try {
+      // PASO 1: Obtener SOLO texto seleccionado de la página web activa
+      const selectedTextFromPage = await getSelectedTextFromPage();
+      
+      if (selectedTextFromPage && selectedTextFromPage.trim()) {
+        console.log('📝 Texto seleccionado encontrado:', selectedTextFromPage);
+        
+        // PASO 2: Copiar el texto seleccionado al portapapeles del sistema
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(selectedTextFromPage);
+            console.log('✅ Texto seleccionado copiado al portapapeles del sistema');
+          } else {
+            console.log('⚠️ API de portapapeles no disponible');
+          }
+        } catch (clipboardError) {
+          console.log('⚠️ Error copiando al portapapeles:', clipboardError);
+        }
+        
+        // PASO 3: Actualizar el clipboard interno de la extensión
+        config.setClipboardText(selectedTextFromPage);
+        console.log('📋 Clipboard interno actualizado con texto seleccionado');
+        
+        // PASO 4: Mostrar notificación
+        const notification = document.getElementById('copy-notification');
+        if (notification) {
+          notification.textContent = '✅ Texto seleccionado copiado y listo para AI';
+          notification.classList.remove('hidden');
+          setTimeout(() => {
+            notification.classList.add('hidden');
+          }, 2000);
+        }
+        
+      } else {
+        console.log('📝 No hay texto seleccionado en la página web activa');
+        
+        // Mostrar notificación informativa
+        const notification = document.getElementById('copy-notification');
+        if (notification) {
+          notification.textContent = '⚠️ Seleccione texto en la página para incluir en el prompt';
+          notification.classList.remove('hidden');
+          setTimeout(() => {
+            notification.classList.add('hidden');
+          }, 2000);
+        }
+      }
+      
+    } catch (error) {
+      console.log('❌ Error obteniendo texto seleccionado:', error);
+    }
+    
+    // PASO 5: Proceder con el flujo normal de openAIWithPrompt
     await openAIWithPrompt(prompt, label);
   });
 
@@ -705,6 +982,60 @@ export function renderInlineLanguageOptions(container, options) {
     button.textContent = option.label;
 
     button.addEventListener('click', async function () {
+      console.log('🖱️ Clic en opción de traducción - Obteniendo texto seleccionado de página...');
+      
+      try {
+        // PASO 1: Obtener SOLO texto seleccionado de la página web activa
+        const selectedTextFromPage = await getSelectedTextFromPage();
+        
+        if (selectedTextFromPage && selectedTextFromPage.trim()) {
+          console.log('📝 Texto seleccionado encontrado para traducción:', selectedTextFromPage);
+          
+          // PASO 2: Copiar el texto seleccionado al portapapeles del sistema
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(selectedTextFromPage);
+              console.log('✅ Texto seleccionado copiado al portapapeles del sistema (traducción)');
+            } else {
+              console.log('⚠️ API de portapapeles no disponible (traducción)');
+            }
+          } catch (clipboardError) {
+            console.log('⚠️ Error copiando al portapapeles (traducción):', clipboardError);
+          }
+          
+          // PASO 3: Actualizar el clipboard interno de la extensión
+          config.setClipboardText(selectedTextFromPage);
+          console.log('📋 Clipboard interno actualizado con texto seleccionado (traducción)');
+          
+          // PASO 4: Mostrar notificación
+          const notification = document.getElementById('copy-notification');
+          if (notification) {
+            notification.textContent = `✅ Texto seleccionado listo para traducir a ${option.label}`;
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+              notification.classList.add('hidden');
+            }, 2000);
+          }
+          
+        } else {
+          console.log('📝 No hay texto seleccionado para traducir');
+          
+          // Mostrar notificación informativa
+          const notification = document.getElementById('copy-notification');
+          if (notification) {
+            notification.textContent = '⚠️ Seleccione texto en la página para traducir';
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+              notification.classList.add('hidden');
+            }, 2000);
+          }
+        }
+        
+      } catch (error) {
+        console.log('❌ Error obteniendo texto seleccionado para traducción:', error);
+      }
+      
+      // PASO 5: Proceder con el flujo normal de openAIWithPrompt
       await openAIWithPrompt(option.prompt, option.label);
     });
 
@@ -1114,11 +1445,11 @@ export async function requestClipboardPermission() {
       name: 'clipboard-read'
     });
 
-    /*/ Si ya tiene permisos, no es necesario hacer nada más
-    //if (permissionStatus.state === 'granted') {
+    // Si ya tiene permisos, retornar true inmediatamente
+    if (permissionStatus.state === 'granted') {
       console.log('Permisos de portapapeles ya concedidos');
       return true;
-    }*/
+    }
 
     // Si el permiso está en estado "prompt", intentar explícitamente solicitar el permiso
     // realizando una operación de lectura
@@ -1130,9 +1461,8 @@ export async function requestClipboardPermission() {
         console.log('Permiso de portapapeles concedido');
         return true;
       } catch (error) {
-        // Si el usuario rechaza o hay un error
-      //  console.warn('Error al solicitar permisos de portapapeles:', error);
-      //  return false;
+        console.warn('Error al solicitar permisos de portapapeles:', error);
+        return false;
       }
     }
 
@@ -1142,10 +1472,26 @@ export async function requestClipboardPermission() {
       return false;
     }
 
-    return false;
+    // Para extensiones con permisos en manifest, intentar acceso directo
+    try {
+      await navigator.clipboard.readText();
+      console.log('Acceso al portapapeles disponible via manifest');
+      return true;
+    } catch (error) {
+      console.log('Acceso al portapapeles no disponible:', error);
+      return false;
+    }
   } catch (error) {
-    console.error('Error al verificar permisos de portapapeles:', error);
-    return false;
+    // Si la API de permisos no está disponible, intentar acceso directo
+    console.log('API de permisos no disponible, intentando acceso directo...');
+    try {
+      await navigator.clipboard.readText();
+      console.log('Acceso directo al portapapeles exitoso');
+      return true;
+    } catch (clipboardError) {
+      console.error('Error al acceder al portapapeles:', clipboardError);
+      return false;
+    }
   }
 }
 

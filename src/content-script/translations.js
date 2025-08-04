@@ -12,8 +12,8 @@ export const translations = {
       directQuestionButton: "Escribe la pregunta directamente a"
     },
     contextMenu: {
-      summaryUrl: "resumen de URL :",
-      summaryClipboard: "resumen de Portapapeles :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "Buscar en Wikipedia :",
       summaryGoogle: "Buscar en Google :"
     },
@@ -36,6 +36,7 @@ export const translations = {
       topicPrompt: "Especificar tema:",
       topicPlaceholder: "Especifique el tema a buscar",
       selectTextClick: "Seleccione y copie el texto de la página y pulse AQUÍ",
+      selectTextMessage: "[ selecciona texto en la página o Pulsa AQUÍ ]",
       questionTo: "Pregunta a "
     },
     confirmPrompt: {
@@ -62,8 +63,8 @@ export const translations = {
       directQuestionButton: "Escriu la pregunta directament a"
     },
     contextMenu: {
-      summaryUrl: "resum de URL :",
-      summaryClipboard: "resum de Portapapers :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "Cercar a Wikipedia :",
       summaryGoogle: "Cercar a Google :"
     },
@@ -85,6 +86,7 @@ export const translations = {
       topicPrompt: "Especificar tema:",
       topicPlaceholder: "Especifiqueu el tema a cercar",
       selectTextClick: "Seleccioneu i copieu el text de la pàgina i premeu AQUÍ",
+      selectTextMessage: "[ selecciona text a la pàgina o Prem AQUÍ ]",
       questionTo: "Pregunta a "
     },
     confirmPrompt: {
@@ -111,8 +113,8 @@ export const translations = {
       directQuestionButton: "Write the question directly to"
     },
     contextMenu: {
-      summaryUrl: "summary of URL :",
-      summaryClipboard: "summary of Clipboard :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "Search in Wikipedia :",
       summaryGoogle: "Search in Google :"
     },
@@ -135,6 +137,7 @@ export const translations = {
       topicPrompt: "Specify topic:",
       topicPlaceholder: "Please specify the topic to search",
       selectTextClick: "Select and copy the text from the page and click HERE",
+      selectTextMessage: "[ select text on the page or Click HERE ]",
       questionTo: "Question to "
     },
     confirmPrompt: {
@@ -161,8 +164,8 @@ export const translations = {
       directQuestionButton: "Écrivez la question directement à"
     },
     contextMenu: {
-      summaryUrl: "résumé de URL :",
-      summaryClipboard: "résumé de Presse-papiers :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "Rechercher dans Wikipedia :",
       summaryGoogle: "Rechercher dans Google :"
     },
@@ -185,6 +188,7 @@ export const translations = {
       topicPrompt: "Spécifier le sujet:",
       topicPlaceholder: "Veuillez spécifier le sujet à rechercher",
       selectTextClick: "Sélectionnez et copiez le texte de la page et cliquez ICI",
+      selectTextMessage: "[ sélectionnez le texte sur la page ou Cliquez ICI ]",
       questionTo: "Question à "
     },
     confirmPrompt: {
@@ -211,8 +215,8 @@ export const translations = {
       directQuestionButton: "Schreiben Sie die Frage direkt an"
     },
     contextMenu: {
-      summaryUrl: "Zusammenfassung von URL :",
-      summaryClipboard: "Zusammenfassung von Zwischenablage :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "Suchen in Wikipedia :",
       summaryGoogle: "Suchen in Google :"
     },
@@ -235,6 +239,7 @@ export const translations = {
       topicPrompt: "Thema angeben:",
       topicPlaceholder: "Bitte geben Sie das zu suchende Thema an",
       selectTextClick: "Wählen Sie den Text von der Seite aus, kopieren Sie ihn und klicken Sie HIER",
+      selectTextMessage: "[ wählen Sie Text auf der Seite aus oder Klicken Sie HIER ]",
       questionTo: "Frage an "
     },
     confirmPrompt: {
@@ -261,8 +266,8 @@ export const translations = {
       directQuestionButton: "Scrivi la domanda direttamente a"
     },
     contextMenu: {
-      summaryUrl: "riassunto di URL :",
-      summaryClipboard: "riassunto di Appunti :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "Cerca in Wikipedia :",
       summaryGoogle: "Cerca in Google :"
     },
@@ -285,6 +290,7 @@ export const translations = {
       topicPrompt: "Specificare argomento:",
       topicPlaceholder: "Si prega di specificare l'argomento da cercare",
       selectTextClick: "Seleziona e copia il testo dalla pagina e clicca QUI",
+      selectTextMessage: "[ seleziona il testo sulla pagina o Clicca QUI ]",
       questionTo: "Domanda a "
     },
     confirmPrompt: {
@@ -311,8 +317,8 @@ export const translations = {
       directQuestionButton: "Напишите вопрос напрямую"
     },
     contextMenu: {
-      summaryUrl: "резюме URL :",
-      summaryClipboard: "резюме Буфер обмена :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "Поиск в Wikipedia :",
       summaryGoogle: "Поиск в Google :"
     },
@@ -335,6 +341,7 @@ export const translations = {
       topicPrompt: "Указать тему:",
       topicPlaceholder: "Пожалуйста, укажите тему для поиска",
       selectTextClick: "Выберите и скопируйте текст со страницы и нажмите ЗДЕСЬ",
+      selectTextMessage: "[ выберите текст на странице или Нажмите ЗДЕСЬ ]",
       questionTo: "Вопрос к "
     },
     confirmPrompt: {
@@ -361,8 +368,8 @@ export const translations = {
       directQuestionButton: "اكتب السؤال مباشرة إلى"
     },
     contextMenu: {
-      summaryUrl: "ملخص الرابط :",
-      summaryClipboard: "ملخص الحافظة :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "البحث في ويكيبيديا :",
       summaryGoogle: "البحث في جوجل :"
     },
@@ -385,6 +392,7 @@ export const translations = {
       topicPrompt: "تحديد الموضوع:",
       topicPlaceholder: "يرجى تحديد الموضوع للبحث",
       selectTextClick: "حدد وانسخ النص من الصفحة واضغط هنا",
+      selectTextMessage: "[ حدد النص في الصفحة أو اضغط هنا ]",
       questionTo: "سؤال إلى "
     },
     confirmPrompt: {
@@ -411,8 +419,8 @@ export const translations = {
       directQuestionButton: "質問を直接書く"
     },
     contextMenu: {
-      summaryUrl: "URLの要約 :",
-      summaryClipboard: "クリップボードの要約 :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "Wikipediaで検索 :",
       summaryGoogle: "Googleで検索 :"
     },
@@ -435,6 +443,7 @@ export const translations = {
       topicPrompt: "トピックを指定:",
       topicPlaceholder: "検索するトピックを指定してください",
       selectTextClick: "ページからテキストを選択してコピーし、ここをクリック",
+      selectTextMessage: "[ ページ上のテキストを選択するか、ここをクリック ]",
       questionTo: "質問先 "
     },
     confirmPrompt: {
@@ -461,8 +470,8 @@ export const translations = {
       directQuestionButton: "प्रश्न सीधे लिखें"
     },
     contextMenu: {
-      summaryUrl: "URL का सारांश :",
-      summaryClipboard: "क्लिपबोर्ड का सारांश :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "विकिपीडिया में खोजें :",
       summaryGoogle: "Google में खोजें :"
     },
@@ -485,6 +494,7 @@ export const translations = {
       topicPrompt: "विषय निर्दिष्ट करें:",
       topicPlaceholder: "कृपया खोजने के लिए विषय निर्दिष्ट करें",
       selectTextClick: "पृष्ठ से टेक्स्ट चुनें और कॉपी करें और यहाँ क्लिक करें",
+      selectTextMessage: "[ पृष्ठ पर टेक्स्ट चुनें या यहाँ दबाएं ]",
       questionTo: "प्रश्न "
     },
     confirmPrompt: {
@@ -511,8 +521,8 @@ export const translations = {
       directQuestionButton: "질문을 직접 작성하세요"
     },
     contextMenu: {
-      summaryUrl: "URL 요약 :",
-      summaryClipboard: "클립보드 요약 :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "위키백과에서 검색 :",
       summaryGoogle: "Google에서 검색 :"
     },
@@ -535,6 +545,7 @@ export const translations = {
       topicPrompt: "주제 지정:",
       topicPlaceholder: "검색할 주제를 지정하십시오",
       selectTextClick: "페이지에서 텍스트를 선택하여 복사하고 여기를 클릭하세요",
+      selectTextMessage: "[ 페이지에서 텍스트를 선택하거나 여기를 클릭 ]",
       questionTo: "질문 "
     },
     confirmPrompt: {
@@ -561,8 +572,8 @@ export const translations = {
       directQuestionButton: "Escreva a pergunta diretamente para"
     },
     contextMenu: {
-      summaryUrl: "resumo de URL :",
-      summaryClipboard: "resumo de Área de transferência :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "Pesquisar na Wikipedia :",
       summaryGoogle: "Pesquisar no Google :"
     },
@@ -585,6 +596,7 @@ export const translations = {
       topicPrompt: "Especificar tópico:",
       topicPlaceholder: "Por favor, especifique o tópico a pesquisar",
       selectTextClick: "Selecione e copie o texto da página e clique AQUI",
+      selectTextMessage: "[ selecione texto na página ou Clique AQUI ]",
       questionTo: "Pergunta a "
     },
     confirmPrompt: {
@@ -611,8 +623,8 @@ export const translations = {
       directQuestionButton: "直接写问题给"
     },
     contextMenu: {
-      summaryUrl: "网址摘要 :",
-      summaryClipboard: "剪贴板摘要 :",
+      summaryUrl: "URL: ",
+      summaryClipboard: "ClipB: ",
       summaryWikipedia: "在维基百科中搜索 :",
       summaryGoogle: "在Google中搜索 :"
     },
@@ -635,6 +647,7 @@ export const translations = {
       topicPrompt: "指定主题:",
       topicPlaceholder: "请指定要搜索的主题",
       selectTextClick: "选择并复制页面中的文本，然后点击这里",
+      selectTextMessage: "[ 选择页面上的文本或点击这里 ]",
       questionTo: "问题给 "
     },
     confirmPrompt: {

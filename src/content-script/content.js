@@ -372,6 +372,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     };
     console.log('📤 Enviando respuesta:', { success: exito });
     sendResponse({ success: exito });
+  } else if (request.action === 'getSelectedText') {
+    // Obtener el texto seleccionado actual de la página
+    try {
+      const selection = window.getSelection();
+      if (selection.rangeCount > 0) {
+        const selectedText = selection.toString().trim();
+        sendResponse({ selectedText: selectedText || '' });
+      } else {
+        sendResponse({ selectedText: '' });
+      }
+    } catch (error) {
+      console.error('Error al obtener texto seleccionado:', error);
+      sendResponse({ selectedText: '' });
+    }
   }
   
   return true; // Importante: mantener el canal abierto para respuesta asíncrona
