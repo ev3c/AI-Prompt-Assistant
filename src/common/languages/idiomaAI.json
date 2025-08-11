@@ -1,14 +1,14 @@
 {
   "idiomas": [
     {
-      "nombreNativo": "Español",
-      "codigoISO": "es",
-      "nombreEspanol": "Español"
-    },
-    {
       "nombreNativo": "English",
       "codigoISO": "gb",
       "nombreEspanol": "Inglés"
+    },
+    {
+      "nombreNativo": "Español",
+      "codigoISO": "es",
+      "nombreEspanol": "Español"
     },
     {
       "nombreNativo": "Català",

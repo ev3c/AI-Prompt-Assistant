@@ -15,8 +15,8 @@ export async function loadAvailableLanguages() {
   } catch (error) {
     console.error('Error al cargar los idiomas:', error);
     availableLanguages = [
-      { nombreNativo: "Español", codigoISO: "es", nombreEspanol: "Español" },
-      { nombreNativo: "English", codigoISO: "gb", nombreEspanol: "Inglés" }
+      { nombreNativo: "English", codigoISO: "gb", nombreEspanol: "Inglés" },
+      { nombreNativo: "Español", codigoISO: "es", nombreEspanol: "Español" }
     ];
     return availableLanguages; // Devuelve un default básico
   }

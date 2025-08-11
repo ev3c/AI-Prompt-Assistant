@@ -75,10 +75,41 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     });
   }
 
+  // Función para detectar idioma del navegador
+  function detectBrowserLanguage() {
+    // Obtener idioma del navegador
+    const browserLang = navigator.language || navigator.userLanguage || 'gb';
+    const langCode = browserLang.split('-')[0].toLowerCase();
+    
+    // Mapear códigos de navegador a códigos de la extensión
+    const languageMap = {
+      'es': 'es',    // Español
+      'en': 'gb',    // Inglés -> gb (como en la extensión)
+      'ca': 'ca',    // Catalán
+      'de': 'de',    // Alemán
+      'fr': 'fr',    // Francés
+      'it': 'it',    // Italiano
+      'pt': 'pt',    // Portugués
+      'zh': 'zh',    // Chino
+      'ru': 'ru',    // Ruso
+      'ar': 'ar',    // Árabe
+      'ja': 'ja',    // Japonés
+      'hi': 'hi',    // Hindi
+      'ko': 'kr'     // Coreano -> kr (como en la extensión)
+    };
+    
+    const detectedLang = languageMap[langCode] || 'gb'; // Inglés por defecto
+    console.log(`🌐 Idioma del navegador detectado: ${browserLang} -> ${detectedLang}`);
+    return detectedLang;
+  }
+
   // Establecer configuración por defecto
-  chrome.storage.local.get(['language', 'aiModel'], async function (result) {
+  chrome.storage.local.get(['language', 'aiModel', 'firstRunCompleted'], async function (result) {
     if (!result.language) {
-      chrome.storage.local.set({ language: 'es' });
+      // En la primera ejecución, detectar idioma del navegador
+      const defaultLanguage = !result.firstRunCompleted ? detectBrowserLanguage() : 'gb';
+      chrome.storage.local.set({ language: defaultLanguage });
+      console.log(`🎯 Idioma establecido: ${defaultLanguage} ${!result.firstRunCompleted ? '(detectado automáticamente)' : '(por defecto)'}`);
     }
 
     const defaultModel = result.aiModel || 'chatgpt';
@@ -86,7 +117,8 @@ chrome.runtime.onInstalled.addListener(async (details) => {
       chrome.storage.local.set({ aiModel: defaultModel });
     }
     const loadedLangs = await loadAvailableLanguages(); // Carga idiomas a través del manager
-    await createInitialContextMenus(loadedLangs, defaultModel, result.language || 'es');
+    const currentLanguage = result.language || detectBrowserLanguage(); // Usar idioma detectado como fallback
+    await createInitialContextMenus(loadedLangs, defaultModel, currentLanguage);
     
     // Verificar y asegurar permisos del portapapeles
     await ensureClipboardPermissions();

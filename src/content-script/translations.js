@@ -26,7 +26,14 @@ export const translations = {
       title: "Configuración",
       languageLabel: "Idioma de la extensión:",
       aiModelLabel: "Motor de IA:",
-      helpVideoButton: "Ayuda / video"
+      shareButton: "Compartir AI Prompt Assistant ▼",
+      shareEmail: "📧 Email",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: "Abrir archivos .json",
+      feedbackButton: "Enviar comentarios",
+      rateButton: "Calificar: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 Video de ayuda"
     },
     textPrompt: {
       defaultTitle: "Editar prompt",
@@ -76,7 +83,15 @@ export const translations = {
     settings: {
       title: "Configuració",
       languageLabel: "Idioma de l'extensió:",
-      aiModelLabel: "Motor d'IA:"
+      aiModelLabel: "Motor d'IA:",
+      shareButton: "Compartir AI Prompt Assistant ▼",
+      shareEmail: "📧 Email",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: "Obrir arxius .json",
+      feedbackButton: "Enviar comentaris",
+      rateButton: "Valorar: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 Vídeo d'ajuda"
     },
     textPrompt: {
       defaultTitle: "Editar prompt",
@@ -127,7 +142,14 @@ export const translations = {
       title: "Settings",
       languageLabel: "Extension language:",
       aiModelLabel: "AI Engine:",
-      helpVideoButton: "Help / video"
+      shareButton: "Share AI Prompt Assistant ▼",
+      shareEmail: "📧 Email",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: "Open .json files",
+      feedbackButton: "Send feedback",
+      rateButton: "Rate: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 Help Video"
     },
     textPrompt: {
       defaultTitle: "Edit prompt",
@@ -178,7 +200,14 @@ export const translations = {
       title: "Paramètres",
       languageLabel: "Langue de l'extension:",
       aiModelLabel: "Moteur IA:",
-      helpVideoButton: "Aide / vidéo"
+      shareButton: "Partager AI Prompt Assistant ▼",
+      shareEmail: "📧 Email",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: "Ouvrir fichiers .json",
+      feedbackButton: "Envoyer commentaires",
+      rateButton: "Évaluer: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 Vidéo d'aide"
     },
     textPrompt: {
       defaultTitle: "Modifier le prompt",
@@ -229,7 +258,14 @@ export const translations = {
       title: "Einstellungen",
       languageLabel: "Erweiterungssprache:",
       aiModelLabel: "KI-Engine:",
-      helpVideoButton: "Hilfe / Video"
+      shareButton: "AI Prompt Assistant teilen ▼",
+      shareEmail: "📧 Email",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: ".json-Dateien öffnen",
+      feedbackButton: "Feedback senden",
+      rateButton: "Bewerten: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 Hilfevideo"
     },
     textPrompt: {
       defaultTitle: "Prompt bearbeiten",
@@ -280,7 +316,14 @@ export const translations = {
       title: "Impostazioni",
       languageLabel: "Lingua dell'estensione:",
       aiModelLabel: "Motore AI:",
-      helpVideoButton: "Aiuto / video"
+      shareButton: "Condividi AI Prompt Assistant ▼",
+      shareEmail: "📧 Email",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: "Apri file .json",
+      feedbackButton: "Invia feedback",
+      rateButton: "Valuta: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 Video di aiuto"
     },
     textPrompt: {
       defaultTitle: "Modifica prompt",
@@ -331,7 +374,14 @@ export const translations = {
       title: "Настройки",
       languageLabel: "Язык расширения:",
       aiModelLabel: "ИИ двигатель:",
-      helpVideoButton: "Помощь / видео"
+      shareButton: "Поделиться AI Prompt Assistant ▼",
+      shareEmail: "📧 Email",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: "Открыть .json файлы",
+      feedbackButton: "Отправить отзыв",
+      rateButton: "Оценить: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 Видео помощи"
     },
     textPrompt: {
       defaultTitle: "Редактировать промпт",
@@ -382,7 +432,14 @@ export const translations = {
       title: "الإعدادات",
       languageLabel: "لغة الإضافة:",
       aiModelLabel: "محرك الذكاء الاصطناعي:",
-      helpVideoButton: "مساعدة / فيديو"
+      shareButton: "مشاركة AI Prompt Assistant ▼",
+      shareEmail: "📧 البريد الإلكتروني",
+      shareWhatsApp: "💬 واتساب", 
+      shareGmail: "📬 جيميل",
+      openJsonButton: "فتح ملفات .json",
+      feedbackButton: "إرسال ملاحظات",
+      rateButton: "تقييم: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 فيديو المساعدة"
     },
     textPrompt: {
       defaultTitle: "تحرير الطلب",
@@ -433,7 +490,14 @@ export const translations = {
       title: "設定",
       languageLabel: "拡張機能の言語:",
       aiModelLabel: "AIエンジン:",
-      helpVideoButton: "ヘルプ / ビデオ"
+      shareButton: "AI Prompt Assistantを共有 ▼",
+      shareEmail: "📧 メール",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: ".jsonファイルを開く",
+      feedbackButton: "フィードバックを送信",
+      rateButton: "評価: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 ヘルプビデオ"
     },
     textPrompt: {
       defaultTitle: "プロンプトを編集",
@@ -484,7 +548,14 @@ export const translations = {
       title: "सेटिंग्स",
       languageLabel: "एक्सटेंशन भाषा:",
       aiModelLabel: "AI इंजन:",
-      helpVideoButton: "मदद / वीडियो"
+      shareButton: "AI Prompt Assistant साझा करें ▼",
+      shareEmail: "📧 ईमेल",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: ".json फाइलें खोलें",
+      feedbackButton: "फीडबैक भेजें",
+      rateButton: "रेटिंग: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 सहायता वीडियो"
     },
     textPrompt: {
       defaultTitle: "प्रॉम्प्ट संपादित करें",
@@ -535,7 +606,14 @@ export const translations = {
       title: "설정",
       languageLabel: "확장 프로그램 언어:",
       aiModelLabel: "AI 엔진:",
-      helpVideoButton: "도움말 / 비디오"
+      shareButton: "AI Prompt Assistant 공유 ▼",
+      shareEmail: "📧 이메일",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: ".json 파일 열기",
+      feedbackButton: "피드백 보내기",
+      rateButton: "평가하기: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 도움말 비디오"
     },
     textPrompt: {
       defaultTitle: "프롬프트 편집",
@@ -586,7 +664,14 @@ export const translations = {
       title: "Configurações",
       languageLabel: "Idioma da extensão:",
       aiModelLabel: "Motor de IA:",
-      helpVideoButton: "Ajuda / video"
+      shareButton: "Compartilhar AI Prompt Assistant ▼",
+      shareEmail: "📧 Email",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: "Abrir arquivos .json",
+      feedbackButton: "Enviar feedback",
+      rateButton: "Avaliar: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 Vídeo de ajuda"
     },
     textPrompt: {
       defaultTitle: "Editar prompt",
@@ -637,7 +722,14 @@ export const translations = {
       title: "设置",
       languageLabel: "扩展语言:",
       aiModelLabel: "人工智能引擎:",
-      helpVideoButton: "帮助 / 视频"
+      shareButton: "分享 AI Prompt Assistant ▼",
+      shareEmail: "📧 邮件",
+      shareWhatsApp: "💬 WhatsApp", 
+      shareGmail: "📬 gMail",
+      openJsonButton: "打开 .json 文件",
+      feedbackButton: "发送反馈",
+      rateButton: "评价: ⭐⭐⭐⭐⭐",
+      helpVideoButton: "🎥 帮助视频"
     },
     textPrompt: {
       defaultTitle: "编辑提示",
@@ -666,7 +758,7 @@ export const translations = {
 
 // Función para obtener las traducciones
 export function getTranslation(language) {
-  return translations[language] || translations['es']; // Inglés como respaldo
+  return translations[language] || translations['gb']; // Inglés como respaldo
 }
 
 // Función para actualizar los textos de la interfaz
@@ -698,12 +790,26 @@ export function updateUITexts(language, aiModelName = 'ChatGPT') {
   const settingsTitle = document.querySelector('.popup-header h3');
   const languageLabel = document.querySelector('label[for="language-selector"]');
   const aiModelLabel = document.querySelector('label[for="ai-model-selector"]');
+  const shareButton = document.getElementById('share-button');
+  const shareEmailButton = document.getElementById('share-email');
+  const shareWhatsAppButton = document.getElementById('share-whatsapp');
+  const shareGmailButton = document.getElementById('share-gmail');
+  const openJsonButton = document.getElementById('open-json-button');
+  const feedbackButton = document.getElementById('feedback-button');
+  const rateButton = document.getElementById('rate-button');
   const helpVideoButton = document.getElementById('help-video-button');
   
   if (settingsTitle) settingsTitle.textContent = texts.settings.title;
   if (languageLabel) languageLabel.textContent = texts.settings.languageLabel;
   if (aiModelLabel) aiModelLabel.textContent = texts.settings.aiModelLabel;
-  if (helpVideoButton) helpVideoButton.textContent = '🎥 ' + texts.settings.helpVideoButton;
+  if (shareButton) shareButton.textContent = texts.settings.shareButton;
+  if (shareEmailButton) shareEmailButton.textContent = texts.settings.shareEmail;
+  if (shareWhatsAppButton) shareWhatsAppButton.textContent = texts.settings.shareWhatsApp;
+  if (shareGmailButton) shareGmailButton.textContent = texts.settings.shareGmail;
+  if (openJsonButton) openJsonButton.textContent = texts.settings.openJsonButton;
+  if (feedbackButton) feedbackButton.textContent = texts.settings.feedbackButton;
+  if (rateButton) rateButton.textContent = texts.settings.rateButton;
+  if (helpVideoButton) helpVideoButton.textContent = texts.settings.helpVideoButton;
 }
 
 // Función para actualizar solo el texto del botón de pregunta directa

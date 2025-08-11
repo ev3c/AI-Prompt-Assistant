@@ -8,7 +8,7 @@ let menuData = null;
 let currentUrl = '';
 let clipboardText = '';
 let currentSection = null;
-let currentLanguage = 'es'; // Idioma por defecto: Español
+let currentLanguage = 'gb'; // Idioma inicial: Inglés (se actualizará automáticamente al idioma del navegador en la primera ejecución)
 let currentAIModel = 'chatgpt'; // Modelo por defecto: ChatGPT
 let useClipboard = false; // Por defecto, usar URL
 let hoveredTranslationButton = null; // Para guardar referencia al botón de traducción con hover
@@ -17,6 +17,7 @@ let availableLanguages = []; // Lista de idiomas disponibles cargada desde /src/
 let currentPrompt = '';
 let clipboardContent = '';
 let verAcceso = true; // Variable global de acceso
+let customButtonsVisible = true; // Estado de visibilidad de customButtons (visible por defecto)
 
 export async function loadMotorAI() {
   try {
@@ -73,7 +74,10 @@ export const config = {
   setAvailableLanguages: (languages) => { availableLanguages = languages; },
 
   getVerAcceso: () => verAcceso,
-  setVerAcceso: (value) => { verAcceso = value; }
+  setVerAcceso: (value) => { verAcceso = value; },
+
+  getCustomButtonsVisible: () => customButtonsVisible,
+  setCustomButtonsVisible: (value) => { customButtonsVisible = value; }
 };
 
 // Helper function to determine if a context behaves like a clipboard context
@@ -471,7 +475,7 @@ export function getAIModelName(modelId) {
 }
 
 // Función para cargar el archivo de menú según el idioma y el modelo de IA actual
-export async function loadMenuData(language = 'es') {
+export async function loadMenuData(language = 'gb') {
   try {
     // Determinar qué archivo cargar según el idioma, el modelo de IA y el contexto seleccionado
     let fileName;
@@ -1397,7 +1401,8 @@ export function saveMainConfig() {
     aiModel: currentAIModel,
     context: currentContext,
     useClipboard: useClipboard,
-    verAcceso: verAcceso
+    verAcceso: verAcceso,
+    customButtonsVisible: customButtonsVisible
   };
   
   console.log('Guardando configuración:', configToSave);
@@ -1412,14 +1417,16 @@ export function saveMainConfig() {
 // Función para cargar la configuración principal
 export async function loadMainConfig() {
   return new Promise((resolve) => {
-    chrome.storage.local.get(['mainConfig'], function(result) {
+    // Cargar tanto mainConfig como las configuraciones individuales
+    chrome.storage.local.get(['mainConfig', 'language', 'aiModel', 'context'], function(result) {
       if (result.mainConfig) {
-        // Restaurar valores
-        currentLanguage = result.mainConfig.language || 'es';
-        currentAIModel = result.mainConfig.aiModel || 'chatgpt';
-        currentContext = result.mainConfig.context || 'url';
+        // Restaurar valores, pero dar prioridad a las configuraciones individuales
+        currentLanguage = result.language || result.mainConfig.language || 'gb';
+        currentAIModel = result.aiModel || result.mainConfig.aiModel || 'chatgpt';
+        currentContext = result.context || result.mainConfig.context || 'url';
         useClipboard = result.mainConfig.useClipboard || false;
         verAcceso = result.mainConfig.verAcceso !== undefined ? result.mainConfig.verAcceso : true;
+        customButtonsVisible = result.mainConfig.customButtonsVisible !== undefined ? result.mainConfig.customButtonsVisible : true;
         
         // Actualizar valores en el objeto config
         config.setCurrentLanguage(currentLanguage);
@@ -1427,12 +1434,36 @@ export async function loadMainConfig() {
         config.setCurrentContext(currentContext);
         config.setUseClipboard(useClipboard);
         config.setVerAcceso(verAcceso);
+        config.setCustomButtonsVisible(customButtonsVisible);
         
-        console.log('Configuración principal cargada y aplicada:', result.mainConfig);
+        console.log('Configuración principal cargada y aplicada. Idioma detectado:', currentLanguage);
       } else {
-        console.log('No se encontró configuración guardada, usando valores por defecto');
+        // Si no hay mainConfig, usar las configuraciones individuales
+        currentLanguage = result.language || 'gb';
+        currentAIModel = result.aiModel || 'chatgpt';
+        currentContext = result.context || 'url';
+        useClipboard = false;
+        verAcceso = true;
+        customButtonsVisible = true;
+        
+        // Actualizar valores en el objeto config
+        config.setCurrentLanguage(currentLanguage);
+        config.setCurrentAIModel(currentAIModel);
+        config.setCurrentContext(currentContext);
+        config.setUseClipboard(useClipboard);
+        config.setVerAcceso(verAcceso);
+        config.setCustomButtonsVisible(customButtonsVisible);
+        
+        console.log('No se encontró mainConfig, usando configuraciones individuales. Idioma:', currentLanguage);
       }
-      resolve(result.mainConfig);
+      resolve({
+        language: currentLanguage,
+        aiModel: currentAIModel,
+        context: currentContext,
+        useClipboard: useClipboard,
+        verAcceso: verAcceso,
+        customButtonsVisible: customButtonsVisible
+      });
     });
   });
 }

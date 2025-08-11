@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Prompt Assistant - Help Video / Video de Ayuda</title>
+    <title>AI Prompt Assistant - Help Video</title>
     <link rel="stylesheet" href="help-video.css">
     <script src="help-video.js" defer></script>
 </head>
@@ -12,29 +12,28 @@
         <div class="header">
             <h1>
                 🎥 AI Prompt Assistant
-                <span style="font-size: 18px;">- Help Video / Video de Ayuda</span>
+                <span style="font-size: 18px;">- Help Video</span>
             </h1>
-            <p>Learn to use the extension easily and quickly / Aprende a usar la extensión de manera fácil y rápida</p>
+            <p>Learn to use the extension easily and quickly</p>
         </div>
 
         <div class="error-message" id="error-message">
-            ⚠️ Error loading video. Please check your internet connection and try again.<br>
-            Error al cargar el video. Por favor, verifica tu conexión a internet e inténtalo de nuevo.
+            ⚠️ Error loading video. Please check your internet connection and try again.
         </div>
 
         <div class="video-container">
             <div class="success-indicator" id="success-indicator">
-                ✅ Video loaded successfully / Video cargado correctamente
+                ✅ Video loaded successfully
             </div>
             <div class="loading" id="loading">
                 <div class="spinner"></div>
-                Loading video... / Cargando video...
+                Loading video...
             </div>
             <iframe 
                 id="video-iframe"
                 class="video-iframe"
                 src="https://www.youtube.com/embed/40AoSd_o7Z8?autoplay=1&rel=0&showinfo=0&modestbranding=1&iv_load_policy=3&fs=1&cc_load_policy=0&disablekb=0&controls=1&playsinline=1&mute=0"
-                title="AI Prompt Assistant - Help Video / Video de Ayuda"
+                title="AI Prompt Assistant - Help Video"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
@@ -43,9 +42,9 @@
         </div>
 
         <div class="footer">
-            <p>🚀 Thank you for using AI Prompt Assistant! / ¡Gracias por usar AI Prompt Assistant!</p>
+            <p>🚀 Thank you for using AI Prompt Assistant!</p>
             <button class="close-button" onclick="closeWindow()">
-                ✨ Close / Cerrar
+                ✨ Close and start using the extension
             </button>
         </div>
     </div>
@@ -112,9 +111,9 @@
                         } catch (error) {
                             console.error('Error en fallback de cierre:', error);
                             
-                            // Último recurso: mostrar mensaje bilingüe
+                            // Último recurso: mostrar mensaje
                             setTimeout(() => {
-                                alert('Please close this tab manually / Por favor, cierra esta pestaña manualmente');
+                                alert('Please close this tab manually');
                             }, 500);
                         }
                     };

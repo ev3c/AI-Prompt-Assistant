@@ -13,18 +13,46 @@ class HelpVideoManager {
         this.videoLoaded = false;
         this.timeoutId = null;
         this.userLanguage = navigator.language || navigator.userLanguage;
+        this.extensionLanguage = null; // Idioma de la extensión desde storage
         
         this.init();
     }
 
-    init() {
+    async init() {
         this.initializeElements();
         this.setupEventListeners();
+        await this.loadExtensionLanguage();
         this.updateLanguageTexts();
         this.setupTimeout();
         this.setupKeyboardHandlers();
         this.logInitialization();
         this.sendAnalytics('help_video_opened');
+    }
+
+    async loadExtensionLanguage() {
+        try {
+            // Cargar el idioma desde el storage de la extensión
+            const result = await chrome.storage.local.get(['language']);
+            if (result.language) {
+                this.extensionLanguage = result.language;
+                console.log(`🌐 [Help Video] Idioma de la extensión cargado: ${this.extensionLanguage}`);
+            } else {
+                // Si no hay idioma guardado, detectar del navegador como fallback
+                const browserLang = this.userLanguage.split('-')[0].toLowerCase();
+                const languageMap = {
+                    'es': 'es', 'en': 'gb', 'ca': 'ca', 'de': 'de', 'fr': 'fr',
+                    'it': 'it', 'pt': 'pt', 'zh': 'zh', 'ru': 'ru', 'ar': 'ar',
+                    'ja': 'ja', 'hi': 'hi', 'ko': 'kr'
+                };
+                this.extensionLanguage = languageMap[browserLang] || 'gb';
+                console.log(`🌐 [Help Video] No hay idioma guardado, usando detección del navegador: ${this.extensionLanguage}`);
+            }
+        } catch (error) {
+            console.error('❌ Error cargando idioma de la extensión:', error);
+            // Fallback al idioma del navegador
+            const browserLang = this.userLanguage.split('-')[0].toLowerCase();
+            this.extensionLanguage = browserLang === 'es' ? 'es' : 'gb';
+        }
     }
 
     initializeElements() {
@@ -283,20 +311,83 @@ class HelpVideoManager {
     }
 
     updateLanguageTexts() {
-        // Los textos ya están en formato bilingüe en el HTML
-        // Solo actualizar el título de la página y log de idioma detectado
-        console.log(`🌐 Language detected: ${this.userLanguage} (Bilingual interface active)`);
+        const translations = this.getTranslations();
+        console.log(`🌐 Extension language: ${this.extensionLanguage} - Applying translations`);
         
-        // Mantener el título bilingüe
-        document.title = 'AI Prompt Assistant - Help Video / Video de Ayuda';
+        // Obtener el código de idioma de la extensión para mostrar
+        const langCode = this.extensionLanguage.toUpperCase();
         
-        // No necesitamos cambiar los textos ya que están en formato bilingüe
-        // Solo registrar el idioma para analytics
-        this.detectedLanguage = this.userLanguage;
+        // Actualizar el título de la página con etiqueta de idioma
+        document.title = `AI Prompt Assistant ${translations.pageTitle} [${langCode}]`;
+        
+        // Actualizar elementos del DOM
+        const titleElement = document.querySelector('h1 span');
+        if (titleElement) {
+            titleElement.textContent = `${translations.title} [${langCode}]`;
+        }
+        
+        // Actualizar también el título principal con la etiqueta de idioma
+        const mainTitleElement = document.querySelector('h1');
+        if (mainTitleElement) {
+            const iconAndText = mainTitleElement.innerHTML.split('<span')[0]; // Preservar el emoji y texto base
+            const spanElement = mainTitleElement.querySelector('span');
+            if (spanElement) {
+                mainTitleElement.innerHTML = `${iconAndText.trim()} [${langCode}]<span style="font-size: 18px;">${translations.title}</span>`;
+            }
+        }
+        
+        const subtitleElement = document.querySelector('.header p');
+        if (subtitleElement) {
+            subtitleElement.textContent = translations.subtitle;
+        }
+        
+        const footerTextElement = document.querySelector('.footer p');
+        if (footerTextElement) {
+            footerTextElement.textContent = translations.footerText;
+        }
+        
+        const closeButtonElement = document.querySelector('.close-button');
+        if (closeButtonElement) {
+            closeButtonElement.textContent = translations.closeButton;
+        }
+        
+        const loadingElement = document.getElementById('loading');
+        if (loadingElement) {
+            loadingElement.textContent = translations.loading;
+        }
+        
+        const errorElement = document.getElementById('error-message');
+        if (errorElement) {
+            errorElement.textContent = translations.error;
+        }
+        
+        const successElement = document.getElementById('success-indicator');
+        if (successElement) {
+            successElement.textContent = translations.success;
+        }
+        
+        // Actualizar el lang del HTML
+        const langMap = {
+            'es': 'es', 'ca': 'ca', 'fr': 'fr', 'de': 'de', 'it': 'it', 'pt': 'pt',
+            'zh': 'zh', 'ru': 'ru', 'ar': 'ar', 'ja': 'ja', 'hi': 'hi', 'kr': 'ko'
+        };
+        document.documentElement.lang = langMap[this.extensionLanguage] || 'en';
+        
+        // Configurar dirección del texto para idiomas RTL
+        if (this.extensionLanguage === 'ar' || this.extensionLanguage === 'hi') {
+            document.documentElement.dir = 'rtl';
+            document.body.style.direction = 'rtl';
+        } else {
+            document.documentElement.dir = 'ltr';
+            document.body.style.direction = 'ltr';
+        }
+        
+        this.detectedLanguage = this.extensionLanguage;
+        console.log(`✅ Interface updated to extension language: ${this.detectedLanguage}`);
     }
 
     getTranslations() {
-        const lang = this.userLanguage.toLowerCase();
+        const lang = this.extensionLanguage ? this.extensionLanguage.toLowerCase() : this.userLanguage.toLowerCase();
         
         if (lang.startsWith('en')) {
             return {
@@ -311,59 +402,155 @@ class HelpVideoManager {
             };
         } else if (lang.startsWith('fr')) {
             return {
-                title: '- Vidéo d\'aide',
+                title: '- Aide',
                 subtitle: 'Apprenez à utiliser l\'extension facilement et rapidement',
                 footerText: '🚀 Merci d\'utiliser AI Prompt Assistant !',
                 closeButton: '✨ Fermer et commencer à utiliser l\'extension',
                 loading: 'Chargement de la vidéo...',
                 error: '⚠️ Erreur lors du chargement de la vidéo. Veuillez vérifier votre connexion internet et réessayer.',
                 success: '✅ Vidéo chargée avec succès',
-                pageTitle: '- Vidéo d\'aide'
+                pageTitle: '- Aide'
             };
         } else if (lang.startsWith('de')) {
             return {
-                title: '- Hilfevideo',
+                title: '- Hilfe',
                 subtitle: 'Lernen Sie, die Erweiterung einfach und schnell zu verwenden',
                 footerText: '🚀 Vielen Dank für die Nutzung von AI Prompt Assistant!',
                 closeButton: '✨ Schließen und Erweiterung verwenden',
                 loading: 'Video wird geladen...',
                 error: '⚠️ Fehler beim Laden des Videos. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.',
                 success: '✅ Video erfolgreich geladen',
-                pageTitle: '- Hilfevideo'
+                pageTitle: '- Hilfe'
             };
         } else if (lang.startsWith('it')) {
             return {
-                title: '- Video di aiuto',
+                title: '- Aiuto',
                 subtitle: 'Impara a usare l\'estensione facilmente e velocemente',
                 footerText: '🚀 Grazie per aver utilizzato AI Prompt Assistant!',
                 closeButton: '✨ Chiudi e inizia a utilizzare l\'estensione',
                 loading: 'Caricamento video...',
                 error: '⚠️ Errore nel caricamento del video. Si prega di controllare la connessione internet e riprovare.',
                 success: '✅ Video caricato con successo',
-                pageTitle: '- Video di aiuto'
+                pageTitle: '- Aiuto'
             };
         } else if (lang.startsWith('pt')) {
             return {
-                title: '- Vídeo de ajuda',
+                title: '- Ajuda',
                 subtitle: 'Aprenda a usar a extensão de forma fácil e rápida',
                 footerText: '🚀 Obrigado por usar o AI Prompt Assistant!',
                 closeButton: '✨ Fechar e começar a usar a extensão',
                 loading: 'Carregando vídeo...',
                 error: '⚠️ Erro ao carregar o vídeo. Por favor, verifique sua conexão com a internet e tente novamente.',
                 success: '✅ Vídeo carregado com sucesso',
-                pageTitle: '- Vídeo de ajuda'
+                pageTitle: '- Ajuda'
             };
-        } else {
-            // Español por defecto
+        } else if (lang === 'ca' || lang.startsWith('ca')) {
+            // Catalán
             return {
-                title: '- Video de Ayuda',
+                title: '- Ajuda',
+                subtitle: 'Aprèn a utilitzar l\'extensió de manera fàcil i ràpida',
+                footerText: '🚀 Gràcies per utilitzar AI Prompt Assistant!',
+                closeButton: '✨ Tancar i començar a utilitzar l\'extensió',
+                loading: 'Carregant vídeo...',
+                error: '⚠️ Error en carregar el vídeo. Si us plau, verifica la teva connexió a internet i torna-ho a intentar.',
+                success: '✅ Vídeo carregat correctament',
+                pageTitle: '- Ajuda'
+            };
+        } else if (lang === 'zh' || lang.startsWith('zh')) {
+            // Chino
+            return {
+                title: '- 帮助',
+                subtitle: '轻松快速地学习如何使用扩展程序',
+                footerText: '🚀 感谢您使用 AI Prompt Assistant！',
+                closeButton: '✨ 关闭并开始使用扩展程序',
+                loading: '正在加载视频...',
+                error: '⚠️ 视频加载错误。请检查您的网络连接并重试。',
+                success: '✅ 视频加载成功',
+                pageTitle: '- 帮助'
+            };
+        } else if (lang === 'ru' || lang.startsWith('ru')) {
+            // Ruso
+            return {
+                title: '- Помощь',
+                subtitle: 'Изучите, как легко и быстро использовать расширение',
+                footerText: '🚀 Спасибо за использование AI Prompt Assistant!',
+                closeButton: '✨ Закрыть и начать использовать расширение',
+                loading: 'Загрузка видео...',
+                error: '⚠️ Ошибка загрузки видео. Пожалуйста, проверьте интернет-соединение и попробуйте снова.',
+                success: '✅ Видео успешно загружено',
+                pageTitle: '- Помощь'
+            };
+        } else if (lang === 'ar' || lang.startsWith('ar')) {
+            // Árabe
+            return {
+                title: '- مساعدة',
+                subtitle: 'تعلم كيفية استخدام الإضافة بسهولة وسرعة',
+                footerText: '🚀 شكراً لاستخدامك AI Prompt Assistant!',
+                closeButton: '✨ إغلاق وبدء استخدام الإضافة',
+                loading: 'جاري تحميل الفيديو...',
+                error: '⚠️ خطأ في تحميل الفيديو. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
+                success: '✅ تم تحميل الفيديو بنجاح',
+                pageTitle: '- مساعدة'
+            };
+        } else if (lang === 'ja' || lang.startsWith('ja')) {
+            // Japonés
+            return {
+                title: '- ヘルプ',
+                subtitle: '拡張機能の使い方を簡単かつ迅速に学習',
+                footerText: '🚀 AI Prompt Assistant をご利用いただきありがとうございます！',
+                closeButton: '✨ 閉じて拡張機能を使い始める',
+                loading: 'ビデオを読み込み中...',
+                error: '⚠️ ビデオの読み込みエラー。インターネット接続を確認して再試行してください。',
+                success: '✅ ビデオが正常に読み込まれました',
+                pageTitle: '- ヘルプ'
+            };
+        } else if (lang === 'hi' || lang.startsWith('hi')) {
+            // Hindi
+            return {
+                title: '- सहायता',
+                subtitle: 'एक्सटेंशन का उपयोग आसानी से और जल्दी सीखें',
+                footerText: '🚀 AI Prompt Assistant का उपयोग करने के लिए धन्यवाद!',
+                closeButton: '✨ बंद करें और एक्सटेंशन का उपयोग शुरू करें',
+                loading: 'वीडियो लोड हो रहा है...',
+                error: '⚠️ वीडियो लोड करने में त्रुटि। कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें।',
+                success: '✅ वीडियो सफलतापूर्वक लोड हुआ',
+                pageTitle: '- सहायता'
+            };
+        } else if (lang === 'kr' || lang.startsWith('ko')) {
+            // Coreano
+            return {
+                title: '- 도움말',
+                subtitle: '확장 프로그램 사용법을 쉽고 빠르게 배우세요',
+                footerText: '🚀 AI Prompt Assistant를 사용해 주셔서 감사합니다!',
+                closeButton: '✨ 닫고 확장 프로그램 사용 시작',
+                loading: '비디오 로딩 중...',
+                error: '⚠️ 비디오 로딩 오류. 인터넷 연결을 확인하고 다시 시도해주세요.',
+                success: '✅ 비디오가 성공적으로 로드되었습니다',
+                pageTitle: '- 도움말'
+            };
+        } else if (lang.startsWith('es')) {
+            // Español
+            return {
+                title: '- Ayuda',
                 subtitle: 'Aprende a usar la extensión de manera fácil y rápida',
                 footerText: '🚀 ¡Gracias por usar AI Prompt Assistant!',
                 closeButton: '✨ Cerrar y empezar a usar la extensión',
                 loading: 'Cargando video...',
                 error: '⚠️ Error al cargar el video. Por favor, verifica tu conexión a internet e inténtalo de nuevo.',
                 success: '✅ Video cargado correctamente',
-                pageTitle: '- Video de Ayuda'
+                pageTitle: '- Ayuda'
+            };
+        } else {
+            // Inglés por defecto
+            return {
+                title: '- Help Video',
+                subtitle: 'Learn to use the extension easily and quickly',
+                footerText: '🚀 Thank you for using AI Prompt Assistant!',
+                closeButton: '✨ Close and start using the extension',
+                loading: 'Loading video...',
+                error: '⚠️ Error loading video. Please check your internet connection and try again.',
+                success: '✅ Video loaded successfully',
+                pageTitle: '- Help Video'
             };
         }
     }
@@ -375,7 +562,7 @@ class HelpVideoManager {
                 action: 'analytics',
                 event: event,
                 timestamp: new Date().toISOString(),
-                language: this.userLanguage,
+                language: this.extensionLanguage || this.userLanguage,
                 userAgent: navigator.userAgent
             }).catch(() => {
                 // Silenciar errores si no hay background script disponible
@@ -386,7 +573,8 @@ class HelpVideoManager {
     logInitialization() {
         console.log('🎥 AI Prompt Assistant - Help Video Page');
         console.log('📺 URL del video:', this.iframe?.src || 'No disponible');
-        console.log('🌐 Idioma detectado:', this.userLanguage);
+        console.log('🌐 Idioma del navegador:', this.userLanguage);
+        console.log('🎨 Idioma de la extensión:', this.extensionLanguage);
         console.log('🖥️ User Agent:', navigator.userAgent);
         console.log('📱 Es móvil:', /Mobi|Android/i.test(navigator.userAgent));
         console.log('🎯 Página inicializada correctamente');

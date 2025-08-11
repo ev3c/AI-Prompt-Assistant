@@ -2,9 +2,25 @@ class JSONEditor {
   constructor() {
     this.currentData = this.getDefaultData();
     this.currentFilename = '';
-    this.currentLanguage = 'es'; // Idioma por defecto: español
+    this.currentLanguage = this.detectBrowserLanguage(); // Detectar idioma del navegador
     this.translations = this.getTranslations();
     this.init();
+  }
+
+  // Función para detectar idioma del navegador
+  detectBrowserLanguage() {
+    const browserLang = navigator.language || navigator.userLanguage || 'gb';
+    const langCode = browserLang.split('-')[0].toLowerCase();
+    
+    // Solo soporta español e inglés en el JSONEditor
+    const languageMap = {
+      'es': 'es',    // Español
+      'en': 'gb'     // Inglés
+    };
+    
+    const detectedLang = languageMap[langCode] || 'gb'; // Inglés por defecto
+    console.log(`🌐 [JSONEditor] Idioma del navegador detectado: ${browserLang} -> ${detectedLang}`);
+    return detectedLang;
   }
 
   getTranslations() {
@@ -194,7 +210,7 @@ class JSONEditor {
       'kr': 'KR',
       'hi': 'HI'
     };
-    return languageMap[languageCode] || 'ES';
+    return languageMap[languageCode] || 'GB';
   }
 
   async loadDefaultFile() {

@@ -2952,14 +2952,29 @@ async function initializeCustomButtons() {
 
   if (customButtonsCreated > 0) {
     customToggle.classList.remove('hidden');
+    
+    // Restaurar el estado de visibilidad guardado
+    const isVisible = config.getCustomButtonsVisible();
+    if (isVisible) {
+      customContainer.classList.remove('hidden');
+      customToggle.textContent = '▲'; // Visible, mostrar flecha hacia arriba para ocultar
+    } else {
+      customContainer.classList.add('hidden');
+      customToggle.textContent = '▼'; // Oculto, mostrar flecha hacia abajo para desplegar
+    }
+    
     customToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       const isHidden = customContainer.classList.toggle('hidden');
       if (isHidden) {
         customToggle.textContent = '▼'; // Oculto, mostrar flecha hacia abajo para desplegar
+        config.setCustomButtonsVisible(false);
       } else {
         customToggle.textContent = '▲'; // Visible, mostrar flecha hacia arriba para ocultar
+        config.setCustomButtonsVisible(true);
       }
+      // Guardar el estado inmediatamente
+      saveMainConfig();
     });
   }
 }
@@ -2984,6 +2999,50 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Cargar los idiomas disponibles primero
     await loadAvailableLanguages();
+
+    // Función para detectar idioma del navegador (igual que en background.js)
+    function detectBrowserLanguage() {
+      // Obtener idioma del navegador
+      const browserLang = navigator.language || navigator.userLanguage || 'gb';
+      const langCode = browserLang.split('-')[0].toLowerCase();
+      
+      // Mapear códigos de navegador a códigos de la extensión
+      const languageMap = {
+        'es': 'es',    // Español
+        'en': 'gb',    // Inglés -> gb (como en la extensión)
+        'ca': 'ca',    // Catalán
+        'de': 'de',    // Alemán
+        'fr': 'fr',    // Francés
+        'it': 'it',    // Italiano
+        'pt': 'pt',    // Portugués
+        'zh': 'zh',    // Chino
+        'ru': 'ru',    // Ruso
+        'ar': 'ar',    // Árabe
+        'ja': 'ja',    // Japonés
+        'hi': 'hi',    // Hindi
+        'ko': 'kr'     // Coreano -> kr (como en la extensión)
+      };
+      
+      const detectedLang = languageMap[langCode] || 'gb'; // Inglés por defecto
+      console.log(`🌐 [Sidebar] Idioma del navegador detectado: ${browserLang} -> ${detectedLang}`);
+      return detectedLang;
+    }
+
+    // Verificar si es la primera ejecución de la sidebar y establecer idioma si es necesario
+    const storageResult = await chrome.storage.local.get(['language', 'firstRunCompleted', 'sidebarFirstRun']);
+    
+    if (!storageResult.language || (!storageResult.sidebarFirstRun && !storageResult.firstRunCompleted)) {
+      // Detectar y establecer idioma del navegador
+      const browserLanguage = detectBrowserLanguage();
+      await chrome.storage.local.set({ 
+        language: browserLanguage,
+        sidebarFirstRun: true
+      });
+      console.log(`🎯 [Sidebar] Idioma establecido en primera ejecución: ${browserLanguage}`);
+      
+      // Actualizar la configuración local inmediatamente
+      config.setCurrentLanguage(browserLanguage);
+    }
 
     const mainConfig = await loadMainConfig();
 
