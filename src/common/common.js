@@ -1082,6 +1082,18 @@ export async function openAIWithPrompt(prompt, label) {
     }
   }
 
+  // Si se ha seleccionado "All AI's", mostrar confirmación antes de proceder
+  if (currentAIModel === 'allai') {
+    const texts = getTranslation(currentLanguage);
+    const confirmed = await confirmPrompt(texts.confirmPrompt.allAiMessage, 'allai');
+    
+    // Si el usuario cancela, no continuar
+    if (!confirmed) {
+      console.log('Usuario canceló la apertura de todas las AI\'s');
+      return;
+    }
+  }
+
   // Si el prompt original estaba vacío, enviar con contexto normal
   if (isEmptyPrompt) {
     console.log("✅ Prompt vacío detectado - Enviando con contexto normal:", prompt);
@@ -1527,13 +1539,56 @@ export async function requestClipboardPermission() {
 }
 
 // Función textPrompt() - Reemplazo moderno para window.prompt() con estilo de sidebar
-export function textPrompt(title = null, defaultText = "", aiModelId = null) {
-  return new Promise((resolve) => {
+export async function textPrompt(title = null, defaultText = "", aiModelId = null, contextPreview = null) {
+  return new Promise(async (resolve) => {
     // Obtener traducciones del idioma actual
     const texts = getTranslation(currentLanguage);
     
-    // Usar título traducido si no se proporciona uno específico
-    const finalTitle = title || texts.textPrompt.defaultTitle;
+    // Generar título dinámico igual que directQuestionUrlClipboardButton
+    const currentAIModel = config.getCurrentAIModel();
+    const aiModelName = getAIModelName(currentAIModel);
+    const dynamicTitle = `${texts.textPrompt.questionTo}${aiModelName}`;
+    
+    // Usar siempre el título dinámico (ignorar el parámetro title)
+    const finalTitle = dynamicTitle;
+    
+    // Usar siempre el modelo actual para mostrar la imagen (igual que directQuestionUrlClipboardButton)
+    const finalAiModelId = aiModelId || currentAIModel;
+
+    // Obtener contexto solo si se debe mostrar (no para directQuestionButton)
+    let context = '';
+    let finalContextPreview = contextPreview; // Usar el contexto proporcionado como parámetro
+    
+    // Mostrar contexto si:
+    // - Se pasó contextPreview explícitamente (directQuestionUrlClipboardButton)
+    // - O si NO se pasó aiModelId (menús JSON que solo pasan 2 parámetros)
+    // NO mostrar contexto si se pasó aiModelId pero NO contextPreview (directQuestionButton)
+    const shouldShowContext = (contextPreview !== null && contextPreview !== undefined) || (!aiModelId);
+    
+    if (shouldShowContext) {
+      const isClipboard = config.getUseClipboard();
+      
+      if (isClipboard) {
+        // Usar contenido del portapapeles - primero intentar getPriorityText, luego getClipboardText
+        try {
+          context = await getPriorityText() || config.getClipboardText() || '';
+        } catch (error) {
+          console.log('Error obteniendo texto prioritario:', error);
+          context = config.getClipboardText() || '';
+        }
+      } else {
+        // Usar URL actual
+        context = config.getCurrentUrl() || '';
+      }
+      
+      // Limitar el contexto a 200 caracteres para la vista previa en el prompt
+      const truncatedContextForPreview = context.length > 200 
+        ? context.substring(0, 200) + '...'
+        : context;
+        
+      // Usar el contexto proporcionado como parámetro o el obtenido automáticamente
+      finalContextPreview = contextPreview || truncatedContextForPreview;
+    }
     
     // Crear overlay con estilo de sidebar
     const overlay = document.createElement('div');
@@ -1592,7 +1647,7 @@ export function textPrompt(title = null, defaultText = "", aiModelId = null) {
     `;
 
     // Si se proporciona un aiModelId, crear header con imagen
-    if (aiModelId) {
+    if (finalAiModelId) {
       const headerContainer = document.createElement('div');
       headerContainer.style.cssText = `
         display: flex;
@@ -1614,7 +1669,7 @@ export function textPrompt(title = null, defaultText = "", aiModelId = null) {
         'allai': '/src/assets/images/All-AI.png'
       };
       
-      aiIcon.src = modelIconMap[aiModelId] || '/src/assets/images/chatgpt.png';
+      aiIcon.src = modelIconMap[finalAiModelId] || '/src/assets/images/chatgpt.png';
       aiIcon.style.cssText = `
         width: 24px;
         height: 24px;
@@ -1687,6 +1742,52 @@ export function textPrompt(title = null, defaultText = "", aiModelId = null) {
       textarea.style.borderColor = '#dadce0';
       textarea.style.boxShadow = 'none';
     });
+
+    // Crear contenedor para vista previa del contexto solo si hay contexto para mostrar
+    let contextContainer = null;
+    if (finalContextPreview) {
+      const isClipboard = config.getUseClipboard();
+      
+      contextContainer = document.createElement('div');
+      contextContainer.style.cssText = `
+        margin-top: 16px;
+        padding: 12px;
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 12px;
+        color: #6c757d;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.4;
+        max-height: 120px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+      `;
+      
+      // Crear etiqueta para el tipo de contexto
+      const contextLabel = document.createElement('div');
+      contextLabel.style.cssText = `
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #495057;
+        font-size: 13px;
+      `;
+      contextLabel.textContent = isClipboard ? `📋 ${texts.optionButtons.clipboardButton}:` : '🔗 URL:';
+      
+      // Crear contenido del contexto
+      const contextContent = document.createElement('div');
+      contextContent.style.cssText = `
+        color: #6c757d;
+        font-size: 12px;
+      `;
+      
+      // Mostrar el contexto (ya está truncado en finalContextPreview)
+      contextContent.textContent = finalContextPreview || (isClipboard ? '[Sin contenido en portapapeles]' : '[Sin URL disponible]');
+      
+      contextContainer.appendChild(contextLabel);
+      contextContainer.appendChild(contextContent);
+    }
 
     // Crear contenedor de botones con estilo de sidebar
     const buttonContainer = document.createElement('div');
@@ -1859,6 +1960,263 @@ export function textPrompt(title = null, defaultText = "", aiModelId = null) {
     buttonContainer.appendChild(cancelButton);
     buttonContainer.appendChild(acceptButton);
     content.appendChild(textarea);
+    
+    // Agregar contexto si existe
+    if (contextContainer) {
+      content.appendChild(contextContainer);
+    }
+    
+    content.appendChild(buttonContainer);
+    modal.appendChild(header);
+    modal.appendChild(content);
+    overlay.appendChild(modal);
+
+    // Agregar al DOM y enfocar
+    document.body.appendChild(overlay);
+    
+    // Enfocar textarea después de un breve delay
+    setTimeout(() => {
+      textarea.focus();
+      textarea.select();
+    }, 100);
+  });
+}
+
+// Función bookPrompt() - Modal específico para libros sin contexto
+export async function bookPrompt(title = null, defaultText = "") {
+  return new Promise(async (resolve) => {
+    // Obtener traducciones del idioma actual
+    const texts = getTranslation(currentLanguage);
+    
+    // Usar el título de bookPrompt desde las traducciones
+    const finalTitle = texts.textPrompt.bookPrompt;
+    
+    // Usar siempre el modelo actual para mostrar la imagen
+    const currentAIModel = config.getCurrentAIModel();
+    const finalAiModelId = currentAIModel;
+    
+    // NO obtener contexto para bookPrompt (siempre sin contexto)
+    const finalContextPreview = null;
+    
+    // Crear overlay con estilo de sidebar
+    const overlay = document.createElement('div');
+    overlay.className = 'text-prompt-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+      visibility: visible;
+    `;
+
+    // Crear modal con estilo de sidebar
+    const modal = document.createElement('div');
+    modal.className = 'text-prompt-modal';
+    modal.style.cssText = `
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      width: 80%;
+      max-width: 500px;
+      min-width: 300px;
+      overflow: hidden;
+      transform: scale(1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      margin: auto;
+    `;
+
+    // Verificar si es RTL (árabe)
+    const isRTL = currentLanguage === 'ar';
+    if (isRTL) {
+      modal.style.direction = 'rtl';
+    }
+
+    // Crear header con estilo de sidebar (sin imagen AI para bookPrompt)
+    const header = document.createElement('div');
+    header.className = 'text-prompt-header';
+    header.style.cssText = `
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #87CEEB;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e0e0e0;
+    `;
+
+    // Crear título directamente sin imagen
+    const headerTitle = document.createElement('h3');
+    headerTitle.textContent = finalTitle;
+    headerTitle.style.cssText = `
+      margin: 0;
+      font-size: 16px;
+      color: white;
+      font-weight: bold;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    `;
+
+    header.appendChild(headerTitle);
+
+    // Crear contenido del modal
+    const content = document.createElement('div');
+    content.style.cssText = `
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    `;
+
+    // Crear textarea con estilo de sidebar
+    const textarea = document.createElement('textarea');
+    textarea.value = defaultText || '';
+    textarea.placeholder = texts.textPrompt.topicPlaceholder || 'Escriba aquí...';
+    textarea.style.cssText = `
+      width: 100%;
+      min-height: 120px;
+      max-height: 300px;
+      padding: 12px;
+      border: 2px solid #dadce0;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      box-sizing: border-box;
+    `;
+
+    // Focus y selección del texto con estilo de sidebar
+    textarea.addEventListener('focus', () => {
+      textarea.style.borderColor = '#87CEEB';
+      textarea.style.boxShadow = '0 0 0 3px rgba(135, 206, 235, 0.3)';
+      textarea.select();
+    });
+
+    textarea.addEventListener('blur', () => {
+      textarea.style.borderColor = '#dadce0';
+      textarea.style.boxShadow = 'none';
+    });
+
+    // NO crear contenedor de contexto para bookPrompt (siempre sin contexto)
+    let contextContainer = null;
+
+    // Crear contenedor de botones con estilo de sidebar
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = `
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 16px;
+    `;
+
+    // Crear botón Cancelar
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = texts.textPrompt.cancelButton;
+    cancelButton.style.cssText = `
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      color: #333;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: all 0.3s ease;
+    `;
+
+    cancelButton.addEventListener('mouseenter', () => {
+      cancelButton.style.backgroundColor = '#e9ecef';
+      cancelButton.style.transform = 'translateY(-1px)';
+    });
+
+    cancelButton.addEventListener('mouseleave', () => {
+      cancelButton.style.backgroundColor = '#f8f9fa';
+      cancelButton.style.transform = 'translateY(0)';
+    });
+
+    // Crear botón Aceptar
+    const acceptButton = document.createElement('button');
+    acceptButton.textContent = texts.textPrompt.acceptButton;
+    acceptButton.style.cssText = `
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #87CEEB;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    `;
+
+    acceptButton.addEventListener('mouseenter', () => {
+      acceptButton.style.backgroundColor = '#5bb4dc';
+      acceptButton.style.transform = 'translateY(-2px)';
+      acceptButton.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+    });
+
+    acceptButton.addEventListener('mouseleave', () => {
+      acceptButton.style.backgroundColor = '#87CEEB';
+      acceptButton.style.transform = 'translateY(0)';
+      acceptButton.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+    });
+
+    // Eventos de botones
+    const closeModal = (result) => {
+      overlay.style.opacity = '0';
+      overlay.style.visibility = 'hidden';
+      modal.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+        resolve(result);
+      }, 300);
+    };
+
+    cancelButton.addEventListener('click', () => closeModal(null));
+    acceptButton.addEventListener('click', () => {
+      const text = textarea.value.trim();
+      closeModal(text || null);
+    });
+
+    // Cerrar con Escape
+    const handleKeydown = (e) => {
+      if (e.key === 'Escape') {
+        closeModal(null);
+        document.removeEventListener('keydown', handleKeydown);
+      } else if (e.key === 'Enter' && e.ctrlKey) {
+        const text = textarea.value.trim();
+        document.removeEventListener('keydown', handleKeydown);
+        closeModal(text || null);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeydown);
+
+    // Cerrar al hacer clic fuera del modal
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeModal(null);
+      }
+    });
+
+    // Construir modal
+    buttonContainer.appendChild(cancelButton);
+    buttonContainer.appendChild(acceptButton);
+    content.appendChild(textarea);
+    
+    // NO agregar contexto (contextContainer es null)
+    
     content.appendChild(buttonContainer);
     modal.appendChild(header);
     modal.appendChild(content);

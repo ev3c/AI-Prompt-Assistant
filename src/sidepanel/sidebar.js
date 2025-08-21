@@ -18,6 +18,7 @@ import {
   updateLanguageButtonIcon,
   loadMenuData,
   loadAvailableLanguages,
+  bookPrompt,
   generateLanguageOptions,
   generateLanguageSelectorOptions,
   saveMainConfig,
@@ -2941,7 +2942,7 @@ async function initializeCustomButtons() {
       button.textContent = title;
       button.dataset.context = context;
       button.dataset.behaviour = behaviour;
-      button.title = `Cargado desde: ${source}`; // Tooltip útil para depuración
+      button.title = context; // Mostrar custom_X como tooltip
 
       button.addEventListener('click', () => handleCustomButtonClick(context, button));
 
@@ -3220,6 +3221,7 @@ function initializeUI() {
   const gmailButton = document.getElementById('use-gmail');
   const addButton = document.getElementById('use-add');
   const directQuestionButton = document.getElementById('direct-question-btn');
+  const directQuestionUrlClipboardButton = document.getElementById('direct-question-url-clipboard-btn');
 
   // Configurar el enlace de feedback
   const feedbackLink = document.getElementById('feedback-button');
@@ -3526,9 +3528,8 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     // Establecer explícitamente que se usará el portapapeles
     config.setUseClipboard(true);
 
-    // Lógica específica para libros
-    const texts = getTranslation(config.getCurrentLanguage());
-    var nombreLibro = await textPrompt(texts.textPrompt.bookPrompt, "The Old Man and the Sea");
+    // Lógica específica para libros usando bookPrompt
+    var nombreLibro = await bookPrompt(null, "The Old Man and the Sea");
     if (nombreLibro) {
       config.setClipboardText(nombreLibro);
       // Copiar al portapapeles del sistema usando función mejorada
@@ -4003,8 +4004,61 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     directQuestionButton.addEventListener('click', async function () {
       // Usar la función especial que envía solo el prompt sin contexto
       const texts = getTranslation(config.getCurrentLanguage());
-      const label = texts.optionButtons.directQuestionButton;
-      await openAIWithPromptOnly("", label);
+      const aiModelName = getAIModelName(config.getCurrentAIModel());
+      const currentAIModel = config.getCurrentAIModel();
+      const dynamicTitle = `${texts.textPrompt.questionTo}${aiModelName}`;
+      
+      // Crear prompt personalizado con imagen de IA
+      const defaultText = "";
+      const iPrompt = await textPrompt(dynamicTitle, defaultText, currentAIModel);
+      
+      if (!iPrompt) return;
+      
+      // Enviar usando openAIWithPromptOnly pero con prompt ya procesado
+      await openAIWithPromptOnlyDirect(iPrompt);
+    });
+  }
+
+  // Event listener para el botón de pregunta directa con URL/Portapapeles
+  if (directQuestionUrlClipboardButton) {
+    directQuestionUrlClipboardButton.addEventListener('click', async function () {
+      // Comportarse igual que directQuestionButton pero agregando contexto
+      const texts = getTranslation(config.getCurrentLanguage());
+      const aiModelName = getAIModelName(config.getCurrentAIModel());
+      const currentAIModel = config.getCurrentAIModel();
+      const dynamicTitle = `${texts.textPrompt.questionTo}${aiModelName}`;
+      
+      // Obtener contexto según la configuración actual
+      let context = '';
+      const isClipboard = config.getUseClipboard();
+      
+      if (isClipboard) {
+        // Usar contenido del portapapeles - primero intentar getPriorityText, luego getClipboardText
+        try {
+          const { getPriorityText } = await import('/src/common/common.js');
+          context = await getPriorityText() || config.getClipboardText() || '';
+        } catch (error) {
+          console.log('Error obteniendo texto prioritario:', error);
+          context = config.getClipboardText() || '';
+        }
+      } else {
+        // Usar URL actual
+        context = config.getCurrentUrl() || '';
+      }
+      
+      // Limitar el contexto a 200 caracteres para la vista previa en el prompt
+      const truncatedContext = context.length > 200 
+        ? context.substring(0, 200) + '...'
+        : context;
+      
+      // Crear prompt personalizado con imagen de IA y contexto para vista previa
+      const defaultText = "";
+      const iPrompt = await textPrompt(dynamicTitle, defaultText, currentAIModel, truncatedContext);
+      
+      if (!iPrompt) return;
+      
+      // Usar la misma lógica que directQuestionButton pero con contexto
+      await openAIWithPromptOnlyDirectWithContext(iPrompt, context, isClipboard);
     });
   }
 
@@ -4632,6 +4686,220 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   return true; // Mantener el canal abierto para respuesta asíncrona
 });
+
+// Funciones auxiliares para manejar prompts con imágenes de IA ya procesados
+async function openAIWithPromptOnlyDirect(prompt) {
+  const { truncatePrompt, confirmPrompt } = await import('/src/common/common.js');
+  
+  // Limitar el prompt a 1000 caracteres
+  prompt = truncatePrompt(prompt, 1000);
+  console.log("Prompt después de truncar:", prompt.length, "caracteres");
+
+  // Verificar si el prompt contiene [TEMA] o [TOPIC]
+  if (prompt.includes('[TEMA]') || prompt.includes('[TOPIC]')) {
+    const texts = getTranslation(config.getCurrentLanguage());
+    const userTopic = await textPrompt(texts.textPrompt.topicPrompt, texts.textPrompt.topicPlaceholder);
+    if (userTopic) {
+      prompt = prompt.replace(/\[TEMA\]|\[TOPIC\]/g, userTopic);
+    } else {
+      prompt = prompt.replace(/\[TEMA\]|\[TOPIC\]/g, 'tema principal');
+    }
+  }
+
+  // Si se ha seleccionado "All AI's", mostrar confirmación antes de proceder
+  const currentAIModel = config.getCurrentAIModel();
+  if (currentAIModel === 'allai') {
+    const texts = getTranslation(config.getCurrentLanguage());
+    const confirmed = await confirmPrompt(texts.confirmPrompt.allAiMessage, 'allai');
+    
+    if (!confirmed) {
+      console.log('Usuario canceló la apertura de todas las AI\'s');
+      return;
+    }
+  }
+
+  // Enviar mensaje al background script para abrir el modelo de IA SIN CONTEXTO
+  chrome.runtime.sendMessage({
+    action: 'openAI',
+    prompt: prompt,
+    context: '', // Contexto vacío
+    aiModel: currentAIModel,
+    isClipboard: false,
+    buttonType: 'textOnlyButton' // Tipo especial para solo texto
+  });
+
+  // Mostrar notificación
+  const notification = document.getElementById('copy-notification');
+  notification.textContent = `Abriendo ${getAIModelName(currentAIModel)}...`;
+  notification.classList.remove('hidden');
+
+  // Si estamos en el popup, cerrarlo después de un segundo
+  if (location.pathname.includes('popup.html')) {
+    setTimeout(() => {
+      window.close();
+    }, 1000);
+  } else {
+    // Si estamos en el sidebar, solo ocultar la notificación
+    setTimeout(() => {
+      notification.classList.add('hidden');
+    }, 2000);
+  }
+}
+
+async function openAIWithPromptDirect(prompt) {
+  const { truncatePrompt, confirmPrompt, getTranslation } = await import('/src/common/common.js');
+  
+  console.log('🔍 DEBUG: openAIWithPromptDirect iniciado con prompt:', prompt ? prompt.substring(0, 50) + '...' : 'vacío');
+  
+  // Limitar el prompt a 1000 caracteres
+  prompt = truncatePrompt(prompt, 1000);
+  console.log("Prompt después de truncar:", prompt.length, "caracteres");
+
+  // Verificar si el prompt contiene [TEMA] o [TOPIC]
+  if (prompt.includes('[TEMA]') || prompt.includes('[TOPIC]')) {
+    const texts = getTranslation(config.getCurrentLanguage());
+    const userTopic = await textPrompt(texts.textPrompt.topicPrompt, texts.textPrompt.topicPlaceholder);
+    if (userTopic) {
+      prompt = prompt.replace(/\[TEMA\]|\[TOPIC\]/g, userTopic);
+    } else {
+      prompt = prompt.replace(/\[TEMA\]|\[TOPIC\]/g, 'tema principal');
+    }
+  }
+
+  // Si se ha seleccionado "All AI's", mostrar confirmación antes de proceder
+  const currentAIModel = config.getCurrentAIModel();
+  console.log('🔍 DEBUG: Modelo actual detectado:', currentAIModel);
+  if (currentAIModel === 'allai') {
+    console.log('🔍 DEBUG: Es All AI, mostrando confirmación...');
+    const texts = getTranslation(config.getCurrentLanguage());
+    const confirmed = await confirmPrompt(texts.confirmPrompt.allAiMessage, 'allai');
+    
+    console.log('🔍 DEBUG: Usuario confirmó:', confirmed);
+    if (!confirmed) {
+      console.log('Usuario canceló la apertura de todas las AI\'s');
+      return;
+    }
+    console.log('🔍 DEBUG: Continuando con All AI...');
+  }
+
+  // Obtener contexto según la configuración actual
+  let context = '';
+  const isClipboard = config.getUseClipboard();
+  
+  if (isClipboard) {
+    // Usar contenido del portapapeles - primero intentar getPriorityText, luego getClipboardText
+    try {
+      const { getPriorityText } = await import('/src/common/common.js');
+      context = await getPriorityText() || config.getClipboardText() || '';
+    } catch (error) {
+      console.log('Error obteniendo texto prioritario:', error);
+      context = config.getClipboardText() || '';
+    }
+    console.log("Usando contexto de portapapeles:", context.substring(0, 100) + "...");
+  } else {
+    // Usar URL actual
+    context = config.getCurrentUrl() || '';
+    console.log("Usando contexto de URL:", context);
+  }
+
+  // Enviar mensaje al background script para abrir el modelo de IA CON CONTEXTO
+  chrome.runtime.sendMessage({
+    action: 'openAI',
+    prompt: prompt,
+    context: context,
+    aiModel: currentAIModel,
+    isClipboard: isClipboard,
+    buttonType: isClipboard ? 'clipboardButton' : 'urlButton'
+  });
+
+  // Mostrar notificación
+  const notification = document.getElementById('copy-notification');
+  notification.textContent = `Abriendo ${getAIModelName(currentAIModel)}...`;
+  notification.classList.remove('hidden');
+
+  // Si estamos en el popup, cerrarlo después de un segundo
+  if (window.location.href.includes('popup.html')) {
+    setTimeout(() => {
+      window.close();
+    }, 1000);
+  } else {
+    // Ocultar notificación después de 2 segundos
+    setTimeout(() => {
+      notification.classList.add('hidden');
+    }, 2000);
+  }
+}
+
+// Función que combina openAIWithPromptOnlyDirect con contexto (para directQuestionUrlClipboardButton)
+async function openAIWithPromptOnlyDirectWithContext(prompt, context, isClipboard) {
+  const { truncatePrompt, confirmPrompt } = await import('/src/common/common.js');
+  
+  console.log('🔍 DEBUG: openAIWithPromptOnlyDirectWithContext iniciado');
+  console.log('🔍 DEBUG: Prompt:', prompt ? prompt.substring(0, 50) + '...' : 'vacío');
+  console.log('🔍 DEBUG: Contexto:', context ? context.substring(0, 100) + '...' : 'vacío');
+  console.log('🔍 DEBUG: isClipboard:', isClipboard);
+  
+  // Limitar el prompt a 1000 caracteres
+  prompt = truncatePrompt(prompt, 1000);
+  console.log("Prompt después de truncar:", prompt.length, "caracteres");
+
+  // Verificar si el prompt contiene [TEMA] o [TOPIC]
+  if (prompt.includes('[TEMA]') || prompt.includes('[TOPIC]')) {
+    const texts = getTranslation(config.getCurrentLanguage());
+    const userTopic = await textPrompt(texts.textPrompt.topicPrompt, texts.textPrompt.topicPlaceholder);
+    if (userTopic) {
+      prompt = prompt.replace(/\[TEMA\]|\[TOPIC\]/g, userTopic);
+    } else {
+      prompt = prompt.replace(/\[TEMA\]|\[TOPIC\]/g, 'tema principal');
+    }
+  }
+
+  // Si se ha seleccionado "All AI's", mostrar confirmación antes de proceder
+  const currentAIModel = config.getCurrentAIModel();
+  console.log('🔍 DEBUG: Modelo detectado:', currentAIModel);
+  if (currentAIModel === 'allai') {
+    console.log('🔍 DEBUG: Es All AI, mostrando confirmación...');
+    const texts = getTranslation(config.getCurrentLanguage());
+    const confirmed = await confirmPrompt(texts.confirmPrompt.allAiMessage, 'allai');
+    
+    console.log('🔍 DEBUG: Usuario confirmó:', confirmed);
+    if (!confirmed) {
+      console.log('Usuario canceló la apertura de todas las AI\'s');
+      return;
+    }
+    console.log('🔍 DEBUG: Continuando con All AI...');
+  }
+
+  // Enviar mensaje al background script CON CONTEXTO (diferencia clave con openAIWithPromptOnlyDirect)
+  console.log('🔍 DEBUG: Enviando mensaje al background script con contexto');
+  chrome.runtime.sendMessage({
+    action: 'openAI',
+    prompt: prompt,
+    context: context || '', // INCLUIR el contexto (diferencia principal)
+    aiModel: currentAIModel,
+    isClipboard: isClipboard,
+    buttonType: isClipboard ? 'clipboardButton' : 'urlButton' // Usar el tipo correcto según el contexto
+  });
+
+  // Mostrar notificación
+  const notification = document.getElementById('copy-notification');
+  notification.textContent = `Abriendo ${getAIModelName(currentAIModel)}...`;
+  notification.classList.remove('hidden');
+
+  // Si estamos en el popup, cerrarlo después de un segundo
+  if (location.pathname.includes('popup.html')) {
+    setTimeout(() => {
+      window.close();
+    }, 1000);
+  } else {
+    // Si estamos en el sidebar, solo ocultar la notificación
+    setTimeout(() => {
+      notification.classList.add('hidden');
+    }, 2000);
+  }
+}
+
+
 
 // Función para enviar email a través de Gmail
 function sendGmail() {

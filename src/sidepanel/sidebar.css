@@ -253,7 +253,7 @@ body {
 
   .direct-question-button {
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #6bb6d6;
     border: none;
     border-radius: 4px;
     color: #000000;
@@ -266,7 +266,7 @@ body {
   }
 
   .direct-question-button:hover {
-    background-color: #e8e8e8;
+    background-color: #5a9fc4;
   }
   
   #current-url {

@@ -2,14 +2,20 @@ export const translations = {
   'es': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "Se envía la URL",
       clipboardButton: "Portapapeles",
+      clipboardButtonTooltip: "Se envía Portapapeles",
       bookButton: "Libro",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Escribe la pregunta directamente a"
+      directQuestionButton: "Escribe la orden a",
+      directQuestionButtonTooltip: "Sin añadir URL / Portapapeles",
+      directQuestionButtonUrlClipboard: "Orden a",
+      directQuestionButtonUrlClipboardTooltip: "Con URL / Portapapeles",
+      urlClipboardText: "URL / Portapapeles"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -60,14 +66,20 @@ export const translations = {
   'ca': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "S'envia la URL",
       clipboardButton: "Portapapers",
+      clipboardButtonTooltip: "S'envia Portapapers",
       bookButton: "Llibre",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Escriu la pregunta directament a"
+      directQuestionButton: "Escriu l'ordre a",
+      directQuestionButtonTooltip: "Sense afegir URL / Portapapers",
+      directQuestionButtonUrlClipboard: "Ordre a",
+      directQuestionButtonUrlClipboardTooltip: "Amb URL / Portapapers",
+      urlClipboardText: "URL / Portapapers"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -118,14 +130,20 @@ export const translations = {
   'gb': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "URL is sent",
       clipboardButton: "Clipboard",
+      clipboardButtonTooltip: "Clipboard is sent",
       bookButton: "Book",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Write the question directly to"
+      directQuestionButton: "Write the command to",
+      directQuestionButtonTooltip: "Without adding URL / Clipboard",
+      directQuestionButtonUrlClipboard: "Command to",
+      directQuestionButtonUrlClipboardTooltip: "With URL / Clipboard",
+      urlClipboardText: "URL / Clipboard"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -176,14 +194,20 @@ export const translations = {
   'fr': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "L'URL est envoyée",
       clipboardButton: "Presse-papiers",
+      clipboardButtonTooltip: "Le presse-papiers est envoyé",
       bookButton: "Livre",
       pdfButton: "PDF",
       wikiButton: "Wikipédia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Écrivez la question directement à"
+      directQuestionButton: "Écrivez la commande à",
+      directQuestionButtonTooltip: "Sans ajouter URL / Presse-papiers",
+      directQuestionButtonUrlClipboard: "Commande à",
+      directQuestionButtonUrlClipboardTooltip: "Avec URL / Presse-papiers",
+      urlClipboardText: "URL / Presse-papiers"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -234,14 +258,20 @@ export const translations = {
   'de': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "URL wird gesendet",
       clipboardButton: "Zwischenablage",
+      clipboardButtonTooltip: "Zwischenablage wird gesendet",
       bookButton: "Bücher",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Schreiben Sie die Frage direkt an"
+      directQuestionButton: "Schreiben Sie den Befehl an",
+      directQuestionButtonTooltip: "Ohne Hinzufügen von URL / Zwischenablage",
+      directQuestionButtonUrlClipboard: "Befehl an",
+      directQuestionButtonUrlClipboardTooltip: "Mit URL / Zwischenablage",
+      urlClipboardText: "URL / Zwischenablage"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -292,14 +322,20 @@ export const translations = {
   'it': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "L'URL viene inviata",
       clipboardButton: "Appunti",
+      clipboardButtonTooltip: "Gli appunti vengono inviati",
       bookButton: "Libro",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Scrivi la domanda direttamente a"
+      directQuestionButton: "Scrivi il comando a",
+      directQuestionButtonTooltip: "Senza aggiungere URL / Appunti",
+      directQuestionButtonUrlClipboard: "Comando a",
+      directQuestionButtonUrlClipboardTooltip: "Con URL / Appunti",
+      urlClipboardText: "URL / Appunti"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -350,14 +386,20 @@ export const translations = {
   'ru': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "URL отправляется",
       clipboardButton: "Буфер обмена",
+      clipboardButtonTooltip: "Буфер обмена отправляется",
       bookButton: "Книга",
       pdfButton: "PDF",
       wikiButton: "Википедия",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+add+",
-      directQuestionButton: "Напишите вопрос напрямую"
+      directQuestionButton: "Напишите команду",
+      directQuestionButtonTooltip: "Без добавления URL / Буфер обмена",
+      directQuestionButtonUrlClipboard: "Команда",
+      directQuestionButtonUrlClipboardTooltip: "С URL / Буфер обмена",
+      urlClipboardText: "URL / Буфер обмена"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -408,14 +450,20 @@ export const translations = {
   'ar': {
     optionButtons: {
       urlButton: "رابط",
+      urlButtonTooltip: "يتم إرسال الرابط",
       clipboardButton: "الحافظة",
+      clipboardButtonTooltip: "يتم إرسال الحافظة",
       bookButton: "كتاب",
       pdfButton: "PDF",
       wikiButton: "ويكيبيديا",
       twitterButton: "تويتر/X",
       gmailButton: "جيميل",
       addButton: "+إضافة+",
-      directQuestionButton: "اكتب السؤال مباشرة إلى"
+      directQuestionButton: "اكتب الأمر إلى",
+      directQuestionButtonTooltip: "بدون إضافة رابط/حافظة",
+      directQuestionButtonUrlClipboard: "أمر إلى",
+      directQuestionButtonUrlClipboardTooltip: "مع رابط/حافظة",
+      urlClipboardText: "URL / حافظة"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -466,14 +514,20 @@ export const translations = {
   'ja': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "URLが送信されます",
       clipboardButton: "クリップボード",
+      clipboardButtonTooltip: "クリップボードが送信されます",
       bookButton: "ブック",
       pdfButton: "PDF",
       wikiButton: "ウィキペディア",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+追加+",
-      directQuestionButton: "質問を直接書く"
+      directQuestionButton: "コマンドを書く",
+      directQuestionButtonTooltip: "URL / クリップボードを追加せずに",
+      directQuestionButtonUrlClipboard: "コマンド",
+      directQuestionButtonUrlClipboardTooltip: "URL / クリップボードを含めて",
+      urlClipboardText: "URL / クリップボード"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -524,14 +578,20 @@ export const translations = {
   'hi': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "URL भेजा जाता है",
       clipboardButton: "क्लिपबोर्ड",
+      clipboardButtonTooltip: "क्लिपबोर्ड भेजा जाता है",
       bookButton: "पुस्तक",
       pdfButton: "PDF",
       wikiButton: "विकिपीडिया",
       twitterButton: "X/ट्विटर",
       gmailButton: "Gmail",
       addButton: "+जोड़ें+",
-      directQuestionButton: "प्रश्न सीधे लिखें"
+      directQuestionButton: "आदेश लिखें",
+      directQuestionButtonTooltip: "URL / क्लिपबोर्ड जोड़े बिना",
+      directQuestionButtonUrlClipboard: "आदेश",
+      directQuestionButtonUrlClipboardTooltip: "URL / क्लिपबोर्ड के साथ",
+      urlClipboardText: "URL / क्लिपबोर्ड"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -582,14 +642,20 @@ export const translations = {
   'kr': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "URL이 전송됩니다",
       clipboardButton: "클립보드",
+      clipboardButtonTooltip: "클립보드가 전송됩니다",
       bookButton: "책",
       pdfButton: "PDF",
       wikiButton: "위키백과",
       twitterButton: "X/트위터",
       gmailButton: "Gmail",
       addButton: "+추가+",
-      directQuestionButton: "질문을 직접 작성하세요"
+      directQuestionButton: "명령을 작성하세요",
+      directQuestionButtonTooltip: "URL / 클립보드 추가 없이",
+      directQuestionButtonUrlClipboard: "명령",
+      directQuestionButtonUrlClipboardTooltip: "URL / 클립보드 포함",
+      urlClipboardText: "URL / 클립보드"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -640,14 +706,20 @@ export const translations = {
   'pt': {
     optionButtons: {
       urlButton: "URL",
+      urlButtonTooltip: "URL é enviada",
       clipboardButton: "Área de transferência",
+      clipboardButtonTooltip: "Área de transferência é enviada",
       bookButton: "Livro",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
       addButton: "+adicionar+",
-      directQuestionButton: "Escreva a pergunta diretamente para"
+      directQuestionButton: "Escreva o comando para",
+      directQuestionButtonTooltip: "Sem adicionar URL / Área de transferência",
+      directQuestionButtonUrlClipboard: "Comando para",
+      directQuestionButtonUrlClipboardTooltip: "Com URL / Área de transferência",
+      urlClipboardText: "URL / Área de transferência"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -698,14 +770,20 @@ export const translations = {
   'zh': {
     optionButtons: {
       urlButton: "网址",
+      urlButtonTooltip: "发送网址",
       clipboardButton: "剪贴板",
+      clipboardButtonTooltip: "发送剪贴板",
       bookButton: "图书",
       pdfButton: "PDF",
       wikiButton: "维基百科",
       twitterButton: "X/推特",
       gmailButton: "Gmail",
       addButton: "+添加+",
-      directQuestionButton: "直接写问题给"
+      directQuestionButton: "写命令给",
+      directQuestionButtonTooltip: "不添加URL / 剪贴板",
+      directQuestionButtonUrlClipboard: "命令给",
+      directQuestionButtonUrlClipboardTooltip: "包含URL / 剪贴板",
+      urlClipboardText: "URL / 剪贴板"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -775,16 +853,30 @@ export function updateUITexts(language, aiModelName = 'ChatGPT') {
   const gmailButton = document.getElementById('use-gmail');
   const addButton = document.getElementById('use-add');
   const directQuestionButton = document.getElementById('direct-question-btn');
+  const directQuestionUrlClipboardButton = document.getElementById('direct-question-url-clipboard-btn');
   
-  if (urlButton) urlButton.textContent = texts.optionButtons.urlButton;
-  if (clipboardButton) clipboardButton.textContent = texts.optionButtons.clipboardButton;
+  if (urlButton) {
+    urlButton.textContent = texts.optionButtons.urlButton;
+    urlButton.title = texts.optionButtons.urlButtonTooltip;
+  }
+  if (clipboardButton) {
+    clipboardButton.textContent = texts.optionButtons.clipboardButton;
+    clipboardButton.title = texts.optionButtons.clipboardButtonTooltip;
+  }
   if (bookButton) bookButton.textContent = texts.optionButtons.bookButton;
   if (pdfButton) pdfButton.textContent = texts.optionButtons.pdfButton;
   if (wikiButton) wikiButton.textContent = texts.optionButtons.wikiButton;
   if (twitterButton) twitterButton.textContent = texts.optionButtons.twitterButton;
   if (gmailButton) gmailButton.textContent = texts.optionButtons.gmailButton;
   if (addButton) addButton.textContent = texts.optionButtons.addButton;
-  if (directQuestionButton) directQuestionButton.textContent = texts.optionButtons.directQuestionButton + ' ' + aiModelName;
+  if (directQuestionButton) {
+    directQuestionButton.textContent = texts.optionButtons.directQuestionButton + ' ' + aiModelName;
+    directQuestionButton.title = texts.optionButtons.directQuestionButtonTooltip;
+  }
+  if (directQuestionUrlClipboardButton) {
+    directQuestionUrlClipboardButton.textContent = texts.optionButtons.directQuestionButtonUrlClipboard + ' ' + aiModelName + ' + ' + texts.optionButtons.urlClipboardText;
+    directQuestionUrlClipboardButton.title = texts.optionButtons.directQuestionButtonUrlClipboardTooltip;
+  }
 
   // Actualizar textos de configuración
   const settingsTitle = document.querySelector('.popup-header h3');
@@ -812,12 +904,18 @@ export function updateUITexts(language, aiModelName = 'ChatGPT') {
   if (helpVideoButton) helpVideoButton.textContent = texts.settings.helpVideoButton;
 }
 
-// Función para actualizar solo el texto del botón de pregunta directa
+// Función para actualizar solo el texto de los botones de pregunta directa
 export function updateDirectQuestionButtonText(language, aiModelName) {
   const texts = getTranslation(language);
   const directQuestionButton = document.getElementById('direct-question-btn');
+  const directQuestionUrlClipboardButton = document.getElementById('direct-question-url-clipboard-btn');
   
   if (directQuestionButton) {
     directQuestionButton.textContent = texts.optionButtons.directQuestionButton + ' ' + aiModelName;
+    directQuestionButton.title = texts.optionButtons.directQuestionButtonTooltip;
+  }
+  if (directQuestionUrlClipboardButton) {
+    directQuestionUrlClipboardButton.textContent = texts.optionButtons.directQuestionButtonUrlClipboard + ' ' + aiModelName + ' + ' + texts.optionButtons.urlClipboardText;
+    directQuestionUrlClipboardButton.title = texts.optionButtons.directQuestionButtonUrlClipboardTooltip;
   }
 } 
