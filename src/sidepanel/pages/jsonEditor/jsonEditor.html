@@ -12,7 +12,7 @@
       <div class="header-content">
         <div class="header-text">
           <h1>📝 JSON AI Prompt Editor</h1>
-          <p>Editor visual para archivos JSON de AI Prompt Assistant</p>
+          <p id="subtitle-text">Editor visual para archivos JSON de AI Prompt Assistant</p>
         </div>
         <div class="language-selector">
           <button id="lang-es" class="lang-btn active">🇪🇸</button>
@@ -22,132 +22,279 @@
     </header>
 
     <div class="file-controls">
-      <div class="controls-wrapper">
-        <div class="button-name-field">
-          <label for="add-button-text" class="button-name-label">🏷️ Title:</label>
-          <div class="tooltip-container">
-            <input type="text" id="add-button-text" maxlength="12" placeholder="Máx. 12 chars" value="ButtonName" class="button-name-input">
-            <div class="modern-tooltip multiline" id="add-button-text-tooltip">
-              <div class="tooltip-content">
-                <div class="tooltip-line">ES: Nombre que tendrá el botón de AI Prompt Assistant</div>
-                <div class="tooltip-line">GB: Name of the AI Prompt Assistant button</div>
-              </div>
-              <div class="tooltip-arrow"></div>
-            </div>
-          </div>
-        </div>
-        <div class="control-group">
-            <label id="origin-label" for="origin-selector">Origen:</label>
+      <div class="main-controls-row">
+        <!-- Columna Izquierda: Titulo y Contexto -->
+        <div class="title-context-group">
+          <div class="control-field">
+            <label for="add-button-text" class="control-label" id="title-label">🏷️ Titulo:</label>
             <div class="tooltip-container">
-                <select id="origin-selector">
-                    <option value="url">URL</option>
-                    <option value="clipboard">Clipboard</option>
-                </select>
-                <div class="modern-tooltip" id="origin-tooltip">
-                    <div class="tooltip-content">
-                        <div class="tooltip-line">ES: Se pasará la URL de la web o el contenido del Portapapeles a la AI</div>
-                        <div class="tooltip-line">GB: The web URL or clipboard content will be passed to the AI</div>
-                    </div>
-                    <div class="tooltip-arrow"></div>
+              <input type="text" id="add-button-text" maxlength="12" placeholder="Máx. 12 chars" value="ButtonName" class="control-input" id="title-input">
+              <div class="modern-tooltip multiline" id="add-button-text-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Nombre que tendrá el botón de AI Prompt Assistant</div>
+                  <div class="tooltip-line">GB: Name of the AI Prompt Assistant button</div>
                 </div>
+                <div class="tooltip-arrow"></div>
+              </div>
             </div>
-        </div>
-      </div>
-      <div class="tooltip-container">
-        <button id="load-default-btn" class="btn btn-success">📋 Cargar Plantilla</button>
-        <div class="modern-tooltip multiline" id="load-default-tooltip">
-          <div class="tooltip-content">
-            <div class="tooltip-line">ES: Seleccionar plantilla predeterminada desde la extensión</div>
-            <div class="tooltip-line">GB: Select default template from the extension</div>
           </div>
-          <div class="tooltip-arrow"></div>
-        </div>
-      </div>
-      <div class="file-input-wrapper">
-        <div class="tooltip-container">
-          <label for="file-input" class="file-label">📁 Abrir JSON</label>
-          <input type="file" id="file-input" accept=".json" class="file-input">
-          <div class="modern-tooltip multiline" id="file-input-tooltip">
-            <div class="tooltip-content">
-              <div class="tooltip-line">ES: Seleccionar un archivo JSON desde tu disco</div>
-              <div class="tooltip-line">GB: Select a JSON file from your disk</div>
-            </div>
-            <div class="tooltip-arrow"></div>
-          </div>
-        </div>
-      </div>
-      <div class="tooltip-container">
-        <button id="save-btn" class="btn btn-primary" disabled>💾 Guardar</button>
-        <div class="modern-tooltip multiline" id="save-btn-tooltip">
-          <div class="tooltip-content">
-            <div class="tooltip-line">ES: Seleccionar ubicación para guardar el archivo JSON</div>
-            <div class="tooltip-line">GB: Select location to save the JSON file</div>
-          </div>
-          <div class="tooltip-arrow"></div>
-        </div>
-      </div>
-      <div class="form-group">
-          <div class="tooltip-container">
-              <select id="custom-file-selector" class="form-control">
-                  <option value="custom_1">Custom 1</option>
-                  <option value="custom_2">Custom 2</option>
-                  <option value="custom_3">Custom 3</option>
-                  <option value="custom_4">Custom 4</option>
-                  <option value="custom_5">Hard Disk</option>
-              </select>
-              <div class="modern-tooltip multiline" id="custom-file-selector-tooltip">
-                  <div class="tooltip-content">
-                      <div class="tooltip-line">ES: Seleccionar slot de almacenamiento (Custom 1-4: extensión, Hard Disk: descargar)</div>
-                      <div class="tooltip-line">GB: Select storage slot (Custom 1-4: extension, Hard Disk: download)</div>
+          <div class="control-field">
+              <label id="origin-label" for="origin-selector" class="control-label">Contexto:</label>
+              <div class="tooltip-container">
+                  <select id="origin-selector" class="control-input">
+                      <option value="url">URL</option>
+                      <option value="clipboard">Clipboard</option>
+                  </select>
+                  <div class="modern-tooltip" id="origin-tooltip">
+                      <div class="tooltip-content">
+                          <div class="tooltip-line">ES: Se pasará la URL de la web o el contenido del Portapapeles a la AI</div>
+                          <div class="tooltip-line">GB: The web URL or clipboard content will be passed to the AI</div>
+                      </div>
+                      <div class="tooltip-arrow"></div>
                   </div>
-                  <div class="tooltip-arrow"></div>
               </div>
           </div>
+        </div>
+        
+        <!-- Columna Derecha: Botones Custom -->
+        <div class="custom-buttons-group">
+        <div class="custom-slot-group">
+          <span class="custom-slot-label">Custom 1</span>
+          <div class="custom-slot-buttons">
+            <div class="tooltip-container">
+              <button id="load-custom-1-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
+              <div class="modern-tooltip multiline" id="load-custom-1-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Cargar JSON desde Custom 1 (chrome.storage)</div>
+                  <div class="tooltip-line">GB: Load JSON from Custom 1 (chrome.storage)</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+            <div class="tooltip-container">
+              <button id="save-custom-1-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
+              <div class="modern-tooltip multiline" id="save-custom-1-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Guardar JSON en Custom 1 (chrome.storage)</div>
+                  <div class="tooltip-line">GB: Save JSON to Custom 1 (chrome.storage)</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="custom-slot-group">
+          <span class="custom-slot-label">Custom 2</span>
+          <div class="custom-slot-buttons">
+            <div class="tooltip-container">
+              <button id="load-custom-2-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
+              <div class="modern-tooltip multiline" id="load-custom-2-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Cargar JSON desde Custom 2 (chrome.storage)</div>
+                  <div class="tooltip-line">GB: Load JSON from Custom 2 (chrome.storage)</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+            <div class="tooltip-container">
+              <button id="save-custom-2-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
+              <div class="modern-tooltip multiline" id="save-custom-2-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Guardar JSON en Custom 2 (chrome.storage)</div>
+                  <div class="tooltip-line">GB: Save JSON to Custom 2 (chrome.storage)</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="custom-slot-group">
+          <span class="custom-slot-label">Custom 3</span>
+          <div class="custom-slot-buttons">
+            <div class="tooltip-container">
+              <button id="load-custom-3-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
+              <div class="modern-tooltip multiline" id="load-custom-3-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Cargar JSON desde Custom 3 (chrome.storage)</div>
+                  <div class="tooltip-line">GB: Load JSON from Custom 3 (chrome.storage)</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+            <div class="tooltip-container">
+              <button id="save-custom-3-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
+              <div class="modern-tooltip multiline" id="save-custom-3-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Guardar JSON en Custom 3 (chrome.storage)</div>
+                  <div class="tooltip-line">GB: Save JSON to Custom 3 (chrome.storage)</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="custom-slot-group">
+          <span class="custom-slot-label">Custom 4</span>
+          <div class="custom-slot-buttons">
+            <div class="tooltip-container">
+              <button id="load-custom-4-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
+              <div class="modern-tooltip multiline" id="load-custom-4-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Cargar JSON desde Custom 4 (chrome.storage)</div>
+                  <div class="tooltip-line">GB: Load JSON from Custom 4 (chrome.storage)</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+            <div class="tooltip-container">
+              <button id="save-custom-4-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
+              <div class="modern-tooltip multiline" id="save-custom-4-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Guardar JSON en Custom 4 (chrome.storage)</div>
+                  <div class="tooltip-line">GB: Save JSON to Custom 4 (chrome.storage)</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="custom-slot-group">
+          <span class="custom-slot-label" id="disk-label">Disco Duro</span>
+          <div class="custom-slot-buttons">
+            <div class="tooltip-container">
+              <button id="load-disk-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
+              <div class="modern-tooltip multiline" id="load-disk-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Cargar JSON desde archivo del disco duro</div>
+                  <div class="tooltip-line">GB: Load JSON file from hard disk</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+            <div class="tooltip-container">
+              <button id="save-disk-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
+              <div class="modern-tooltip multiline" id="save-disk-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Guardar JSON como archivo en el disco duro</div>
+                  <div class="tooltip-line">GB: Save JSON as file to hard disk</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+            <div class="tooltip-container">
+              <button id="info-disk-btn" class="btn btn-small btn-secondary" data-text="ℹ️ Info">ℹ️ Info</button>
+              <div class="modern-tooltip multiline" id="info-disk-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Información sobre el disco duro y archivos JSON</div>
+                  <div class="tooltip-line">GB: Information about hard disk and JSON files</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+            <div class="tooltip-container">
+              <button id="email-btn" class="btn btn-small btn-primary" data-text="📧 Correo">📧 Correo</button>
+              <div class="modern-tooltip multiline" id="email-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Enviar correo electrónico con información de contacto</div>
+                  <div class="tooltip-line">GB: Send email with contact information</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
       </div>
+      </div>
+
     </div>
 
-    <!-- Editor Embebido -->
-    <div id="embedded-editor" class="embedded-editor">
-      <div class="editor-header">
-        <h3>📝 Editor de Texto JSON</h3>
-        <div class="editor-controls">
-          <div class="tooltip-container">
-            <button id="validate-json-btn" class="btn btn-small btn-primary">✅ Validar JSON</button>
-            <div class="modern-tooltip multiline" id="validate-json-tooltip">
-              <div class="tooltip-content">
-                <div class="tooltip-line">ES: Verificar si el JSON tiene errores de sintaxis</div>
-                <div class="tooltip-line">GB: Check if the JSON has syntax errors</div>
+    <!-- Editor Dividido en Dos Columnas -->
+    <div class="editor-container">
+      <!-- Columna Izquierda: Editor de Texto -->
+      <div id="embedded-editor" class="embedded-editor left-panel">
+        <div class="editor-header">
+          <h3 id="editor-title">📝 Editor de Texto JSON</h3>
+          <div class="editor-controls">
+            <div class="tooltip-container">
+              <button id="load-default-btn" class="btn btn-small btn-success" data-text="📋 Cargar Plantilla">📋 Cargar Plantilla</button>
+              <div class="modern-tooltip multiline" id="load-default-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Seleccionar plantilla predeterminada desde la extensión</div>
+                  <div class="tooltip-line">GB: Select default template from the extension</div>
+                </div>
+                <div class="tooltip-arrow"></div>
               </div>
-              <div class="tooltip-arrow"></div>
+              
+              <!-- Menú emergente de selección de idioma -->
+              <div id="language-template-popup" class="language-template-popup hidden">
+                <ul>
+                  <li class="language-option" data-lang="es">🇪🇸 Español</li>
+                  <li class="language-option" data-lang="gb">🇬🇧 English</li>
+                  <li class="language-option" data-lang="fr">🇫🇷 Français</li>
+                  <li class="language-option" data-lang="ca">ca Català</li>
+                  <li class="language-option" data-lang="de">🇩🇪 Deutsch</li>
+                  <li class="language-option" data-lang="it">🇮🇹 Italiano</li>
+                  <li class="language-option" data-lang="pt">🇵🇹 Português</li>
+                  <li class="language-option" data-lang="ja">🇯🇵 日本語</li>
+                  <li class="language-option" data-lang="zh">🇨🇳 中文</li>
+                  <li class="language-option" data-lang="ru">🇷🇺 Русский</li>
+                  <li class="language-option" data-lang="ar">🇸🇦 العربية</li>
+                  <li class="language-option" data-lang="kr">🇰🇷 한국어</li>
+                  <li class="language-option" data-lang="hi">🇮🇳 हिन्दी</li>
+                </ul>
+              </div>
             </div>
-          </div>
-          <div class="tooltip-container">
-            <button id="copy-path-btn" class="btn btn-small btn-secondary">📋 Copiar Ruta</button>
-            <div class="modern-tooltip multiline" id="copy-path-tooltip">
-              <div class="tooltip-content">
-                <div class="tooltip-line">ES: Copiar ruta al portapapeles</div>
-                <div class="tooltip-line">GB: Copy path to clipboard</div>
+            <div class="tooltip-container">
+              <button id="validate-json-btn" class="btn btn-small btn-primary" data-text="✅ Validar JSON">✅ Validar JSON</button>
+              <div class="modern-tooltip multiline" id="validate-json-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Verificar si el JSON tiene errores de sintaxis</div>
+                  <div class="tooltip-line">GB: Check if the JSON has syntax errors</div>
+                </div>
+                <div class="tooltip-arrow"></div>
               </div>
-              <div class="tooltip-arrow"></div>
-            </div>
-          </div>
-          <div class="tooltip-container">
-            <button id="copy-json-btn" class="btn btn-small btn-secondary">📋 Copiar Archivo</button>
-            <div class="modern-tooltip multiline" id="copy-json-tooltip">
-              <div class="tooltip-content">
-                <div class="tooltip-line">ES: Copiar todo el contenido JSON al portapapeles</div>
-                <div class="tooltip-line">GB: Copy all JSON content to clipboard</div>
-              </div>
-              <div class="tooltip-arrow"></div>
             </div>
           </div>
         </div>
+        <textarea id="embedded-json-editor" placeholder="Edit your JSON here..." id="json-editor-textarea"></textarea>
       </div>
-      <textarea id="embedded-json-editor" placeholder="Edit your JSON here..."></textarea>
+
+      <!-- Columna Derecha: Previsualización -->
+      <div id="json-preview" class="json-preview right-panel">
+        <div class="preview-header">
+          <h3 id="preview-title">🔍 Previsualización del Menú</h3>
+          <div class="preview-controls">
+            <div class="tooltip-container">
+              <button id="update-preview-btn" class="btn btn-small btn-success" data-text="🔄 Actualizar">🔄 Actualizar</button>
+              <div class="modern-tooltip multiline" id="update-preview-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Actualizar la previsualización del menú JSON</div>
+                  <div class="tooltip-line">GB: Update the JSON menu preview</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="preview-content" class="preview-content">
+          <div class="preview-placeholder">
+            <p id="preview-placeholder-text">📋 Haz clic en "Actualizar" para ver cómo se verá tu menú JSON en la sidebar</p>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
 
   <script src="jsonEditor.js"></script>
+  <!-- Importar el CSS de la sidebar para la previsualización -->
+  <link rel="stylesheet" href="../../sidebar.css">
+  <link rel="stylesheet" href="../../styles.css">
 </body>
 </html> 

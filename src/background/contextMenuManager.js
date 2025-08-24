@@ -30,7 +30,7 @@ export async function createInitialContextMenus(loadedLangs, defaultModelId, def
     });
 
     chrome.contextMenus.create({ id: 'extension-config', title: '⚙️ Configuración', contexts: ['action'] });
-    chrome.contextMenus.create({ id: 'open-json-files', title: '📁 Open / Abrir .json files', contexts: ['action'] });
+    chrome.contextMenus.create({ id: 'open-json-files', title: '📁 Editar botones custom_x', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'help-video', title: '🎥 Ayuda / Video', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'send-feedback', title: '📝 Send / Enviar feedback', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'rate-extension', title: '⭐ Rate / Calificar extensión', contexts: ['action'] });
@@ -110,7 +110,7 @@ export async function updateContextMenuTitles(modelId, languageIso) {
 
     // Recrear otros menús de la extensión
     chrome.contextMenus.create({ id: 'extension-config', title: '⚙️ Configuración', contexts: ['action'] });
-    chrome.contextMenus.create({ id: 'open-json-files', title: '📁 Open / Abrir .json files', contexts: ['action'] });
+    chrome.contextMenus.create({ id: 'open-json-files', title: '📁 Editar botones custom_x', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'help-video', title: '🎥 Ayuda / Video', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'send-feedback', title: '📝 Send / Enviar feedback', contexts: ['action'] });
     chrome.contextMenus.create({ id: 'rate-extension', title: '⭐ Rate / Calificar extensión', contexts: ['action'] });

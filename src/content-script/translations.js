@@ -36,10 +36,11 @@ export const translations = {
       shareEmail: "📧 Email",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: "Abrir archivos .json",
+      openJsonButton: "Editar botones custom_x",
       feedbackButton: "Enviar comentarios",
       rateButton: "Calificar: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 Video de ayuda"
+      helpVideoButton: "🎥 Video de ayuda",
+      addButtonTooltip: "Editar menú de prompts de los botones custom_x"
     },
     textPrompt: {
       defaultTitle: "Editar prompt",
@@ -100,10 +101,11 @@ export const translations = {
       shareEmail: "📧 Email",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: "Obrir arxius .json",
+      openJsonButton: "Editar botons custom_x",
       feedbackButton: "Enviar comentaris",
       rateButton: "Valorar: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 Vídeo d'ajuda"
+      helpVideoButton: "🎥 Vídeo d'ajuda",
+      addButtonTooltip: "Editar menú de prompts dels botons custom_x"
     },
     textPrompt: {
       defaultTitle: "Editar prompt",
@@ -164,10 +166,11 @@ export const translations = {
       shareEmail: "📧 Email",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: "Open .json files",
+      openJsonButton: "Edit custom_x buttons",
       feedbackButton: "Send feedback",
       rateButton: "Rate: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 Help Video"
+      helpVideoButton: "🎥 Help Video",
+      addButtonTooltip: "Edit custom_x buttons prompt menu"
     },
     textPrompt: {
       defaultTitle: "Edit prompt",
@@ -228,10 +231,11 @@ export const translations = {
       shareEmail: "📧 Email",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: "Ouvrir fichiers .json",
+      openJsonButton: "Éditer boutons custom_x",
       feedbackButton: "Envoyer commentaires",
       rateButton: "Évaluer: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 Vidéo d'aide"
+      helpVideoButton: "🎥 Vidéo d'aide",
+      addButtonTooltip: "Éditer le menu des prompts des boutons custom_x"
     },
     textPrompt: {
       defaultTitle: "Modifier le prompt",
@@ -292,10 +296,11 @@ export const translations = {
       shareEmail: "📧 Email",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: ".json-Dateien öffnen",
+      openJsonButton: "Custom_x-Buttons bearbeiten",
       feedbackButton: "Feedback senden",
       rateButton: "Bewerten: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 Hilfevideo"
+      helpVideoButton: "🎥 Hilfevideo",
+      addButtonTooltip: "Custom_x-Buttons Prompt-Menü bearbeiten"
     },
     textPrompt: {
       defaultTitle: "Prompt bearbeiten",
@@ -356,10 +361,11 @@ export const translations = {
       shareEmail: "📧 Email",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: "Apri file .json",
+      openJsonButton: "Modifica pulsanti custom_x",
       feedbackButton: "Invia feedback",
       rateButton: "Valuta: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 Video di aiuto"
+      helpVideoButton: "🎥 Video di aiuto",
+      addButtonTooltip: "Modifica menu prompt dei pulsanti custom_x"
     },
     textPrompt: {
       defaultTitle: "Modifica prompt",
@@ -420,10 +426,11 @@ export const translations = {
       shareEmail: "📧 Email",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: "Открыть .json файлы",
+      openJsonButton: "Редактировать кнопки custom_x",
       feedbackButton: "Отправить отзыв",
       rateButton: "Оценить: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 Видео помощи"
+      helpVideoButton: "🎥 Видео помощи",
+      addButtonTooltip: "Редактировать меню промптов кнопок custom_x"
     },
     textPrompt: {
       defaultTitle: "Редактировать промпт",
@@ -484,10 +491,11 @@ export const translations = {
       shareEmail: "📧 البريد الإلكتروني",
       shareWhatsApp: "💬 واتساب", 
       shareGmail: "📬 جيميل",
-      openJsonButton: "فتح ملفات .json",
+      openJsonButton: "تحرير أزرار custom_x",
       feedbackButton: "إرسال ملاحظات",
       rateButton: "تقييم: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 فيديو المساعدة"
+      helpVideoButton: "🎥 فيديو المساعدة",
+      addButtonTooltip: "تحرير قائمة المطالبات لأزرار custom_x"
     },
     textPrompt: {
       defaultTitle: "تحرير الطلب",
@@ -548,10 +556,11 @@ export const translations = {
       shareEmail: "📧 メール",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: ".jsonファイルを開く",
+      openJsonButton: "custom_xボタンを編集",
       feedbackButton: "フィードバックを送信",
       rateButton: "評価: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 ヘルプビデオ"
+      helpVideoButton: "🎥 ヘルプビデオ",
+      addButtonTooltip: "custom_xボタンのプロンプトメニューを編集"
     },
     textPrompt: {
       defaultTitle: "プロンプトを編集",
@@ -612,10 +621,11 @@ export const translations = {
       shareEmail: "📧 ईमेल",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: ".json फाइलें खोलें",
+      openJsonButton: "custom_x बटन संपादित करें",
       feedbackButton: "फीडबैक भेजें",
       rateButton: "रेटिंग: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 सहायता वीडियो"
+      helpVideoButton: "🎥 सहायता वीडियो",
+      addButtonTooltip: "custom_x बटन का प्रॉम्प्ट मेनू संपादित करें"
     },
     textPrompt: {
       defaultTitle: "प्रॉम्प्ट संपादित करें",
@@ -676,10 +686,11 @@ export const translations = {
       shareEmail: "📧 이메일",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: ".json 파일 열기",
+      openJsonButton: "custom_x 버튼 편집",
       feedbackButton: "피드백 보내기",
       rateButton: "평가하기: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 도움말 비디오"
+      helpVideoButton: "🎥 도움말 비디오",
+      addButtonTooltip: "custom_x 버튼의 프롬프트 메뉴 편집"
     },
     textPrompt: {
       defaultTitle: "프롬프트 편집",
@@ -740,10 +751,11 @@ export const translations = {
       shareEmail: "📧 Email",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: "Abrir arquivos .json",
+      openJsonButton: "Editar botões custom_x",
       feedbackButton: "Enviar feedback",
       rateButton: "Avaliar: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 Vídeo de ajuda"
+      helpVideoButton: "🎥 Vídeo de ajuda",
+      addButtonTooltip: "Editar menu de prompts dos botões custom_x"
     },
     textPrompt: {
       defaultTitle: "Editar prompt",
@@ -804,10 +816,11 @@ export const translations = {
       shareEmail: "📧 邮件",
       shareWhatsApp: "💬 WhatsApp", 
       shareGmail: "📬 gMail",
-      openJsonButton: "打开 .json 文件",
+      openJsonButton: "编辑 custom_x 按钮",
       feedbackButton: "发送反馈",
       rateButton: "评价: ⭐⭐⭐⭐⭐",
-      helpVideoButton: "🎥 帮助视频"
+      helpVideoButton: "🎥 帮助视频",
+      addButtonTooltip: "编辑 custom_x 按钮的提示菜单"
     },
     textPrompt: {
       defaultTitle: "编辑提示",
@@ -868,7 +881,10 @@ export function updateUITexts(language, aiModelName = 'ChatGPT') {
   if (wikiButton) wikiButton.textContent = texts.optionButtons.wikiButton;
   if (twitterButton) twitterButton.textContent = texts.optionButtons.twitterButton;
   if (gmailButton) gmailButton.textContent = texts.optionButtons.gmailButton;
-  if (addButton) addButton.textContent = texts.optionButtons.addButton;
+  if (addButton) {
+    addButton.textContent = texts.optionButtons.addButton;
+    addButton.title = texts.settings.addButtonTooltip;
+  }
   if (directQuestionButton) {
     directQuestionButton.textContent = texts.optionButtons.directQuestionButton + ' ' + aiModelName;
     directQuestionButton.title = texts.optionButtons.directQuestionButtonTooltip;

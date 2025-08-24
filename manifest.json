@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "AI Prompt Assistant v1.8 beta",
-  "version": "1.8",
+  "name": "AI Prompt Assistant v1.9 beta",
+  "version": "1.9",
   "description": "Menú de prompts útiles para ChatGPT, DeepSeek, Gemini, Copilot, y más.",
   "permissions": [
     "clipboardWrite", 
