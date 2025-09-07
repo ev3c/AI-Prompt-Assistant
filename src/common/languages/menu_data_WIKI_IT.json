@@ -1,19 +1,27 @@
 {
   "header": {
-    "title": "Assistente prompt IA",
+    "title": "Assistente IA",
     "currentUrlPlaceholder": "Pagina corrente"
   },
   "sections": [
     {
-      "title": "📚 Riassumere articoli di Wikipedia",
+      "title": "📚 Riassumere articoli Wikipedia",
       "buttons": [
         {
           "label": "Riassumere articolo",
-          "prompt": "Riassumi questo articolo di Wikipedia in meno di 200 parole, evidenziando i punti chiave:"
+          "prompt": "Riassumi questo articolo Wikipedia in meno di 200 parole, evidenziando i punti chiave:"
         },
         {
           "label": "Riassunto stile scolastico",
-          "prompt": "Fai un riassunto in stile scolastico (livello secondario/superiore) di questo testo di Wikipedia:"
+          "prompt": "Fai un riassunto stile scolastico (livello secondaria/liceo) di questo testo Wikipedia:"
+        },
+        {
+          "label": "Riassunto formato appunti",
+          "prompt": "Riassumi questo articolo in formato appunti di classe con punti chiave:"
+        },
+        {
+          "label": "Riassunto esecutivo orale",
+          "prompt": "Crea un riassunto esecutivo per presentazione orale di questo articolo:"
         }
       ]
     },
@@ -21,12 +29,20 @@
       "title": "🔍 Spiegare concetti difficili",
       "buttons": [
         {
-          "label": "Spiegami questo testo di Wikipedia come se avessi 12 anni",
-          "prompt": "Spiegami questo testo di Wikipedia come se avessi 12 anni:"
+          "label": "Spiegami questo testo Wikipedia come se avessi 12 anni",
+          "prompt": "Spiegami questo testo Wikipedia come se avessi 12 anni:"
         },
         {
-          "label": "Fai una versione semplice e facile da capire di questa sezione di Wikipedia",
-          "prompt": "Fai una versione semplice e facile da capire di questa sezione di Wikipedia:"
+          "label": "Fai una versione semplice e facile da capire di questa sezione Wikipedia",
+          "prompt": "Fai una versione semplice e facile da capire di questa sezione Wikipedia:"
+        },
+        {
+          "label": "Spiegare con analogie quotidiane",
+          "prompt": "Spiega questo concetto usando analogie quotidiane ed esempi semplici:"
+        },
+        {
+          "label": "Spiegazione passo per passo",
+          "prompt": "Converti questo testo in una spiegazione passo per passo, come una ricetta:"
         }
       ]
     },
@@ -34,12 +50,20 @@
       "title": "🔄 Parafrasare per evitare il plagio",
       "buttons": [
         {
-          "label": "Riscrivi questo contenuto di Wikipedia con parole tue, evitando il plagio ma mantenendo le informazioni",
-          "prompt": "Riscrivi questo contenuto di Wikipedia con parole tue, evitando il plagio ma mantenendo le informazioni:"
+          "label": "Riscrivi questo contenuto Wikipedia con le tue parole, evitando il plagio ma mantenendo le informazioni",
+          "prompt": "Riscrivi questo contenuto Wikipedia con le tue parole, evitando il plagio ma mantenendo le informazioni:"
         },
         {
-          "label": "Fai una versione originale di questo contenuto di Wikipedia senza copiare il testo letterale",
-          "prompt": "Fai una versione originale di questo contenuto di Wikipedia senza copiare il testo letterale."
+          "label": "Fai una versione originale di questo contenuto Wikipedia senza copiare il testo letterale",
+          "prompt": "Fai una versione originale di questo contenuto Wikipedia senza copiare il testo letterale."
+        },
+        {
+          "label": "Riscrivere per lavoro accademico",
+          "prompt": "Riscrivi questo contenuto per un lavoro accademico con stile formale:"
+        },
+        {
+          "label": "Adattare per diversi livelli",
+          "prompt": "Adatta questo testo per diversi livelli educativi (primaria, secondaria, università):"
         }
       ]
     },
@@ -55,8 +79,12 @@
           "prompt": "Da questo testo, crea una mappa concettuale degli argomenti principali."
         },
         {
-          "label": "Da questo testo, crea ...",
-          "prompt": "Da questo testo, crea ..."
+          "label": "Cronologia",
+          "prompt": "Organizza queste informazioni in una cronologia cronologica:"
+        },
+        {
+          "label": "Diagramma causa-effetto",
+          "prompt": "Crea un diagramma causa-effetto basato su questo contenuto:"
         }
       ]
     },
@@ -65,11 +93,61 @@
       "buttons": [
         {
           "label": "Crea 10 domande tipo esame su questo articolo, con le loro risposte:",
-          "prompt": "Crea 10 domande tipo esame su questo articolo di Wikipedia, con le loro risposte:"
+          "prompt": "Crea 10 domande tipo esame su questo articolo Wikipedia, con le loro risposte:"
         },
         {
-          "label": "Fai domande a scelta multipla per studiare sul seguente testo",
-          "prompt": "Fai domande a scelta multipla per studiare sul seguente testo"
+          "label": "Fai domande a scelta multipla per studiare il seguente testo",
+          "prompt": "Fai domande a scelta multipla per studiare il seguente testo"
+        },
+        {
+          "label": "Domande di comprensione del testo",
+          "prompt": "Crea domande di comprensione del testo basate su questo articolo:"
+        },
+        {
+          "label": "Esercizi pratici",
+          "prompt": "Genera esercizi pratici basati su questo contenuto:"
+        }
+      ]
+    },
+    {
+      "title": "🎓 Analisi Accademica",
+      "buttons": [
+        {
+          "label": "Identificare concetti chiave",
+          "prompt": "Identifica i concetti chiave da studiare di questo articolo:"
+        },
+        {
+          "label": "Analizzare fonti e riferimenti",
+          "prompt": "Analizza le fonti e i riferimenti citati in questo articolo:"
+        },
+        {
+          "label": "Valutare oggettività",
+          "prompt": "Valuta l'oggettività e la neutralità del contenuto di questo articolo:"
+        },
+        {
+          "label": "Identificare pregiudizi",
+          "prompt": "Identifica possibili pregiudizi o punti di vista presenti in questo testo:"
+        }
+      ]
+    },
+    {
+      "title": "🏫 Applicazione Educativa",
+      "buttons": [
+        {
+          "label": "Usare in classe",
+          "prompt": "Come usare questo contenuto in classe? Suggerisci strategie didattiche:"
+        },
+        {
+          "label": "Attività pratiche",
+          "prompt": "Suggerisci attività pratiche per studenti basate su questo contenuto:"
+        },
+        {
+          "label": "Connettere con curriculum",
+          "prompt": "Connettere questo argomento con il curriculum scolastico e le competenze educative:"
+        },
+        {
+          "label": "Progetto di ricerca",
+          "prompt": "Progetta un progetto di ricerca scolastico basato su questo argomento:"
         }
       ]
     }

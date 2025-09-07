@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "KI-Prompt-Assistent",
+    "title": "KI-Assistent",
     "currentUrlPlaceholder": "Aktuelle Seite"
   },
   "sections": [
@@ -13,7 +13,15 @@
         },
         {
           "label": "Schulstil-Zusammenfassung",
-          "prompt": "Erstellen Sie eine Zusammenfassung im Schulstil (Sekundarstufe/Gymnasium) dieses Wikipedia-Textes:"
+          "prompt": "Erstellen Sie eine Schulstil-Zusammenfassung (Sekundarstufe/Gymnasium) dieses Wikipedia-Textes:"
+        },
+        {
+          "label": "Notizenformat-Zusammenfassung",
+          "prompt": "Fassen Sie diesen Artikel im Format von Unterrichtsnotizen mit Schlüsselpunkten zusammen:"
+        },
+        {
+          "label": "Mündliche Exekutivzusammenfassung",
+          "prompt": "Erstellen Sie eine Exekutivzusammenfassung für mündliche Präsentation dieses Artikels:"
         }
       ]
     },
@@ -25,38 +33,58 @@
           "prompt": "Erklären Sie mir diesen Wikipedia-Text, als wäre ich 12 Jahre alt:"
         },
         {
-          "label": "Erstellen Sie eine einfache und leicht verständliche Version dieses Wikipedia-Abschnitts",
-          "prompt": "Erstellen Sie eine einfache und leicht verständliche Version dieses Wikipedia-Abschnitts:"
+          "label": "Erstellen Sie eine einfache und verständliche Version dieses Wikipedia-Abschnitts",
+          "prompt": "Erstellen Sie eine einfache und verständliche Version dieses Wikipedia-Abschnitts:"
+        },
+        {
+          "label": "Mit alltäglichen Analogien erklären",
+          "prompt": "Erklären Sie dieses Konzept mit alltäglichen Analogien und einfachen Beispielen:"
+        },
+        {
+          "label": "Schritt-für-Schritt-Erklärung",
+          "prompt": "Konvertieren Sie diesen Text in eine Schritt-für-Schritt-Erklärung, wie ein Rezept:"
         }
       ]
     },
     {
-      "title": "🔄 Umschreiben zur Plagiatsvermeidung",
+      "title": "🔄 Paraphrasieren um Plagiat zu vermeiden",
       "buttons": [
         {
-          "label": "Schreiben Sie diesen Wikipedia-Inhalt mit eigenen Worten um, vermeiden Sie Plagiate, behalten Sie aber die Informationen bei",
-          "prompt": "Schreiben Sie diesen Wikipedia-Inhalt mit eigenen Worten um, vermeiden Sie Plagiate, behalten Sie aber die Informationen bei:"
+          "label": "Schreiben Sie diesen Wikipedia-Inhalt mit Ihren eigenen Worten um, vermeiden Sie Plagiat, aber behalten Sie die Informationen bei",
+          "prompt": "Schreiben Sie diesen Wikipedia-Inhalt mit Ihren eigenen Worten um, vermeiden Sie Plagiat, aber behalten Sie die Informationen bei:"
         },
         {
-          "label": "Erstellen Sie eine originelle Version dieses Wikipedia-Inhalts ohne wörtliches Kopieren des Textes",
-          "prompt": "Erstellen Sie eine originelle Version dieses Wikipedia-Inhalts ohne wörtliches Kopieren des Textes."
+          "label": "Erstellen Sie eine originale Version dieses Wikipedia-Inhalts ohne den wörtlichen Text zu kopieren",
+          "prompt": "Erstellen Sie eine originale Version dieses Wikipedia-Inhalts ohne den wörtlichen Text zu kopieren."
+        },
+        {
+          "label": "Für akademische Arbeit umschreiben",
+          "prompt": "Schreiben Sie diesen Inhalt für akademische Arbeit mit formalem Stil um:"
+        },
+        {
+          "label": "Für verschiedene Niveaus anpassen",
+          "prompt": "Passen Sie diesen Text für verschiedene Bildungsniveaus an (Grundschule, Sekundarstufe, Universität):"
         }
       ]
     },
     {
-      "title": "📝 Schemata oder Concept Maps erstellen",
+      "title": "📝 Gliederungen oder Konzeptkarten erstellen",
       "buttons": [
         {
-          "label": "Thematisches Schema erstellen",
-          "prompt": "Erstellen Sie aus diesem Text ein thematisches Schema der Hauptthemen."
+          "label": "Thematische Gliederung erstellen",
+          "prompt": "Erstellen Sie aus diesem Text eine thematische Gliederung der Hauptthemen."
         },
         {
-          "label": "Concept Map erstellen",
-          "prompt": "Erstellen Sie aus diesem Text eine Concept Map der Hauptthemen."
+          "label": "Konzeptkarte erstellen",
+          "prompt": "Erstellen Sie aus diesem Text eine Konzeptkarte der Hauptthemen."
         },
         {
-          "label": "Aus diesem Text erstellen Sie ...",
-          "prompt": "Aus diesem Text erstellen Sie ..."
+          "label": "Zeitlinie",
+          "prompt": "Organisieren Sie diese Informationen in einer chronologischen Zeitlinie:"
+        },
+        {
+          "label": "Ursache-Wirkung-Diagramm",
+          "prompt": "Erstellen Sie ein Ursache-Wirkung-Diagramm basierend auf diesem Inhalt:"
         }
       ]
     },
@@ -68,8 +96,58 @@
           "prompt": "Erstellen Sie 10 prüfungsähnliche Fragen zu diesem Wikipedia-Artikel mit Antworten:"
         },
         {
-          "label": "Erstellen Sie Multiple-Choice-Fragen zum Lernen über den folgenden Text",
-          "prompt": "Erstellen Sie Multiple-Choice-Fragen zum Lernen über den folgenden Text"
+          "label": "Erstellen Sie Multiple-Choice-Fragen zum Studieren des folgenden Textes",
+          "prompt": "Erstellen Sie Multiple-Choice-Fragen zum Studieren des folgenden Textes"
+        },
+        {
+          "label": "Leseverständnisfragen",
+          "prompt": "Erstellen Sie Leseverständnisfragen basierend auf diesem Artikel:"
+        },
+        {
+          "label": "Praktische Übungen",
+          "prompt": "Generieren Sie praktische Übungen basierend auf diesem Inhalt:"
+        }
+      ]
+    },
+    {
+      "title": "🎓 Akademische Analyse",
+      "buttons": [
+        {
+          "label": "Schlüsselkonzepte identifizieren",
+          "prompt": "Identifizieren Sie die Schlüsselkonzepte zum Studieren aus diesem Artikel:"
+        },
+        {
+          "label": "Quellen und Referenzen analysieren",
+          "prompt": "Analysieren Sie die in diesem Artikel zitierten Quellen und Referenzen:"
+        },
+        {
+          "label": "Objektivität bewerten",
+          "prompt": "Bewerten Sie die Objektivität und Neutralität des Inhalts dieses Artikels:"
+        },
+        {
+          "label": "Verzerrungen identifizieren",
+          "prompt": "Identifizieren Sie mögliche Verzerrungen oder Standpunkte in diesem Text:"
+        }
+      ]
+    },
+    {
+      "title": "🏫 Pädagogische Anwendung",
+      "buttons": [
+        {
+          "label": "Im Unterricht verwenden",
+          "prompt": "Wie kann man diesen Inhalt im Unterricht verwenden? Schlagen Sie Unterrichtsstrategien vor:"
+        },
+        {
+          "label": "Praktische Aktivitäten",
+          "prompt": "Schlagen Sie praktische Aktivitäten für Schüler basierend auf diesem Inhalt vor:"
+        },
+        {
+          "label": "Mit Lehrplan verbinden",
+          "prompt": "Verbinden Sie dieses Thema mit dem Schullehrplan und den Bildungskompetenzen:"
+        },
+        {
+          "label": "Forschungsprojekt",
+          "prompt": "Entwerfen Sie ein schulisches Forschungsprojekt basierend auf diesem Thema:"
         }
       ]
     }

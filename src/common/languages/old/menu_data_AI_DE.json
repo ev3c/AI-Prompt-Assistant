@@ -1,0 +1,174 @@
+{
+  "header": {
+    "title": "KI-Prompt-Assistent",
+    "currentUrlPlaceholder": "Aktuelle Seite"
+  },
+  "sections": [
+    {
+      "title": "📝 Zusammenfassung und Verständnis",
+      "buttons": [
+        {
+          "label": "Seitenzusammenfassung erstellen: ",
+          "prompt": "Erstelle eine Zusammenfassung von:"
+        },
+        {
+          "label": "Hauptpunkte",
+          "prompt": "Was sind die Hauptpunkte dieses Artikels?"
+        },
+        {
+          "label": "Zusammenfassung in 3 Sätzen",
+          "prompt": "Fassen Sie diese Seite in 3 Sätzen zusammen."
+        },
+        {"label": "Zusammenfassung in X Zeichen", "prompt": "Fassen Sie diese Seite in X Zeichen zusammen."},
+        {
+          "label": "Kinderversion",
+          "prompt": "Geben Sie mir eine kinderfreundliche Version dieser Information."
+        },
+        {
+          "label": "Hauptschlussfolgerung",
+          "prompt": "Was ist die Hauptschlussfolgerung dieser Seite?"
+        }
+      ]
+    },
+    {
+      "title": "🔍 Inhaltsanalyse",
+      "buttons": [
+        {
+          "label": "Welchen Ton hat es?",
+          "prompt": "Welchen Ton hat diese Seite? (objektiv, überzeugend, emotional, etc.)"
+        },
+        {
+          "label": "Hauptargumente",
+          "prompt": "Welche Hauptargumente werden auf dieser Seite verwendet?"
+        },
+        {
+          "label": "Vorurteile identifizieren",
+          "prompt": "Können Sie Vorurteile in diesem Text identifizieren?"
+        },
+        {
+          "label": "Verwendete Quellen",
+          "prompt": "Welche Quellen verwendet diese Seite?"
+        },
+        {
+          "label": "Zuverlässigkeit bewerten",
+          "prompt": "Ist diese Information zuverlässig? Warum ja oder warum nein?"
+        }
+      ]
+    },
+    {
+      "title": "📊 Datenextraktion",
+      "buttons": [
+        {
+          "label": "Statistische Daten",
+          "prompt": "Extrahieren Sie alle statistischen Daten, die auf dieser Seite erscheinen."
+        },
+        {
+          "label": "Zusammenfassungstabelle",
+          "prompt": "Geben Sie mir eine Tabelle mit den wichtigsten Informationen aus diesem Artikel."
+        },
+        {
+          "label": "Erwähnte Produkte",
+          "prompt": "Listen Sie alle erwähnten Produkte auf."
+        },
+        {
+          "label": "Erwähnte Entitäten",
+          "prompt": "Welche Namen von Personen/Orten/Unternehmen erscheinen hier?"
+        }
+      ]
+    },
+    {
+      "title": "🤖 Interaktion oder Hilfe bei Aktionen",
+      "buttons": [
+        {
+          "label": "Formular ausfüllen",
+          "prompt": "Helfen Sie mir, dieses Formular mit meinen Daten auszufüllen."
+        },
+        {
+          "label": "Wie man sich registriert",
+          "prompt": "Wie kann ich mich hier registrieren?"
+        },
+        {
+          "label": "Kontaktinformationen",
+          "prompt": "Wo sind die Kontaktinformationen?"
+        },
+        {
+          "label": "Aktionsschritte",
+          "prompt": "Fassen Sie die Schritte zusammen, um [spezifische Aktion der Seite] durchzuführen."
+        }
+      ]
+    },
+    {
+      "title": "💬 Übersetzung oder Formatänderung",
+      "translationButton": {
+        "label": "Seite/Text in Sprache übersetzen: "
+      },
+      "translationSubmenu": [
+        {
+          "label": "🇪🇸 Spanisch",
+          "prompt": "Übersetzen Sie diese Seite ins Spanische."
+        },
+        {
+          "label": "🇬🇧 Englisch",
+          "prompt": "Übersetzen Sie diese Seite ins Englische."
+        },
+        {
+          "label": "ca Katalanisch",
+          "prompt": "Übersetzen Sie diese Seite ins Katalanische."
+        },
+        {
+          "label": "🇩🇪 Deutsch",
+          "prompt": "Übersetzen Sie diese Seite ins Deutsche."
+        },
+        {
+          "label": "🇫🇷 Französisch",
+          "prompt": "Übersetzen Sie diese Seite ins Französische."
+        },
+        {
+          "label": "🇮🇹 Italienisch",
+          "prompt": "Übersetzen Sie diese Seite ins Italienische."
+        },
+        {
+          "label": "🇵🇹 Portugiesisch",
+          "prompt": "Übersetzen Sie diese Seite ins Portugiesische."
+        },
+        {
+          "label": "🇨🇳 Chinesisch",
+          "prompt": "Übersetzen Sie diese Seite ins Chinesische."
+        },
+        {
+          "label": "🇷🇺 Russisch",
+          "prompt": "Übersetzen Sie diese Seite ins Russische."
+        },
+        {
+          "label": "🇸🇦 Arabisch",
+          "prompt": "Übersetzen Sie diese Seite ins Arabische."
+        },
+        {
+          "label": "🇯🇵 Japanisch",
+          "prompt": "Übersetzen Sie diese Seite ins Japanische."
+        },
+        {
+          "label": "🇮🇳 Hindi",
+          "prompt": "Übersetzen Sie diese Seite ins Hindi."
+        },
+        {
+          "label": "🇰🇷 Koreanisch",
+          "prompt": "Übersetzen Sie diese Seite ins Koreanische."
+        }
+      ],
+      "buttons": [
+        {
+          "label": "Zu Präsentation",
+          "prompt": "Wandeln Sie diesen Artikel in eine Präsentation mit Folien um."
+        },
+        {
+          "label": "Für soziale Medien",
+          "prompt": "Schreiben Sie diesen Inhalt für einen Social-Media-Beitrag um."
+        }
+      ]
+    }
+  ],
+  "jsonName": "menu_data_url_DE.json",
+  "addButtonText": "KI-Prompt-Assistent",
+  "origin": "url"
+}

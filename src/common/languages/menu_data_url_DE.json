@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "KI-Prompt-Assistent",
+    "title": "KI-Assistent",
     "currentUrlPlaceholder": "Aktuelle Seite"
   },
   "sections": [
@@ -8,8 +8,8 @@
       "title": "📝 Zusammenfassung und Verständnis",
       "buttons": [
         {
-          "label": "Seitenzusammenfassung erstellen: ",
-          "prompt": "Erstelle eine Zusammenfassung von:"
+          "label": "Erstellen Sie eine Webseiten-Zusammenfassung: ",
+          "prompt": "Erstellen Sie eine Zusammenfassung von:"
         },
         {
           "label": "Hauptpunkte",
@@ -21,8 +21,8 @@
         },
         {"label": "Zusammenfassung in X Zeichen", "prompt": "Fassen Sie diese Seite in X Zeichen zusammen."},
         {
-          "label": "Kinderversion",
-          "prompt": "Geben Sie mir eine kinderfreundliche Version dieser Information."
+          "label": "Version für Kinder",
+          "prompt": "Geben Sie mir eine Version für Kinder dieser Information."
         },
         {
           "label": "Hauptschlussfolgerung",
@@ -34,7 +34,7 @@
       "title": "🔍 Inhaltsanalyse",
       "buttons": [
         {
-          "label": "Welchen Ton hat es?",
+          "label": "Welchen Ton hat sie?",
           "prompt": "Welchen Ton hat diese Seite? (objektiv, überzeugend, emotional, etc.)"
         },
         {
@@ -42,8 +42,8 @@
           "prompt": "Welche Hauptargumente werden auf dieser Seite verwendet?"
         },
         {
-          "label": "Vorurteile identifizieren",
-          "prompt": "Können Sie Vorurteile in diesem Text identifizieren?"
+          "label": "Verzerrungen identifizieren",
+          "prompt": "Können Sie eine Verzerrung in diesem Text identifizieren?"
         },
         {
           "label": "Verwendete Quellen",
@@ -68,11 +68,11 @@
         },
         {
           "label": "Erwähnte Produkte",
-          "prompt": "Listen Sie alle erwähnten Produkte auf."
+          "prompt": "Listen Sie alle Produkte auf, die erwähnt werden."
         },
         {
           "label": "Erwähnte Entitäten",
-          "prompt": "Welche Namen von Personen/Orten/Unternehmen erscheinen hier?"
+          "prompt": "Was sind die Namen der Personen/Orte/Unternehmen, die hier erscheinen?"
         }
       ]
     },
@@ -84,7 +84,7 @@
           "prompt": "Helfen Sie mir, dieses Formular mit meinen Daten auszufüllen."
         },
         {
-          "label": "Wie man sich registriert",
+          "label": "Wie registrieren",
           "prompt": "Wie kann ich mich hier registrieren?"
         },
         {
@@ -93,14 +93,14 @@
         },
         {
           "label": "Aktionsschritte",
-          "prompt": "Fassen Sie die Schritte zusammen, um [spezifische Aktion der Seite] durchzuführen."
+          "prompt": "Fassen Sie die Schritte zusammen, um [spezifische Aktion von der Seite] zu machen."
         }
       ]
     },
     {
       "title": "💬 Übersetzung oder Formatänderung",
       "translationButton": {
-        "label": "Seite/Text in Sprache übersetzen: "
+        "label": "Übersetzen Sie Seite/Text in Sprache: "
       },
       "translationSubmenu": [
         {
@@ -159,16 +159,16 @@
       "buttons": [
         {
           "label": "Zu Präsentation",
-          "prompt": "Wandeln Sie diesen Artikel in eine Präsentation mit Folien um."
+          "prompt": "Konvertieren Sie diesen Artikel in eine Präsentation mit Folien."
         },
         {
           "label": "Für soziale Medien",
-          "prompt": "Schreiben Sie diesen Inhalt für einen Social-Media-Beitrag um."
+          "prompt": "Schreiben Sie diesen Inhalt für einen sozialen Medienbeitrag um."
         }
       ]
     }
   ],
-  "jsonName": "menu_data_AI_DE.json",
-  "addButtonText": "KI-Prompt-Assistent",
+  "jsonName": "menu_data_url_DE.json",
+  "addButtonText": "KI-Assistent",
   "origin": "url"
 }

@@ -14,6 +14,14 @@
         {
           "label": "Resumir estilo escolar",
           "prompt": "Haz un resumen estilo escolar (nivel secundaria/preparatoria) de este texto de Wikipedia:"
+        },
+        {
+          "label": "Resumen en formato apuntes",
+          "prompt": "Resume este artículo en formato de apuntes de clase con puntos clave:"
+        },
+        {
+          "label": "Resumen ejecutivo oral",
+          "prompt": "Crea un resumen ejecutivo para presentación oral de este artículo:"
         }
       ]
     },
@@ -27,6 +35,14 @@
         {
           "label": "Haz una versión sencilla y fácil de entender de esta sección de Wikipedia",
           "prompt": "Haz una versión sencilla y fácil de entender de esta sección de Wikipedia:"
+        },
+        {
+          "label": "Explicar con analogías cotidianas",
+          "prompt": "Explica este concepto usando analogías cotidianas y ejemplos simples:"
+        },
+        {
+          "label": "Explicación paso a paso",
+          "prompt": "Convierte este texto en una explicación paso a paso, como si fuera una receta:"
         }
       ]
     },
@@ -40,6 +56,14 @@
         {
           "label": "Haz una versión original de este contenido de Wikipedia sin copiar el texto literal",
           "prompt": "Haz una versión original de este contenido de Wikipedia sin copiar el texto literal."
+        },
+        {
+          "label": "Reescribir para trabajo académico",
+          "prompt": "Reescribe este contenido para un trabajo académico con estilo formal:"
+        },
+        {
+          "label": "Adaptar para diferentes niveles",
+          "prompt": "Adapta este texto para diferentes niveles educativos (primaria, secundaria, universidad):"
         }
       ]
     },
@@ -55,8 +79,12 @@
           "prompt": "A partir de este texto, crea un mapa conceptual de los temas principales."
         },
         {
-          "label": "A partir de este texto, crea ...",
-          "prompt": "A partir de este texto, crea ..."
+          "label": "Línea de tiempo",
+          "prompt": "Organiza esta información en una línea de tiempo cronológica:"
+        },
+        {
+          "label": "Diagrama causa-efecto",
+          "prompt": "Crea un diagrama de causa-efecto basado en este contenido:"
         }
       ]
     },
@@ -70,6 +98,56 @@
         {
           "label": "Haz preguntas tipo opción múltiple para estudiar sobre el siguiente texto",
           "prompt": "Haz preguntas tipo opción múltiple para estudiar sobre el siguiente texto"
+        },
+        {
+          "label": "Preguntas de comprensión lectora",
+          "prompt": "Crea preguntas de comprensión lectora basadas en este artículo:"
+        },
+        {
+          "label": "Ejercicios prácticos",
+          "prompt": "Genera ejercicios prácticos basados en este contenido:"
+        }
+      ]
+    },
+    {
+      "title": "🎓 Análisis Académico",
+      "buttons": [
+        {
+          "label": "Identificar conceptos clave",
+          "prompt": "Identifica los conceptos clave para estudiar de este artículo:"
+        },
+        {
+          "label": "Analizar fuentes y referencias",
+          "prompt": "Analiza las fuentes y referencias citadas en este artículo:"
+        },
+        {
+          "label": "Evaluar objetividad",
+          "prompt": "Evalúa la objetividad y neutralidad del contenido de este artículo:"
+        },
+        {
+          "label": "Identificar sesgos",
+          "prompt": "Identifica posibles sesgos o puntos de vista presentes en este texto:"
+        }
+      ]
+    },
+    {
+      "title": "🏫 Aplicación Educativa",
+      "buttons": [
+        {
+          "label": "Usar en clase",
+          "prompt": "¿Cómo usar este contenido en una clase? Sugiere estrategias didácticas:"
+        },
+        {
+          "label": "Actividades prácticas",
+          "prompt": "Sugiere actividades prácticas para estudiantes basadas en este contenido:"
+        },
+        {
+          "label": "Conectar con currículo",
+          "prompt": "Conecta este tema con el currículo escolar y las competencias educativas:"
+        },
+        {
+          "label": "Proyecto de investigación",
+          "prompt": "Diseña un proyecto de investigación escolar basado en este tema:"
         }
       ]
     }

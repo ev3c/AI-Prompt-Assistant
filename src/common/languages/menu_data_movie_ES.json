@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "Movie prompt assistant",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "🎬 Comprensión general",
+      "buttons": [
+        {"label": "Resumen de la película", "prompt": "¿Cuál es el resumen de la película?"},
+        {"label": "Personajes principales y cómo son", "prompt": "¿Cuáles son los personajes principales y cómo son?"},
+        {"label": "Qué conflicto central se presenta", "prompt": "¿Qué conflicto central se presenta?"},
+        {"label": "Final de la película", "prompt": "¿Cómo termina la película?"},
+        {"label": "Elementos de la trama más importantes", "prompt": "¿Qué elementos de la trama son más importantes?"},
+        {"label": "Género y subgénero de la película", "prompt": "¿A qué género y subgénero pertenece la película y por qué?"},
+        {"label": "Contexto histórico de la película", "prompt": "¿En qué contexto histórico se desarrolla la película?"},
+        {"label": "Estructura narrativa", "prompt": "¿Cómo está estructurada la narrativa de la película?"}
+      ]
+    },
+    {
+      "title": "🎭 Análisis cinematográfico",
+      "buttons": [
+        {"label": "Tema principal de la película", "prompt": "¿Cuál es el tema principal de la película?"},
+        {"label": "Simbolismos visuales y qué significan", "prompt": "¿Qué simbolismos visuales se usan y qué significan?"},
+        {"label": "Cómo evoluciona el protagonista", "prompt": "¿Cómo evoluciona el protagonista?"},
+        {"label": "Qué mensaje transmite el director", "prompt": "¿Qué mensaje transmite el director?"},
+        {"label": "Qué representa la escena o el personaje", "prompt": "¿Qué representa la escena o el personaje?"},
+        {"label": "Estilo visual del director", "prompt": "¿Qué estilo visual caracteriza al director en esta película?"},
+        {"label": "Uso del color y la iluminación", "prompt": "¿Cómo se utiliza el color y la iluminación para transmitir emociones?"},
+        {"label": "Banda sonora y efectos de sonido", "prompt": "¿Cómo contribuye la banda sonora y los efectos de sonido a la película?"},
+        {"label": "Actuaciones destacadas", "prompt": "¿Qué actuaciones destacan y por qué son efectivas?"}
+      ]
+    },
+    {
+      "title": "🧠 Interpretación cultural",
+      "buttons": [
+        {"label": "Qué crítica hace la película a la sociedad", "prompt": "¿Qué crítica hace la película a la sociedad?"},
+        {"label": "Cómo se relaciona esta historia con la vida real", "prompt": "¿Cómo se relaciona esta historia con la vida real?"},
+        {"label": "Qué enseñanzas se pueden aplicar hoy", "prompt": "¿Qué enseñanzas se pueden aplicar hoy?"},
+        {"label": "Qué significado tiene el final", "prompt": "¿Qué significado tiene el final?"},
+        {"label": "Influencias culturales", "prompt": "¿Qué influencias culturales se pueden identificar en la película?"},
+        {"label": "Comparación con otras películas del género", "prompt": "¿Cómo se compara con otras películas similares del género?"},
+        {"label": "Impacto social de la película", "prompt": "¿Qué impacto social tuvo o podría tener esta película?"}
+      ]
+    },
+    {
+      "title": "✍️ Análisis técnico",
+      "buttons": [
+        {"label": "Qué valores o ideas se promueven en la película", "prompt": "¿Qué valores o ideas se promueven en la película?"},
+        {"label": "Cómo se usa la cinematografía para crear emoción", "prompt": "¿Cómo se usa la cinematografía para crear emoción o impacto?"},
+        {"label": "Qué recursos audiovisuales destacan y para qué", "prompt": "¿Qué recursos audiovisuales destacan y para qué?"},
+        {"label": "Técnicas de montaje", "prompt": "¿Qué técnicas de montaje se utilizan y cómo afectan al ritmo?"},
+        {"label": "Composición de planos", "prompt": "¿Cómo se componen los planos para contar la historia?"},
+        {"label": "Efectos especiales y su propósito", "prompt": "¿Cómo se integran los efectos especiales en la narrativa?"}
+      ]
+    },
+    {
+      "title": "🎯 Crítica y opinión personal",
+      "buttons": [
+        {"label": "Fortalezas de la película", "prompt": "¿Cuáles son las principales fortalezas de la película?"},
+        {"label": "Aspectos mejorables", "prompt": "¿Qué aspectos de la película podrían haberse mejorado?"},
+        {"label": "Público objetivo", "prompt": "¿A qué tipo de público está dirigida esta película?"},
+        {"label": "Valoración personal justificada", "prompt": "¿Cómo valorarías esta película y por qué?"}
+      ]
+    },
+    {
+      "title": "🏆 Contexto cinematográfico",
+      "buttons": [
+        {"label": "Lugar en la filmografía del director", "prompt": "¿Qué lugar ocupa esta película en la filmografía del director?"},
+        {"label": "Influencia en el cine posterior", "prompt": "¿Cómo influyó esta película en el cine posterior?"},
+        {"label": "Premios y reconocimientos", "prompt": "¿Qué premios o reconocimientos recibió la película?"}
+      ]
+    }
+  ]
+}

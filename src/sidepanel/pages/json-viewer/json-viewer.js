@@ -1,6 +1,6 @@
 // Clasificación por categorías basada en el nombre del archivo
 function categorizeFile(filename) {
-  if (filename.includes('menu_data_AI_')) {
+  if (filename.includes('menu_data_url_')) {
     return "Archivos de Menú AI";
   } else if (filename.includes('menu_data_X_')) {
     return "Archivos de Menú X/Twitter";
@@ -8,8 +8,8 @@ function categorizeFile(filename) {
     return "Archivos de Menú Wiki";
   } else if (filename.includes('menu_data_PDF_')) {
     return "Archivos de Menú PDF";
-  } else if (filename.includes('menu_data_ePub_')) {
-    return "Archivos de Menú ePub";
+  } else if (filename.includes('menu_data_book_')) {
+    return "Archivos de Menú Book";
   } else if (filename.includes('menu_data_Gmail_')) {
     return "Archivos de Menú Gmail";
   } else if (filename.includes('menu_data_CUSTOM_')) {
@@ -79,11 +79,11 @@ async function loadJsonFilesAlternative() {
   
   // Lista base de prefijos comunes para buscar
   const prefixes = [
-    "menu_data_AI_",
+    "menu_data_url_",
     "menu_data_X_",
     "menu_data_WIKI_",
     "menu_data_PDF_",
-    "menu_data_ePub_",
+    "menu_data_book_",
     "menu_data_Gmail_",
     "menu_data_CUSTOM_"
   ];

@@ -26,7 +26,7 @@
         <!-- Columna Izquierda: Titulo y Contexto -->
         <div class="title-context-group">
           <div class="control-field">
-            <label for="add-button-text" class="control-label" id="title-label">🏷️ Titulo:</label>
+            <label for="add-button-text" class="control-label" id="title-label">🏷️ Nombre del botón:</label>
             <div class="tooltip-container">
               <input type="text" id="add-button-text" maxlength="12" placeholder="Máx. 12 chars" value="ButtonName" class="control-input" id="title-input">
               <div class="modern-tooltip multiline" id="add-button-text-tooltip">
@@ -39,16 +39,17 @@
             </div>
           </div>
           <div class="control-field">
-              <label id="origin-label" for="origin-selector" class="control-label">Contexto:</label>
+              <label id="origin-label" for="origin-selector" class="control-label">Origen del contexto:</label>
               <div class="tooltip-container">
                   <select id="origin-selector" class="control-input">
                       <option value="url">URL</option>
                       <option value="clipboard">Clipboard</option>
+                      <option value="question">Question</option>
                   </select>
                   <div class="modern-tooltip" id="origin-tooltip">
                       <div class="tooltip-content">
-                          <div class="tooltip-line">ES: Se pasará la URL de la web o el contenido del Portapapeles a la AI</div>
-                          <div class="tooltip-line">GB: The web URL or clipboard content will be passed to the AI</div>
+                          <div class="tooltip-line">ES: Se pasará la URL de la web, el contenido del Portapapeles o una Pregunta a usuario a la AI</div>
+                          <div class="tooltip-line">GB: The web URL, clipboard content or a Question to user will be passed to the AI</div>
                       </div>
                       <div class="tooltip-arrow"></div>
                   </div>
@@ -59,104 +60,42 @@
         <!-- Columna Derecha: Botones Custom -->
         <div class="custom-buttons-group">
         <div class="custom-slot-group">
-          <span class="custom-slot-label">Custom 1</span>
           <div class="custom-slot-buttons">
             <div class="tooltip-container">
-              <button id="load-custom-1-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
-              <div class="modern-tooltip multiline" id="load-custom-1-tooltip">
+              <select id="custom-slot-selector" class="custom-slot-selector">
+                <option value="1" selected>custom_1</option>
+                <option value="2">custom_2</option>
+                <option value="3">custom_3</option>
+                <option value="4">custom_4</option>
+              </select>
+              <div class="modern-tooltip multiline" id="custom-slot-selector-tooltip">
                 <div class="tooltip-content">
-                  <div class="tooltip-line">ES: Cargar JSON desde Custom 1 (chrome.storage)</div>
-                  <div class="tooltip-line">GB: Load JSON from Custom 1 (chrome.storage)</div>
+                  <div class="tooltip-line">ES: Selecciona el slot Custom para cargar o guardar</div>
+                  <div class="tooltip-line">GB: Select the Custom slot to load or save</div>
                 </div>
                 <div class="tooltip-arrow"></div>
               </div>
             </div>
-            <div class="tooltip-container">
-              <button id="save-custom-1-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
-              <div class="modern-tooltip multiline" id="save-custom-1-tooltip">
-                <div class="tooltip-content">
-                  <div class="tooltip-line">ES: Guardar JSON en Custom 1 (chrome.storage)</div>
-                  <div class="tooltip-line">GB: Save JSON to Custom 1 (chrome.storage)</div>
+            <div class="custom-button-row">
+              <div class="tooltip-container">
+                <button id="load-custom-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
+                <div class="modern-tooltip multiline" id="load-custom-tooltip">
+                  <div class="tooltip-content">
+                    <div class="tooltip-line">ES: Cargar JSON desde el slot Custom seleccionado</div>
+                    <div class="tooltip-line">GB: Load JSON from the selected Custom slot</div>
+                  </div>
+                  <div class="tooltip-arrow"></div>
                 </div>
-                <div class="tooltip-arrow"></div>
               </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="custom-slot-group">
-          <span class="custom-slot-label">Custom 2</span>
-          <div class="custom-slot-buttons">
-            <div class="tooltip-container">
-              <button id="load-custom-2-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
-              <div class="modern-tooltip multiline" id="load-custom-2-tooltip">
-                <div class="tooltip-content">
-                  <div class="tooltip-line">ES: Cargar JSON desde Custom 2 (chrome.storage)</div>
-                  <div class="tooltip-line">GB: Load JSON from Custom 2 (chrome.storage)</div>
+              <div class="tooltip-container">
+                <button id="save-custom-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
+                <div class="modern-tooltip multiline" id="save-custom-tooltip">
+                  <div class="tooltip-content">
+                    <div class="tooltip-line">ES: Guardar JSON en el slot Custom seleccionado</div>
+                    <div class="tooltip-line">GB: Save JSON to the selected Custom slot</div>
+                  </div>
+                  <div class="tooltip-arrow"></div>
                 </div>
-                <div class="tooltip-arrow"></div>
-              </div>
-            </div>
-            <div class="tooltip-container">
-              <button id="save-custom-2-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
-              <div class="modern-tooltip multiline" id="save-custom-2-tooltip">
-                <div class="tooltip-content">
-                  <div class="tooltip-line">ES: Guardar JSON en Custom 2 (chrome.storage)</div>
-                  <div class="tooltip-line">GB: Save JSON to Custom 2 (chrome.storage)</div>
-                </div>
-                <div class="tooltip-arrow"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="custom-slot-group">
-          <span class="custom-slot-label">Custom 3</span>
-          <div class="custom-slot-buttons">
-            <div class="tooltip-container">
-              <button id="load-custom-3-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
-              <div class="modern-tooltip multiline" id="load-custom-3-tooltip">
-                <div class="tooltip-content">
-                  <div class="tooltip-line">ES: Cargar JSON desde Custom 3 (chrome.storage)</div>
-                  <div class="tooltip-line">GB: Load JSON from Custom 3 (chrome.storage)</div>
-                </div>
-                <div class="tooltip-arrow"></div>
-              </div>
-            </div>
-            <div class="tooltip-container">
-              <button id="save-custom-3-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
-              <div class="modern-tooltip multiline" id="save-custom-3-tooltip">
-                <div class="tooltip-content">
-                  <div class="tooltip-line">ES: Guardar JSON en Custom 3 (chrome.storage)</div>
-                  <div class="tooltip-line">GB: Save JSON to Custom 3 (chrome.storage)</div>
-                </div>
-                <div class="tooltip-arrow"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="custom-slot-group">
-          <span class="custom-slot-label">Custom 4</span>
-          <div class="custom-slot-buttons">
-            <div class="tooltip-container">
-              <button id="load-custom-4-btn" class="btn btn-small btn-info" data-text="📥 Cargar">📥 Cargar</button>
-              <div class="modern-tooltip multiline" id="load-custom-4-tooltip">
-                <div class="tooltip-content">
-                  <div class="tooltip-line">ES: Cargar JSON desde Custom 4 (chrome.storage)</div>
-                  <div class="tooltip-line">GB: Load JSON from Custom 4 (chrome.storage)</div>
-                </div>
-                <div class="tooltip-arrow"></div>
-              </div>
-            </div>
-            <div class="tooltip-container">
-              <button id="save-custom-4-btn" class="btn btn-small btn-warning" data-text="💾 Guardar">💾 Guardar</button>
-              <div class="modern-tooltip multiline" id="save-custom-4-tooltip">
-                <div class="tooltip-content">
-                  <div class="tooltip-line">ES: Guardar JSON en Custom 4 (chrome.storage)</div>
-                  <div class="tooltip-line">GB: Save JSON to Custom 4 (chrome.storage)</div>
-                </div>
-                <div class="tooltip-arrow"></div>
               </div>
             </div>
           </div>
@@ -222,6 +161,16 @@
           <h3 id="editor-title">📝 Editor de Texto JSON</h3>
           <div class="editor-controls">
             <div class="tooltip-container">
+              <button id="generate-json-btn" class="btn btn-small btn-info" data-text="🤖 Generar con Claude">🤖 Generar con Claude AI</button>
+              <div class="modern-tooltip multiline" id="generate-json-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Generar Menú .json con AI Claude usando el contenido del editor como plantilla</div>
+                  <div class="tooltip-line">GB: Generate .json Menu with AI Claude using editor content as template</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+            <div class="tooltip-container">
               <button id="load-default-btn" class="btn btn-small btn-success" data-text="📋 Cargar Plantilla">📋 Cargar Plantilla</button>
               <div class="modern-tooltip multiline" id="load-default-tooltip">
                 <div class="tooltip-content">
@@ -247,6 +196,19 @@
                   <li class="language-option" data-lang="ar">🇸🇦 العربية</li>
                   <li class="language-option" data-lang="kr">🇰🇷 한국어</li>
                   <li class="language-option" data-lang="hi">🇮🇳 हिन्दी</li>
+                </ul>
+              </div>
+              
+              <!-- Menú emergente de selección de slot Custom -->
+              <div id="custom-slot-popup" class="custom-slot-popup hidden">
+                <div class="popup-header">
+                  <h4 id="custom-slot-title">Custom Slots</h4>
+                </div>
+                <ul>
+                  <li class="custom-slot-option" data-slot="1">Custom 1</li>
+                  <li class="custom-slot-option" data-slot="2">Custom 2</li>
+                  <li class="custom-slot-option" data-slot="3">Custom 3</li>
+                  <li class="custom-slot-option" data-slot="4">Custom 4</li>
                 </ul>
               </div>
             </div>
@@ -276,6 +238,17 @@
                 <div class="tooltip-content">
                   <div class="tooltip-line">ES: Actualizar la previsualización del menú JSON</div>
                   <div class="tooltip-line">GB: Update the JSON menu preview</div>
+                </div>
+                <div class="tooltip-arrow"></div>
+              </div>
+            </div>
+            <!-- Botón específico para Edge -->
+            <div class="tooltip-container" id="edge-force-update-container" style="display: none;">
+              <button id="edge-force-update-btn" class="btn btn-small btn-warning" data-text="🔧 Forzar">🔧 Forzar</button>
+              <div class="modern-tooltip multiline" id="edge-force-update-tooltip">
+                <div class="tooltip-content">
+                  <div class="tooltip-line">ES: Forzar actualización para navegadores Edge</div>
+                  <div class="tooltip-line">GB: Force update for Edge browsers</div>
                 </div>
                 <div class="tooltip-arrow"></div>
               </div>

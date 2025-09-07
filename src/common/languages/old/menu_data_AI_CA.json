@@ -168,7 +168,7 @@
       ]
     }
   ],
-  "jsonName": "menu_data_AI_CA.json",
+  "jsonName": "menu_data_url_CA.json",
   "addButtonText": "Assistent de prompts d'IA",
   "origin": "url"
 }

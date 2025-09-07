@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "Assistent de prompts de pel·lícules",
+    "currentUrlPlaceholder": "Pàgina actual"
+  },
+  "sections": [
+    {
+      "title": "🎬 Comprensió general",
+      "buttons": [
+        {"label": "Resum de la pel·lícula", "prompt": "Quin és el resum de la pel·lícula?"},
+        {"label": "Personatges principals i com són", "prompt": "Quins són els personatges principals i com són?"},
+        {"label": "Quin conflicte central es presenta", "prompt": "Quin conflicte central es presenta?"},
+        {"label": "Final de la pel·lícula", "prompt": "Com acaba la pel·lícula?"},
+        {"label": "Elements de la trama més importants", "prompt": "Quins elements de la trama són més importants?"},
+        {"label": "Gènere i subgènere de la pel·lícula", "prompt": "A quin gènere i subgènere pertany la pel·lícula i per què?"},
+        {"label": "Context històric de la pel·lícula", "prompt": "En quin context històric es desenvolupa la pel·lícula?"},
+        {"label": "Estructura narrativa", "prompt": "Com està estructurada la narrativa de la pel·lícula?"}
+      ]
+    },
+    {
+      "title": "🎭 Anàlisi cinematogràfica",
+      "buttons": [
+        {"label": "Tema principal de la pel·lícula", "prompt": "Quin és el tema principal de la pel·lícula?"},
+        {"label": "Simbolismes visuals i què signifiquen", "prompt": "Quins simbolismes visuals s'usen i què signifiquen?"},
+        {"label": "Com evoluciona el protagonista", "prompt": "Com evoluciona el protagonista?"},
+        {"label": "Quin missatge transmet el director", "prompt": "Quin missatge transmet el director?"},
+        {"label": "Què representa l'escena o el personatge", "prompt": "Què representa l'escena o el personatge?"},
+        {"label": "Estil visual del director", "prompt": "Quin estil visual caracteritza al director en aquesta pel·lícula?"},
+        {"label": "Ús del color i la il·luminació", "prompt": "Com s'utilitza el color i la il·luminació per transmetre emocions?"},
+        {"label": "Banda sonora i efectes de so", "prompt": "Com contribueix la banda sonora i els efectes de so a la pel·lícula?"},
+        {"label": "Actuacions destacades", "prompt": "Quines actuacions destaquen i per què són efectives?"}
+      ]
+    },
+    {
+      "title": "🧠 Interpretació cultural",
+      "buttons": [
+        {"label": "Quina crítica fa la pel·lícula a la societat", "prompt": "Quina crítica fa la pel·lícula a la societat?"},
+        {"label": "Com es relaciona aquesta història amb la vida real", "prompt": "Com es relaciona aquesta història amb la vida real?"},
+        {"label": "Quines ensenyances es poden aplicar avui", "prompt": "Quines ensenyances es poden aplicar avui?"},
+        {"label": "Quin significat té el final", "prompt": "Quin significat té el final?"},
+        {"label": "Influències culturals", "prompt": "Quines influències culturals es poden identificar a la pel·lícula?"},
+        {"label": "Comparació amb altres pel·lícules del gènere", "prompt": "Com es compara amb altres pel·lícules similars del gènere?"},
+        {"label": "Impacte social de la pel·lícula", "prompt": "Quin impacte social va tenir o podria tenir aquesta pel·lícula?"}
+      ]
+    },
+    {
+      "title": "✍️ Anàlisi tècnica",
+      "buttons": [
+        {"label": "Quins valors o idees es promouen a la pel·lícula", "prompt": "Quins valors o idees es promouen a la pel·lícula?"},
+        {"label": "Com s'usa la cinematografia per crear emoció", "prompt": "Com s'usa la cinematografia per crear emoció o impacte?"},
+        {"label": "Quins recursos audiovisuals destaquen i per a què", "prompt": "Quins recursos audiovisuals destaquen i per a què?"},
+        {"label": "Tècniques de muntatge", "prompt": "Quines tècniques de muntatge s'utilitzen i com afecten al ritme?"},
+        {"label": "Composició de plans", "prompt": "Com es composen els plans per explicar la història?"},
+        {"label": "Efectes especials i el seu propòsit", "prompt": "Com s'integren els efectes especials a la narrativa?"}
+      ]
+    },
+    {
+      "title": "🎯 Crítica i opinió personal",
+      "buttons": [
+        {"label": "Fortaleses de la pel·lícula", "prompt": "Quines són les principals fortaleses de la pel·lícula?"},
+        {"label": "Aspectes millorables", "prompt": "Quins aspectes de la pel·lícula podrien haver-se millorat?"},
+        {"label": "Públic objectiu", "prompt": "A quin tipus de públic està dirigida aquesta pel·lícula?"},
+        {"label": "Valoració personal justificada", "prompt": "Com valoraries aquesta pel·lícula i per què?"}
+      ]
+    },
+    {
+      "title": "🏆 Context cinematogràfic",
+      "buttons": [
+        {"label": "Lloc a la filmografia del director", "prompt": "Quin lloc ocupa aquesta pel·lícula a la filmografia del director?"},
+        {"label": "Influència en el cinema posterior", "prompt": "Com va influir aquesta pel·lícula en el cinema posterior?"},
+        {"label": "Premis i reconeixement", "prompt": "Quins premis o reconeixement va rebre la pel·lícula?"}
+      ]
+    }
+  ]
+}

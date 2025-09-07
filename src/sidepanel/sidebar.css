@@ -221,6 +221,22 @@ body {
     width: 100%;
   }
   
+  .toggle-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    margin: 1px 0;
+  }
+  
+  .toggle-row .dropdown-arrow {
+    padding: 1px 8px !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    min-height: auto !important;
+    height: 16px !important;
+  }
+  
   .option-button {
     background-color: rgba(255, 255, 255, 0.2);
     border: none;
@@ -245,6 +261,20 @@ body {
     font-weight: bold;
   }
 
+  /* Estilos para checkboxes dentro de los botones */
+  .option-button input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  /* Solo los botones URL y Portapapeles tienen estilo flex para los checkboxes */
+  #use-url, #use-clipb {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
   /* Estilo para el botón de pregunta directa */
   .direct-question-container {
     margin: 6px 0;
@@ -257,7 +287,7 @@ body {
     border: none;
     border-radius: 4px;
     color: #000000;
-    padding: 4px 10px;
+    padding: 8px 10px;
     font-size: 12px;
     cursor: pointer;
     transition: background-color 0.2s;

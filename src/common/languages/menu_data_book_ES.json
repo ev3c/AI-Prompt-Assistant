@@ -1,0 +1,88 @@
+{
+  "header": {
+    "title": "Book prompt assistant",
+    "currentUrlPlaceholder": "Página actual"
+  },
+  "sections": [
+    {
+      "title": "📘 Comprensión general",
+      "buttons": [
+        {"label": "Resumen del libro", "prompt": "¿Cuál es el resumen del libro?"},
+        {"label": "Personajes principales y cómo son", "prompt": "¿Cuáles son los personajes principales y cómo son?"},
+        {"label": "Qué conflicto central se presenta", "prompt": "¿Qué conflicto central se presenta?"},
+        {"label": "Final de la historia", "prompt": "¿Cómo termina la historia?"},
+        {"label": "Elementos del argumento más importantes", "prompt": "¿Qué elementos del argumento son más importantes?"},
+        {"label": "Contexto histórico y época del libro", "prompt": "¿En qué contexto histórico y época se desarrolla el libro?"},
+        {"label": "Género y subgénero literario", "prompt": "¿A qué género y subgénero literario pertenece la obra?"},
+        {"label": "Estructura narrativa de la obra", "prompt": "¿Cómo está estructurada la narrativa de la obra?"},
+        {"label": "Punto de vista narrativo utilizado", "prompt": "¿Qué punto de vista narrativo utiliza el autor y por qué?"}
+      ]
+    },
+    {
+      "title": "🎭 Análisis literario",
+      "buttons": [
+        {"label": "Tema principal del libro", "prompt": "¿Cuál es el tema principal del libro?"},
+        {"label": "Simbolismos y qué significan", "prompt": "¿Qué simbolismos se usan y qué significan?"},
+        {"label": "Cómo evoluciona el protagonista", "prompt": "¿Cómo evoluciona el protagonista?"},
+        {"label": "Qué mensaje transmite el autor", "prompt": "¿Qué mensaje transmite el autor?"},
+        {"label": "Qué representa el personaje o la escena", "prompt": "¿Qué representa el personaje o la escena?"},
+        {"label": "Estilo narrativo del autor", "prompt": "¿Qué estilo narrativo caracteriza al autor en esta obra?"},
+        {"label": "Uso del tiempo y espacio en la narrativa", "prompt": "¿Cómo maneja el autor el tiempo y el espacio en la narrativa?"},
+        {"label": "Relaciones entre personajes", "prompt": "¿Cómo son las relaciones entre los personajes principales?"},
+        {"label": "Conflictos internos vs externos", "prompt": "¿Qué conflictos internos y externos se presentan en la obra?"},
+        {"label": "Técnicas narrativas empleadas", "prompt": "¿Qué técnicas narrativas emplea el autor y con qué propósito?"}
+      ]
+    },
+    {
+      "title": "🧠 Interpretación filosófica",
+      "buttons": [
+        {"label": "Qué crítica hace el libro a la sociedad", "prompt": "¿Qué crítica hace el libro a la sociedad?"},
+        {"label": "Cómo se relaciona esta historia con la vida real", "prompt": "¿Cómo se relaciona esta historia con la vida real?"},
+        {"label": "Qué enseñanzas se pueden aplicar hoy", "prompt": "¿Qué enseñanzas se pueden aplicar hoy?"},
+        {"label": "Qué significado tiene el final", "prompt": "¿Qué significado tiene el final?"},
+        {"label": "Influencias culturales e históricas", "prompt": "¿Qué influencias culturales e históricas se pueden identificar en la obra?"},
+        {"label": "Comparación con otras obras del mismo autor", "prompt": "¿Cómo se compara esta obra con otras del mismo autor?"},
+        {"label": "Impacto social y cultural de la obra", "prompt": "¿Qué impacto social y cultural tuvo o tiene esta obra?"}
+      ]
+    },
+    {
+      "title": "✍️ Ensayos y tareas",
+      "buttons": [
+        {"label": "Qué valores o ideas se promueven en la obra", "prompt": "¿Qué valores o ideas se promueven en la obra?"},
+        {"label": "Cómo se usa el lenguaje para crear emoción o impacto", "prompt": "¿Cómo se usa el lenguaje para crear emoción o impacto?"},
+        {"label": "Qué figuras literarias aparecen y para qué", "prompt": "¿Qué figuras literarias aparecen y para qué?"},
+        {"label": "Análisis del desarrollo de personajes", "prompt": "¿Cómo se desarrollan los personajes a lo largo de la obra?"},
+        {"label": "Recursos estilísticos y su función", "prompt": "¿Qué recursos estilísticos utiliza el autor y cuál es su función?"},
+        {"label": "Intertextualidad y referencias", "prompt": "¿Qué referencias intertextuales o alusiones aparecen en la obra?"}
+      ]
+    },
+    {
+      "title": "📚 Estudio académico",
+      "buttons": [
+        {"label": "Biografía del autor y contexto de escritura", "prompt": "¿Qué aspectos de la biografía del autor influyeron en esta obra?"},
+        {"label": "Corriente literaria a la que pertenece", "prompt": "¿A qué corriente o movimiento literario pertenece esta obra?"},
+        {"label": "Influencia en la literatura posterior", "prompt": "¿Cómo influyó esta obra en la literatura posterior?"},
+        {"label": "Adaptaciones y versiones de la obra", "prompt": "¿Qué adaptaciones cinematográficas, teatrales o de otro tipo tiene esta obra?"},
+        {"label": "Crítica literaria especializada", "prompt": "¿Qué dicen los críticos literarios especializados sobre esta obra?"}
+      ]
+    },
+    {
+      "title": "🎯 Análisis crítico",
+      "buttons": [
+        {"label": "Fortalezas y debilidades de la obra", "prompt": "¿Cuáles son las principales fortalezas y debilidades de la obra?"},
+        {"label": "Relevancia contemporánea del libro", "prompt": "¿Qué relevancia tiene esta obra en la actualidad?"},
+        {"label": "Público objetivo y recepción", "prompt": "¿A qué público está dirigida la obra y cómo fue recibida?"},
+        {"label": "Valoración personal justificada", "prompt": "¿Cómo valorarías esta obra y por qué razones?"}
+      ]
+    },
+    {
+      "title": "📖 Comprensión lectora",
+      "buttons": [
+        {"label": "Vocabulario y expresiones destacadas", "prompt": "¿Qué vocabulario o expresiones destacadas aparecen en la obra?"},
+        {"label": "Pasajes más significativos", "prompt": "¿Cuáles son los pasajes más significativos de la obra?"},
+        {"label": "Citas memorables y su significado", "prompt": "¿Qué citas memorables contiene la obra y qué significan?"},
+        {"label": "Preguntas de comprensión específicas", "prompt": "¿Qué aspectos específicos requieren mayor comprensión en esta obra?"}
+      ]
+    }
+  ]
+}

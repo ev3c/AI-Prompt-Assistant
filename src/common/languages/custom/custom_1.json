@@ -1,0 +1,158 @@
+{
+  "addButtonText": "Cuadro",
+  "header": {
+    "behaviour": "Question",
+    "currentUrlPlaceholder": "Página actual",
+    "title": "Cuadro"
+  },
+  "origin": "question",
+  "sections": [
+    {
+      "buttons": [
+        {
+          "label": "Descripción detallada del cuadro",
+          "prompt": "Proporciona una descripción detallada del cuadro que me menciones: composición visual, elementos principales, colores dominantes, técnica utilizada y dimensiones aproximadas."
+        },
+        {
+          "label": "Interpretación y simbolismo",
+          "prompt": "Analiza la interpretación y simbolismo del cuadro que me especifiques: significado de los elementos, mensajes ocultos, alegorías y diferentes lecturas posibles de la obra."
+        },
+        {
+          "label": "Técnica pictórica empleada",
+          "prompt": "Explica en detalle la técnica pictórica utilizada en el cuadro que me indiques: tipo de pintura, soporte, pinceladas, efectos de luz, textura y métodos específicos del artista."
+        },
+        {
+          "label": "Composición y perspectiva",
+          "prompt": "Analiza la composición y perspectiva del cuadro que me menciones: distribución de elementos, líneas de fuga, punto focal, equilibrio visual y uso del espacio."
+        }
+      ],
+      "title": "🎨 Análisis de la Obra"
+    },
+    {
+      "buttons": [
+        {
+          "label": "Biografía del pintor",
+          "prompt": "Proporciona información biográfica del artista que creó el cuadro que me especifiques: vida personal, formación artística, influencias y contexto histórico en el que vivió."
+        },
+        {
+          "label": "Estilo y período artístico",
+          "prompt": "Describe el estilo artístico y período al que pertenece el cuadro que me menciones: corriente artística, características del movimiento y evolución del estilo del pintor."
+        },
+        {
+          "label": "Otras obras destacadas del artista",
+          "prompt": "Lista y describe brevemente otras obras importantes del mismo artista que creó el cuadro que me indiques, estableciendo comparaciones y evolución estilística."
+        },
+        {
+          "label": "Influencias y maestros",
+          "prompt": "Explica las influencias artísticas y maestros que marcaron al creador del cuadro que me especifiques, y cómo se reflejan en esta obra particular."
+        }
+      ],
+      "title": "👨‍🎨 El Artista y su Contexto"
+    },
+    {
+      "buttons": [
+        {
+          "label": "Historia de la creación",
+          "prompt": "Cuenta la historia detrás de la creación del cuadro que me menciones: encargo o motivación, proceso de creación, tiempo que tomó realizarlo y circunstancias especiales."
+        },
+        {
+          "label": "Contexto histórico de la época",
+          "prompt": "Sitúa el cuadro que me indiques en su contexto histórico: eventos importantes de la época, situación social, política y cultural que influyeron en su creación."
+        },
+        {
+          "label": "Proveniencia y propietarios",
+          "prompt": "Describe la proveniencia del cuadro que me especifiques: primeros propietarios, cambios de manos, coleccionistas importantes y cómo llegó a su ubicación actual."
+        },
+        {
+          "label": "Restauraciones y conservación",
+          "prompt": "Explica el historial de restauraciones y estado de conservación del cuadro que me menciones: daños sufridos, intervenciones realizadas y técnicas de preservación empleadas."
+        }
+      ],
+      "title": "📚 Historia y Contexto"
+    },
+    {
+      "buttons": [
+        {
+          "label": "Dónde se encuentra actualmente",
+          "prompt": "Indica dónde se encuentra actualmente el cuadro que me menciones: museo, colección privada, sala específica y condiciones de exhibición al público."
+        },
+        {
+          "label": "Historia de exhibiciones",
+          "prompt": "Describe la historia de exhibiciones del cuadro que me especifiques: exposiciones importantes, préstamos a otros museos, giras internacionales y eventos especiales."
+        },
+        {
+          "label": "Información para visitantes",
+          "prompt": "Proporciona información práctica para ver el cuadro que me indiques: horarios de museo, precio de entradas, mejores momentos para visitarlo y recomendaciones de visita."
+        },
+        {
+          "label": "Réplicas y reproducciones",
+          "prompt": "Explica sobre réplicas, copias y reproducciones existentes del cuadro que me menciones: versiones autorizadas, copias históricas y disponibilidad de reproducciones."
+        }
+      ],
+      "title": "🏛️ Ubicación y Exhibición"
+    },
+    {
+      "buttons": [
+        {
+          "label": "Valor estimado y tasación",
+          "prompt": "Analiza el valor artístico y económico estimado del cuadro que me menciones: factores que determinan su precio, comparación con obras similares y evolución de su valor."
+        },
+        {
+          "label": "Récords de subasta",
+          "prompt": "Proporciona información sobre récords de subasta relacionados con el cuadro que me especifiques o obras similares del mismo artista: precios alcanzados y casas de subastas."
+        },
+        {
+          "label": "Importancia en el mercado del arte",
+          "prompt": "Explica la importancia del cuadro que me indiques en el mercado del arte actual: demanda de coleccionistas, influencia en precios del artista y tendencias relacionadas."
+        }
+      ],
+      "title": "💰 Valor y Mercado",
+      "translationButton": {
+        "label": "Información artística en idioma: "
+      },
+      "translationSubmenu": [
+        {
+          "label": "🇪🇸 Español",
+          "prompt": "Proporciona información detallada sobre este cuadro en español, incluyendo su relevancia en el arte hispano si es aplicable."
+        },
+        {
+          "label": "🇬🇧 Inglés",
+          "prompt": "Provide detailed information about this painting in English, including its significance in English-speaking art world if relevant."
+        },
+        {
+          "label": "🇫🇷 Francés",
+          "prompt": "Fournis des informations détaillées sur ce tableau en français, y compris sa pertinence dans l'art français si applicable."
+        },
+        {
+          "label": "🇮🇹 Italiano",
+          "prompt": "Fornisci informazioni dettagliate su questo quadro in italiano, inclusa la sua rilevanza nell'arte italiana se applicabile."
+        }
+      ]
+    },
+    {
+      "buttons": [
+        {
+          "label": "Misterios y teorías",
+          "prompt": "Explora misterios, teorías y debates académicos en torno al cuadro que me menciones: interpretaciones controvertidas, elementos enigmáticos y investigaciones recientes."
+        },
+        {
+          "label": "Influencia en la cultura popular",
+          "prompt": "Analiza la influencia del cuadro que me especifiques en la cultura popular: referencias en cine, literatura, publicidad, parodias y adaptaciones modernas."
+        },
+        {
+          "label": "Análisis con tecnología moderna",
+          "prompt": "Describe descubrimientos realizados mediante tecnología moderna en el cuadro que me indiques: rayos X, análisis de pigmentos, capas ocultas y técnicas de investigación."
+        },
+        {
+          "label": "Comparación con obras similares",
+          "prompt": "Compara el cuadro que me menciones con otras obras similares de la época o del mismo artista: diferencias, similitudes e influencias mutuas."
+        },
+        {
+          "label": "Impacto en movimientos artísticos",
+          "prompt": "Analiza cómo el cuadro que me especifiques influyó en movimientos artísticos posteriores: artistas inspirados, técnicas adoptadas y legado en la historia del arte."
+        }
+      ],
+      "title": "🔍 Curiosidades y Análisis Profundo"
+    }
+  ]
+}

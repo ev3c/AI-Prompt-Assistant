@@ -1,6 +1,6 @@
 {
   "header": {
-    "title": "Assistente de prompts IA",
+    "title": "Assistente IA",
     "currentUrlPlaceholder": "Página atual"
   },
   "sections": [
@@ -12,8 +12,16 @@
           "prompt": "Resuma este artigo da Wikipedia em menos de 200 palavras, destacando os pontos principais:"
         },
         {
-          "label": "Resumir estilo escolar",
-          "prompt": "Faça um resumo estilo escolar (nível secundário/ensino médio) deste texto da Wikipedia:"
+          "label": "Resumo estilo escolar",
+          "prompt": "Faça um resumo estilo escolar (nível secundário/preparatório) deste texto da Wikipedia:"
+        },
+        {
+          "label": "Resumo formato notas",
+          "prompt": "Resuma este artigo em formato de notas de aula com pontos principais:"
+        },
+        {
+          "label": "Resumo executivo oral",
+          "prompt": "Crie um resumo executivo para apresentação oral deste artigo:"
         }
       ]
     },
@@ -27,6 +35,14 @@
         {
           "label": "Faça uma versão simples e fácil de entender desta seção da Wikipedia",
           "prompt": "Faça uma versão simples e fácil de entender desta seção da Wikipedia:"
+        },
+        {
+          "label": "Explicar com analogias cotidianas",
+          "prompt": "Explique este conceito usando analogias cotidianas e exemplos simples:"
+        },
+        {
+          "label": "Explicação passo a passo",
+          "prompt": "Converta este texto em uma explicação passo a passo, como uma receita:"
         }
       ]
     },
@@ -34,12 +50,20 @@
       "title": "🔄 Parafrasear para evitar plágio",
       "buttons": [
         {
-          "label": "Reescreva este conteúdo da Wikipedia com suas próprias palavras, evitando plágio mas mantendo a informação",
-          "prompt": "Reescreva este conteúdo da Wikipedia com suas próprias palavras, evitando plágio mas mantendo a informação:"
+          "label": "Reescreva este conteúdo da Wikipedia com suas próprias palavras, evitando plágio mas mantendo as informações",
+          "prompt": "Reescreva este conteúdo da Wikipedia com suas próprias palavras, evitando plágio mas mantendo as informações:"
         },
         {
           "label": "Faça uma versão original deste conteúdo da Wikipedia sem copiar o texto literal",
           "prompt": "Faça uma versão original deste conteúdo da Wikipedia sem copiar o texto literal."
+        },
+        {
+          "label": "Reescrever para trabalho acadêmico",
+          "prompt": "Reescreva este conteúdo para trabalho acadêmico com estilo formal:"
+        },
+        {
+          "label": "Adaptar para diferentes níveis",
+          "prompt": "Adapte este texto para diferentes níveis educacionais (primário, secundário, universidade):"
         }
       ]
     },
@@ -47,16 +71,20 @@
       "title": "📝 Criar esquemas ou mapas conceituais",
       "buttons": [
         {
-          "label": "Criar um esquema temático",
+          "label": "Crie um esquema temático",
           "prompt": "A partir deste texto, crie um esquema temático dos tópicos principais."
         },
         {
-          "label": "Criar um mapa conceitual",
+          "label": "Crie um mapa conceitual",
           "prompt": "A partir deste texto, crie um mapa conceitual dos tópicos principais."
         },
         {
-          "label": "A partir deste texto, crie ...",
-          "prompt": "A partir deste texto, crie ..."
+          "label": "Linha do tempo",
+          "prompt": "Organize estas informações em uma linha do tempo cronológica:"
+        },
+        {
+          "label": "Diagrama causa-efeito",
+          "prompt": "Crie um diagrama de causa-efeito baseado neste conteúdo:"
         }
       ]
     },
@@ -64,12 +92,62 @@
       "title": "💬 Gerar perguntas de revisão ou exame",
       "buttons": [
         {
-          "label": "Crie 10 perguntas tipo exame sobre este artigo, com suas respostas:",
-          "prompt": "Crie 10 perguntas tipo exame sobre este artigo da Wikipedia, com suas respostas:"
+          "label": "Crie 10 perguntas estilo exame sobre este artigo, com suas respostas:",
+          "prompt": "Crie 10 perguntas estilo exame sobre este artigo da Wikipedia, com suas respostas:"
         },
         {
-          "label": "Faça perguntas tipo múltipla escolha para estudar sobre o seguinte texto",
-          "prompt": "Faça perguntas tipo múltipla escolha para estudar sobre o seguinte texto"
+          "label": "Faça perguntas de múltipla escolha para estudar o seguinte texto",
+          "prompt": "Faça perguntas de múltipla escolha para estudar o seguinte texto"
+        },
+        {
+          "label": "Perguntas de compreensão de leitura",
+          "prompt": "Crie perguntas de compreensão de leitura baseadas neste artigo:"
+        },
+        {
+          "label": "Exercícios práticos",
+          "prompt": "Gere exercícios práticos baseados neste conteúdo:"
+        }
+      ]
+    },
+    {
+      "title": "🎓 Análise Acadêmica",
+      "buttons": [
+        {
+          "label": "Identificar conceitos-chave",
+          "prompt": "Identifique os conceitos-chave para estudar deste artigo:"
+        },
+        {
+          "label": "Analisar fontes e referências",
+          "prompt": "Analise as fontes e referências citadas neste artigo:"
+        },
+        {
+          "label": "Avaliar objetividade",
+          "prompt": "Avalie a objetividade e neutralidade do conteúdo deste artigo:"
+        },
+        {
+          "label": "Identificar vieses",
+          "prompt": "Identifique possíveis vieses ou pontos de vista presentes neste texto:"
+        }
+      ]
+    },
+    {
+      "title": "🏫 Aplicação Educacional",
+      "buttons": [
+        {
+          "label": "Usar em sala de aula",
+          "prompt": "Como usar este conteúdo em sala de aula? Sugira estratégias didáticas:"
+        },
+        {
+          "label": "Atividades práticas",
+          "prompt": "Sugira atividades práticas para estudantes baseadas neste conteúdo:"
+        },
+        {
+          "label": "Conectar com currículo",
+          "prompt": "Conecte este tópico com o currículo escolar e as competências educacionais:"
+        },
+        {
+          "label": "Projeto de pesquisa",
+          "prompt": "Projete um projeto de pesquisa escolar baseado neste tópico:"
         }
       ]
     }

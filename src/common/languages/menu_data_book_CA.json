@@ -1,0 +1,88 @@
+{
+  "header": {
+    "title": "Assistent de prompts de llibres",
+    "currentUrlPlaceholder": "Pàgina actual"
+  },
+  "sections": [
+    {
+      "title": "📘 Comprensió general",
+      "buttons": [
+        {"label": "Resum del llibre", "prompt": "Quin és el resum del llibre?"},
+        {"label": "Personatges principals i com són", "prompt": "Quins són els personatges principals i com són?"},
+        {"label": "Quin conflicte central es presenta", "prompt": "Quin conflicte central es presenta?"},
+        {"label": "Final de la història", "prompt": "Com acaba la història?"},
+        {"label": "Elements de l'argument més importants", "prompt": "Quins elements de l'argument són més importants?"},
+        {"label": "Context històric i època del llibre", "prompt": "En quin context històric i època es desenvolupa el llibre?"},
+        {"label": "Gènere i subgènere literari", "prompt": "A quin gènere i subgènere literari pertany l'obra?"},
+        {"label": "Estructura narrativa de l'obra", "prompt": "Com està estructurada la narrativa de l'obra?"},
+        {"label": "Punt de vista narratiu utilitzat", "prompt": "Quin punt de vista narratiu utilitza l'autor i per què?"}
+      ]
+    },
+    {
+      "title": "🎭 Anàlisi literària",
+      "buttons": [
+        {"label": "Tema principal del llibre", "prompt": "Quin és el tema principal del llibre?"},
+        {"label": "Simbolismes i què signifiquen", "prompt": "Quins simbolismes s'usen i què signifiquen?"},
+        {"label": "Com evoluciona el protagonista", "prompt": "Com evoluciona el protagonista?"},
+        {"label": "Quin missatge transmet l'autor", "prompt": "Quin missatge transmet l'autor?"},
+        {"label": "Què representa el personatge o l'escena", "prompt": "Què representa el personatge o l'escena?"},
+        {"label": "Estil narratiu de l'autor", "prompt": "Quin estil narratiu caracteritza l'autor en aquesta obra?"},
+        {"label": "Ús del temps i espai en la narrativa", "prompt": "Com gestiona l'autor el temps i l'espai en la narrativa?"},
+        {"label": "Relacions entre personatges", "prompt": "Com són les relacions entre els personatges principals?"},
+        {"label": "Conflictes interns vs externs", "prompt": "Quins conflictes interns i externs es presenten a l'obra?"},
+        {"label": "Tècniques narratives emprades", "prompt": "Quines tècniques narratives empra l'autor i amb quin propòsit?"}
+      ]
+    },
+    {
+      "title": "🧠 Interpretació filosòfica",
+      "buttons": [
+        {"label": "Quina crítica fa el llibre a la societat", "prompt": "Quina crítica fa el llibre a la societat?"},
+        {"label": "Com es relaciona aquesta història amb la vida real", "prompt": "Com es relaciona aquesta història amb la vida real?"},
+        {"label": "Quines ensenyances es poden aplicar avui", "prompt": "Quines ensenyances es poden aplicar avui?"},
+        {"label": "Quin significat té el final", "prompt": "Quin significat té el final?"},
+        {"label": "Influències culturals i històriques", "prompt": "Quines influències culturals i històriques es poden identificar a l'obra?"},
+        {"label": "Comparació amb altres obres del mateix autor", "prompt": "Com es compara aquesta obra amb altres del mateix autor?"},
+        {"label": "Impacte social i cultural de l'obra", "prompt": "Quin impacte social i cultural va tenir o té aquesta obra?"}
+      ]
+    },
+    {
+      "title": "✍️ Assaigs i tasques",
+      "buttons": [
+        {"label": "Quins valors o idees es promouen a l'obra", "prompt": "Quins valors o idees es promouen a l'obra?"},
+        {"label": "Com s'usa el llenguatge per crear emoció o impacte", "prompt": "Com s'usa el llenguatge per crear emoció o impacte?"},
+        {"label": "Quines figures literàries apareixen i per a què", "prompt": "Quines figures literàries apareixen i per a què?"},
+        {"label": "Anàlisi del desenvolupament de personatges", "prompt": "Com es desenvolupen els personatges al llarg de l'obra?"},
+        {"label": "Recursos estilístics i la seva funció", "prompt": "Quins recursos estilístics utilitza l'autor i quina és la seva funció?"},
+        {"label": "Intertextualitat i referències", "prompt": "Quines referències intertextuals o al·lusions apareixen a l'obra?"}
+      ]
+    },
+    {
+      "title": "📚 Estudi acadèmic",
+      "buttons": [
+        {"label": "Biografia de l'autor i context d'escriptura", "prompt": "Quins aspectes de la biografia de l'autor van influir en aquesta obra?"},
+        {"label": "Corrent literari al qual pertany", "prompt": "A quin corrent o moviment literari pertany aquesta obra?"},
+        {"label": "Influència en la literatura posterior", "prompt": "Com va influir aquesta obra en la literatura posterior?"},
+        {"label": "Adaptacions i versions de l'obra", "prompt": "Quines adaptacions cinematogràfiques, teatrals o d'altre tipus té aquesta obra?"},
+        {"label": "Crítica literària especialitzada", "prompt": "Què diuen els crítics literaris especialitzats sobre aquesta obra?"}
+      ]
+    },
+    {
+      "title": "🎯 Anàlisi crítica",
+      "buttons": [
+        {"label": "Fortaleses i debilitats de l'obra", "prompt": "Quines són les principals fortaleses i debilitats de l'obra?"},
+        {"label": "Rellevància contemporània del llibre", "prompt": "Quina rellevància té aquesta obra en l'actualitat?"},
+        {"label": "Públic objectiu i recepció", "prompt": "A quin públic està dirigida l'obra i com va ser rebuda?"},
+        {"label": "Valoració personal justificada", "prompt": "Com valoraries aquesta obra i per quines raons?"}
+      ]
+    },
+    {
+      "title": "📖 Comprensió lectora",
+      "buttons": [
+        {"label": "Vocabulari i expressions destacades", "prompt": "Quin vocabulari o expressions destacades apareixen a l'obra?"},
+        {"label": "Passatges més significatius", "prompt": "Quins són els passatges més significatius de l'obra?"},
+        {"label": "Cites memorables i el seu significat", "prompt": "Quines cites memorables conté l'obra i què signifiquen?"},
+        {"label": "Preguntes de comprensió específiques", "prompt": "Quins aspectes específics requereixen major comprensió en aquesta obra?"}
+      ]
+    }
+  ]
+}

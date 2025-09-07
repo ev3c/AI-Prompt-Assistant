@@ -5,15 +5,23 @@
   },
   "sections": [
     {
-      "title": "📚 Summarize Wikipedia articles",
+      "title": "📚 Summarise Wikipedia articles",
       "buttons": [
         {
-          "label": "Summarize article",
-          "prompt": "Summarize this Wikipedia article in less than 200 words, highlighting the key points:"
+          "label": "Summarise article",
+          "prompt": "Summarise this Wikipedia article in less than 200 words, highlighting the key points:"
         },
         {
           "label": "School-style summary",
           "prompt": "Make a school-style summary (secondary/high school level) of this Wikipedia text:"
+        },
+        {
+          "label": "Notes format summary",
+          "prompt": "Summarise this article in class notes format with key points:"
+        },
+        {
+          "label": "Executive oral summary",
+          "prompt": "Create an executive summary for oral presentation of this article:"
         }
       ]
     },
@@ -21,12 +29,20 @@
       "title": "🔍 Explain difficult concepts",
       "buttons": [
         {
-          "label": "Explain this Wikipedia text to me as if I were 12 years old",
-          "prompt": "Explain this Wikipedia text to me as if I were 12 years old:"
+          "label": "Explain this Wikipedia text as if I were 12 years old",
+          "prompt": "Explain this Wikipedia text as if I were 12 years old:"
         },
         {
           "label": "Make a simple and easy-to-understand version of this Wikipedia section",
           "prompt": "Make a simple and easy-to-understand version of this Wikipedia section:"
+        },
+        {
+          "label": "Explain with everyday analogies",
+          "prompt": "Explain this concept using everyday analogies and simple examples:"
+        },
+        {
+          "label": "Step-by-step explanation",
+          "prompt": "Convert this text into a step-by-step explanation, like a recipe:"
         }
       ]
     },
@@ -34,12 +50,20 @@
       "title": "🔄 Paraphrase to avoid plagiarism",
       "buttons": [
         {
-          "label": "Rewrite this Wikipedia content in your own words, avoiding plagiarism while maintaining the information",
-          "prompt": "Rewrite this Wikipedia content in your own words, avoiding plagiarism while maintaining the information:"
+          "label": "Rewrite this Wikipedia content in your own words, avoiding plagiarism but maintaining the information",
+          "prompt": "Rewrite this Wikipedia content in your own words, avoiding plagiarism but maintaining the information:"
         },
         {
           "label": "Make an original version of this Wikipedia content without copying the literal text",
           "prompt": "Make an original version of this Wikipedia content without copying the literal text."
+        },
+        {
+          "label": "Rewrite for academic work",
+          "prompt": "Rewrite this content for academic work with formal style:"
+        },
+        {
+          "label": "Adapt for different levels",
+          "prompt": "Adapt this text for different educational levels (primary, secondary, university):"
         }
       ]
     },
@@ -55,8 +79,12 @@
           "prompt": "From this text, create a concept map of the main topics."
         },
         {
-          "label": "From this text, create ...",
-          "prompt": "From this text, create ..."
+          "label": "Timeline",
+          "prompt": "Organise this information in a chronological timeline:"
+        },
+        {
+          "label": "Cause-effect diagram",
+          "prompt": "Create a cause-effect diagram based on this content:"
         }
       ]
     },
@@ -64,12 +92,62 @@
       "title": "💬 Generate review or exam questions",
       "buttons": [
         {
-          "label": "Create 10 exam-type questions about this article, with their answers:",
-          "prompt": "Create 10 exam-type questions about this Wikipedia article, with their answers:"
+          "label": "Create 10 exam-style questions about this article, with their answers:",
+          "prompt": "Create 10 exam-style questions about this Wikipedia article, with their answers:"
         },
         {
-          "label": "Make multiple choice questions to study about the following text",
-          "prompt": "Make multiple choice questions to study about the following text"
+          "label": "Make multiple choice questions to study the following text",
+          "prompt": "Make multiple choice questions to study the following text"
+        },
+        {
+          "label": "Reading comprehension questions",
+          "prompt": "Create reading comprehension questions based on this article:"
+        },
+        {
+          "label": "Practical exercises",
+          "prompt": "Generate practical exercises based on this content:"
+        }
+      ]
+    },
+    {
+      "title": "🎓 Academic Analysis",
+      "buttons": [
+        {
+          "label": "Identify key concepts",
+          "prompt": "Identify the key concepts to study from this article:"
+        },
+        {
+          "label": "Analyse sources and references",
+          "prompt": "Analyse the sources and references cited in this article:"
+        },
+        {
+          "label": "Evaluate objectivity",
+          "prompt": "Evaluate the objectivity and neutrality of this article's content:"
+        },
+        {
+          "label": "Identify biases",
+          "prompt": "Identify possible biases or viewpoints present in this text:"
+        }
+      ]
+    },
+    {
+      "title": "🏫 Educational Application",
+      "buttons": [
+        {
+          "label": "Use in class",
+          "prompt": "How to use this content in a class? Suggest teaching strategies:"
+        },
+        {
+          "label": "Practical activities",
+          "prompt": "Suggest practical activities for students based on this content:"
+        },
+        {
+          "label": "Connect with curriculum",
+          "prompt": "Connect this topic with the school curriculum and educational competencies:"
+        },
+        {
+          "label": "Research project",
+          "prompt": "Design a school research project based on this topic:"
         }
       ]
     }

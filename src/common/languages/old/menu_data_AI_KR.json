@@ -168,7 +168,7 @@
       ]
     }
   ],
-  "jsonName": "menu_data_AI_KR.json",
+  "jsonName": "menu_data_url_KR.json",
   "addButtonText": "AI 프롬프트 어시스턴트",
   "origin": "url"
 }

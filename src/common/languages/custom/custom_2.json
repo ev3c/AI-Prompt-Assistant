@@ -1,89 +1,158 @@
 {
+  "addButtonText": "Disco",
   "header": {
-    "title": "CUSTOM_2",
+    "behaviour": "Question",
     "currentUrlPlaceholder": "Página actual",
-    "behaviour": "Clipboard"
+    "title": "Disco"
   },
+  "origin": "question",
   "sections": [
     {
-      "title": "🔍 1a sección del menú Custom_2",
       "buttons": [
         {
-          "label": "Etiqueta 1.1 en el menú. (La extensión preguntará al usuario antes de enviar el prompt)",
-          "prompt": "Este es el texto que preguntará al usuario"
+          "label": "Análisis completo del álbum",
+          "prompt": "Proporciona un análisis completo del álbum que me menciones: información básica (artista, año, sello), concepto temático, producción, contexto histórico e impacto cultural."
         },
         {
-          "label": "Etiqueta 1.2 en el menú",
-          "prompt": "Pregunta 1.2 a la AI:."
+          "label": "Ficha técnica del disco",
+          "prompt": "Detalla la ficha técnica completa del álbum que me especifiques: productores, ingenieros, estudios de grabación, músicos participantes y créditos de composición."
+        },
+        {
+          "label": "Historia de la creación",
+          "prompt": "Cuenta la historia detrás de la creación del álbum que me indiques: inspiración, proceso de composición, sesiones de grabación, anécdotas y desafíos durante su producción."
+        },
+        {
+          "label": "Contexto del lanzamiento",
+          "prompt": "Explica el contexto del lanzamiento del álbum que me menciones: situación de la banda/artista, expectativas, estrategia promocional y recepción inicial."
         }
-      ]
+      ],
+      "title": "💿 Información del Álbum"
     },
     {
-      "title": "📝 2a sección del menú en archivo",
       "buttons": [
         {
-          "label": "Etiqueta 2.1 en el menú",
-          "prompt": "Pregunta 2.1 a la AI:."
+          "label": "Análisis track por track",
+          "prompt": "Realiza un análisis detallado de cada canción del álbum que me especifiques: temática, estructura musical, destacados instrumentales y significado dentro del conjunto."
         },
         {
-          "label": "Etiqueta 2.2 en el menú",
-          "prompt": "Pregunta 2.2 a la AI:."
+          "label": "Canciones más exitosas",
+          "prompt": "Identifica las canciones más exitosas del álbum que me menciones: posiciones en charts, ventas como singles, videos musicales y impacto en la carrera del artista."
         },
         {
-          "label": "Etiqueta 2.3 en el menú",
-          "prompt": "Pregunta 2.3 a la AI:."
+          "label": "Joyas ocultas del álbum",
+          "prompt": "Destaca las canciones menos conocidas pero valiosas del álbum que me indiques, explicando por qué merecen mayor reconocimiento y sus cualidades únicas."
+        },
+        {
+          "label": "Evolución de las canciones",
+          "prompt": "Describe cómo evolucionaron las canciones del álbum que me especifiques desde las demos iniciales hasta la versión final, incluyendo cambios significativos."
         }
-      ]
+      ],
+      "title": "🎵 Tracklist y Canciones"
     },
     {
-      "title": "📝 3a sección del menú en archivo",
       "buttons": [
         {
-          "label": "Etiqueta 3.1 en el menú",
-          "prompt": "Pregunta 3.1 a la AI:."
+          "label": "Análisis de la portada",
+          "prompt": "Analiza en detalle la portada del álbum que me menciones: diseño, simbolismo, artista/fotógrafo, concepto visual y relación con la música."
         },
         {
-          "label": "Etiqueta 3.2 en el menú",
-          "prompt": "Pregunta 3.2 a la AI:."
+          "label": "Artwork completo del álbum",
+          "prompt": "Describe todo el artwork del álbum que me especifiques: portada, contraportada, libreto interior, fotografías incluidas y elementos visuales adicionales."
         },
         {
-          "label": "Etiqueta 3.3 en el menú",
-          "prompt": "Pregunta 3.3 a la AI:."
+          "label": "Evolución visual del artista",
+          "prompt": "Analiza cómo el diseño del álbum que me indiques representa la evolución visual del artista comparado con trabajos anteriores y posteriores."
+        },
+        {
+          "label": "Versiones y ediciones especiales",
+          "prompt": "Detalla las diferentes versiones y ediciones especiales del álbum que me menciones: remasterizaciones, box sets, vinilos de colores, contenido adicional."
         }
-      ]
+      ],
+      "title": "🎨 Arte y Diseño"
     },
     {
-      "title": "💬 4a sección del menú en archivo",
+      "buttons": [
+        {
+          "label": "Recepción crítica especializada",
+          "prompt": "Analiza la recepción crítica del álbum que me especifiques: reseñas en medios especializados, puntuaciones, consenso crítico y evolución de la percepción con el tiempo."
+        },
+        {
+          "label": "Éxito comercial y ventas",
+          "prompt": "Proporciona datos sobre el éxito comercial del álbum que me menciones: posiciones en charts, ventas totales, certificaciones (oro, platino) en diferentes países."
+        },
+        {
+          "label": "Recepción del público",
+          "prompt": "Describe la recepción del público del álbum que me indiques: reacciones de fans, controversias, impacto en la base de seguidores y legado entre los oyentes."
+        },
+        {
+          "label": "Premios y reconocimientos",
+          "prompt": "Lista los premios, nominaciones y reconocimientos recibidos por el álbum que me especifiques: Grammys, premios nacionales, listas de 'mejores álbumes'."
+        }
+      ],
+      "title": "📊 Recepción y Críticas"
+    },
+    {
+      "buttons": [
+        {
+          "label": "Influencia en otros artistas",
+          "prompt": "Analiza cómo el álbum que me menciones ha influenciado a otros artistas y álbumes posteriores, con ejemplos específicos de su legado musical."
+        },
+        {
+          "label": "Impacto cultural duradero",
+          "prompt": "Describe el impacto cultural a largo plazo del álbum que me especifiques: uso en películas/TV, memes, referencias culturales y relevancia actual."
+        },
+        {
+          "label": "Lugar en la discografía",
+          "prompt": "Sitúa el álbum que me indiques dentro de la discografía completa del artista: cómo se compara con otros trabajos y su importancia en la carrera musical."
+        }
+      ],
+      "title": "🎭 Legado e Influencia",
       "translationButton": {
-        "label": "Traduce página/texto al idioma: "
+        "label": "Información del álbum en idioma: "
       },
       "translationSubmenu": [
         {
           "label": "🇪🇸 Español",
-          "prompt": "Traduce esta página al español."
+          "prompt": "Proporciona información detallada sobre este álbum en español, incluyendo su impacto en países hispanohablantes si es relevante."
         },
         {
           "label": "🇬🇧 Inglés",
-          "prompt": "Traduce esta página al inglés."
+          "prompt": "Provide detailed information about this album in English, including its impact in English-speaking countries and global influence."
         },
         {
-          "label": "xx Lenguaje",
-          "prompt": "Traduce esta página al lenguaje."
-        }
-      ],
-      "buttons": [
-        {
-          "label": "Etiqueta 4.1 en el menú",
-          "prompt": "Pregunta 4.1 a la AI:."
+          "label": "🇫🇷 Francés",
+          "prompt": "Fournis des informations détaillées sur cet album en français, y compris son impact dans les pays francophones si pertinent."
         },
         {
-          "label": "Etiqueta 4.2 en el menú",
-          "prompt": "Pregunta 4.2 a la AI:."
+          "label": "🇩🇪 Alemán",
+          "prompt": "Stelle detaillierte Informationen über dieses Album auf Deutsch bereit, einschließlich seiner Wirkung in deutschsprachigen Ländern falls relevant."
         }
       ]
+    },
+    {
+      "buttons": [
+        {
+          "label": "Trivia y curiosidades",
+          "prompt": "Comparte datos curiosos, trivia y anécdotas interesantes sobre el álbum que me menciones: secretos de grabación, easter eggs, referencias ocultas."
+        },
+        {
+          "label": "Versiones alternativas",
+          "prompt": "Describe versiones alternativas del álbum que me especifiques: demos, versiones censuradas, mezclas diferentes, tracks descartados y material bonus."
+        },
+        {
+          "label": "Tours y presentaciones en vivo",
+          "prompt": "Detalla las giras y presentaciones en vivo asociadas al álbum que me indiques: tours promocionales, conciertos especiales, adaptaciones para el directo."
+        },
+        {
+          "label": "Mitos y leyendas del álbum",
+          "prompt": "Explica los mitos, leyendas urbanas y historias controvertidas que rodean al álbum que me menciones, separando hechos de ficción."
+        },
+        {
+          "label": "Valor como objeto de colección",
+          "prompt": "Analiza el valor del álbum que me especifiques como objeto de colección: ediciones raras, precios en el mercado, variantes buscadas por coleccionistas."
+        }
+      ],
+      "title": "🔍 Curiosidades y Datos"
     }
-  ],
-  "addButtonText": "CUSTOM_2",
-  "origin": "clipboard",
-  "jsonName": "custom_2.json"
+  ]
 }

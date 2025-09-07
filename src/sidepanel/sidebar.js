@@ -18,12 +18,17 @@ import {
   updateLanguageButtonIcon,
   loadMenuData,
   loadAvailableLanguages,
-  bookPrompt,
   generateLanguageOptions,
   generateLanguageSelectorOptions,
   saveMainConfig,
   loadMainConfig,
+  trackPromptUsage,
+  getTopPrompts,
+  renderTopPromptsSection,
+  calculateOptimalSidebarWidth,
+  adjustSidebarWidth,
   textPrompt,
+  questionPrompt,
   confirmPrompt,
   isAISupportedURL,
   sendTextToAI,
@@ -456,6 +461,7 @@ function getButtonIdFromContext(context) {
     'url': 'use-url',
     'clipboard': 'use-clipb',
     'book': 'use-book',
+    'movie': 'use-movie',
     'pdf': 'use-pdf',
     'wiki': 'use-wiki',
     'twitter': 'use-twitter',
@@ -720,8 +726,8 @@ function extractAndCopyGmailContent() {
     let scrollAttempts = 0;
 
     // Configuración optimizada para Gmail 2024 - MÁXIMO 30 EMAILS CON SCROLL AUTOMÁTICO AGRESIVO
-    const MAX_SCROLL_ATTEMPTS = 150; // Más intentos para conversaciones largas
-    const MAX_STAGNANT_ATTEMPTS = 20; // Más persistencia para conversaciones complejas
+    const MAX_SCROLL_ATTEMPTS = 20; // Reducido para captura más rápida
+    const MAX_STAGNANT_ATTEMPTS = 5; // Ajustado proporcionalmente
     const SCROLL_DISTANCE = 1200; // Scroll más agresivo para conversaciones
     const SCROLL_DELAY = 800; // Más tiempo para carga de contenido dinámico
     const MAX_EMAILS = 30; // LÍMITE MÁXIMO: 30 emails
@@ -2417,8 +2423,8 @@ function extractAndCopyTweets() {
     let scrollAttempts = 0;
 
     // Configuración optimizada para X/Twitter 2024 - MÁXIMO 50 TWEETS
-    const MAX_SCROLL_ATTEMPTS = 120; // Aumentado para garantizar 50 tweets
-    const MAX_STAGNANT_ATTEMPTS = 15; // Más persistencia para encontrar los 50
+    const MAX_SCROLL_ATTEMPTS = 20; // Reducido para captura más rápida
+    const MAX_STAGNANT_ATTEMPTS = 5; // Ajustado proporcionalmente
     const SCROLL_DISTANCE = 1000; // Scroll optimizado para captura
     const SCROLL_DELAY = 500; // Más tiempo para asegurar carga completa
     const MAX_TWEETS = 50; // LÍMITE MÁXIMO: 50 tweets
@@ -2861,14 +2867,57 @@ async function handleCustomButtonClick(context, buttonElement) {
   //    interprete correctamente el tipo de contexto (URL vs. Portapapeles).
   config.setCurrentContext(context);
   saveMainConfig(); // Guardar la configuración actualizada inmediatamente
+  
+  // Sincronizar checkboxes con el nuevo contexto
+  syncCheckboxesWithContext(context);
 
-  // 2. Determinar el comportamiento y actualizar los datos relevantes (URL o contenido del Portapapeles).
+  // 2. Determinar el comportamiento y actualizar los datos relevantes según el behaviour del botón custom
   const behaviour = buttonElement.dataset.behaviour;
+  const buttonTitle = buttonElement.textContent || context;
+  
+  // Actualizar checkboxes según el comportamiento
+  const urlCheckbox = document.getElementById('url-checkbox');
+  const clipboardCheckbox = document.getElementById('clipboard-checkbox');
+  
   if (behaviour === 'Clipboard') {
+    // Comportamiento Clipboard: marcar checkbox clipboard, desmarcar URL
     config.setUseClipboard(true);
+    if (clipboardCheckbox) clipboardCheckbox.checked = true;
+    if (urlCheckbox) urlCheckbox.checked = false;
     await tryReadClipboard(); // Esperar a que se lea el portapapeles
-  } else { // Comportamiento por defecto: URL
+    console.log('📋 Comportamiento Clipboard activado para botón custom');
+    
+     } else if (behaviour === 'Question') {
+     // Comportamiento Question: marcar checkbox clipboard, desmarcar URL, preguntar al usuario
+     config.setUseClipboard(true);
+     if (clipboardCheckbox) clipboardCheckbox.checked = true;
+     if (urlCheckbox) urlCheckbox.checked = false;
+     
+     // Lógica específica para Question usando questionPrompt
+     var nombreCustom = await questionPrompt(buttonTitle, buttonTitle);
+     if (nombreCustom) {
+       config.setClipboardText(nombreCustom);
+       // Copiar al portapapeles del sistema usando función mejorada
+       copyToSystemClipboard(nombreCustom);
+       // Actualizar la visualización con el nombre del custom
+       await updateContextDisplay();
+       console.log(`✅ Usuario respondió: ${nombreCustom} - Copiado al clipboard del sistema`);
+     } else {
+       nombreCustom = buttonTitle;
+       config.setClipboardText(nombreCustom);
+       // Copiar al portapapeles del sistema usando función mejorada
+       copyToSystemClipboard(nombreCustom);
+       // Actualizar la visualización con el nombre del custom por defecto
+       await updateContextDisplay();
+       console.log(`⚠️ Usuario canceló - usando nombre por defecto: ${nombreCustom}`);
+     }
+    
+  } else {
+    // Comportamiento por defecto: URL (marcar checkbox URL, desmarcar clipboard)
     config.setUseClipboard(false);
+    if (urlCheckbox) urlCheckbox.checked = true;
+    if (clipboardCheckbox) clipboardCheckbox.checked = false;
+    
     await new Promise(resolve => { // Envolver chrome.tabs.query en una Promesa para esperar su finalización
       chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         if (tabs && tabs.length > 0) {
@@ -2877,7 +2926,9 @@ async function handleCustomButtonClick(context, buttonElement) {
         resolve(); // Resolver la promesa una vez que la callback se haya ejecutado
       });
     });
+    console.log('🌐 Comportamiento URL activado para botón custom');
   }
+  
   // Load and render sections based on the new context
   try {
     const newMenuData = await loadMenuData(config.getCurrentLanguage());
@@ -2887,11 +2938,109 @@ async function handleCustomButtonClick(context, buttonElement) {
     // No actualizar el título del sidepanel para botones custom
     // El título se mantiene como está configurado inicialmente
 
-    // 3. Ahora que el contexto, los datos (URL/Portapapeles) y los datos del menú están establecidos, actualizar la visualización.
-    await updateContextDisplay();
+    // 3. Mostrar contenido según el valor "origin" del archivo JSON
+    const menuData = config.getMenuData();
+    const originValue = menuData?.origin || 'clipboard'; // Por defecto clipboard
+    const title = menuData?.header?.title || context.replace(/_/g, ' ').replace('custom', 'Custom');
+    
+    if (originValue === 'url') {
+      // Origin URL: mostrar URL de la ventana actual
+      config.setUseClipboard(false);
+      if (urlCheckbox) urlCheckbox.checked = true;
+      if (clipboardCheckbox) clipboardCheckbox.checked = false;
+      
+      chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+        if (tabs && tabs.length > 0) {
+          config.setCurrentUrl(tabs[0].url);
+          const labelText = document.getElementById('current-url');
+          if (labelText) {
+            labelText.textContent = `${title}: ${tabs[0].url}`;
+          }
+        }
+      });
+      console.log(`🌐 Botón custom con origin="url": mostrando URL de ventana actual`);
+      
+    } else {
+      // Origin diferente a URL: mostrar contenido del portapapeles
+      config.setUseClipboard(true);
+      if (clipboardCheckbox) clipboardCheckbox.checked = true;
+      if (urlCheckbox) urlCheckbox.checked = false;
+      
+      await tryReadClipboard();
+      const clipboardContent = config.getClipboardText() || '';
+      const labelText = document.getElementById('current-url');
+      if (labelText) {
+        const displayText = clipboardContent.length > 100 
+          ? clipboardContent.substring(0, 100) + '...'
+          : clipboardContent;
+        labelText.textContent = `${title}: ${displayText}`;
+      }
+      console.log(`📋 Botón custom con origin="${originValue}": mostrando contenido del portapapeles`);
+    }
   } catch (error) {
     console.error('Error loading menu data for custom context:', error);
   }
+}
+
+// Función para inicializar el toggle de la segunda fila de botones y botones custom
+function initializeSecondRowToggle() {
+  const customToggle = document.getElementById('custom-toggle');
+  const secondRowContainer = document.getElementById('second-button-row');
+  const customContainer = document.getElementById('custom-buttons-container');
+
+  if (!customToggle || !secondRowContainer) {
+    console.warn('Elementos para toggle de segunda fila no encontrados.');
+    return;
+  }
+
+  // Mostrar el toggle siempre (ya que siempre hay botones en la segunda fila)
+  customToggle.classList.remove('hidden');
+  
+  // Restaurar el estado de visibilidad guardado
+  const isVisible = config.getSecondRowButtonsVisible();
+  if (isVisible) {
+    secondRowContainer.classList.remove('hidden');
+    if (customContainer) {
+      customContainer.classList.remove('hidden');
+    }
+    customToggle.textContent = '▲'; // Visible, mostrar flecha hacia arriba para ocultar
+  } else {
+    secondRowContainer.classList.add('hidden');
+    if (customContainer) {
+      customContainer.classList.add('hidden');
+    }
+    customToggle.textContent = '▼'; // Oculto, mostrar flecha hacia abajo para desplegar
+  }
+  
+  // Limpiar event listeners previos y añadir el nuevo
+  const newToggle = customToggle.cloneNode(true);
+  customToggle.parentNode.replaceChild(newToggle, customToggle);
+  
+  newToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isHidden = secondRowContainer.classList.toggle('hidden');
+    
+    // También toggle del contenedor de botones custom si existe
+    if (customContainer) {
+      if (isHidden) {
+        customContainer.classList.add('hidden');
+      } else {
+        customContainer.classList.remove('hidden');
+      }
+    }
+    
+    if (isHidden) {
+      newToggle.textContent = '▼'; // Oculto, mostrar flecha hacia abajo para desplegar
+      config.setSecondRowButtonsVisible(false);
+      config.setCustomButtonsVisible(false);
+    } else {
+      newToggle.textContent = '▲'; // Visible, mostrar flecha hacia arriba para ocultar
+      config.setSecondRowButtonsVisible(true);
+      config.setCustomButtonsVisible(true);
+    }
+    // Guardar el estado inmediatamente
+    saveMainConfig();
+  });
 }
 
 // Función para buscar JSONs custom (en storage o archivos) y crear los botones
@@ -2929,6 +3078,18 @@ async function initializeCustomButtons() {
         if (response.ok) {
           data = await response.json();
           source = 'file';
+          
+          // 🆕 Guardar automáticamente el archivo cargado en su slot de storage
+          try {
+            await new Promise(resolve => {
+              chrome.storage.local.set({ [storageKey]: data }, () => {
+                console.log(`✅ Archivo ${fileName} guardado automáticamente en slot ${slot} durante la inicialización`);
+                resolve();
+              });
+            });
+          } catch (saveError) {
+            console.warn(`⚠️ No se pudo guardar ${fileName} en storage automáticamente:`, saveError);
+          }
         }
       } catch (error) { /* El archivo no existe, ignorar */ }
     }
@@ -2951,32 +3112,15 @@ async function initializeCustomButtons() {
     }
   }
 
+  // Solo mostrar/ocultar el contenedor de botones custom si hay botones creados
+  // Usar el mismo estado que la segunda fila de botones ya que se controlan juntos
   if (customButtonsCreated > 0) {
-    customToggle.classList.remove('hidden');
-    
-    // Restaurar el estado de visibilidad guardado
-    const isVisible = config.getCustomButtonsVisible();
+    const isVisible = config.getSecondRowButtonsVisible();
     if (isVisible) {
       customContainer.classList.remove('hidden');
-      customToggle.textContent = '▲'; // Visible, mostrar flecha hacia arriba para ocultar
     } else {
       customContainer.classList.add('hidden');
-      customToggle.textContent = '▼'; // Oculto, mostrar flecha hacia abajo para desplegar
     }
-    
-    customToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isHidden = customContainer.classList.toggle('hidden');
-      if (isHidden) {
-        customToggle.textContent = '▼'; // Oculto, mostrar flecha hacia abajo para desplegar
-        config.setCustomButtonsVisible(false);
-      } else {
-        customToggle.textContent = '▲'; // Visible, mostrar flecha hacia arriba para ocultar
-        config.setCustomButtonsVisible(true);
-      }
-      // Guardar el estado inmediatamente
-      saveMainConfig();
-    });
   }
 }
 
@@ -3061,6 +3205,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     initializeUI();
 
     await initializeCustomButtons();
+    
+    // Inicializar el toggle de la segunda fila de botones
+    initializeSecondRowToggle();
 
     // Seleccionar automáticamente el contexto adecuado y renderizar el menú
     const currentContext = config.getCurrentContext();
@@ -3100,6 +3247,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       // Renderizar secciones del menú
       renderSections();
+      
+      // Ajustar ancho de sidebar después de la inicialización completa
+      setTimeout(() => {
+        adjustSidebarWidth();
+      }, 200); // Delay para asegurar que todo esté renderizado
     } else {
       console.warn('No se encontró el botón para el contexto:', currentContext, 'ID:', buttonId);
       const urlButton = document.getElementById('use-url');
@@ -3114,8 +3266,18 @@ document.addEventListener('DOMContentLoaded', async function () {
         const newMenuData = await loadMenuData(config.getCurrentLanguage());
         config.setMenuData(newMenuData);
         renderSections();
+        
+        // Ajustar ancho de sidebar en caso de fallback
+        setTimeout(() => {
+          adjustSidebarWidth();
+        }, 200);
       }
     }
+
+    // Marcar checkboxes según el contexto después de toda la inicialización
+    setTimeout(() => {
+      syncCheckboxesWithContext(currentContext);
+    }, 300); // Delay más largo para asegurar que las traducciones se hayan aplicado
 
     function isUrlBehaviorContext(context) {
       return !isClipboardBehaviorContext(context); // If it's not clipboard behavior, it's URL behavior
@@ -3161,12 +3323,48 @@ function updateActiveTabUrl() {
   });
 }
 
+// Función para sincronizar checkboxes según el contexto actual
+function syncCheckboxesWithContext(context) {
+  const urlCheckbox = document.getElementById('url-checkbox');
+  const clipboardCheckbox = document.getElementById('clipboard-checkbox');
+  
+  if (!urlCheckbox || !clipboardCheckbox) {
+    return;
+  }
+  
+  // Determinar el comportamiento del contexto
+  let isClipboard = false;
+  
+  if (context.startsWith('custom_')) {
+    // Para botones custom, verificar el behaviour guardado
+    const customButton = document.querySelector(`.custom-menu-button[data-context="${context}"]`);
+    if (customButton) {
+      const behaviour = customButton.dataset.behaviour;
+      isClipboard = (behaviour === 'Clipboard' || behaviour === 'Question');
+    }
+  } else {
+    // Para otros contextos, usar la lógica existente
+    isClipboard = isClipboardBehaviorContext(context);
+  }
+  
+  // Actualizar checkboxes
+  if (isClipboard) {
+    clipboardCheckbox.checked = true;
+    urlCheckbox.checked = false;
+    console.log('✅ Checkbox Clipboard marcado para contexto:', context);
+  } else {
+    urlCheckbox.checked = true;
+    clipboardCheckbox.checked = false;
+    console.log('✅ Checkbox URL marcado para contexto:', context);
+  }
+}
+
 // Función para deseleccionar todos los botones de opciones
 function deselectAllButtons() {
   const urlButton = document.getElementById('use-url');
   const clipboardButton = document.getElementById('use-clipb');
   const bookButton = document.getElementById('use-book');
-  const pdfButton = document.getElementById('use-pdf');
+  const movieButton = document.getElementById('use-movie');
   const wikiButton = document.getElementById('use-wiki');
   const twitterButton = document.getElementById('use-twitter');
   const gmailButton = document.getElementById('use-gmail');
@@ -3175,7 +3373,7 @@ function deselectAllButtons() {
   if (urlButton) urlButton.classList.remove('option-selected');
   if (clipboardButton) clipboardButton.classList.remove('option-selected');
   if (bookButton) bookButton.classList.remove('option-selected');
-  if (pdfButton) pdfButton.classList.remove('option-selected');
+  if (movieButton) movieButton.classList.remove('option-selected');
   if (wikiButton) wikiButton.classList.remove('option-selected');
   if (twitterButton) twitterButton.classList.remove('option-selected');
   if (gmailButton) gmailButton.classList.remove('option-selected');
@@ -3215,13 +3413,54 @@ function initializeUI() {
   const urlButton = document.getElementById('use-url');
   const clipboardButton = document.getElementById('use-clipb');
   const bookButton = document.getElementById('use-book');
-  const pdfButton = document.getElementById('use-pdf');
+  const movieButton = document.getElementById('use-movie');
   const wikiButton = document.getElementById('use-wiki');
   const twitterButton = document.getElementById('use-twitter');
   const gmailButton = document.getElementById('use-gmail');
   const addButton = document.getElementById('use-add');
   const directQuestionButton = document.getElementById('direct-question-btn');
   const directQuestionUrlClipboardButton = document.getElementById('direct-question-url-clipboard-btn');
+
+  // Establecer tooltips para botones Libro y Película usando traducciones
+  updateBookMovieTooltips();
+
+  // Función para actualizar tooltips de Libro y Película
+  function updateBookMovieTooltips() {
+    if (bookButton) {
+      const currentLang = config.getCurrentLanguage();
+      const langTranslations = getTranslation(currentLang);
+      bookButton.title = langTranslations.optionButtons.bookButtonTooltip || "Se pregunta al usuario";
+    }
+    if (movieButton) {
+      const currentLang = config.getCurrentLanguage();
+      const langTranslations = getTranslation(currentLang);
+      movieButton.title = langTranslations.optionButtons.movieButtonTooltip || "Se pregunta al usuario";
+    }
+  }
+
+  // Hacer la función disponible globalmente para poder llamarla desde changeLanguage
+  window.updateBookMovieTooltips = updateBookMovieTooltips;
+
+  // Inicializar checkboxes
+  const urlCheckbox = document.getElementById('url-checkbox');
+  const clipboardCheckbox = document.getElementById('clipboard-checkbox');
+
+  // Event listeners para checkboxes mutuamente exclusivos
+  if (urlCheckbox) {
+    urlCheckbox.addEventListener('change', function() {
+      if (this.checked && clipboardCheckbox) {
+        clipboardCheckbox.checked = false;
+      }
+    });
+  }
+
+  if (clipboardCheckbox) {
+    clipboardCheckbox.addEventListener('change', function() {
+      if (this.checked && urlCheckbox) {
+        urlCheckbox.checked = false;
+      }
+    });
+  }
 
   // Configurar el enlace de feedback
   const feedbackLink = document.getElementById('feedback-button');
@@ -3467,6 +3706,9 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     config.setUseClipboard(false);
     config.setCurrentContext('url');
 
+    // Sincronizar checkboxes con el nuevo contexto
+    syncCheckboxesWithContext('url');
+
     // Actualizar URL activa inmediatamente
     chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
       if (tabs && tabs.length > 0) {
@@ -3493,6 +3735,9 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     clipboardButton.classList.add('option-selected');
     config.setUseClipboard(true);
     config.setCurrentContext('clipboard');
+
+    // Sincronizar checkboxes con el nuevo contexto
+    syncCheckboxesWithContext('clipboard');
 
     console.log('📝 ClipboardButton activado - Configurando para mostrar texto seleccionado o clipboard');
 
@@ -3528,8 +3773,11 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     // Establecer explícitamente que se usará el portapapeles
     config.setUseClipboard(true);
 
-    // Lógica específica para libros usando bookPrompt
-    var nombreLibro = await bookPrompt(null, "The Old Man and the Sea");
+    // Sincronizar checkboxes con el nuevo contexto
+    syncCheckboxesWithContext('book');
+
+    // Lógica específica para libros usando questionPrompt
+    var nombreLibro = await questionPrompt("Libro", "The Old Man and the Sea");
     if (nombreLibro) {
       config.setClipboardText(nombreLibro);
       // Copiar al portapapeles del sistema usando función mejorada
@@ -3556,216 +3804,135 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     });
   });
 
-  pdfButton.addEventListener('click', function () {
+  movieButton.addEventListener('click', async function () {
     deselectAllButtons();
     // Detener actualización automática del clipboardButton si estaba activa
     stopClipboardLabelAutoUpdate();
-    pdfButton.classList.add('option-selected');
-    config.setCurrentContext('pdf');
-    config.setUseClipboard(false);
+    movieButton.classList.add('option-selected');
+    config.setCurrentContext('movie');
+    // Establecer explícitamente que se usará el portapapeles
+    config.setUseClipboard(true);
 
-    // Comprobar si ya tenemos información de un PDF seleccionado previamente
-    chrome.storage.local.get(['lastSelectedPdf'], async function (result) {
-      if (result.lastSelectedPdf) {
-        // Mostrar el PDF seleccionado anteriormente
-        config.setClipboardText(`PDF: ${result.lastSelectedPdf}`);
-        await updateContextDisplay();
-      } else {
-        // No hay PDF seleccionado, mostrar mensaje genérico
-        config.setClipboardText('Seleccione un PDF...');
-        await updateContextDisplay();
-      }
-    });
+    // Sincronización de checkboxes con el nuevo contexto
+    syncCheckboxesWithContext('movie');
 
-    // Crear un input file oculto para seleccionar archivos PDF
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = '.pdf';
-    fileInput.style.display = 'none';
-    document.body.appendChild(fileInput);
-
-    // Activar el diálogo de selección de archivo
-    fileInput.click();
-
-    // Manejar la selección del archivo
-    fileInput.addEventListener('change', async function () {
-      if (fileInput.files && fileInput.files[0]) {
-        const selectedFile = fileInput.files[0];
-
-        // Mostrar el nombre del archivo seleccionado en la interfaz
-        config.setClipboardText(`PDF: ${selectedFile.name}`);
-        await updateContextDisplay();
-
-        // Crear un objeto URL para el archivo
-        const fileUrl = URL.createObjectURL(selectedFile);
-
-        // Guardar la ruta del archivo para usarla en los prompts
-        const filePath = fileUrl;
-
-        // Almacenar el nombre y la ruta del archivo en el almacenamiento local
-        chrome.storage.local.set({
-          lastSelectedPdf: selectedFile.name,
-          lastSelectedPdfPath: filePath
-        });
-
-        // Guardar configuración principal
-        saveMainConfig();
-
-        // Cargar el PDF usando fetch
-        fetch(fileUrl)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(`Error al cargar el PDF: ${response.status}`);
-            }
-            return response.blob();
-          })
-          .then(pdfBlob => {
-            // Crear un nuevo objeto URL para el blob
-            const blobUrl = URL.createObjectURL(pdfBlob);
-
-            // Abrir el PDF en una nueva pestaña
-            chrome.tabs.create({ url: blobUrl, active: true }, (newTab) => {
-              // Esperar a que la pestaña se cargue completamente
-              chrome.tabs.onUpdated.addListener(function listener(tabId, changeInfo, tab) {
-                if (tabId === newTab.id && changeInfo.status === 'complete') {
-                  // Remover el listener para evitar múltiples ejecuciones
-                  chrome.tabs.onUpdated.removeListener(listener);
-                  
-                  // Esperar un poco más para asegurar que el PDF se renderice
-                  setTimeout(() => {
-                    // Ejecutar el script para extraer texto del PDF
-                    chrome.scripting.executeScript({
-                      target: { tabId: newTab.id },
-                      function: extractPDFText
-                    });
-                  }, 2000);
-                }
-              });
-            });
-
-            // Mostrar notificación de éxito
-            const notification = document.getElementById('copy-notification');
-            notification.textContent = `PDF abierto: ${selectedFile.name}. Extrayendo texto...`;
-            notification.classList.remove('hidden');
-
-            // Configurar listener para recibir el resultado de la extracción
-            const messageListener = async (event) => {
-              if (event.data && event.data.type === 'PDF_EXTRACT_COMPLETE') {
-                if (event.data.success) {
-                  // Éxito: actualizar el texto del clipboard y la interfaz
-                  const extractedLength = event.data.textLength;
-                  config.setClipboardText(`PDF extraído: ${selectedFile.name} (${extractedLength} caracteres)`);
-                  await updateContextDisplay();
-                  
-                  notification.textContent = `✅ Texto extraído del PDF: ${extractedLength} caracteres copiados al clipboard`;
-            setTimeout(() => {
-              notification.classList.add('hidden');
-                  }, 4000);
-                } else {
-                  // Error: mostrar mensaje de error
-                  notification.textContent = `❌ Error extrayendo texto del PDF: ${event.data.error}`;
-                  setTimeout(() => {
-                    notification.classList.add('hidden');
-                  }, 5000);
-                }
-                
-                // Remover el listener después de recibir el resultado
-                window.removeEventListener('message', messageListener);
-              }
-            };
-            
-            // Agregar el listener
-            window.addEventListener('message', messageListener);
-
-            // Timeout de seguridad para remover el listener si no se recibe respuesta
-            setTimeout(() => {
-              window.removeEventListener('message', messageListener);
-              if (!notification.classList.contains('hidden')) {
-                notification.textContent = `⚠️ Tiempo de espera agotado para extraer texto del PDF`;
-                setTimeout(() => {
-                  notification.classList.add('hidden');
-                }, 3000);
-              }
-            }, 30000); // 30 segundos de timeout
-          })
-          .catch(error => {
-            console.error('Error al cargar el PDF:', error);
-
-            // Mostrar notificación de error
-            const notification = document.getElementById('copy-notification');
-            notification.textContent = `UNDER CONSTRUCTION: Error al abrir el PDF: ${error.message}`;
-            notification.classList.remove('hidden');
-
-            setTimeout(() => {
-              notification.classList.add('hidden');
-            }, 3000);
-          });
-      }
-
-      // Eliminar el input después de usarlo
-      document.body.removeChild(fileInput);
-    });
-
-    // Cargar el menú correspondiente al contexto de pdf
-    loadMenuData(config.getCurrentLanguage()).then(newMenuData => {
-      config.setMenuData(newMenuData);
-      renderSections();
-    }).catch(error => {
-      console.error('Error al cargar el menú de pdf:', error);
-    });
-
-    // Llamar a la función underConstruction al final
-    underConstruction();
-  });
-
-  wikiButton.addEventListener('click', function () {
-    deselectAllButtons();
-    // Detener actualización automática del clipboardButton si estaba activa
-    stopClipboardLabelAutoUpdate();
-    wikiButton.classList.add('option-selected');
-    config.setCurrentContext('wiki');
-    config.setUseClipboard(false);
-
-    // Actualizar URL activa inmediatamente
-    chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
-      if (tabs && tabs.length > 0) {
-        config.setCurrentUrl(tabs[0].url);
-        // Actualizar la visualización para mostrar Wiki y la URL
-        await updateContextDisplay();
-      }
-    });
-
-    // Lógica específica para Wikipedia: obtener la pestaña actual y verificar si es Wikipedia
-    chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
-      if (tabs && tabs.length > 0) {
-        const currentUrl = tabs[0].url;
-        if (currentUrl.includes('wikipedia.org')) {
-          // Ya estamos en Wikipedia, sólo actualizamos la visualización
-          config.setCurrentUrl(currentUrl);
-          await updateContextDisplay();
-          // Ya estamos en Wikipedia
-        } else {
-          // No estamos en Wikipedia, abrir una nueva pestaña
-          chrome.tabs.create({ url: 'https://www.wikipedia.org/' }, async function (newTab) {
-            // Actualizar con la nueva URL de Wikipedia
-            config.setCurrentUrl('https://www.wikipedia.org/');
-            await updateContextDisplay();
-          });
-          // Abriendo Wikipedia en nueva pestaña
-        }
-      }
-    });
-
-    // Guardar preferencia de contexto
+    // Lógica específica para películas usando questionPrompt
+    var nombrePelicula = await questionPrompt("Película", "The Fisher King");
+    if (nombrePelicula) {
+      config.setClipboardText(nombrePelicula);
+      // Copiar al portapapeles del sistema usando función mejorada
+      copyToSystemClipboard(nombrePelicula);
+      // Actualizar la visualización con el nombre de la película
+      await updateContextDisplay();
+    } else {
+      nombrePelicula = "The Fisher King";
+      config.setClipboardText(nombrePelicula);
+      // Copiar al portapapeles del sistema usando función mejorada
+      copyToSystemClipboard(nombrePelicula);
+      // Actualizar la visualización con el nombre de la película por defecto
+      await updateContextDisplay();
+    }
+    // Guardar configuración principal
     saveMainConfig();
 
-    // Cargar el menú correspondiente al contexto de Wikipedia
+    // Cargar el menú correspondiente al contexto de películas
     loadMenuData(config.getCurrentLanguage()).then(newMenuData => {
       config.setMenuData(newMenuData);
       renderSections();
     }).catch(error => {
-      console.error('Error al cargar el menú de Wikipedia:', error);
+      console.error('Error al cargar el menú de películas:', error);
     });
+  });
+
+      wikiButton.addEventListener('click', async function () {
+      deselectAllButtons();
+      // Detener actualización automática del clipboardButton si estaba activa
+      stopClipboardLabelAutoUpdate();
+      wikiButton.classList.add('option-selected');
+      
+      // NO cambiar el contexto global - mantener el contexto actual
+      // config.setCurrentContext('wiki'); // Comentado - funciona independiente del contexto
+      
+      // NO sincronizar checkboxes - mantener el estado actual de los checkboxes
+      // syncCheckboxesWithContext('wiki'); // Comentado - usar estado actual de checkboxes
+    
+    // Verificar qué checkbox está marcado para determinar el comportamiento (independiente del contexto)
+    const urlCheckbox = document.getElementById('url-checkbox');
+    const clipboardCheckbox = document.getElementById('clipboard-checkbox');
+    
+    if (clipboardCheckbox && clipboardCheckbox.checked) {
+      // Si el checkbox de clipboard está marcado, usar clipboard (texto seleccionado o copiado)
+      config.setUseClipboard(true);
+      console.log('📝 Wikipedia usando Clipboard como fuente (independiente del contexto)');
+    } else {
+      // Por defecto usar URL (si url checkbox está marcado o ninguno está marcado)
+      config.setUseClipboard(false);
+      console.log('🌐 Wikipedia usando URL como fuente (independiente del contexto)');
+    }
+
+    // Actualizar contexto según el modo seleccionado
+    if (config.getUseClipboard()) {
+      // Modo clipboard: intentar obtener texto del clipboard y abrir Wikipedia si no está abierta
+      await tryReadClipboard();
+      await updateContextDisplay();
+      // Iniciar actualización automática del clipboard si es necesario
+      startClipboardLabelAutoUpdate();
+      
+      // Verificar si Wikipedia está abierta, si no, abrirla
+      chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+        if (tabs && tabs.length > 0) {
+          const currentUrl = tabs[0].url;
+          if (currentUrl.includes('wikipedia.org')) {
+            // Ya estamos en Wikipedia
+            console.log('🌐 Wikipedia ya está abierta - usando clipboard');
+          } else {
+            // No estamos en Wikipedia, abrir una nueva pestaña
+            chrome.tabs.create({ url: 'https://www.wikipedia.org/' }, async function (newTab) {
+              console.log('🌐 Abriendo Wikipedia en nueva pestaña para contexto clipboard');
+            });
+          }
+        }
+      });
+      
+      console.log('📝 Wikipedia configurado para usar contenido del clipboard');
+    } else {
+      // Modo URL: manejar pestaña actual y Wikipedia
+      chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+        if (tabs && tabs.length > 0) {
+          config.setCurrentUrl(tabs[0].url);
+          // Actualizar la visualización para mostrar Wiki y la URL
+          await updateContextDisplay();
+        }
+      });
+
+      // Lógica específica para Wikipedia: obtener la pestaña actual y verificar si es Wikipedia
+      chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+        if (tabs && tabs.length > 0) {
+          const currentUrl = tabs[0].url;
+          if (currentUrl.includes('wikipedia.org')) {
+            // Ya estamos en Wikipedia, sólo actualizamos la visualización
+            config.setCurrentUrl(currentUrl);
+            await updateContextDisplay();
+            console.log('🌐 Ya estamos en Wikipedia');
+          } else {
+            // No estamos en Wikipedia, abrir una nueva pestaña
+            chrome.tabs.create({ url: 'https://www.wikipedia.org/' }, async function (newTab) {
+              // Actualizar con la nueva URL de Wikipedia
+              config.setCurrentUrl('https://www.wikipedia.org/');
+              await updateContextDisplay();
+            });
+            console.log('🌐 Abriendo Wikipedia en nueva pestaña');
+          }
+        }
+      });
+    }
+
+    // Guardar preferencia (solo configuración de clipboard/URL, no el contexto)
+    saveMainConfig();
+
+    // NO cargar menú específico de Wikipedia - mantener el menú del contexto actual
+    // El wikiButton funciona independiente del contexto, no cambia el menú
+    console.log('🔍 Wikipedia configurado como herramienta independiente del contexto actual');
   });
 
   twitterButton.addEventListener('click', async function () {
@@ -3775,6 +3942,9 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     twitterButton.classList.add('option-selected');
     config.setCurrentContext('twitter');
     config.setUseClipboard(true); // Cambiado a true para usar el clipboard para tweets
+    
+    // Sincronizar checkboxes con el nuevo contexto
+    syncCheckboxesWithContext('twitter');
 
     // Actualizar URL activa inmediatamente
     chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
@@ -3878,6 +4048,9 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     gmailButton.classList.add('option-selected');
     config.setCurrentContext('gmail');
     config.setUseClipboard(true);
+    
+    // Sincronizar checkboxes con el nuevo contexto
+    syncCheckboxesWithContext('gmail');
 
     // Leer portapapeles inmediatamente
     const clipText = await tryReadClipboard();
@@ -3965,6 +4138,9 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
     // Cambiar al contexto ADD para mostrar el menú JSON correspondiente
     const context = '+add+';
     config.setCurrentContext(context);
+    
+    // Sincronizar checkboxes con el nuevo contexto
+    syncCheckboxesWithContext(context);
     
     // Actualizar el botón seleccionado
     deselectAllButtons();
@@ -4088,6 +4264,12 @@ https://chromewebstore.google.com/detail/jimdgbjdhdoiejncgdfcjpakokcpnalg?utm_so
   languageSelector.addEventListener('change', function (e) {
     changeLanguage(e.target.value);
     saveMainConfig();
+    // Actualizar tooltips después del cambio de idioma
+    setTimeout(() => {
+      if (window.updateBookMovieTooltips) {
+        window.updateBookMovieTooltips();
+      }
+    }, 100);
   });
 
   const modelSelector = document.getElementById('ai-model-selector');
@@ -4134,9 +4316,11 @@ function configureModelMenu() {
   // Marcar el modelo actual como seleccionado
   updateSelectedModelInMenu();
 
-  // Mostrar el menú al pasar el mouse sobre el botón
-  motorButton.addEventListener('mouseenter', function (event) {
+  // Mostrar/ocultar el menú al hacer clic en el botón
+  motorButton.addEventListener('click', function (event) {
+    event.preventDefault(); // Prevenir comportamiento por defecto
     event.stopPropagation(); // Evitar que el clic se propague
+    event.stopImmediatePropagation(); // Evitar que otros handlers se ejecuten
 
     // Si el menú de idiomas está visible, lo ocultamos
     const languagePopup = document.getElementById('language-popup');
@@ -4145,41 +4329,15 @@ function configureModelMenu() {
       languagePopup.classList.add('hidden');
     }
 
-    // Mostrar el menú de modelos
+    // Toggle del menú de modelos
     if (aiModelsPopup.classList.contains('hidden')) {
+      // Mostrar el menú
       aiModelsPopup.classList.remove('hidden');
       setTimeout(() => {
         aiModelsPopup.classList.add('visible');
-      }, 50);
-    }
-  });
-
-  // Mantener el menú abierto mientras el mouse esté sobre él
-  aiModelsPopup.addEventListener('mouseenter', function (event) {
-    event.stopPropagation();
-  });
-
-  // Ocultar el menú cuando el mouse sale del botón y del menú
-  motorButton.addEventListener('mouseleave', function (event) {
-    // Verificar si el mouse se movió al menú
-    const toElement = event.relatedTarget;
-    if (!toElement || !aiModelsPopup.contains(toElement)) {
-      setTimeout(() => {
-        // Solo ocultar si el mouse no está sobre el menú
-        if (!aiModelsPopup.matches(':hover')) {
-          aiModelsPopup.classList.remove('visible');
-          setTimeout(() => {
-            aiModelsPopup.classList.add('hidden');
-          }, 200);
-        }
       }, 100);
-    }
-  });
-
-  // Ocultar el menú cuando el mouse sale del menú
-  aiModelsPopup.addEventListener('mouseleave', function (event) {
-    const toElement = event.relatedTarget;
-    if (!toElement || !motorButton.contains(toElement)) {
+    } else {
+      // Ocultar el menú
       aiModelsPopup.classList.remove('visible');
       setTimeout(() => {
         aiModelsPopup.classList.add('hidden');
@@ -4270,9 +4428,11 @@ function configureLanguageMenu() {
   // Marcar el idioma actual como seleccionado
   updateSelectedLanguageInMenu();
 
-  // Mostrar el menú al pasar el mouse sobre el botón
-  languageButton.addEventListener('mouseenter', function (event) {
+  // Mostrar/ocultar el menú al hacer clic en el botón
+  languageButton.addEventListener('click', function (event) {
+    event.preventDefault(); // Prevenir comportamiento por defecto
     event.stopPropagation(); // Evitar que el evento se propague
+    event.stopImmediatePropagation(); // Evitar que otros handlers se ejecuten
 
     // Si el menú de modelos está visible, lo ocultamos
     const aiModelsPopup = document.getElementById('ai-models-popup');
@@ -4281,41 +4441,15 @@ function configureLanguageMenu() {
       aiModelsPopup.classList.add('hidden');
     }
 
-    // Mostrar menú de idiomas
+    // Toggle del menú de idiomas
     if (languagePopup.classList.contains('hidden')) {
+      // Mostrar el menú
       languagePopup.classList.remove('hidden');
       setTimeout(() => {
         languagePopup.classList.add('visible');
-      }, 50);
-    }
-  });
-
-  // Mantener el menú abierto mientras el mouse esté sobre él
-  languagePopup.addEventListener('mouseenter', function (event) {
-    event.stopPropagation();
-  });
-
-  // Ocultar el menú cuando el mouse sale del botón y del menú
-  languageButton.addEventListener('mouseleave', function (event) {
-    // Verificar si el mouse se movió al menú
-    const toElement = event.relatedTarget;
-    if (!toElement || !languagePopup.contains(toElement)) {
-      setTimeout(() => {
-        // Solo ocultar si el mouse no está sobre el menú
-        if (!languagePopup.matches(':hover')) {
-          languagePopup.classList.remove('visible');
-          setTimeout(() => {
-            languagePopup.classList.add('hidden');
-          }, 200);
-        }
       }, 100);
-    }
-  });
-
-  // Ocultar el menú cuando el mouse sale del menú
-  languagePopup.addEventListener('mouseleave', function (event) {
-    const toElement = event.relatedTarget;
-    if (!toElement || !languageButton.contains(toElement)) {
+    } else {
+      // Ocultar el menú
       languagePopup.classList.remove('visible');
       setTimeout(() => {
         languagePopup.classList.add('hidden');
@@ -4335,6 +4469,12 @@ function configureLanguageMenu() {
       const langId = option.getAttribute('data-lang');
       changeLanguage(langId);
       updateLanguageButtonIcon(langId);
+      // Actualizar tooltips después del cambio de idioma
+      setTimeout(() => {
+        if (window.updateBookMovieTooltips) {
+          window.updateBookMovieTooltips();
+        }
+      }, 100);
       languagePopup.classList.remove('visible');
       setTimeout(() => {
         languagePopup.classList.add('hidden');
@@ -4360,12 +4500,33 @@ function updateSelectedLanguageInMenu() {
 // Cerrar menús al hacer clic fuera
 function setupClickOutsideHandler() {
   document.addEventListener('click', function (event) {
-    // Mantener la funcionalidad para cierre de menús al hacer clic
-    // pero solo para interacciones específicas que lo requieran
-    // Por ejemplo, al seleccionar una opción
+    // Pequeño delay para evitar conflicto con el clic del botón
+    setTimeout(() => {
+      const aiModelsPopup = document.getElementById('ai-models-popup');
+      const languagePopup = document.getElementById('language-popup');
+      const motorButton = document.getElementById('motor-button');
+      const languageButton = document.getElementById('language-button');
 
-    // Los menús ahora se manejan principalmente con eventos de mouse (hover)
-    // sin necesidad de cerrarlos al hacer clic fuera
+      // Cerrar menú de modelos si se hace clic fuera
+      if (aiModelsPopup && !aiModelsPopup.classList.contains('hidden')) {
+        if (!aiModelsPopup.contains(event.target) && !motorButton.contains(event.target)) {
+          aiModelsPopup.classList.remove('visible');
+          setTimeout(() => {
+            aiModelsPopup.classList.add('hidden');
+          }, 200);
+        }
+      }
+
+      // Cerrar menú de idiomas si se hace clic fuera
+      if (languagePopup && !languagePopup.classList.contains('hidden')) {
+        if (!languagePopup.contains(event.target) && !languageButton.contains(event.target)) {
+          languagePopup.classList.remove('visible');
+          setTimeout(() => {
+            languagePopup.classList.add('hidden');
+          }, 200);
+        }
+      }
+    }, 10); // Pequeño delay para permitir que se complete el toggle del botón
   });
 }
 

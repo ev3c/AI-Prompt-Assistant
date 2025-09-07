@@ -1,0 +1,174 @@
+{
+  "header": {
+    "title": "Assistant IA",
+    "currentUrlPlaceholder": "Page actuelle"
+  },
+  "sections": [
+    {
+      "title": "📝 Résumé et compréhension",
+      "buttons": [
+        {
+          "label": "Faites un résumé de page web : ",
+          "prompt": "Faites un résumé de :"
+        },
+        {
+          "label": "Points principaux",
+          "prompt": "Quels sont les points principaux de cet article ?"
+        },
+        {
+          "label": "Résumé en 3 phrases",
+          "prompt": "Résumez cette page en 3 phrases."
+        },
+        {"label": "Résumé en X caractères", "prompt": "Résumez cette page en X caractères."},
+        {
+          "label": "Version pour enfants",
+          "prompt": "Donnez-moi une version pour enfants de cette information."
+        },
+        {
+          "label": "Conclusion principale",
+          "prompt": "Quelle est la conclusion principale de cette page ?"
+        }
+      ]
+    },
+    {
+      "title": "🔍 Analyse de contenu",
+      "buttons": [
+        {
+          "label": "Quel ton a-t-elle ?",
+          "prompt": "Quel ton a cette page ? (objectif, persuasif, émotionnel, etc.)"
+        },
+        {
+          "label": "Arguments principaux",
+          "prompt": "Quels arguments principaux sont utilisés sur cette page ?"
+        },
+        {
+          "label": "Identifier les biais",
+          "prompt": "Pouvez-vous identifier un biais dans ce texte ?"
+        },
+        {
+          "label": "Sources utilisées",
+          "prompt": "Quelles sont les sources que cette page utilise ?"
+        },
+        {
+          "label": "Évaluer la fiabilité",
+          "prompt": "Cette information est-elle fiable ? Pourquoi oui ou pourquoi non ?"
+        }
+      ]
+    },
+    {
+      "title": "📊 Extraction de données",
+      "buttons": [
+        {
+          "label": "Données statistiques",
+          "prompt": "Extrayez toutes les données statistiques qui apparaissent sur cette page."
+        },
+        {
+          "label": "Tableau résumé",
+          "prompt": "Donnez-moi un tableau avec les informations les plus importantes de cet article."
+        },
+        {
+          "label": "Produits mentionnés",
+          "prompt": "Listez tous les produits qui sont mentionnés."
+        },
+        {
+          "label": "Entités mentionnées",
+          "prompt": "Quels sont les noms des personnes/lieux/entreprises qui apparaissent ici ?"
+        }
+      ]
+    },
+    {
+      "title": "🤖 Interaction ou aide avec les actions",
+      "buttons": [
+        {
+          "label": "Remplir le formulaire",
+          "prompt": "Aidez-moi à remplir ce formulaire avec mes données."
+        },
+        {
+          "label": "Comment s'inscrire",
+          "prompt": "Comment puis-je m'inscrire ici ?"
+        },
+        {
+          "label": "Info de contact",
+          "prompt": "Où sont les informations de contact ?"
+        },
+        {
+          "label": "Étapes d'action",
+          "prompt": "Résumez les étapes pour faire [action spécifique de la page]."
+        }
+      ]
+    },
+    {
+      "title": "💬 Traduction ou changement de format",
+      "translationButton": {
+        "label": "Traduisez la page/texte en langue : "
+      },
+      "translationSubmenu": [
+        {
+          "label": "🇪🇸 Espagnol",
+          "prompt": "Traduisez cette page en espagnol."
+        },
+        {
+          "label": "🇬🇧 Anglais",
+          "prompt": "Traduisez cette page en anglais."
+        },
+        {
+          "label": "ca Catalan",
+          "prompt": "Traduisez cette page en catalan."
+        },
+        {
+          "label": "🇩🇪 Allemand",
+          "prompt": "Traduisez cette page en allemand."
+        },
+        {
+          "label": "🇫🇷 Français",
+          "prompt": "Traduisez cette page en français."
+        },
+        {
+          "label": "🇮🇹 Italien",
+          "prompt": "Traduisez cette page en italien."
+        },
+        {
+          "label": "🇵🇹 Portugais",
+          "prompt": "Traduisez cette page en portugais."
+        },
+        {
+          "label": "🇨🇳 Chinois",
+          "prompt": "Traduisez cette page en chinois."
+        },
+        {
+          "label": "🇷🇺 Russe",
+          "prompt": "Traduisez cette page en russe."
+        },
+        {
+          "label": "🇸🇦 Arabe",
+          "prompt": "Traduisez cette page en arabe."
+        },
+        {
+          "label": "🇯🇵 Japonais",
+          "prompt": "Traduisez cette page en japonais."
+        },
+        {
+          "label": "🇮🇳 Hindi",
+          "prompt": "Traduisez cette page en hindi."
+        },
+        {
+          "label": "🇰🇷 Coréen",
+          "prompt": "Traduisez cette page en coréen."
+        }
+      ],
+      "buttons": [
+        {
+          "label": "À présentation",
+          "prompt": "Convertissez cet article en présentation avec diapositives."
+        },
+        {
+          "label": "Pour réseaux sociaux",
+          "prompt": "Réécrivez ce contenu pour une publication de réseaux sociaux."
+        }
+      ]
+    }
+  ],
+  "jsonName": "menu_data_url_FR.json",
+  "addButtonText": "Assistant IA",
+  "origin": "url"
+}

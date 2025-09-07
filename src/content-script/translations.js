@@ -6,16 +6,21 @@ export const translations = {
       clipboardButton: "Portapapeles",
       clipboardButtonTooltip: "Se envía Portapapeles",
       bookButton: "Libro",
+      bookButtonTooltip: "Se pregunta al usuario",
+      movieButton: "Película",
+      movieButtonTooltip: "Se pregunta al usuario",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
+      wikiButtonTooltip: "Se envía URL o Portapapeles",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+",
+      addButton: "ADD custom_x",
       directQuestionButton: "Escribe la orden a",
       directQuestionButtonTooltip: "Sin añadir URL / Portapapeles",
       directQuestionButtonUrlClipboard: "Orden a",
       directQuestionButtonUrlClipboardTooltip: "Con URL / Portapapeles",
-      urlClipboardText: "URL / Portapapeles"
+      urlClipboardText: "URL / Portapapeles",
+      topPromptsTitle: "📊 Prompts más usados"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -47,6 +52,8 @@ export const translations = {
       cancelButton: "Cancelar",
       acceptButton: "Aceptar",
       bookPrompt: "¿Cuál es el nombre del libro?",
+      moviePrompt: "¿Cuál es el nombre de la película?",
+      questionPrompt: "¿Cuál es el nombre de: ?  ",
       topicPrompt: "Especificar tema:",
       topicPlaceholder: "Especifique el tema a buscar",
       selectTextClick: "Seleccione y copie el texto de la página y pulse AQUÍ",
@@ -71,16 +78,21 @@ export const translations = {
       clipboardButton: "Portapapers",
       clipboardButtonTooltip: "S'envia Portapapers",
       bookButton: "Llibre",
+      bookButtonTooltip: "Es pregunta a l'usuari",
+      movieButton: "Pel·lícula",
+      movieButtonTooltip: "Es pregunta a l'usuari",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
+      wikiButtonTooltip: "S'envia URL o Portapapers",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+",
+      addButton: "ADD custom_x",
       directQuestionButton: "Escriu l'ordre a",
       directQuestionButtonTooltip: "Sense afegir URL / Portapapers",
       directQuestionButtonUrlClipboard: "Ordre a",
       directQuestionButtonUrlClipboardTooltip: "Amb URL / Portapapers",
-      urlClipboardText: "URL / Portapapers"
+      urlClipboardText: "URL / Portapapers",
+      topPromptsTitle: "📊 Prompts més usats"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -112,6 +124,7 @@ export const translations = {
       cancelButton: "Cancel·lar",
       acceptButton: "Acceptar",
       bookPrompt: "Quin és el nom del llibre?",
+      questionPrompt: "Quin és el nom de: ?  ",
       topicPrompt: "Especificar tema:",
       topicPlaceholder: "Especifiqueu el tema a cercar",
       selectTextClick: "Seleccioneu i copieu el text de la pàgina i premeu AQUÍ",
@@ -136,16 +149,21 @@ export const translations = {
       clipboardButton: "Clipboard",
       clipboardButtonTooltip: "Clipboard is sent",
       bookButton: "Book",
+      bookButtonTooltip: "User is asked",
+      movieButton: "Movie",
+      movieButtonTooltip: "User is asked",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
+      wikiButtonTooltip: "URL or Clipboard is sent",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+",
+      addButton: "ADD custom_x",
       directQuestionButton: "Write the command to",
       directQuestionButtonTooltip: "Without adding URL / Clipboard",
       directQuestionButtonUrlClipboard: "Command to",
       directQuestionButtonUrlClipboardTooltip: "With URL / Clipboard",
-      urlClipboardText: "URL / Clipboard"
+      urlClipboardText: "URL / Clipboard",
+      topPromptsTitle: "📊 Most used prompts"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -177,6 +195,8 @@ export const translations = {
       cancelButton: "Cancel",
       acceptButton: "Accept",
       bookPrompt: "What is the name of the book?",
+      moviePrompt: "What is the name of the movie?",
+      questionPrompt: "What is the name of: ?  ",
       topicPrompt: "Specify topic:",
       topicPlaceholder: "Please specify the topic to search",
       selectTextClick: "Select and copy the text from the page and click HERE",
@@ -201,16 +221,21 @@ export const translations = {
       clipboardButton: "Presse-papiers",
       clipboardButtonTooltip: "Le presse-papiers est envoyé",
       bookButton: "Livre",
+      bookButtonTooltip: "L'utilisateur est interrogé",
+      movieButton: "Film",
+      movieButtonTooltip: "L'utilisateur est interrogé",
       pdfButton: "PDF",
       wikiButton: "Wikipédia",
+      wikiButtonTooltip: "URL ou Presse-papiers est envoyé",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+",
+      addButton: "ADD custom_x",
       directQuestionButton: "Écrivez la commande à",
       directQuestionButtonTooltip: "Sans ajouter URL / Presse-papiers",
       directQuestionButtonUrlClipboard: "Commande à",
       directQuestionButtonUrlClipboardTooltip: "Avec URL / Presse-papiers",
-      urlClipboardText: "URL / Presse-papiers"
+      urlClipboardText: "URL / Presse-papiers",
+      topPromptsTitle: "📊 Prompts les plus utilisés"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -242,6 +267,8 @@ export const translations = {
       cancelButton: "Annuler",
       acceptButton: "Accepter",
       bookPrompt: "Quel est le nom du livre?",
+      moviePrompt: "Quel est le nom du film?",
+      questionPrompt: "Quel est le nom de: ?  ",
       topicPrompt: "Spécifier le sujet:",
       topicPlaceholder: "Veuillez spécifier le sujet à rechercher",
       selectTextClick: "Sélectionnez et copiez le texte de la page et cliquez ICI",
@@ -266,16 +293,21 @@ export const translations = {
       clipboardButton: "Zwischenablage",
       clipboardButtonTooltip: "Zwischenablage wird gesendet",
       bookButton: "Bücher",
+      bookButtonTooltip: "Benutzer wird gefragt",
+      movieButton: "Film",
+      movieButtonTooltip: "Benutzer wird gefragt",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
+      wikiButtonTooltip: "URL oder Zwischenablage wird gesendet",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+",
+      addButton: "ADD custom_x",
       directQuestionButton: "Schreiben Sie den Befehl an",
       directQuestionButtonTooltip: "Ohne Hinzufügen von URL / Zwischenablage",
       directQuestionButtonUrlClipboard: "Befehl an",
       directQuestionButtonUrlClipboardTooltip: "Mit URL / Zwischenablage",
-      urlClipboardText: "URL / Zwischenablage"
+      urlClipboardText: "URL / Zwischenablage",
+      topPromptsTitle: "📊 Meist verwendete Prompts"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -307,6 +339,7 @@ export const translations = {
       cancelButton: "Abbrechen",
       acceptButton: "Akzeptieren",
       bookPrompt: "Wie heißt das Buch?",
+      questionPrompt: "Wie heißt: ?  ",
       topicPrompt: "Thema angeben:",
       topicPlaceholder: "Bitte geben Sie das zu suchende Thema an",
       selectTextClick: "Wählen Sie den Text von der Seite aus, kopieren Sie ihn und klicken Sie HIER",
@@ -331,16 +364,21 @@ export const translations = {
       clipboardButton: "Appunti",
       clipboardButtonTooltip: "Gli appunti vengono inviati",
       bookButton: "Libro",
+      bookButtonTooltip: "L'utente viene interrogato",
+      movieButton: "Film",
+      movieButtonTooltip: "L'utente viene interrogato",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
+      wikiButtonTooltip: "URL o Appunti vengono inviati",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+",
+      addButton: "ADD custom_x",
       directQuestionButton: "Scrivi il comando a",
       directQuestionButtonTooltip: "Senza aggiungere URL / Appunti",
       directQuestionButtonUrlClipboard: "Comando a",
       directQuestionButtonUrlClipboardTooltip: "Con URL / Appunti",
-      urlClipboardText: "URL / Appunti"
+      urlClipboardText: "URL / Appunti",
+      topPromptsTitle: "📊 Prompt più utilizzati"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -372,6 +410,7 @@ export const translations = {
       cancelButton: "Annulla",
       acceptButton: "Accetta",
       bookPrompt: "Qual è il nome del libro?",
+      questionPrompt: "Qual è il nome di: ?  ",
       topicPrompt: "Specificare argomento:",
       topicPlaceholder: "Si prega di specificare l'argomento da cercare",
       selectTextClick: "Seleziona e copia il testo dalla pagina e clicca QUI",
@@ -396,16 +435,21 @@ export const translations = {
       clipboardButton: "Буфер обмена",
       clipboardButtonTooltip: "Буфер обмена отправляется",
       bookButton: "Книга",
+      bookButtonTooltip: "Пользователя спрашивают",
+      movieButton: "Фильм",
+      movieButtonTooltip: "Пользователя спрашивают",
       pdfButton: "PDF",
       wikiButton: "Википедия",
+      wikiButtonTooltip: "Отправляется URL или буфер обмена",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+add+",
+      addButton: "ADD custom_x",
       directQuestionButton: "Напишите команду",
       directQuestionButtonTooltip: "Без добавления URL / Буфер обмена",
       directQuestionButtonUrlClipboard: "Команда",
       directQuestionButtonUrlClipboardTooltip: "С URL / Буфер обмена",
-      urlClipboardText: "URL / Буфер обмена"
+      urlClipboardText: "URL / Буфер обмена",
+      topPromptsTitle: "📊 Самые используемые промпты"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -437,6 +481,7 @@ export const translations = {
       cancelButton: "Отмена",
       acceptButton: "Принять",
       bookPrompt: "Как называется книга?",
+      questionPrompt: "Как называется: ?  ",
       topicPrompt: "Указать тему:",
       topicPlaceholder: "Пожалуйста, укажите тему для поиска",
       selectTextClick: "Выберите и скопируйте текст со страницы и нажмите ЗДЕСЬ",
@@ -461,16 +506,21 @@ export const translations = {
       clipboardButton: "الحافظة",
       clipboardButtonTooltip: "يتم إرسال الحافظة",
       bookButton: "كتاب",
+      bookButtonTooltip: "يتم سؤال المستخدم",
+      movieButton: "فيلم",
+      movieButtonTooltip: "يتم سؤال المستخدم",
       pdfButton: "PDF",
       wikiButton: "ويكيبيديا",
+      wikiButtonTooltip: "يتم إرسال الرابط أو الحافظة",
       twitterButton: "تويتر/X",
       gmailButton: "جيميل",
-      addButton: "+إضافة+",
+      addButton: "ADD custom_x",
       directQuestionButton: "اكتب الأمر إلى",
       directQuestionButtonTooltip: "بدون إضافة رابط/حافظة",
       directQuestionButtonUrlClipboard: "أمر إلى",
       directQuestionButtonUrlClipboardTooltip: "مع رابط/حافظة",
-      urlClipboardText: "URL / حافظة"
+      urlClipboardText: "URL / حافظة",
+      topPromptsTitle: "📊 أكثر الطلبات استخداماً"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -502,6 +552,7 @@ export const translations = {
       cancelButton: "إلغاء",
       acceptButton: "قبول",
       bookPrompt: "ما اسم الكتاب؟",
+      questionPrompt: "ما اسم: ?  ",
       topicPrompt: "تحديد الموضوع:",
       topicPlaceholder: "يرجى تحديد الموضوع للبحث",
       selectTextClick: "حدد وانسخ النص من الصفحة واضغط هنا",
@@ -526,16 +577,21 @@ export const translations = {
       clipboardButton: "クリップボード",
       clipboardButtonTooltip: "クリップボードが送信されます",
       bookButton: "ブック",
+      bookButtonTooltip: "ユーザーに質問されます",
+      movieButton: "映画",
+      movieButtonTooltip: "ユーザーに質問されます",
       pdfButton: "PDF",
       wikiButton: "ウィキペディア",
+      wikiButtonTooltip: "URLまたはクリップボードが送信されます",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+追加+",
+      addButton: "ADD custom_x",
       directQuestionButton: "コマンドを書く",
       directQuestionButtonTooltip: "URL / クリップボードを追加せずに",
       directQuestionButtonUrlClipboard: "コマンド",
       directQuestionButtonUrlClipboardTooltip: "URL / クリップボードを含めて",
-      urlClipboardText: "URL / クリップボード"
+      urlClipboardText: "URL / クリップボード",
+      topPromptsTitle: "📊 最も使用されたプロンプト"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -567,6 +623,7 @@ export const translations = {
       cancelButton: "キャンセル",
       acceptButton: "受け入れる",
       bookPrompt: "本の名前は何ですか？",
+      questionPrompt: "の名前は何ですか？  ",
       topicPrompt: "トピックを指定:",
       topicPlaceholder: "検索するトピックを指定してください",
       selectTextClick: "ページからテキストを選択してコピーし、ここをクリック",
@@ -591,16 +648,21 @@ export const translations = {
       clipboardButton: "क्लिपबोर्ड",
       clipboardButtonTooltip: "क्लिपबोर्ड भेजा जाता है",
       bookButton: "पुस्तक",
+      bookButtonTooltip: "उपयोगकर्ता से पूछा जाता है",
+      movieButton: "फिल्म",
+      movieButtonTooltip: "उपयोगकर्ता से पूछा जाता है",
       pdfButton: "PDF",
       wikiButton: "विकिपीडिया",
+      wikiButtonTooltip: "URL या क्लिपबोर्ड भेजा जाता है",
       twitterButton: "X/ट्विटर",
       gmailButton: "Gmail",
-      addButton: "+जोड़ें+",
+      addButton: "ADD custom_x",
       directQuestionButton: "आदेश लिखें",
       directQuestionButtonTooltip: "URL / क्लिपबोर्ड जोड़े बिना",
       directQuestionButtonUrlClipboard: "आदेश",
       directQuestionButtonUrlClipboardTooltip: "URL / क्लिपबोर्ड के साथ",
-      urlClipboardText: "URL / क्लिपबोर्ड"
+      urlClipboardText: "URL / क्लिपबोर्ड",
+      topPromptsTitle: "📊 सबसे अधिक उपयोग किए गए प्रॉम्प्ट"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -632,6 +694,7 @@ export const translations = {
       cancelButton: "रद्द करें",
       acceptButton: "स्वीकार करें",
       bookPrompt: "पुस्तक का नाम क्या है?",
+      questionPrompt: "का नाम क्या है?  ",
       topicPrompt: "विषय निर्दिष्ट करें:",
       topicPlaceholder: "कृपया खोजने के लिए विषय निर्दिष्ट करें",
       selectTextClick: "पृष्ठ से टेक्स्ट चुनें और कॉपी करें और यहाँ क्लिक करें",
@@ -656,16 +719,21 @@ export const translations = {
       clipboardButton: "클립보드",
       clipboardButtonTooltip: "클립보드가 전송됩니다",
       bookButton: "책",
+      bookButtonTooltip: "사용자에게 질문합니다",
+      movieButton: "영화",
+      movieButtonTooltip: "사용자에게 질문합니다",
       pdfButton: "PDF",
       wikiButton: "위키백과",
+      wikiButtonTooltip: "URL 또는 클립보드가 전송됩니다",
       twitterButton: "X/트위터",
       gmailButton: "Gmail",
-      addButton: "+추가+",
+      addButton: "ADD custom_x",
       directQuestionButton: "명령을 작성하세요",
       directQuestionButtonTooltip: "URL / 클립보드 추가 없이",
       directQuestionButtonUrlClipboard: "명령",
       directQuestionButtonUrlClipboardTooltip: "URL / 클립보드 포함",
-      urlClipboardText: "URL / 클립보드"
+      urlClipboardText: "URL / 클립보드",
+      topPromptsTitle: "📊 가장 많이 사용된 프롬프트"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -697,6 +765,7 @@ export const translations = {
       cancelButton: "취소",
       acceptButton: "수락",
       bookPrompt: "책의 이름은 무엇입니까?",
+      questionPrompt: "의 이름은 무엇입니까?  ",
       topicPrompt: "주제 지정:",
       topicPlaceholder: "검색할 주제를 지정하십시오",
       selectTextClick: "페이지에서 텍스트를 선택하여 복사하고 여기를 클릭하세요",
@@ -721,16 +790,21 @@ export const translations = {
       clipboardButton: "Área de transferência",
       clipboardButtonTooltip: "Área de transferência é enviada",
       bookButton: "Livro",
+      bookButtonTooltip: "O usuário é perguntado",
+      movieButton: "Filme",
+      movieButtonTooltip: "O usuário é perguntado",
       pdfButton: "PDF",
       wikiButton: "Wikipedia",
+      wikiButtonTooltip: "URL ou Área de transferência é enviada",
       twitterButton: "X/Twitter",
       gmailButton: "Gmail",
-      addButton: "+adicionar+",
+      addButton: "ADD custom_x",
       directQuestionButton: "Escreva o comando para",
       directQuestionButtonTooltip: "Sem adicionar URL / Área de transferência",
       directQuestionButtonUrlClipboard: "Comando para",
       directQuestionButtonUrlClipboardTooltip: "Com URL / Área de transferência",
-      urlClipboardText: "URL / Área de transferência"
+      urlClipboardText: "URL / Área de transferência",
+      topPromptsTitle: "📊 Prompts mais usados"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -762,6 +836,7 @@ export const translations = {
       cancelButton: "Cancelar",
       acceptButton: "Aceitar",
       bookPrompt: "Qual é o nome do livro?",
+      questionPrompt: "Qual é o nome de: ?  ",
       topicPrompt: "Especificar tópico:",
       topicPlaceholder: "Por favor, especifique o tópico a pesquisar",
       selectTextClick: "Selecione e copie o texto da página e clique AQUI",
@@ -786,16 +861,21 @@ export const translations = {
       clipboardButton: "剪贴板",
       clipboardButtonTooltip: "发送剪贴板",
       bookButton: "图书",
+      bookButtonTooltip: "询问用户",
+      movieButton: "电影",
+      movieButtonTooltip: "询问用户",
       pdfButton: "PDF",
       wikiButton: "维基百科",
+      wikiButtonTooltip: "发送网址或剪贴板",
       twitterButton: "X/推特",
       gmailButton: "Gmail",
-      addButton: "+添加+",
+      addButton: "ADD custom_x",
       directQuestionButton: "写命令给",
       directQuestionButtonTooltip: "不添加URL / 剪贴板",
       directQuestionButtonUrlClipboard: "命令给",
       directQuestionButtonUrlClipboardTooltip: "包含URL / 剪贴板",
-      urlClipboardText: "URL / 剪贴板"
+      urlClipboardText: "URL / 剪贴板",
+      topPromptsTitle: "📊 最常用的提示"
     },
     contextMenu: {
       summaryUrl: "URL: ",
@@ -827,6 +907,7 @@ export const translations = {
       cancelButton: "取消",
       acceptButton: "接受",
       bookPrompt: "书名是什么？",
+      questionPrompt: "的名字是什么？  ",
       topicPrompt: "指定主题:",
       topicPlaceholder: "请指定要搜索的主题",
       selectTextClick: "选择并复制页面中的文本，然后点击这里",
@@ -860,6 +941,7 @@ export function updateUITexts(language, aiModelName = 'ChatGPT') {
   const urlButton = document.getElementById('use-url');
   const clipboardButton = document.getElementById('use-clipb');
   const bookButton = document.getElementById('use-book');
+  const movieButton = document.getElementById('use-movie');
   const pdfButton = document.getElementById('use-pdf');
   const wikiButton = document.getElementById('use-wiki');
   const twitterButton = document.getElementById('use-twitter');
@@ -869,16 +951,21 @@ export function updateUITexts(language, aiModelName = 'ChatGPT') {
   const directQuestionUrlClipboardButton = document.getElementById('direct-question-url-clipboard-btn');
   
   if (urlButton) {
-    urlButton.textContent = texts.optionButtons.urlButton;
+    // Crear checkbox y texto para el botón URL
+    urlButton.innerHTML = `<input type="checkbox" id="url-checkbox" style="margin-right: 8px;"> ${texts.optionButtons.urlButton}`;
     urlButton.title = texts.optionButtons.urlButtonTooltip;
   }
   if (clipboardButton) {
-    clipboardButton.textContent = texts.optionButtons.clipboardButton;
+    // Crear checkbox y texto para el botón Portapapeles
+    clipboardButton.innerHTML = `<input type="checkbox" id="clipboard-checkbox" style="margin-right: 8px;"> ${texts.optionButtons.clipboardButton}`;
     clipboardButton.title = texts.optionButtons.clipboardButtonTooltip;
   }
   if (bookButton) bookButton.textContent = texts.optionButtons.bookButton;
-  if (pdfButton) pdfButton.textContent = texts.optionButtons.pdfButton;
-  if (wikiButton) wikiButton.textContent = texts.optionButtons.wikiButton;
+  if (movieButton) movieButton.textContent = texts.optionButtons.movieButton;
+  if (wikiButton) {
+    wikiButton.textContent = texts.optionButtons.wikiButton;
+    wikiButton.title = texts.optionButtons.wikiButtonTooltip;
+  }
   if (twitterButton) twitterButton.textContent = texts.optionButtons.twitterButton;
   if (gmailButton) gmailButton.textContent = texts.optionButtons.gmailButton;
   if (addButton) {
@@ -918,6 +1005,12 @@ export function updateUITexts(language, aiModelName = 'ChatGPT') {
   if (feedbackButton) feedbackButton.textContent = texts.settings.feedbackButton;
   if (rateButton) rateButton.textContent = texts.settings.rateButton;
   if (helpVideoButton) helpVideoButton.textContent = texts.settings.helpVideoButton;
+  
+  // Actualizar título de prompts más usados
+  const topPromptsTitle = document.querySelector('#top-prompts-section h2');
+  if (topPromptsTitle) {
+    topPromptsTitle.textContent = texts.optionButtons.topPromptsTitle;
+  }
 }
 
 // Función para actualizar solo el texto de los botones de pregunta directa

@@ -1,19 +1,27 @@
 {
   "header": {
-    "title": "Assistant de prompts IA",
+    "title": "Assistant IA",
     "currentUrlPlaceholder": "Page actuelle"
   },
   "sections": [
     {
-      "title": "📚 Résumer les articles de Wikipédia",
+      "title": "📚 Résumer les articles Wikipédia",
       "buttons": [
         {
           "label": "Résumer l'article",
-          "prompt": "Résumez cet article de Wikipédia en moins de 200 mots, en mettant l'accent sur les points clés :"
+          "prompt": "Résumez cet article Wikipédia en moins de 200 mots, en mettant en évidence les points clés :"
         },
         {
-          "label": "Résumer style scolaire",
-          "prompt": "Faites un résumé de style scolaire (niveau secondaire/lycée) de ce texte de Wikipédia :"
+          "label": "Résumé style scolaire",
+          "prompt": "Faites un résumé style scolaire (niveau collège/lycée) de ce texte Wikipédia :"
+        },
+        {
+          "label": "Résumé format notes",
+          "prompt": "Résumez cet article en format de notes de cours avec les points clés :"
+        },
+        {
+          "label": "Résumé exécutif oral",
+          "prompt": "Créez un résumé exécutif pour présentation orale de cet article :"
         }
       ]
     },
@@ -21,12 +29,20 @@
       "title": "🔍 Expliquer les concepts difficiles",
       "buttons": [
         {
-          "label": "Expliquez-moi ce texte de Wikipédia comme si j'avais 12 ans",
-          "prompt": "Expliquez-moi ce texte de Wikipédia comme si j'avais 12 ans :"
+          "label": "Expliquez-moi ce texte Wikipédia comme si j'avais 12 ans",
+          "prompt": "Expliquez-moi ce texte Wikipédia comme si j'avais 12 ans :"
         },
         {
-          "label": "Faites une version simple et facile à comprendre de cette section de Wikipédia",
-          "prompt": "Faites une version simple et facile à comprendre de cette section de Wikipédia :"
+          "label": "Faites une version simple et facile à comprendre de cette section Wikipédia",
+          "prompt": "Faites une version simple et facile à comprendre de cette section Wikipédia :"
+        },
+        {
+          "label": "Expliquer avec des analogies quotidiennes",
+          "prompt": "Expliquez ce concept en utilisant des analogies quotidiennes et des exemples simples :"
+        },
+        {
+          "label": "Explication étape par étape",
+          "prompt": "Convertissez ce texte en une explication étape par étape, comme une recette :"
         }
       ]
     },
@@ -34,12 +50,20 @@
       "title": "🔄 Paraphraser pour éviter le plagiat",
       "buttons": [
         {
-          "label": "Réécrivez ce contenu de Wikipédia avec vos propres mots, en évitant le plagiat tout en conservant l'information",
-          "prompt": "Réécrivez ce contenu de Wikipédia avec vos propres mots, en évitant le plagiat tout en conservant l'information :"
+          "label": "Réécrivez ce contenu Wikipédia avec vos propres mots, en évitant le plagiat mais en conservant l'information",
+          "prompt": "Réécrivez ce contenu Wikipédia avec vos propres mots, en évitant le plagiat mais en conservant l'information :"
         },
         {
-          "label": "Faites une version originale de ce contenu de Wikipédia sans copier le texte littéral",
-          "prompt": "Faites une version originale de ce contenu de Wikipédia sans copier le texte littéral."
+          "label": "Faites une version originale de ce contenu Wikipédia sans copier le texte littéral",
+          "prompt": "Faites une version originale de ce contenu Wikipédia sans copier le texte littéral."
+        },
+        {
+          "label": "Réécrire pour travail académique",
+          "prompt": "Réécrivez ce contenu pour un travail académique avec un style formel :"
+        },
+        {
+          "label": "Adapter pour différents niveaux",
+          "prompt": "Adaptez ce texte pour différents niveaux éducatifs (primaire, secondaire, université) :"
         }
       ]
     },
@@ -47,16 +71,20 @@
       "title": "📝 Créer des schémas ou cartes conceptuelles",
       "buttons": [
         {
-          "label": "Créer un schéma thématique",
+          "label": "Créez un schéma thématique",
           "prompt": "À partir de ce texte, créez un schéma thématique des sujets principaux."
         },
         {
-          "label": "Créer une carte conceptuelle",
+          "label": "Créez une carte conceptuelle",
           "prompt": "À partir de ce texte, créez une carte conceptuelle des sujets principaux."
         },
         {
-          "label": "À partir de ce texte, créez ...",
-          "prompt": "À partir de ce texte, créez ..."
+          "label": "Ligne de temps",
+          "prompt": "Organisez ces informations dans une ligne de temps chronologique :"
+        },
+        {
+          "label": "Diagramme cause-effet",
+          "prompt": "Créez un diagramme de cause-effet basé sur ce contenu :"
         }
       ]
     },
@@ -64,12 +92,62 @@
       "title": "💬 Générer des questions de révision ou d'examen",
       "buttons": [
         {
-          "label": "Créez 10 questions de type examen sur cet article, avec leurs réponses :",
-          "prompt": "Créez 10 questions de type examen sur cet article de Wikipédia, avec leurs réponses :"
+          "label": "Créez 10 questions type examen sur cet article, avec leurs réponses :",
+          "prompt": "Créez 10 questions type examen sur cet article Wikipédia, avec leurs réponses :"
         },
         {
-          "label": "Faites des questions de type choix multiples pour étudier sur le texte suivant",
-          "prompt": "Faites des questions de type choix multiples pour étudier sur le texte suivant"
+          "label": "Faites des questions à choix multiples pour étudier le texte suivant",
+          "prompt": "Faites des questions à choix multiples pour étudier le texte suivant"
+        },
+        {
+          "label": "Questions de compréhension de lecture",
+          "prompt": "Créez des questions de compréhension de lecture basées sur cet article :"
+        },
+        {
+          "label": "Exercices pratiques",
+          "prompt": "Générez des exercices pratiques basés sur ce contenu :"
+        }
+      ]
+    },
+    {
+      "title": "🎓 Analyse Académique",
+      "buttons": [
+        {
+          "label": "Identifier les concepts clés",
+          "prompt": "Identifiez les concepts clés à étudier de cet article :"
+        },
+        {
+          "label": "Analyser les sources et références",
+          "prompt": "Analysez les sources et références citées dans cet article :"
+        },
+        {
+          "label": "Évaluer l'objectivité",
+          "prompt": "Évaluez l'objectivité et la neutralité du contenu de cet article :"
+        },
+        {
+          "label": "Identifier les biais",
+          "prompt": "Identifiez les biais ou points de vue possibles présents dans ce texte :"
+        }
+      ]
+    },
+    {
+      "title": "🏫 Application Éducative",
+      "buttons": [
+        {
+          "label": "Utiliser en classe",
+          "prompt": "Comment utiliser ce contenu en classe ? Suggérez des stratégies didactiques :"
+        },
+        {
+          "label": "Activités pratiques",
+          "prompt": "Suggérez des activités pratiques pour les étudiants basées sur ce contenu :"
+        },
+        {
+          "label": "Connecter avec le curriculum",
+          "prompt": "Connectez ce sujet avec le curriculum scolaire et les compétences éducatives :"
+        },
+        {
+          "label": "Projet de recherche",
+          "prompt": "Concevez un projet de recherche scolaire basé sur ce sujet :"
         }
       ]
     }

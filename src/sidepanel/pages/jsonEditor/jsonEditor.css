@@ -170,7 +170,7 @@ select.control-input {
 
 .btn {
   padding: 8px 16px;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
@@ -196,48 +196,58 @@ select.control-input {
 }
 
 .btn-primary {
-  background-color: #007bff;
-  color: white;
+  background-color: #d6e5ff;
+  color: #4a5c7a;
+  border: 1px solid #b8d0f0;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: #c4d9ff;
+  border-color: #a0c1e8;
 }
 
 .btn-secondary {
-  background-color: #6c757d;
-  color: white;
+  background-color: #e6e6fa;
+  color: #6a5a82;
+  border: 1px solid #d4d4ed;
 }
 
 .btn-secondary:hover {
-  background-color: #545b62;
+  background-color: #dcdcf0;
+  border-color: #c5c5e3;
 }
 
 .btn-success {
-  background-color: #28a745;
-  color: white;
+  background-color: #d4f4dd;
+  color: #2d5a3d;
+  border: 1px solid #b8e6c1;
 }
 
 .btn-success:hover {
-  background-color: #1e7e34;
+  background-color: #c8efcc;
+  border-color: #a8ddb1;
 }
 
 .btn-info {
-  background-color: #17a2b8;
-  color: white;
+  background-color: #d1f2f6;
+  color: #2d5a62;
+  border: 1px solid #b3e5eb;
 }
 
 .btn-info:hover:not(:disabled) {
-  background-color: #117a8b;
+  background-color: #c3eef4;
+  border-color: #a1dde5;
 }
 
 .btn-warning {
-  background-color: #ffc107;
-  color: #212529;
+  background-color: #fff3cd;
+  color: #6c5b2d;
+  border: 1px solid #fde8a8;
 }
 
 .btn-warning:hover:not(:disabled) {
-  background-color: #e0a800;
+  background-color: #ffecb3;
+  border-color: #fdd988;
 }
 
 .btn-small {
@@ -363,6 +373,10 @@ select.control-input {
   margin-bottom: 14px;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 6px;
+  /* Compatibilidad con Edge */
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .preview-content .sidebar-section:last-child {
@@ -376,12 +390,19 @@ select.control-input {
   font-weight: bold;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 4px;
+  /* Compatibilidad con Edge */
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .preview-content .sidebar-buttons-container {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  /* Compatibilidad con Edge */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .preview-content .sidebar-prompt-button {
@@ -395,6 +416,11 @@ select.control-input {
   transition: background-color 0.2s, box-shadow 0.2s;
   flex-grow: 1;
   text-align: center;
+  /* Compatibilidad con Edge */
+  min-width: 0;
+  box-sizing: border-box;
+  /* Fallback para Edge */
+  -ms-flex: 1 1 auto;
 }
 
 .preview-content .sidebar-prompt-button:hover {
@@ -405,6 +431,11 @@ select.control-input {
 .preview-content .sidebar-translation-container {
   position: relative;
   flex-grow: 1;
+  /* Compatibilidad con Edge */
+  min-width: 0;
+  box-sizing: border-box;
+  /* Fallback para Edge */
+  -ms-flex: 1 1 auto;
 }
 
 .preview-content .sidebar-translation-button {
@@ -419,11 +450,102 @@ select.control-input {
   flex-grow: 1;
   text-align: center;
   margin-bottom: 0;
+  /* Compatibilidad con Edge */
+  min-width: 0;
+  box-sizing: border-box;
+  /* Fallback para Edge */
+  -ms-flex: 1 1 auto;
 }
 
 .preview-content .sidebar-translation-button:hover {
   background-color: #d2e3fc;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos específicos para compatibilidad con Edge */
+@supports not (gap: 6px) {
+  .preview-content .sidebar-buttons-container > * {
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  
+  .preview-content .sidebar-buttons-container > *:last-child {
+    margin-right: 0;
+  }
+}
+
+/* Fallback para navegadores que no soportan flexbox moderno */
+@supports not (display: flex) {
+  .preview-content .sidebar-buttons-container {
+    display: block;
+  }
+  
+  .preview-content .sidebar-prompt-button,
+  .preview-content .sidebar-translation-button {
+    display: inline-block;
+    width: auto;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+}
+
+/* Estilos específicos para Edge */
+@supports (-ms-ime-align: auto) {
+  .preview-content .sidebar-section {
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 14px !important;
+  }
+  
+  .preview-content .sidebar-buttons-container {
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  .preview-content .sidebar-prompt-button,
+  .preview-content .sidebar-translation-button {
+    display: inline-block !important;
+    width: auto !important;
+    margin-right: 6px !important;
+    margin-bottom: 6px !important;
+    float: left !important;
+  }
+  
+  .preview-content .sidebar-translation-container {
+    display: inline-block !important;
+    width: auto !important;
+    margin-right: 6px !important;
+    margin-bottom: 6px !important;
+    float: left !important;
+  }
+}
+
+/* Mejoras de compatibilidad general */
+.preview-content {
+  /* Forzar hardware acceleration en Edge */
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  
+  /* Mejorar rendimiento de scroll */
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+/* Botón específico para Edge */
+#edge-force-update-container {
+  margin-left: 8px;
+}
+
+#edge-force-update-btn {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+#edge-force-update-btn:hover {
+  background-color: #ffeaa7;
+  border-color: #fdcb6e;
 }
 
 #embedded-json-editor:focus {
@@ -442,6 +564,7 @@ select.control-input {
   font-weight: bold;
   color: #333;
   flex-shrink: 0;
+  min-width: 150px;
 }
 
 .control-group input[type="text"],
@@ -451,6 +574,14 @@ select.control-input {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
+}
+
+/* Alineación horizontal de labels en control-field */
+.control-field .control-label {
+  display: inline-block;
+  min-width: 150px;
+  font-weight: bold;
+  color: #333;
 }
 
 /* Estilos para los grupos de botones custom */
@@ -467,14 +598,16 @@ select.control-input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   background: #f8f9fa;
   border: 1px solid #e9ecef;
   border-radius: 6px;
-  padding: 6px 4px;
+  padding: 3px 4px;
   min-width: 110px;
+  min-height: 65px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
+  justify-content: space-between;
 }
 
 .custom-slot-group:hover {
@@ -487,25 +620,27 @@ select.control-input {
   font-weight: 700;
   color: #495057;
   text-align: center;
-  margin-bottom: 2px;
+  margin-bottom: 0px;
   white-space: nowrap;
+  line-height: 1.0;
 }
 
 .custom-slot-buttons {
   display: flex;
   flex-direction: row;
-  gap: 4px;
+  gap: 2px;
   width: 100%;
   justify-content: center;
 }
 
 .custom-slot-buttons .btn {
-  font-size: 11px;
-  padding: 4px 6px;
-  min-width: 45px;
+  font-size: 12px;
+  padding: 1px 3px;
+  min-width: 35px;
   text-align: center;
   white-space: nowrap;
   flex: 1;
+  line-height: 1.1;
 }
 
 /* Estilo para las opciones del selector */
@@ -539,11 +674,12 @@ select.control-input {
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, #e8f4f8 0%, #f0e8ff 100%);
+  color: #4a5568;
   padding: 14px 18px;
   border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid #d8e8f0;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
@@ -650,7 +786,7 @@ select.control-input {
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid #667eea;
+  border-bottom: 8px solid #e8f4f8;
   transition: left 0.15s ease-out, transform 0.15s ease-out;
   z-index: 1001;
 }
@@ -784,4 +920,199 @@ select.control-input {
 
 #embedded-json-editor::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+/* Estilos para el menú emergente de selección de slot Custom */
+.custom-slot-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 160px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+  max-height: 80vh;
+  overflow-y: auto;
+  margin-top: 4px;
+  border: 1px solid #ddd;
+}
+
+.custom-slot-popup.visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease;
+}
+
+.custom-slot-popup.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Flecha indicadora del popup */
+.custom-slot-popup::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 22px;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  transform: rotate(45deg);
+  box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.05);
+  z-index: -1;
+}
+
+.custom-slot-popup ul {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.custom-slot-option {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.custom-slot-option:last-child {
+  border-bottom: none;
+}
+
+.custom-slot-option:hover {
+  background-color: #f5f5f5;
+}
+
+.custom-slot-option.selected {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  font-weight: bold;
+}
+
+.popup-header {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  background-color: #f8f9fa;
+}
+
+.popup-header h4 {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  font-weight: 600;
+}
+
+/* Estilos para el selector de slots Custom */
+.custom-slot-selector {
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 11px;
+  color: #333;
+  cursor: pointer;
+  min-width: 90px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  z-index: 100;
+}
+
+.custom-slot-selector:hover {
+  border-color: #87CEEB;
+}
+
+.custom-slot-selector:focus {
+  outline: none;
+  border-color: #87CEEB;
+  box-shadow: 0 0 0 2px rgba(135, 206, 235, 0.2);
+  z-index: 200;
+}
+
+.custom-slot-selector option {
+  padding: 3px 6px;
+  font-size: 11px;
+  background-color: white;
+  color: #333;
+}
+
+.custom-slot-selector option:first-child {
+  color: #666;
+  font-style: italic;
+}
+
+/* Cuando el select está abierto, aparece sobre los botones */
+.custom-slot-selector:focus option,
+.custom-slot-selector:active option {
+  background-color: white;
+  z-index: 300;
+}
+
+/* Contenedor para los botones de Custom que están debajo del selector */
+.custom-button-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  position: relative;
+  z-index: 50;
+}
+
+.custom-button-row .tooltip-container {
+  flex: 1;
+}
+
+/* Asegurar que el contenedor principal permita el z-index */
+.custom-slot-buttons {
+  position: relative;
+}
+
+/* Solo para el primer custom-slot-group (Custom), no para Disco Duro */
+.custom-slot-group:first-child .custom-slot-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Contenedor del selector para que esté claramente arriba - solo en Custom */
+.custom-slot-group:first-child .custom-slot-buttons > .tooltip-container:first-child {
+  order: 1;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor de los botones para que esté claramente abajo - solo en Custom */
+.custom-slot-group:first-child .custom-button-row {
+  order: 2;
+  margin-top: 0;
+}
+
+/* Posicionamiento de botones del segundo grupo (Disco Duro) más arriba */
+.custom-slot-group:nth-child(2) .custom-slot-buttons {
+  margin-top: -16px;
+}
+
+/* Reducir espacio entre label "Disco Duro" y sus botones */
+.custom-slot-group:nth-child(2) {
+  gap: 0px;
+  padding-bottom: 8px;
+}
+
+.custom-slot-group:nth-child(2) .custom-slot-label {
+  margin-bottom: -2px;
+  font-size: 16px;
 }

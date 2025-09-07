@@ -77,19 +77,23 @@
       <div class="context-selector">
         <div class="option-buttons">
           <div class="button-row">
-            <button id="use-url" class="option-button option-selected"></button>
-            <button id="use-clipb" class="option-button"></button>
-            <button id="use-book" class="option-button"></button>
-            <button id="use-pdf" class="option-button"></button>
+            <button id="use-url" class="option-button option-selected">
+              <input type="checkbox" id="url-checkbox" checked>URL
+            </button>
+            <button id="use-clipb" class="option-button">
+              <input type="checkbox" id="clipboard-checkbox">Clipboard
+            </button>
+            <button id="use-wiki" class="option-button">Wiki</button>
+            <button id="use-book" class="option-button">Libro</button>
+            <button id="use-movie" class="option-button">Película</button>
           </div>
-          <div class="button-row">
-            <button id="use-wiki" class="option-button"></button>
+          <div class="toggle-row">
+            <button id="custom-toggle" class="option-button dropdown-arrow hidden">▼</button>
+          </div>
+          <div id="second-button-row" class="button-row">
             <button id="use-twitter" class="option-button"></button>
             <button id="use-gmail" class="option-button"></button>
-            <div id="add-button-group" class="option-button-group">
-              <button id="use-add" class="option-button">ADD</button>
-              <button id="custom-toggle" class="option-button dropdown-arrow hidden">▼</button>
-            </div>
+            <button id="use-add" class="option-button">ADD</button>
           </div>
           <div id="custom-buttons-container" class="button-row custom-buttons-container hidden">
             <!-- Los botones personalizados se inyectarán aquí dinámicamente -->

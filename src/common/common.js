@@ -2,6 +2,7 @@
 
 // Importar función de traducción
 import { getTranslation } from '/src/content-script/translations.js';
+import { updateUITexts, updateDirectQuestionButtonText } from '/src/content-script/translations.js';
 
 // Variables que serán reutilizadas
 let menuData = null;
@@ -12,12 +13,14 @@ let currentLanguage = 'gb'; // Idioma inicial: Inglés (se actualizará automát
 let currentAIModel = 'chatgpt'; // Modelo por defecto: ChatGPT
 let useClipboard = false; // Por defecto, usar URL
 let hoveredTranslationButton = null; // Para guardar referencia al botón de traducción con hover
+let promptStats = {}; // Estadísticas de uso de prompts
 let currentContext = 'url'; // Default context is URL
 let availableLanguages = []; // Lista de idiomas disponibles cargada desde /src/common/languages/idiomaAI.json
 let currentPrompt = '';
 let clipboardContent = '';
 let verAcceso = true; // Variable global de acceso
 let customButtonsVisible = true; // Estado de visibilidad de customButtons (visible por defecto)
+let secondRowButtonsVisible = false; // Estado de visibilidad de la segunda fila de botones (oculto por defecto)
 
 export async function loadMotorAI() {
   try {
@@ -77,13 +80,20 @@ export const config = {
   setVerAcceso: (value) => { verAcceso = value; },
 
   getCustomButtonsVisible: () => customButtonsVisible,
-  setCustomButtonsVisible: (value) => { customButtonsVisible = value; }
+  setCustomButtonsVisible: (value) => { customButtonsVisible = value; },
+
+  getSecondRowButtonsVisible: () => secondRowButtonsVisible,
+  setSecondRowButtonsVisible: (value) => { secondRowButtonsVisible = value; },
+  
+  // Estadísticas de prompts
+  getPromptStats: () => promptStats,
+  setPromptStats: (stats) => { promptStats = stats; }
 };
 
 // Helper function to determine if a context behaves like a clipboard context
 export function isClipboardBehaviorContext(context) {
   // Standard clipboard-like contexts
-  if (['clipboard', 'book', 'twitter', 'gmail'].includes(context)) {
+  if (['clipboard', 'book', 'movie', 'twitter', 'gmail'].includes(context)) {
     return true;
   }
   // Custom contexts with 'Clipboard' behaviour
@@ -99,6 +109,108 @@ export function isClipboardBehaviorContext(context) {
 // Helper function to determine if a context behaves like a URL context
 export function isUrlBehaviorContext(context) {
   return !isClipboardBehaviorContext(context);
+}
+
+// ========================== ESTADÍSTICAS DE PROMPTS ==========================
+
+// Función para registrar el uso de un prompt
+export function trackPromptUsage(promptText, context = null) {
+  try {
+    const contextKey = context || currentContext || 'unknown';
+    const promptKey = `${contextKey}:${promptText}`;
+    
+    if (!promptStats[promptKey]) {
+      promptStats[promptKey] = {
+        prompt: promptText,
+        context: contextKey,
+        count: 0,
+        lastUsed: null
+      };
+    }
+    
+    promptStats[promptKey].count += 1;
+    promptStats[promptKey].lastUsed = new Date().toISOString();
+    
+    console.log(`📊 Prompt tracked: "${promptText}" (${promptStats[promptKey].count} uses)`);
+    
+    // Guardar estadísticas de forma persistente
+    savePromptStats();
+  } catch (error) {
+    console.error('Error tracking prompt usage:', error);
+  }
+}
+
+// Función para obtener los top 5 prompts más usados
+export function getTopPrompts(limit = 5, contextFilter = null) {
+  try {
+    let filteredStats = Object.values(promptStats);
+    
+    // Filtrar por contexto si se especifica
+    if (contextFilter) {
+      filteredStats = filteredStats.filter(stat => stat.context === contextFilter);
+    }
+    
+    // Ordenar por número de usos (descendente) y luego por fecha de último uso
+    filteredStats.sort((a, b) => {
+      if (b.count !== a.count) {
+        return b.count - a.count;
+      }
+      return new Date(b.lastUsed) - new Date(a.lastUsed);
+    });
+    
+    return filteredStats.slice(0, limit);
+  } catch (error) {
+    console.error('Error getting top prompts:', error);
+    return [];
+  }
+}
+
+// Función para guardar estadísticas de prompts
+export function savePromptStats() {
+  try {
+    const statsToSave = {
+      promptStats: promptStats,
+      lastUpdated: new Date().toISOString()
+    };
+    
+    chrome.storage.local.set({ promptStatistics: statsToSave }, () => {
+      if (chrome.runtime.lastError) {
+        console.error('Error saving prompt stats:', chrome.runtime.lastError);
+      } else {
+        console.log('📊 Prompt statistics saved successfully');
+      }
+    });
+  } catch (error) {
+    console.error('Error saving prompt stats:', error);
+  }
+}
+
+// Función para cargar estadísticas de prompts
+export function loadPromptStats() {
+  return new Promise((resolve) => {
+    try {
+      chrome.storage.local.get(['promptStatistics'], (result) => {
+        if (chrome.runtime.lastError) {
+          console.error('Error loading prompt stats:', chrome.runtime.lastError);
+          resolve();
+          return;
+        }
+        
+        if (result.promptStatistics && result.promptStatistics.promptStats) {
+          promptStats = result.promptStatistics.promptStats;
+          config.setPromptStats(promptStats);
+          console.log('📊 Prompt statistics loaded:', Object.keys(promptStats).length, 'prompts tracked');
+        } else {
+          console.log('📊 No prompt statistics found, starting fresh');
+        }
+        
+        resolve();
+      });
+    } catch (error) {
+      console.error('Error loading prompt stats:', error);
+      resolve();
+    }
+  });
 }
 
 // Función para cargar los idiomas disponibles desde /src/common/languages/idiomaAI.json
@@ -244,7 +356,28 @@ export async function getSelectedTextFromPage() {
 // Función para obtener el texto prioritario (seleccionado + clipboard)
 export async function getPriorityText() {
   try {
-    // PRIORIDAD 1: Texto seleccionado en la página
+    // EXCEPCIÓN: Para contextos 'book' y 'movie', usar SOLO el clipboard (nombre del libro/película)
+    if (currentContext === 'book') {
+      if (clipboardText && !clipboardText.startsWith('[')) {
+        console.log('📚 Contexto libro: usando SOLO clipboard (nombre del libro):', clipboardText);
+        return clipboardText;
+      } else {
+        console.log('📚 Contexto libro: no hay nombre de libro en clipboard');
+        return '';
+      }
+    }
+    
+    if (currentContext === 'movie') {
+      if (clipboardText && !clipboardText.startsWith('[')) {
+        console.log('🎬 Contexto película: usando SOLO clipboard (nombre de la película):', clipboardText);
+        return clipboardText;
+      } else {
+        console.log('🎬 Contexto película: no hay nombre de película en clipboard');
+        return '';
+      }
+    }
+
+    // PRIORIDAD 1: Texto seleccionado en la página (para otros contextos)
     const currentSelectedText = await getSelectedTextFromPage();
     if (currentSelectedText) {
       console.log('📝 Usando texto seleccionado:', currentSelectedText);
@@ -288,7 +421,7 @@ export async function updateContextDisplay() {
   labelText.style.webkitBoxOrient = 'vertical';
   labelText.style.lineHeight = '1.2em';
 
-  if (isClipboardBehaviorContext(currentContext)) {
+  if (isClipboardBehaviorContext(currentContext) || (currentContext === 'wiki' && useClipboard)) {
     // Para contextos de clipboard, mostrar ÚNICAMENTE texto seleccionado de página web
     // Excepción: para 'book', usar el texto introducido por el usuario
     try {
@@ -303,6 +436,16 @@ export async function updateContextDisplay() {
         } else {
           displayText = '[introduzca el nombre del libro]';
           console.log('📚 No hay texto de libro del usuario');
+        }
+      } else if (currentContext === 'movie') {
+        // Para contexto movie, usar el texto introducido por el usuario
+        const userMovieText = config.getClipboardText();
+        if (userMovieText) {
+          displayText = userMovieText;
+          console.log('🎬 Mostrando texto de la película introducido por el usuario:', userMovieText);
+        } else {
+          displayText = '[introduzca el nombre de la película]';
+          console.log('🎬 No hay texto de película del usuario');
         }
       } else if (currentContext === 'twitter') {
         // Para contexto Twitter, usar prioritariamente el texto extraído de Twitter
@@ -319,6 +462,25 @@ export async function updateContextDisplay() {
           } else {
             displayText = '[procesando tweets...]';
             console.log('🐦 Esperando extracción de tweets de X/Twitter');
+          }
+        }
+      } else if (currentContext === 'wiki') {
+        // Para contexto Wiki en modo clipboard, obtener texto seleccionado o clipboard
+        const selectedTextFromPage = await getSelectedTextFromPage();
+        
+        if (selectedTextFromPage) {
+          displayText = selectedTextFromPage;
+          console.log('📝 Wiki mostrando texto seleccionado de página:', selectedTextFromPage);
+        } else {
+          // Si no hay texto seleccionado, usar contenido del clipboard
+          const clipboardContent = config.getClipboardText();
+          if (clipboardContent && !clipboardContent.startsWith('[')) {
+            displayText = clipboardContent;
+            console.log('📋 Wiki mostrando contenido del clipboard:', clipboardContent);
+          } else {
+            const texts = getTranslation(config.getCurrentLanguage());
+            displayText = texts.textPrompt.selectTextMessage;
+            console.log('📝 Wiki: no hay texto seleccionado ni contenido válido en clipboard');
           }
         }
       } else {
@@ -361,12 +523,16 @@ export async function updateContextDisplay() {
         prefix = `${title} (ClipB)`;
       } else if (currentContext === 'book') {
         prefix = 'Book';
+      } else if (currentContext === 'movie') {
+        prefix = 'Movie';
       } else if (currentContext === 'pdf') {
         prefix = 'PDF';
       } else if (currentContext === 'twitter') {
         prefix = 'X';
       } else if (currentContext === 'gmail') {
         prefix = 'Gmail';
+      } else if (currentContext === 'wiki') {
+        prefix = 'Wiki';
       }
       
       labelText.textContent = `${prefix}: ${displayText}`;
@@ -425,12 +591,16 @@ export async function updateContextDisplay() {
         prefix = `${title} (ClipB)`;
       } else if (currentContext === 'book') {
         prefix = 'Book';
+      } else if (currentContext === 'movie') {
+        prefix = 'Movie';
       } else if (currentContext === 'pdf') {
         prefix = 'PDF';
       } else if (currentContext === 'twitter') {
         prefix = 'X';
       } else if (currentContext === 'gmail') {
         prefix = 'Gmail';
+      } else if (currentContext === 'wiki') {
+        prefix = 'Wiki';
       }
       labelText.textContent = `${prefix}: [error accediendo a la página]`;
     }
@@ -500,8 +670,22 @@ export async function loadMenuData(language = 'gb') {
             const customFilePath = `/src/common/languages/custom/${customFileName}`;
             try {
               const response = await fetch(chrome.runtime.getURL(customFilePath));
-              if (response.ok) resolve(await response.json());
-              else reject(new Error(`No se pudo cargar el archivo de menú custom por defecto: ${customFileName}`));
+              if (response.ok) {
+                const data = await response.json();
+                
+                // 🆕 Guardar automáticamente el archivo cargado en su slot de storage
+                try {
+                  chrome.storage.local.set({ [storageKey]: data }, () => {
+                    console.log(`✅ Archivo ${customFileName} guardado automáticamente en slot ${slot} durante loadMenuData`);
+                  });
+                } catch (saveError) {
+                  console.warn(`⚠️ No se pudo guardar ${customFileName} en storage automáticamente:`, saveError);
+                }
+                
+                resolve(data);
+              } else {
+                reject(new Error(`No se pudo cargar el archivo de menú custom por defecto: ${customFileName}`));
+              }
             } catch (error) {
               reject(error);
             }
@@ -532,7 +716,10 @@ export async function loadMenuData(language = 'gb') {
         contextPrefix = 'Clipb';
         break;
       case 'book':
-        contextPrefix = 'ePub';
+        contextPrefix = 'book';
+        break;
+      case 'movie':
+        contextPrefix = 'movie';
         break;
       case 'pdf':
         contextPrefix = 'PDF';
@@ -603,7 +790,7 @@ export async function loadMenuData(language = 'gb') {
     }
 
     // Si no se encuentra el archivo específico, intentar con el archivo de AI en el idioma actual
-    const aiFileName = `/src/common/languages/menu_data_AI_${langSuffix}.json`;
+    const aiFileName = `/src/common/languages/menu_data_url_${langSuffix}.json`;
     try {
       console.log(`Intentando cargar archivo AI como fallback: ${aiFileName}`);
       const aiResponse = await fetch(aiFileName);
@@ -627,10 +814,14 @@ export async function loadMenuData(language = 'gb') {
     }
 
     // Como último recurso, intentar con el archivo en español
-    console.log(`Intentando cargar archivo: /src/common/languages/menu_data_CUSTOM_ES.json`);
+    try {
+      console.log(`Intentando cargar archivo: /src/common/languages/menu_data_CUSTOM_ES.json`);
       const fallbackResponse = await fetch('/src/common/languages/menu_data_CUSTOM_ES.json');
-    if (fallbackResponse.ok) {
-      return await fallbackResponse.json();
+      if (fallbackResponse.ok) {
+        return await fallbackResponse.json();
+      }
+    } catch (fallbackError) {
+      console.log('No se encontró archivo en español como fallback.');
     }
 
     throw new Error('No se pudo cargar ningún archivo de menú');
@@ -641,7 +832,6 @@ export async function loadMenuData(language = 'gb') {
 }
 
 // Función para cambiar el idioma
-import { updateUITexts, updateDirectQuestionButtonText } from '/src/content-script/translations.js';
 
 export function changeLanguage(language) {
   currentLanguage = language;
@@ -858,6 +1048,291 @@ export function renderSections() {
     sectionElement.appendChild(buttonsContainer);
     sectionsContainer.appendChild(sectionElement);
   });
+  
+  // Renderizar sección de top prompts al final
+  renderTopPromptsSection();
+  
+  // Ajustar ancho de sidebar después de renderizar todo
+  setTimeout(() => {
+    adjustSidebarWidth();
+  }, 150); // Delay ligeramente mayor para asegurar que todo esté renderizado
+}
+
+// Función para resetear un prompt específico
+export function resetPromptStats(promptText) {
+  const promptKey = promptText.toLowerCase().trim();
+  if (promptStats[promptKey]) {
+    delete promptStats[promptKey];
+    savePromptStats();
+    console.log(`📊 Prompt reset: "${promptText}"`);
+    // Recargar la sección de prompts más usados
+    renderTopPromptsSection();
+  }
+}
+
+// Función para renderizar sección de prompts más usados
+export function renderTopPromptsSection() {
+  const sectionsContainer = document.getElementById('sections-container');
+  if (!sectionsContainer) return;
+  
+  // Verificar si ya existe la sección de top prompts
+  let topPromptsSection = document.getElementById('top-prompts-section');
+  if (topPromptsSection) {
+    topPromptsSection.remove();
+  }
+  
+  // Obtener top 5 prompts
+  const topPrompts = getTopPrompts(5);
+  
+  if (topPrompts.length === 0) {
+    console.log('📊 No hay estadísticas de prompts para mostrar');
+    return;
+  }
+  
+  // Crear sección de top prompts
+  topPromptsSection = document.createElement('div');
+  topPromptsSection.className = 'section';
+  topPromptsSection.id = 'top-prompts-section';
+  
+  // Título de la sección
+  const titleElement = document.createElement('h2');
+  const texts = getTranslation(currentLanguage);
+  titleElement.textContent = texts.optionButtons.topPromptsTitle;
+  titleElement.style.cssText = `
+    color: #4a90e2;
+    font-size: 12px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  `;
+  
+  // Añadir cruz para resetear todos los prompts
+  const resetAllButton = document.createElement('span');
+  resetAllButton.textContent = '×';
+  resetAllButton.style.cssText = `
+    color: #dc3545;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: all 0.2s ease;
+    margin-left: auto;
+  `;
+  
+  // Añadir hover effect
+  resetAllButton.addEventListener('mouseenter', () => {
+    resetAllButton.style.background = '#dc3545';
+    resetAllButton.style.color = 'white';
+    resetAllButton.style.transform = 'scale(1.1)';
+  });
+  
+  resetAllButton.addEventListener('mouseleave', () => {
+    resetAllButton.style.background = 'rgba(255, 255, 255, 0.9)';
+    resetAllButton.style.color = '#dc3545';
+    resetAllButton.style.transform = 'scale(1)';
+  });
+  
+  // Añadir evento click para resetear todos los prompts
+  resetAllButton.addEventListener('click', () => {
+    // Resetear todos los prompts
+    promptStats = {};
+    savePromptStats();
+    console.log('📊 All prompts reset');
+    // Recargar la sección de prompts más usados
+    renderTopPromptsSection();
+  });
+  
+  titleElement.appendChild(resetAllButton);
+  topPromptsSection.appendChild(titleElement);
+  
+  // Contenedor de botones
+  const buttonsContainer = document.createElement('div');
+  buttonsContainer.className = 'buttons-container';
+  buttonsContainer.style.cssText = `
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 4px;
+    align-items: start;
+  `;
+  
+  // Añadir botones de top prompts
+  topPrompts.forEach((stat, index) => {
+    // Crear etiqueta más compacta para el botón
+    const shortLabel = stat.prompt.length > 25 ? 
+      stat.prompt.substring(0, 25) + '...' : 
+      stat.prompt;
+    
+    const buttonElement = createButton(
+      `${index + 1}. ${shortLabel}`,
+      stat.prompt
+    );
+    
+    // Estilo especial para prompts populares
+    buttonElement.style.cssText += `
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-left: 3px solid #4a90e2;
+      font-size: 10px;
+      position: relative;
+      min-height: 28px;
+      padding: 4px 6px;
+      text-align: left;
+      line-height: 1.1;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    `;
+    
+    // Añadir badge con el número de usos
+    const badge = document.createElement('span');
+    badge.textContent = `${stat.count}x`;
+    badge.style.cssText = `
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: #4a90e2;
+      color: white;
+      font-size: 7px;
+      padding: 1px 3px;
+      border-radius: 8px;
+      font-weight: bold;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    `;
+    buttonElement.appendChild(badge);
+    
+    buttonsContainer.appendChild(buttonElement);
+  });
+  
+  topPromptsSection.appendChild(buttonsContainer);
+  
+  // Insertar al principio del contenedor de secciones
+  sectionsContainer.insertBefore(topPromptsSection, sectionsContainer.firstChild);
+  
+  console.log('📊 Top prompts section rendered with', topPrompts.length, 'items');
+  
+  // Ajustar ancho de sidebar después de renderizar
+  setTimeout(() => {
+    adjustSidebarWidth();
+  }, 100); // Pequeño delay para asegurar que el DOM se haya actualizado
+}
+
+// Función para calcular el ancho óptimo de la sidebar
+export function calculateOptimalSidebarWidth() {
+  try {
+    const sectionsContainer = document.getElementById('sections-container');
+    if (!sectionsContainer) {
+      console.log('📐 No se encontró sections-container, usando ancho por defecto');
+      return 400; // Ancho por defecto
+    }
+
+    // Calcular ancho basándose en la sección de top prompts (que usa grid)
+    const topPromptsSection = document.getElementById('top-prompts-section');
+    let maxNeededWidth = 400; // Ancho mínimo base
+    
+    if (topPromptsSection) {
+      const buttonsContainer = topPromptsSection.querySelector('.buttons-container');
+      if (buttonsContainer) {
+        const buttons = buttonsContainer.querySelectorAll('.prompt-button');
+        const buttonCount = buttons.length;
+        
+        // Calcular ancho necesario para mostrar todos los botones en una fila
+        const minButtonWidth = 160; // Ancho mínimo por botón según el grid
+        const gap = 6; // Gap entre botones
+        const padding = 40; // Padding lateral del contenedor
+        
+        // Calcular para diferentes configuraciones
+        const widthFor3Columns = (minButtonWidth * 3) + (gap * 2) + padding;
+        const widthFor2Columns = (minButtonWidth * 2) + gap + padding;
+        const widthForSingle = minButtonWidth + padding;
+        
+        if (buttonCount >= 3) {
+          maxNeededWidth = Math.max(maxNeededWidth, widthFor3Columns);
+        } else if (buttonCount === 2) {
+          maxNeededWidth = Math.max(maxNeededWidth, widthFor2Columns);
+        } else if (buttonCount === 1) {
+          maxNeededWidth = Math.max(maxNeededWidth, widthForSingle);
+        }
+        
+        console.log(`📐 Calculado ancho óptimo: ${maxNeededWidth}px para ${buttonCount} botones top`);
+      }
+    }
+    
+    // También considerar las filas de botones de contexto
+    const buttonRows = document.querySelectorAll('.button-row');
+    buttonRows.forEach((row, index) => {
+      const buttons = row.querySelectorAll('button:not(.hidden)');
+      if (buttons.length > 0) {
+        // Estimar ancho necesario para botones de contexto
+        let estimatedWidth = 0;
+        buttons.forEach(button => {
+          const buttonText = button.textContent || '';
+          const estimatedButtonWidth = Math.max(80, buttonText.length * 8 + 20); // Estimación basada en texto
+          estimatedWidth += estimatedButtonWidth + 6; // +6 para gap
+        });
+        estimatedWidth += 40; // Padding lateral
+        
+        maxNeededWidth = Math.max(maxNeededWidth, estimatedWidth);
+        console.log(`📐 Fila ${index}: ${buttons.length} botones, ancho estimado: ${estimatedWidth}px`);
+      }
+    });
+    
+    // Límites de ancho
+    const minWidth = 320; // Ancho mínimo absoluto
+    const maxWidth = 800; // Ancho máximo para evitar que sea demasiado ancho
+    
+    const optimalWidth = Math.min(Math.max(maxNeededWidth, minWidth), maxWidth);
+    console.log(`📐 Ancho óptimo final: ${optimalWidth}px (min: ${minWidth}, max: ${maxWidth})`);
+    
+    return optimalWidth;
+    
+  } catch (error) {
+    console.error('Error calculando ancho óptimo:', error);
+    return 400; // Fallback
+  }
+}
+
+// Función para ajustar el ancho de la sidebar
+export function adjustSidebarWidth(width = null) {
+  try {
+    const targetWidth = width || 600; // Ancho fijo de 600px (wide)
+    
+    // Buscar el contenedor principal de la sidebar
+    const sidebar = document.querySelector('.sidebar') || 
+                   document.querySelector('[role="complementary"]') || 
+                   document.body;
+    
+    if (sidebar && sidebar !== document.body) {
+      sidebar.style.width = `${targetWidth}px`;
+      sidebar.style.minWidth = `${targetWidth}px`;
+      sidebar.style.maxWidth = `${targetWidth}px`;
+      
+      console.log(`📐 Sidebar redimensionada a ${targetWidth}px`);
+      
+      // También ajustar el contenedor padre si existe
+      const sidebarContainer = sidebar.parentElement;
+      if (sidebarContainer && sidebarContainer.classList.contains('sidebar-container')) {
+        sidebarContainer.style.width = `${targetWidth}px`;
+      }
+    } else {
+      // Si no encontramos la sidebar específica, ajustar el body o el documento
+      document.documentElement.style.setProperty('--sidebar-width', `${targetWidth}px`);
+      console.log(`📐 Variable CSS --sidebar-width establecida a ${targetWidth}px`);
+    }
+    
+    // Disparar evento personalizado para notificar el cambio
+    window.dispatchEvent(new CustomEvent('sidebarWidthChanged', { 
+      detail: { width: targetWidth } 
+    }));
+    
+  } catch (error) {
+    console.error('Error ajustando ancho de sidebar:', error);
+  }
 }
 
 // Crear un botón regular
@@ -867,52 +1342,136 @@ export function createButton(label, prompt) {
   button.textContent = label;
 
   button.addEventListener('click', async function () {
-    console.log('🖱️ Clic en opción del menú JSON - Obteniendo texto seleccionado de página...');
+    console.log('🖱️ Clic en opción del menú JSON - Procesando según contexto...');
+    
+    // Registrar uso del prompt para estadísticas
+    trackPromptUsage(prompt, currentContext);
     
     try {
-      // PASO 1: Obtener SOLO texto seleccionado de la página web activa
-      const selectedTextFromPage = await getSelectedTextFromPage();
-      
-      if (selectedTextFromPage && selectedTextFromPage.trim()) {
-        console.log('📝 Texto seleccionado encontrado:', selectedTextFromPage);
-        
-        // PASO 2: Copiar el texto seleccionado al portapapeles del sistema
-        try {
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            await navigator.clipboard.writeText(selectedTextFromPage);
-            console.log('✅ Texto seleccionado copiado al portapapeles del sistema');
-          } else {
-            console.log('⚠️ API de portapapeles no disponible');
+      // EXCEPCIÓN: Para contextos 'book' y 'movie', usar SOLO el clipboard (nombre del libro/película)
+      if (currentContext === 'book') {
+        const bookName = config.getClipboardText();
+        if (bookName && bookName.trim() && !bookName.startsWith('[')) {
+          console.log('📚 Contexto libro: usando nombre del libro del clipboard:', bookName);
+          
+          // PASO 2: Copiar el nombre del libro al portapapeles del sistema (refrescar)
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(bookName);
+              console.log('✅ Nombre del libro copiado al portapapeles del sistema');
+            }
+          } catch (clipboardError) {
+            console.log('⚠️ Error copiando al portapapeles:', clipboardError);
           }
-        } catch (clipboardError) {
-          console.log('⚠️ Error copiando al portapapeles:', clipboardError);
+          
+          // PASO 3: El clipboard interno ya tiene el nombre del libro
+          console.log('📋 Usando nombre del libro del clipboard interno');
+          
+          // PASO 4: Mostrar notificación específica para libro
+          const notification = document.getElementById('copy-notification');
+          if (notification) {
+            notification.textContent = '📚 Nombre del libro listo para AI';
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+              notification.classList.add('hidden');
+            }, 2000);
+          }
+        } else {
+          console.log('📚 No hay nombre de libro en el clipboard');
+          const notification = document.getElementById('copy-notification');
+          if (notification) {
+            notification.textContent = '⚠️ Introduzca el nombre del libro primero';
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+              notification.classList.add('hidden');
+            }, 2000);
+          }
+          return; // No continuar si no hay nombre de libro
         }
-        
-        // PASO 3: Actualizar el clipboard interno de la extensión
-        config.setClipboardText(selectedTextFromPage);
-        console.log('📋 Clipboard interno actualizado con texto seleccionado');
-        
-        // PASO 4: Mostrar notificación
-        const notification = document.getElementById('copy-notification');
-        if (notification) {
-          notification.textContent = '✅ Texto seleccionado copiado y listo para AI';
-          notification.classList.remove('hidden');
-          setTimeout(() => {
-            notification.classList.add('hidden');
-          }, 2000);
+      } else if (currentContext === 'movie') {
+        const movieName = config.getClipboardText();
+        if (movieName && movieName.trim() && !movieName.startsWith('[')) {
+          console.log('🎬 Contexto película: usando nombre de la película del clipboard:', movieName);
+          
+          // PASO 2: Copiar el nombre de la película al portapapeles del sistema (refrescar)
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(movieName);
+              console.log('✅ Nombre de la película copiado al portapapeles del sistema');
+            }
+          } catch (clipboardError) {
+            console.log('⚠️ Error copiando al portapapeles:', clipboardError);
+          }
+          
+          // PASO 3: El clipboard interno ya tiene el nombre de la película
+          console.log('📋 Usando nombre de la película del clipboard interno');
+          
+          // PASO 4: Mostrar notificación específica para película
+          const notification = document.getElementById('copy-notification');
+          if (notification) {
+            notification.textContent = '🎬 Nombre de la película listo para AI';
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+              notification.classList.add('hidden');
+            }, 2000);
+          }
+        } else {
+          console.log('🎬 No hay nombre de película en el clipboard');
+          const notification = document.getElementById('copy-notification');
+          if (notification) {
+            notification.textContent = '⚠️ Introduzca el nombre de la película primero';
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+              notification.classList.add('hidden');
+            }, 2000);
+          }
+          return; // No continuar si no hay nombre de película
         }
-        
       } else {
-        console.log('📝 No hay texto seleccionado en la página web activa');
+        // PASO 1: Para otros contextos, obtener texto seleccionado de la página web activa
+        const selectedTextFromPage = await getSelectedTextFromPage();
         
-        // Mostrar notificación informativa
-        const notification = document.getElementById('copy-notification');
-        if (notification) {
-          notification.textContent = '⚠️ Seleccione texto en la página para incluir en el prompt';
-          notification.classList.remove('hidden');
-          setTimeout(() => {
-            notification.classList.add('hidden');
-          }, 2000);
+        if (selectedTextFromPage && selectedTextFromPage.trim()) {
+          console.log('📝 Texto seleccionado encontrado:', selectedTextFromPage);
+          
+          // PASO 2: Copiar el texto seleccionado al portapapeles del sistema
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(selectedTextFromPage);
+              console.log('✅ Texto seleccionado copiado al portapapeles del sistema');
+            } else {
+              console.log('⚠️ API de portapapeles no disponible');
+            }
+          } catch (clipboardError) {
+            console.log('⚠️ Error copiando al portapapeles:', clipboardError);
+          }
+          
+          // PASO 3: Actualizar el clipboard interno de la extensión
+          config.setClipboardText(selectedTextFromPage);
+          console.log('📋 Clipboard interno actualizado con texto seleccionado');
+          
+          // PASO 4: Mostrar notificación
+          const notification = document.getElementById('copy-notification');
+          if (notification) {
+            notification.textContent = '✅ Texto seleccionado copiado y listo para AI';
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+              notification.classList.add('hidden');
+            }, 2000);
+          }
+          
+        } else {
+          console.log('📝 No hay texto seleccionado en la página web activa');
+        
+          // Mostrar notificación informativa
+          const notification = document.getElementById('copy-notification');
+          if (notification) {
+            notification.textContent = '⚠️ Seleccione texto en la página para incluir en el prompt';
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+              notification.classList.add('hidden');
+            }, 2000);
+          }
         }
       }
       
@@ -1160,6 +1719,9 @@ function openAIWithStandardContext(prompt, label) {
       break;
     case 'book':
       buttonType = 'bookButton';
+      break;
+    case 'movie':
+      buttonType = 'movieButton';
       break;
     case 'pdf':
       buttonType = 'pdfButton';
@@ -1414,7 +1976,8 @@ export function saveMainConfig() {
     context: currentContext,
     useClipboard: useClipboard,
     verAcceso: verAcceso,
-    customButtonsVisible: customButtonsVisible
+    customButtonsVisible: customButtonsVisible,
+    secondRowButtonsVisible: secondRowButtonsVisible
   };
   
   console.log('Guardando configuración:', configToSave);
@@ -1438,7 +2001,8 @@ export async function loadMainConfig() {
         currentContext = result.context || result.mainConfig.context || 'url';
         useClipboard = result.mainConfig.useClipboard || false;
         verAcceso = result.mainConfig.verAcceso !== undefined ? result.mainConfig.verAcceso : true;
-        customButtonsVisible = result.mainConfig.customButtonsVisible !== undefined ? result.mainConfig.customButtonsVisible : true;
+        secondRowButtonsVisible = result.mainConfig.secondRowButtonsVisible !== undefined ? result.mainConfig.secondRowButtonsVisible : false;
+        customButtonsVisible = secondRowButtonsVisible; // Sincronizar con secondRowButtonsVisible
         
         // Actualizar valores en el objeto config
         config.setCurrentLanguage(currentLanguage);
@@ -1447,6 +2011,7 @@ export async function loadMainConfig() {
         config.setUseClipboard(useClipboard);
         config.setVerAcceso(verAcceso);
         config.setCustomButtonsVisible(customButtonsVisible);
+        config.setSecondRowButtonsVisible(secondRowButtonsVisible);
         
         console.log('Configuración principal cargada y aplicada. Idioma detectado:', currentLanguage);
       } else {
@@ -1456,7 +2021,8 @@ export async function loadMainConfig() {
         currentContext = result.context || 'url';
         useClipboard = false;
         verAcceso = true;
-        customButtonsVisible = true;
+        secondRowButtonsVisible = false;
+        customButtonsVisible = secondRowButtonsVisible; // Sincronizar con secondRowButtonsVisible
         
         // Actualizar valores en el objeto config
         config.setCurrentLanguage(currentLanguage);
@@ -1465,9 +2031,14 @@ export async function loadMainConfig() {
         config.setUseClipboard(useClipboard);
         config.setVerAcceso(verAcceso);
         config.setCustomButtonsVisible(customButtonsVisible);
+        config.setSecondRowButtonsVisible(secondRowButtonsVisible);
         
         console.log('No se encontró mainConfig, usando configuraciones individuales. Idioma:', currentLanguage);
       }
+      
+      // Cargar estadísticas de prompts
+      loadPromptStats();
+      
       resolve({
         language: currentLanguage,
         aiModel: currentAIModel,
@@ -1872,6 +2443,19 @@ export async function textPrompt(title = null, defaultText = "", aiModelId = nul
       const text = textarea.value.trim();
       
       if (text) {
+        // Registrar uso del prompt para estadísticas
+        trackPromptUsage(text, currentContext);
+        
+        // Recargar el menú JSON y las estadísticas cuando se acepta
+        try {
+          const newMenuData = await loadMenuData(currentLanguage);
+          config.setMenuData(newMenuData);
+          renderSections();
+          console.log('📊 Menú recargado después de aceptar prompt');
+        } catch (error) {
+          console.error('Error al recargar el menú:', error);
+        }
+        
         // Verificar si estamos en una página de AI soportada
         try {
           const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -1915,6 +2499,19 @@ export async function textPrompt(title = null, defaultText = "", aiModelId = nul
         document.removeEventListener('keydown', handleKeydown);
         
         if (text) {
+          // Registrar uso del prompt para estadísticas
+          trackPromptUsage(text, currentContext);
+          
+          // Recargar el menú JSON y las estadísticas cuando se acepta
+          try {
+            const newMenuData = await loadMenuData(currentLanguage);
+            config.setMenuData(newMenuData);
+            renderSections();
+            console.log('📊 Menú recargado después de aceptar prompt (Ctrl+Enter)');
+          } catch (error) {
+            console.error('Error al recargar el menú:', error);
+          }
+          
           // Verificar si estamos en una página de AI soportada
           try {
             const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -1975,6 +2572,505 @@ export async function textPrompt(title = null, defaultText = "", aiModelId = nul
     document.body.appendChild(overlay);
     
     // Enfocar textarea después de un breve delay
+    setTimeout(() => {
+      textarea.focus();
+      textarea.select();
+    }, 100);
+  });
+}
+
+// Función questionPrompt() - Modal específico para preguntas con titulo questionPrompt + nombre del botón
+export async function questionPrompt(buttonName = "", defaultText = "") {
+  return new Promise(async (resolve) => {
+    // Obtener traducciones del idioma actual
+    const texts = getTranslation(currentLanguage);
+    
+    // Usar solo questionPrompt como título
+    const finalTitle = texts.textPrompt.questionPrompt;
+    
+    // Usar siempre el modelo actual para mostrar la imagen
+    const currentAIModel = config.getCurrentAIModel();
+    
+    // Crear overlay con estilo de sidebar
+    const overlay = document.createElement('div');
+    overlay.className = 'question-prompt-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+      visibility: visible;
+    `;
+
+    // Crear modal con estilo de sidebar
+    const modal = document.createElement('div');
+    modal.className = 'question-prompt-modal';
+    modal.style.cssText = `
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      width: 80%;
+      max-width: 500px;
+      min-width: 300px;
+      overflow: hidden;
+      transform: scale(1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      margin: auto;
+    `;
+
+    // Verificar si es RTL (árabe)
+    const isRTL = currentLanguage === 'ar';
+    if (isRTL) {
+      modal.style.direction = 'rtl';
+    }
+
+    // Crear header con estilo de sidebar
+    const header = document.createElement('div');
+    header.className = 'question-prompt-header';
+    header.style.cssText = `
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #87CEEB;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e0e0e0;
+    `;
+
+    // Header tradicional sin imagen (estilo textPrompt)
+    const headerTitle = document.createElement('h3');
+    headerTitle.textContent = finalTitle;
+    headerTitle.style.cssText = `
+      margin: 0;
+      font-size: 16px;
+      color: white;
+      font-weight: bold;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      width: 100%;
+    `;
+
+    header.appendChild(headerTitle);
+
+    // Crear contenido del modal (estilo textPrompt)
+    const content = document.createElement('div');
+    content.style.cssText = `
+      padding: 16px;
+    `;
+
+    // Crear textarea con estilo de textPrompt
+    const textarea = document.createElement('textarea');
+    textarea.value = defaultText || '';
+    textarea.placeholder = buttonName || 'Escriba aquí...';
+    textarea.style.cssText = `
+      width: 100%;
+      min-height: 120px;
+      max-height: 200px;
+      padding: 10px 12px;
+      border: 1px solid #dadce0;
+      border-radius: 6px;
+      background-color: white;
+      font-size: 14px;
+      color: #2c3e50;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    `;
+
+    // Focus y selección del texto
+    textarea.addEventListener('focus', () => {
+      textarea.style.borderColor = '#87CEEB';
+      textarea.style.boxShadow = '0 0 0 3px rgba(135, 206, 235, 0.3)';
+      textarea.select();
+    });
+
+    textarea.addEventListener('blur', () => {
+      textarea.style.borderColor = '#dadce0';
+      textarea.style.boxShadow = 'none';
+    });
+
+    // Crear contenedor de botones (estilo textPrompt)
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = `
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 16px;
+    `;
+
+    // Crear botón "Cancelar" (estilo textPrompt)
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = texts.textPrompt.cancelButton;
+    cancelButton.style.cssText = `
+      background-color: #f0f0f0;
+      border: 1px solid #dcdcdc;
+      border-radius: 6px;
+      color: #2c3e50;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 10px 15px;
+      transition: background-color 0.2s, box-shadow 0.2s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: normal;
+      min-width: 80px;
+    `;
+
+    // Crear botón "Aceptar" (estilo textPrompt)
+    const acceptButton = document.createElement('button');
+    acceptButton.textContent = texts.textPrompt.acceptButton;
+    acceptButton.style.cssText = `
+      background-color: #87CEEB;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 10px 15px;
+      transition: background-color 0.3s, transform 0.2s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      min-width: 80px;
+    `;
+
+    // Efectos hover (estilo textPrompt)
+    cancelButton.addEventListener('mouseenter', () => {
+      cancelButton.style.backgroundColor = '#e0e0e0';
+      cancelButton.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.2)';
+    });
+
+    cancelButton.addEventListener('mouseleave', () => {
+      cancelButton.style.backgroundColor = '#f0f0f0';
+      cancelButton.style.boxShadow = 'none';
+    });
+
+    acceptButton.addEventListener('mouseenter', () => {
+      acceptButton.style.backgroundColor = '#5bb4dc';
+      acceptButton.style.transform = 'translateY(-2px)';
+      acceptButton.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+    });
+
+    acceptButton.addEventListener('mouseleave', () => {
+      acceptButton.style.backgroundColor = '#87CEEB';
+      acceptButton.style.transform = 'translateY(0)';
+      acceptButton.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+    });
+
+    // Eventos de los botones
+    cancelButton.addEventListener('click', () => {
+      document.body.removeChild(overlay);
+      // No hacer nada - solo cerrar el modal
+      return;
+    });
+
+    acceptButton.addEventListener('click', () => {
+      const inputText = textarea.value.trim();
+      if (inputText) {
+        // No registrar uso del prompt para estadísticas cuando se pide el nombre
+        // trackPromptUsage(inputText, 'question');
+      }
+      document.body.removeChild(overlay);
+      resolve(inputText || null);
+    });
+
+    // Evento de teclado
+    textarea.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        const inputText = textarea.value.trim();
+        if (inputText) {
+          // No registrar uso del prompt para estadísticas cuando se pide el nombre
+          // trackPromptUsage(inputText, 'question');
+        }
+        document.body.removeChild(overlay);
+        resolve(inputText || null);
+      } else if (e.key === 'Escape') {
+        document.body.removeChild(overlay);
+        // No hacer nada - solo cerrar el modal
+        return;
+      }
+    });
+
+    // Ensamblar modal
+    buttonContainer.appendChild(cancelButton);
+    buttonContainer.appendChild(acceptButton);
+    content.appendChild(textarea);
+    content.appendChild(buttonContainer);
+    modal.appendChild(header);
+    modal.appendChild(content);
+    overlay.appendChild(modal);
+
+    // Añadir al DOM
+    document.body.appendChild(overlay);
+
+    // Enfocar el textarea
+    setTimeout(() => {
+      textarea.focus();
+      textarea.select();
+    }, 100);
+  });
+}
+
+// Función moviePrompt() - Modal específico para películas sin contexto
+export async function moviePrompt(title = null, defaultText = "") {
+  return new Promise(async (resolve) => {
+    // Obtener traducciones del idioma actual
+    const texts = getTranslation(currentLanguage);
+    
+    // Usar el título de moviePrompt desde las traducciones
+    const finalTitle = texts.textPrompt.moviePrompt;
+    
+    // Usar siempre el modelo actual para mostrar la imagen
+    const currentAIModel = config.getCurrentAIModel();
+    const finalAiModelId = currentAIModel;
+    
+    // NO obtener contexto para moviePrompt (siempre sin contexto)
+    const finalContextPreview = null;
+    
+    // Crear overlay con estilo de sidebar
+    const overlay = document.createElement('div');
+    overlay.className = 'text-prompt-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+      visibility: visible;
+    `;
+
+    // Crear modal con estilo de sidebar
+    const modal = document.createElement('div');
+    modal.className = 'text-prompt-modal';
+    modal.style.cssText = `
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      width: 80%;
+      max-width: 500px;
+      min-width: 300px;
+      overflow: hidden;
+      transform: scale(1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      margin: auto;
+    `;
+
+    // Verificar si es RTL (árabe)
+    const isRTL = currentLanguage === 'ar';
+    if (isRTL) {
+      modal.style.direction = 'rtl';
+    }
+
+    // Crear header con estilo de sidebar (sin imagen AI para moviePrompt)
+    const header = document.createElement('div');
+    header.className = 'text-prompt-header';
+    header.style.cssText = `
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #87CEEB;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e0e0e0;
+    `;
+
+    // Crear título directamente sin imagen
+    const headerTitle = document.createElement('h3');
+    headerTitle.textContent = finalTitle;
+    headerTitle.style.cssText = `
+      margin: 0;
+      font-size: 16px;
+      color: white;
+      font-weight: bold;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    `;
+
+    header.appendChild(headerTitle);
+
+    // Crear contenido del modal
+    const content = document.createElement('div');
+    content.style.cssText = `
+      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    `;
+
+    // Crear textarea con estilo de sidebar
+    const textarea = document.createElement('textarea');
+    textarea.value = defaultText || '';
+    textarea.placeholder = texts.textPrompt.topicPlaceholder || 'Escriba aquí...';
+    textarea.style.cssText = `
+      width: 100%;
+      min-height: 120px;
+      max-height: 300px;
+      padding: 12px;
+      border: 2px solid #dadce0;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      box-sizing: border-box;
+    `;
+
+    // Focus y selección del texto con estilo de sidebar
+    textarea.addEventListener('focus', () => {
+      textarea.style.borderColor = '#87CEEB';
+      textarea.style.boxShadow = '0 0 0 3px rgba(135, 206, 235, 0.3)';
+      textarea.select();
+    });
+
+    textarea.addEventListener('blur', () => {
+      textarea.style.borderColor = '#dadce0';
+      textarea.style.boxShadow = 'none';
+    });
+
+    // NO crear contenedor de contexto para moviePrompt (siempre sin contexto)
+    let contextContainer = null;
+
+    // Crear contenedor de botones con estilo de sidebar
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = `
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 16px;
+    `;
+
+    // Crear botón Cancelar
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = texts.textPrompt.cancelButton;
+    cancelButton.style.cssText = `
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      color: #333;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: all 0.3s ease;
+    `;
+
+    cancelButton.addEventListener('mouseenter', () => {
+      cancelButton.style.backgroundColor = '#e9ecef';
+      cancelButton.style.transform = 'translateY(-1px)';
+    });
+
+    cancelButton.addEventListener('mouseleave', () => {
+      cancelButton.style.backgroundColor = '#f8f9fa';
+      cancelButton.style.transform = 'translateY(0)';
+    });
+
+    // Crear botón Aceptar
+    const acceptButton = document.createElement('button');
+    acceptButton.textContent = texts.textPrompt.acceptButton;
+    acceptButton.style.cssText = `
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #87CEEB;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    `;
+
+    acceptButton.addEventListener('mouseenter', () => {
+      acceptButton.style.backgroundColor = '#5bb4dc';
+      acceptButton.style.transform = 'translateY(-2px)';
+      acceptButton.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+    });
+
+    acceptButton.addEventListener('mouseleave', () => {
+      acceptButton.style.backgroundColor = '#87CEEB';
+      acceptButton.style.transform = 'translateY(0)';
+      acceptButton.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+    });
+
+    // Eventos de los botones
+    cancelButton.addEventListener('click', () => {
+      document.body.removeChild(overlay);
+      resolve(null);
+    });
+
+    acceptButton.addEventListener('click', () => {
+      const inputText = textarea.value.trim();
+      if (inputText) {
+        // No registrar uso del prompt para estadísticas cuando se pide el nombre de la película
+        // trackPromptUsage(inputText, 'movie');
+      }
+      document.body.removeChild(overlay);
+      resolve(inputText || null);
+    });
+
+    // Evento de teclado
+    textarea.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        const inputText = textarea.value.trim();
+        if (inputText) {
+          // No registrar uso del prompt para estadísticas cuando se pide el nombre de la película
+          // trackPromptUsage(inputText, 'movie');
+        }
+        document.body.removeChild(overlay);
+        resolve(inputText || null);
+      } else if (e.key === 'Escape') {
+        document.body.removeChild(overlay);
+        resolve(null);
+      }
+    });
+
+    // Cerrar al hacer clic en el overlay
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        document.body.removeChild(overlay);
+        resolve(null);
+      }
+    });
+
+    // Ensamblar el modal
+    buttonContainer.appendChild(cancelButton);
+    buttonContainer.appendChild(acceptButton);
+
+    content.appendChild(textarea);
+    if (contextContainer) {
+      content.appendChild(contextContainer);
+    }
+    content.appendChild(buttonContainer);
+
+    modal.appendChild(header);
+    modal.appendChild(content);
+    overlay.appendChild(modal);
+
+    // Añadir al DOM
+    document.body.appendChild(overlay);
+
+    // Enfocar el textarea
     setTimeout(() => {
       textarea.focus();
       textarea.select();
@@ -2186,6 +3282,10 @@ export async function bookPrompt(title = null, defaultText = "") {
     cancelButton.addEventListener('click', () => closeModal(null));
     acceptButton.addEventListener('click', () => {
       const text = textarea.value.trim();
+      if (text) {
+        // No registrar uso del prompt para estadísticas cuando se pide el nombre del libro
+        // trackPromptUsage(text, 'book');
+      }
       closeModal(text || null);
     });
 
@@ -2196,6 +3296,10 @@ export async function bookPrompt(title = null, defaultText = "") {
         document.removeEventListener('keydown', handleKeydown);
       } else if (e.key === 'Enter' && e.ctrlKey) {
         const text = textarea.value.trim();
+        if (text) {
+          // No registrar uso del prompt para estadísticas cuando se pide el nombre del libro
+          // trackPromptUsage(text, 'book');
+        }
         document.removeEventListener('keydown', handleKeydown);
         closeModal(text || null);
       }
@@ -2395,14 +3499,14 @@ export function confirmPrompt(message = null, type = 'general') {
       justify-content: center;
     `;
 
-    // Crear botón "No" con estilo de sidebar (secundario)
+    // Crear botón "No" con estilo de sidebar (secundario) - Color pastel
     const noButton = document.createElement('button');
     noButton.textContent = texts.confirmPrompt.noButton;
     noButton.style.cssText = `
-      background-color: #f0f0f0;
-      border: 1px solid #dcdcdc;
+      background-color: #ffb3ba !important;
+      border: 1px solid #ff8a95 !important;
       border-radius: 6px;
-      color: #2c3e50;
+      color: #8b0000 !important;
       cursor: pointer;
       font-size: 14px;
       padding: 10px 15px;
@@ -2412,14 +3516,14 @@ export function confirmPrompt(message = null, type = 'general') {
       min-width: 100px;
     `;
 
-    // Crear botón "Sí" con estilo de sidebar (color principal)
+    // Crear botón "Sí" con estilo de sidebar (color principal) - Color pastel
     const yesButton = document.createElement('button');
     yesButton.textContent = texts.confirmPrompt.yesButton;
     yesButton.style.cssText = `
-      background-color: #87CEEB;
-      border: none;
+      background-color: #b3e5fc !important;
+      border: 1px solid #81c784 !important;
       border-radius: 6px;
-      color: white;
+      color: #1565c0 !important;
       cursor: pointer;
       font-size: 14px;
       padding: 10px 15px;
@@ -2430,25 +3534,25 @@ export function confirmPrompt(message = null, type = 'general') {
       min-width: 100px;
     `;
 
-    // Efectos hover con estilo de sidebar
+    // Efectos hover con estilo de sidebar - Colores pastel
     noButton.addEventListener('mouseenter', () => {
-      noButton.style.backgroundColor = '#e0e0e0';
+      noButton.style.setProperty('background-color', '#ffccd1', 'important');
       noButton.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.2)';
     });
 
     noButton.addEventListener('mouseleave', () => {
-      noButton.style.backgroundColor = '#f0f0f0';
+      noButton.style.setProperty('background-color', '#ffb3ba', 'important');
       noButton.style.boxShadow = 'none';
     });
 
     yesButton.addEventListener('mouseenter', () => {
-      yesButton.style.backgroundColor = '#5bb4dc';
+      yesButton.style.setProperty('background-color', '#90caf9', 'important');
       yesButton.style.transform = 'translateY(-2px)';
       yesButton.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
     });
 
     yesButton.addEventListener('mouseleave', () => {
-      yesButton.style.backgroundColor = '#87CEEB';
+      yesButton.style.setProperty('background-color', '#b3e5fc', 'important');
       yesButton.style.transform = 'translateY(0)';
       yesButton.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
     });

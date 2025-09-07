@@ -1,0 +1,75 @@
+{
+  "header": {
+    "title": "Assistente prompt film",
+    "currentUrlPlaceholder": "Pagina corrente"
+  },
+  "sections": [
+    {
+      "title": "🎬 Comprensione generale",
+      "buttons": [
+        {"label": "Riassunto del film", "prompt": "Qual è il riassunto del film?"},
+        {"label": "Personaggi principali e come sono", "prompt": "Quali sono i personaggi principali e come sono?"},
+        {"label": "Quale conflitto centrale viene presentato", "prompt": "Quale conflitto centrale viene presentato?"},
+        {"label": "Finale del film", "prompt": "Come finisce il film?"},
+        {"label": "Elementi della trama più importanti", "prompt": "Quali elementi della trama sono più importanti?"},
+        {"label": "Genere e sottogenere del film", "prompt": "A quale genere e sottogenere appartiene il film e perché?"},
+        {"label": "Contesto storico del film", "prompt": "In quale contesto storico si svolge il film?"},
+        {"label": "Struttura narrativa", "prompt": "Come è strutturata la narrativa del film?"}
+      ]
+    },
+    {
+      "title": "🎭 Analisi cinematografica",
+      "buttons": [
+        {"label": "Tema principale del film", "prompt": "Qual è il tema principale del film?"},
+        {"label": "Simboli visivi e cosa significano", "prompt": "Quali simboli visivi vengono utilizzati e cosa significano?"},
+        {"label": "Come evolve il protagonista", "prompt": "Come evolve il protagonista?"},
+        {"label": "Quale messaggio trasmette il regista", "prompt": "Quale messaggio trasmette il regista?"},
+        {"label": "Cosa rappresenta la scena o il personaggio", "prompt": "Cosa rappresenta la scena o il personaggio?"},
+        {"label": "Stile visivo del regista", "prompt": "Quale stile visivo caratterizza il regista in questo film?"},
+        {"label": "Uso del colore e dell'illuminazione", "prompt": "Come vengono utilizzati il colore e l'illuminazione per trasmettere emozioni?"},
+        {"label": "Colonna sonora ed effetti sonori", "prompt": "Come contribuiscono la colonna sonora e gli effetti sonori al film?"},
+        {"label": "Performance eccezionali", "prompt": "Quali performance si distinguono e perché sono efficaci?"}
+      ]
+    },
+    {
+      "title": "🧠 Interpretazione culturale",
+      "buttons": [
+        {"label": "Quale critica il film fa alla società", "prompt": "Quale critica il film fa alla società?"},
+        {"label": "Come questa storia si relaziona alla vita reale", "prompt": "Come questa storia si relaziona alla vita reale?"},
+        {"label": "Quali insegnamenti possono essere applicati oggi", "prompt": "Quali insegnamenti possono essere applicati oggi?"},
+        {"label": "Cosa significa il finale", "prompt": "Cosa significa il finale?"},
+        {"label": "Influenze culturali", "prompt": "Quali influenze culturali possono essere identificate nel film?"},
+        {"label": "Confronto con altri film del genere", "prompt": "Come si confronta con altri film simili del genere?"},
+        {"label": "Impatto sociale del film", "prompt": "Quale impatto sociale ha avuto o potrebbe avere questo film?"}
+      ]
+    },
+    {
+      "title": "✍️ Analisi tecnica",
+      "buttons": [
+        {"label": "Quali valori o idee vengono promossi nel film", "prompt": "Quali valori o idee vengono promossi nel film?"},
+        {"label": "Come viene utilizzata la cinematografia per creare emozione", "prompt": "Come viene utilizzata la cinematografia per creare emozione o impatto?"},
+        {"label": "Quali risorse audiovisive si distinguono e per cosa", "prompt": "Quali risorse audiovisive si distinguono e per cosa?"},
+        {"label": "Tecniche di montaggio", "prompt": "Quali tecniche di montaggio vengono utilizzate e come influenzano il ritmo?"},
+        {"label": "Composizione delle inquadrature", "prompt": "Come vengono composte le inquadrature per raccontare la storia?"},
+        {"label": "Effetti speciali e il loro scopo", "prompt": "Come vengono integrati gli effetti speciali nella narrativa?"}
+      ]
+    },
+    {
+      "title": "🎯 Critica e opinione personale",
+      "buttons": [
+        {"label": "Punti di forza del film", "prompt": "Quali sono i principali punti di forza del film?"},
+        {"label": "Aspetti migliorabili", "prompt": "Quali aspetti del film avrebbero potuto essere migliorati?"},
+        {"label": "Pubblico di destinazione", "prompt": "A quale tipo di pubblico è diretto questo film?"},
+        {"label": "Valutazione personale giustificata", "prompt": "Come valuteresti questo film e perché?"}
+      ]
+    },
+    {
+      "title": "🏆 Contesto cinematografico",
+      "buttons": [
+        {"label": "Posto nella filmografia del regista", "prompt": "Che posto occupa questo film nella filmografia del regista?"},
+        {"label": "Influenza sul cinema successivo", "prompt": "Come ha influenzato questo film il cinema successivo?"},
+        {"label": "Premi e riconoscimenti", "prompt": "Quali premi o riconoscimenti ha ricevuto il film?"}
+      ]
+    }
+  ]
+}

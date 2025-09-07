@@ -1,0 +1,88 @@
+{
+  "header": {
+    "title": "Book prompt assistant",
+    "currentUrlPlaceholder": "Current page"
+  },
+  "sections": [
+    {
+      "title": "📘 General understanding",
+      "buttons": [
+        {"label": "Book summary", "prompt": "What is the summary of the book?"},
+        {"label": "Main characters and how they are", "prompt": "What are the main characters and how are they?"},
+        {"label": "What central conflict is presented", "prompt": "What central conflict is presented?"},
+        {"label": "End of the story", "prompt": "How does the story end?"},
+        {"label": "Most important plot elements", "prompt": "What plot elements are most important?"},
+        {"label": "Historical context and era of the book", "prompt": "In what historical context and era does the book take place?"},
+        {"label": "Genre and literary subgenre", "prompt": "What genre and literary subgenre does the work belong to?"},
+        {"label": "Narrative structure of the work", "prompt": "How is the narrative of the work structured?"},
+        {"label": "Narrative point of view used", "prompt": "What narrative point of view does the author use and why?"}
+      ]
+    },
+    {
+      "title": "🎭 Literary analysis",
+      "buttons": [
+        {"label": "Main theme of the book", "prompt": "What is the main theme of the book?"},
+        {"label": "Symbolisms and what they mean", "prompt": "What symbolisms are used and what do they mean?"},
+        {"label": "How the protagonist evolves", "prompt": "How does the protagonist evolve?"},
+        {"label": "What message the author conveys", "prompt": "What message does the author convey?"},
+        {"label": "What the character or scene represents", "prompt": "What does the character or scene represent?"},
+        {"label": "Author's narrative style", "prompt": "What narrative style characterizes the author in this work?"},
+        {"label": "Use of time and space in narrative", "prompt": "How does the author handle time and space in the narrative?"},
+        {"label": "Relationships between characters", "prompt": "How are the relationships between the main characters?"},
+        {"label": "Internal vs external conflicts", "prompt": "What internal and external conflicts are presented in the work?"},
+        {"label": "Narrative techniques employed", "prompt": "What narrative techniques does the author employ and for what purpose?"}
+      ]
+    },
+    {
+      "title": "🧠 Philosophical interpretation",
+      "buttons": [
+        {"label": "What criticism the book makes of society", "prompt": "What criticism does the book make of society?"},
+        {"label": "How this story relates to real life", "prompt": "How does this story relate to real life?"},
+        {"label": "What lessons can be applied today", "prompt": "What lessons can be applied today?"},
+        {"label": "What the ending means", "prompt": "What does the ending mean?"},
+        {"label": "Cultural and historical influences", "prompt": "What cultural and historical influences can be identified in the work?"},
+        {"label": "Comparison with other works by the same author", "prompt": "How does this work compare to others by the same author?"},
+        {"label": "Social and cultural impact of the work", "prompt": "What social and cultural impact did or does this work have?"}
+      ]
+    },
+    {
+      "title": "✍️ Essays and assignments",
+      "buttons": [
+        {"label": "What values or ideas are promoted in the work", "prompt": "What values or ideas are promoted in the work?"},
+        {"label": "How language is used to create emotion or impact", "prompt": "How is language used to create emotion or impact?"},
+        {"label": "What literary figures appear and for what", "prompt": "What literary figures appear and for what?"},
+        {"label": "Analysis of character development", "prompt": "How do the characters develop throughout the work?"},
+        {"label": "Stylistic resources and their function", "prompt": "What stylistic resources does the author use and what is their function?"},
+        {"label": "Intertextuality and references", "prompt": "What intertextual references or allusions appear in the work?"}
+      ]
+    },
+    {
+      "title": "📚 Academic study",
+      "buttons": [
+        {"label": "Author's biography and writing context", "prompt": "What aspects of the author's biography influenced this work?"},
+        {"label": "Literary movement it belongs to", "prompt": "What literary current or movement does this work belong to?"},
+        {"label": "Influence on later literature", "prompt": "How did this work influence later literature?"},
+        {"label": "Adaptations and versions of the work", "prompt": "What film, theatrical or other adaptations does this work have?"},
+        {"label": "Specialized literary criticism", "prompt": "What do specialized literary critics say about this work?"}
+      ]
+    },
+    {
+      "title": "🎯 Critical analysis",
+      "buttons": [
+        {"label": "Strengths and weaknesses of the work", "prompt": "What are the main strengths and weaknesses of the work?"},
+        {"label": "Contemporary relevance of the book", "prompt": "What relevance does this work have today?"},
+        {"label": "Target audience and reception", "prompt": "What audience is the work aimed at and how was it received?"},
+        {"label": "Justified personal assessment", "prompt": "How would you rate this work and for what reasons?"}
+      ]
+    },
+    {
+      "title": "📖 Reading comprehension",
+      "buttons": [
+        {"label": "Vocabulary and outstanding expressions", "prompt": "What vocabulary or outstanding expressions appear in the work?"},
+        {"label": "Most significant passages", "prompt": "What are the most significant passages of the work?"},
+        {"label": "Memorable quotes and their meaning", "prompt": "What memorable quotes does the work contain and what do they mean?"},
+        {"label": "Specific comprehension questions", "prompt": "What specific aspects require greater comprehension in this work?"}
+      ]
+    }
+  ]
+}
